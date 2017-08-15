@@ -41,6 +41,8 @@ public class AnswerServiceImpl implements IAnswerService{
         
         if(!StringUtil.isEmpty(page.getParam().getName())){
             criteria.andNameEqualTo(page.getParam().getName());
+        }else{
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
         example.setOrderByClause("created desc");

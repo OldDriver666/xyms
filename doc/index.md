@@ -25,6 +25,7 @@ http://boss.fise-wi.com
 |   参数格式    |   JSON              |
 
 ####请求
+可以上传图片文件
 ```
 {
      "name":"",       //必填-用户名 
@@ -89,3 +90,73 @@ null 没有数据返回 看code是否成功
       }
 }         
 ```
+
+####图片查询
+|   接口地址    |   xiaoyusvr/problem/picture    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "picture":""            //必填-图片路径url
+}
+```
+
+####回复
+```
+返回一张图片
+```
+
+####话题查询
+|   接口地址    |   xiaoyusvr/problem/titlequery    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "param":{
+                  "title":""            //必填-模糊查询话题
+              }    
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 2,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 5,
+            "name": "3",
+            "title": "bcd",
+            "content": "",
+            "picture": "",
+            "created": 2016,
+            "answer_num": 0,
+            "browse_num": 0
+         },
+         {
+            "id": 4,
+            "name": "2",
+            "title": "abc",
+            "content": "",
+            "picture": "",
+            "created": 2015,
+            "answer_num": 0,
+            "browse_num": 0
+         }
+      ]
+   }
+}
+```    

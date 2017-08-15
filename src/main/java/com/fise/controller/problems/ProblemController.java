@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Problems;
 import com.fise.service.problems.IProblemService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/problem")
@@ -105,6 +107,10 @@ public class ProblemController {
     public Response titlequery(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
         logger.info(param.toString());
+        
+        if(StringUtil.isEmpty(param.getParam().getTitle())){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
         
         res=problemService.queryTitle(param);
         return res;

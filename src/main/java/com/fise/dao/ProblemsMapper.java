@@ -23,7 +23,7 @@ public interface ProblemsMapper {
     
     List<Problems> selectBypage(@Param("example") ProblemsExample example,@Param("page") Page<Problems> page);
     
-    List<Problems> querytitle(Page<Problems> page);
+    List<Problems> querytitle(@Param("page") Page<Problems> page,@Param("title") String title);
     
     Problems selectByPrimaryKey(Integer id);
 

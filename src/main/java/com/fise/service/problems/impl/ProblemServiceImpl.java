@@ -81,7 +81,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         param.setPageSize(10);
         
-        List<Problems> list=problemsDao.querytitle(param);
+        List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
         
         Page<Problems> page = new Page<Problems>();
         

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Answer;
 import com.fise.service.answer.IAnswerService;
@@ -34,6 +35,16 @@ public class AnswerController {
         }
         
         res=answerService.insertAnswer(record);
+        return res;
+    }
+    
+    /*查询我的回答*/
+    @RequestMapping(value="/querymy",method=RequestMethod.POST)
+    public Response queryMyAnswer(@RequestBody @Valid Page<Answer> page){
+        Response res = new Response();
+        logger.info(page.toString());
+        
+        res=answerService.queryAnswer(page);
         return res;
     }
 }

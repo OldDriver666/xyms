@@ -276,12 +276,12 @@
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="querytitle" parameterType="com.fise.base.Page" resultMap="BaseResultMap">
+  <select id="querytitle" parameterType="map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from Problems 
   	where 
-  	title like '%#{param.title,jdbcType=VARCHAR}%' 
+  	title like '%${title}%' 
   	order by created desc
   </select>
 </mapper>
