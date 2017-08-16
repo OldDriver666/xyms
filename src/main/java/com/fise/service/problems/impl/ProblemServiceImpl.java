@@ -64,6 +64,11 @@ public class ProblemServiceImpl implements IProblemService{
         
         List<Problems> list=problemsDao.selectBypage(example, param);
         
+        for(Problems problem:list){
+            problem.setBrowseNum(problem.getBrowseNum()+1);
+            problemsDao.updateByPrimaryKeySelective(problem);
+        }
+        
         Page<Problems> page = new Page<Problems>();
         
         page.setPageNo(param.getPageNo());
@@ -82,6 +87,11 @@ public class ProblemServiceImpl implements IProblemService{
         param.setPageSize(10);
         
         List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
+        
+        for(Problems problem:list){
+            problem.setBrowseNum(problem.getBrowseNum()+1);
+            problemsDao.updateByPrimaryKeySelective(problem);
+        }
         
         Page<Problems> page = new Page<Problems>();
         

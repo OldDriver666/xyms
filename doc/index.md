@@ -159,4 +159,134 @@ null 没有数据返回 看code是否成功
       ]
    }
 }
-```    
+```
+
+###回答系统
+####添加回答
+|   接口地址    |   xiaoyusvr/answer/insert    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "name":"",             //必填-用户名
+     "problem_id":x,        //必填-问题id
+     "content":""           //必填-内容
+}
+```
+####回复
+```
+无回复内容，查看返回码
+```
+
+####查询我的回答
+|   接口地址    |   xiaoyusvr/answer/querymy    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "param":{
+                  "name":""              //必填-用户名
+             }
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "name": "1",
+            "content": "22",
+            "created": 0,
+            "problem_id": 2,
+            "agree_num": 0,
+            "comment_num": 0
+         }
+      ]
+   }
+}
+```
+
+####回答点赞
+|   接口地址    |   xiaoyusvr/agree    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "name":"",        //必填-用户名
+     "answer_id":x     //必填-回答ID
+}
+```
+####回复
+```
+msg  为已点赞或 已取消点赞
+{
+   "code": 0,
+   "msg": "已取消点赞",
+   "data": null
+}
+```
+
+####点击关注
+|   接口地址    |   xiaoyusvr/concern/change    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |  
+
+####请求
+```
+{
+     "name":"",            //必填-用户名
+     "problem_id":x        //必填-问题ID
+}
+```
+####回复
+```
+msg  为已关注或已取消关注
+{
+   "code": 0,
+   "msg": "已关注",
+   "data": null
+}
+```
+
+####查询关注
+|   接口地址    |   xiaoyusvr/concern/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "name":"",       //必填-用户名
+     "problem_id":x   //必填-问题ID
+}
+```
+####回复
+```
+msg 为已关注或未关注
+{
+   "code": 0,
+   "msg": "已关注",
+   "data": null
+}
+```                                    

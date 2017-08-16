@@ -9,9 +9,11 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
+import com.fise.dao.ProblemsMapper;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.AnswerExample.Criteria;
+import com.fise.model.entity.Problems;
 import com.fise.service.answer.IAnswerService;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
@@ -22,6 +24,9 @@ public class AnswerServiceImpl implements IAnswerService{
     @Autowired
     AnswerMapper answerDao;
     
+    @Autowired
+    ProblemsMapper problemDao;
+    
     @Override
     public Response insertAnswer(Answer record) {
         Response res = new Response();
@@ -29,6 +34,10 @@ public class AnswerServiceImpl implements IAnswerService{
         record.setCreated(DateUtil.getLinuxTimeStamp());
         
         answerDao.insertSelective(record);
+        
+        Problems problems = problemDao.selectByPrimaryKey(record.getProblemId());
+        problems.setAnswerNum(problems.getAnswerNum()+1);
+        problemDao.updateByPrimaryKey(problems);
         return res.success();
     }
 
