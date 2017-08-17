@@ -1,7 +1,5 @@
 package com.fise.service.problems;
 
-import java.util.Map;
-
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Problems;
@@ -15,4 +13,10 @@ public interface IProblemService {
     
     /*检索问题    模糊查询*/
     public Response queryTitle(Page<Problems> param);
+    
+    /*查询我的问题*/
+    public Response queryMypro(Page<Problems> param);
+    
+    /*根据问题id，查询问题详情*/
+    public Response query(Integer problem_id);
 }

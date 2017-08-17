@@ -8,6 +8,7 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="agree_num" jdbcType="INTEGER" property="agreeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, problem_id, content, agree_num, comment_num, created
+    id, name, problem_id, content, agree_num, comment_num, status, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AnswerExample" resultMap="BaseResultMap">
     select
@@ -99,19 +100,6 @@
     from Answer
     where id = #{id,jdbcType=INTEGER}
   </select>
-  
-  <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from Answer
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-    <if test="example.orderByClause != null">
-      order by ${example.orderByClause}
-    </if>
-  </select>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from Answer
     where id = #{id,jdbcType=INTEGER}
@@ -125,10 +113,10 @@
   <insert id="insert" parameterType="com.fise.model.entity.Answer">
     insert into Answer (id, name, problem_id, 
       content, agree_num, comment_num, 
-      created)
+      status, created)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{problemId,jdbcType=INTEGER}, 
       #{content,jdbcType=VARCHAR}, #{agreeNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
-      #{created,jdbcType=INTEGER})
+      #{status,jdbcType=TINYINT}, #{created,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.Answer">
     insert into Answer
@@ -150,6 +138,9 @@
       </if>
       <if test="commentNum != null">
         comment_num,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="created != null">
         created,
@@ -173,6 +164,9 @@
       </if>
       <if test="commentNum != null">
         #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null">
         #{created,jdbcType=INTEGER},
@@ -206,6 +200,9 @@
       <if test="record.commentNum != null">
         comment_num = #{record.commentNum,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=INTEGER},
       </if>
@@ -222,6 +219,7 @@
       content = #{record.content,jdbcType=VARCHAR},
       agree_num = #{record.agreeNum,jdbcType=INTEGER},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -245,6 +243,9 @@
       <if test="commentNum != null">
         comment_num = #{commentNum,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=INTEGER},
       </if>
@@ -258,7 +259,20 @@
       content = #{content,jdbcType=VARCHAR},
       agree_num = #{agreeNum,jdbcType=INTEGER},
       comment_num = #{commentNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Answer
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
 </mapper>

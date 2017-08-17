@@ -9,6 +9,7 @@
     <result column="picture" jdbcType="VARCHAR" property="picture" />
     <result column="answer_num" jdbcType="INTEGER" property="answerNum" />
     <result column="browse_num" jdbcType="INTEGER" property="browseNum" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, title, content, picture, answer_num, browse_num, created
+    id, name, title, content, picture, answer_num, browse_num, status, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.ProblemsExample" resultMap="BaseResultMap">
     select
@@ -94,19 +95,6 @@
       </if>
     </if>
   </select>
-  
-  <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from Problems
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-    <if test="example.orderByClause != null">
-      order by ${example.orderByClause}
-    </if>
-  </select>
-  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -126,10 +114,12 @@
   <insert id="insert" parameterType="com.fise.model.entity.Problems">
     insert into Problems (id, name, title, 
       content, picture, answer_num, 
-      browse_num, created)
+      browse_num, status, created
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{answerNum,jdbcType=INTEGER}, 
-      #{browseNum,jdbcType=INTEGER}, #{created,jdbcType=INTEGER})
+      #{browseNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{created,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.Problems">
     insert into Problems
@@ -154,6 +144,9 @@
       </if>
       <if test="browseNum != null">
         browse_num,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="created != null">
         created,
@@ -180,6 +173,9 @@
       </if>
       <if test="browseNum != null">
         #{browseNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="created != null">
         #{created,jdbcType=INTEGER},
@@ -216,6 +212,9 @@
       <if test="record.browseNum != null">
         browse_num = #{record.browseNum,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=INTEGER},
       </if>
@@ -233,6 +232,7 @@
       picture = #{record.picture,jdbcType=VARCHAR},
       answer_num = #{record.answerNum,jdbcType=INTEGER},
       browse_num = #{record.browseNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,6 +259,9 @@
       <if test="browseNum != null">
         browse_num = #{browseNum,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=INTEGER},
       </if>
@@ -273,15 +276,30 @@
       picture = #{picture,jdbcType=VARCHAR},
       answer_num = #{answerNum,jdbcType=INTEGER},
       browse_num = #{browseNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Problems
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  
   <select id="querytitle" parameterType="map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from Problems 
   	where 
   	title like '%${title}%' 
-  	order by created desc
+  	and status=1
+  	order by created desc 
   </select>
 </mapper>

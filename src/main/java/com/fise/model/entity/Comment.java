@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 /**
  * @author 
@@ -44,6 +45,11 @@ public class Comment implements Serializable {
      * 对回答的评论
      */
     private String content;
+
+    /**
+     * 1-可用 0-删除
+     */
+    private Integer status;
 
     /**
      * 更新时间
@@ -113,6 +119,14 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getUpdated() {
         return updated;
     }
@@ -130,9 +144,8 @@ public class Comment implements Serializable {
     }
 
     @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+    public String toString() {        
+        return JsonUtil.toJson(this);
     }
-    
+       
 }

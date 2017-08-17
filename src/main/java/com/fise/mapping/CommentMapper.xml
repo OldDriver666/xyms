@@ -9,6 +9,7 @@
     <result column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="problem_id" jdbcType="INTEGER" property="problemId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, from_name, to_name, answer_id, comment_id, problem_id, content, updated, created
+    id, from_name, to_name, answer_id, comment_id, problem_id, content, status, updated, 
+    created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.CommentExample" resultMap="BaseResultMap">
     select
@@ -114,12 +116,12 @@
   <insert id="insert" parameterType="com.fise.model.entity.Comment">
     insert into Comment (id, from_name, to_name, 
       answer_id, comment_id, problem_id, 
-      content, updated, created
-      )
+      content, status, updated, 
+      created)
     values (#{id,jdbcType=INTEGER}, #{fromName,jdbcType=VARCHAR}, #{toName,jdbcType=VARCHAR}, 
       #{answerId,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
-      )
+      #{content,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, 
+      #{created,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.Comment">
     insert into Comment
@@ -144,6 +146,9 @@
       </if>
       <if test="content != null">
         content,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="updated != null">
         updated,
@@ -173,6 +178,9 @@
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="updated != null">
         #{updated,jdbcType=INTEGER},
@@ -212,6 +220,9 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
       <if test="record.updated != null">
         updated = #{record.updated,jdbcType=INTEGER},
       </if>
@@ -232,6 +243,7 @@
       comment_id = #{record.commentId,jdbcType=INTEGER},
       problem_id = #{record.problemId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
       updated = #{record.updated,jdbcType=INTEGER},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -259,6 +271,9 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
       <if test="updated != null">
         updated = #{updated,jdbcType=INTEGER},
       </if>
@@ -276,8 +291,21 @@
       comment_id = #{commentId,jdbcType=INTEGER},
       problem_id = #{problemId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
       updated = #{updated,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Comment
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
 </mapper>

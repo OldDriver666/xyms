@@ -40,6 +40,11 @@ public class Answer implements Serializable {
     private Integer commentNum;
 
     /**
+     * 1-可用 0-删除
+     */
+    private Integer status;
+
+    /**
      * 创建时间
      */
     private Integer created;
@@ -94,6 +99,14 @@ public class Answer implements Serializable {
         this.commentNum = commentNum;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getCreated() {
         return created;
     }
@@ -106,6 +119,5 @@ public class Answer implements Serializable {
     public String toString() {
         return JsonUtil.toJson(this);
     }
-    
     
 }

@@ -1,5 +1,8 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
+import com.fise.model.entity.Answer;
+import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import java.util.List;
@@ -17,6 +20,8 @@ public interface CommentMapper {
     int insertSelective(Comment record);
 
     List<Comment> selectByExample(CommentExample example);
+    
+    List<Comment> selectByPage(@Param("example") CommentExample example,@Param("page") Page<Comment> page);
 
     Comment selectByPrimaryKey(Integer id);
 

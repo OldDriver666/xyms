@@ -44,6 +44,11 @@ public class Problems implements Serializable {
     private Integer browseNum;
 
     /**
+     * 1-可用   0-删除
+     */
+    private Integer status;
+
+    /**
      * 创建时间
      */
     private Integer created;
@@ -106,6 +111,14 @@ public class Problems implements Serializable {
         this.browseNum = browseNum;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getCreated() {
         return created;
     }
@@ -115,8 +128,8 @@ public class Problems implements Serializable {
     }
 
     @Override
-    public String toString() {       
+    public String toString() {        
         return JsonUtil.toJson(this);
     }
-        
+    
 }

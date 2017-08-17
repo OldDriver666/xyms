@@ -115,4 +115,32 @@ public class ProblemController {
         res=problemService.queryTitle(param);
         return res;
     }
+    
+    /*查询我的问题     获取更新的回答数量信息*/
+    @RequestMapping(value="/myproblem",method=RequestMethod.POST)
+    public Response myProblem(@RequestBody @Valid Page<Problems> param){
+        Response res = new Response();
+        logger.info(param.toString());
+        
+        if(StringUtil.isEmpty(param.getParam().getName())){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=problemService.queryMypro(param);
+        return res;
+    }
+    
+    /*根据问题id，查询问题详情    */
+    @RequestMapping(value="/query",method=RequestMethod.POST)
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("problem_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=problemService.query(map.get("problem_id"));
+        return res;
+    }
 }

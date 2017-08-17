@@ -47,6 +47,7 @@ public class AnswerServiceImpl implements IAnswerService{
         
         AnswerExample example = new AnswerExample();
         Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(1);
         
         if(!StringUtil.isEmpty(page.getParam().getName())){
             criteria.andNameEqualTo(page.getParam().getName());
@@ -77,6 +78,7 @@ public class AnswerServiceImpl implements IAnswerService{
         
         AnswerExample example = new AnswerExample();
         Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(1);
         
         if(page.getParam().getProblemId()!=null){
             criteria.andProblemIdEqualTo(page.getParam().getProblemId());

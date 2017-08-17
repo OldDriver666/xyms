@@ -48,9 +48,7 @@ null 没有数据返回 看code是否成功
 ```
 采用分页查询
 {
-     "param":{
-     		      "name":""	   //选填-用户名     （不填查询所有     填写查询指定用户的问题）
-     		  }         
+     "param":{}	         
 }
 ```
 ####回复
@@ -160,6 +158,84 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+####查询我的问题     获取更新的回答数量信息
+|   接口地址    |   xiaoyusvr/problem/myproblem    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "param":{
+                  "name":x            //必填-用户名
+              }
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "addAnswerCount": 0,
+            "addBrowseCount": 0,
+            "problems": {
+               "id": 9,
+               "name": "5",
+               "title": "试一试",
+               "content": "sss",
+               "picture": "",
+               "status": 1,
+               "created": 1502957592,
+               "answer_num": 0,
+               "browse_num": 0
+            }
+         }
+      ]
+   }
+}
+```
+
+####问题详情  会更新redis
+|   接口地址    |   xiaoyusvr/problem/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |                 
+
+####请求
+```
+{
+     "problem_id":x          //必填-问题id
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "id": 9,
+      "name": "5",
+      "title": "试一试",
+      "content": "sss",
+      "picture": "",
+      "status": 1,
+      "created": 1502957592,
+      "answer_num": 0,
+      "browse_num": 0
+   }
+}
+```     
 
 ###回答系统
 ####添加回答
@@ -330,4 +406,62 @@ msg 为已关注或未关注
    "msg": "已关注",
    "data": null
 }
-```                                    
+```
+
+####添加评论
+|   接口地址    |   xiaoyusvr/comment/add    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "from_name":"",          //必填-用户名
+     "to_name":"",            //选填-回复人用户名
+     "answer_id":x,           //必填-回答id
+     "comment_id":x,          //选填-评论id
+     "problem_id":x,          //必填-问题id
+     "content":""             //必填-内容
+}
+```
+####回复
+```
+无返回信息  查看返回码
+```
+
+####查询评论
+|   接口地址    |   xiaoyusvr/comment/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "param":{
+                  "answer_id":x        //必填-回答id
+              }
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 2,
+         "content": "测试",
+         "status": 1,
+         "updated": 1502962563,
+         "created": 1502962563,
+         "from_name": "wo",
+         "to_name": "",
+         "answer_id": 1,
+         "comment_id": 0,
+         "problem_id": 2
+      }
+   ]
+}
+```                                                           
