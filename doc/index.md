@@ -222,6 +222,47 @@ null 没有数据返回 看code是否成功
 }
 ```
 
+####查询问题的回答
+|   接口地址    |   xiaoyusvr/answer/querybyid    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "page_no":"x",        //必填-查询当前页数     
+     "problem_id":"x",     //必填-问题Id
+     "order":"created"     //必填-created  表示按时间查询     agree_num   表示按热度查询 
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "name": "1",
+            "content": "22",
+            "created": 0,
+            "problem_id": 2,
+            "agree_num": 0,
+            "comment_num": 0
+         }
+      ]
+   }
+}
+```
+
 ####回答点赞
 |   接口地址    |   xiaoyusvr/agree    |
 |   ---         |   ---          |

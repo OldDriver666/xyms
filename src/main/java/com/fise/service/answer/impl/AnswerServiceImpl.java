@@ -71,4 +71,31 @@ public class AnswerServiceImpl implements IAnswerService{
      
     }
 
+    @Override
+    public Response queryAnswerById(Page<Answer> page,String order) {
+        Response res = new Response();
+        
+        AnswerExample example = new AnswerExample();
+        Criteria criteria = example.createCriteria();
+        
+        if(page.getParam().getProblemId()!=null){
+            criteria.andProblemIdEqualTo(page.getParam().getProblemId());
+        }
+        
+        example.setOrderByClause(order+" desc");
+        page.setPageSize(10);
+        
+        List<Answer> list=answerDao.selectBypage(example, page);
+        
+        Page<Answer> reslut = new Page<Answer>();
+        
+        reslut.setPageNo(page.getPageNo());
+        reslut.setPageSize(page.getPageSize());
+        reslut.setTotalCount(page.getTotalCount());
+        reslut.setTotalPageCount(page.getTotalPageCount());
+        reslut.setResult(list);
+       
+        return res.success(reslut);
+    }
+
 }

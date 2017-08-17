@@ -88,6 +88,12 @@ public class ProblemServiceImpl implements IProblemService{
         
         List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
         
+        if(list.size()==0){
+            res.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+            res.setMsg("没有查询到相关记录");
+            return res;
+        }
+        
         for(Problems problem:list){
             problem.setBrowseNum(problem.getBrowseNum()+1);
             problemsDao.updateByPrimaryKeySelective(problem);

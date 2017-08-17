@@ -11,4 +11,7 @@ public interface IAnswerService {
     /*查询我的回答*/
     public Response queryAnswer(Page<Answer> page);
     
+    /*查询问题的回答 */
+    public Response queryAnswerById(Page<Answer> page,String order);
+    
 }

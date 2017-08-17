@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.Comment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_name" jdbcType="VARCHAR" property="fromName" />
+    <result column="to_name" jdbcType="VARCHAR" property="toName" />
+    <result column="answer_id" jdbcType="INTEGER" property="answerId" />
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="problem_id" jdbcType="INTEGER" property="problemId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, from_name, to_name, answer_id, comment_id, problem_id, content, updated, created
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.CommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.CommentExample">
+    delete from Comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.Comment">
+    insert into Comment (id, from_name, to_name, 
+      answer_id, comment_id, problem_id, 
+      content, updated, created
+      )
+    values (#{id,jdbcType=INTEGER}, #{fromName,jdbcType=VARCHAR}, #{toName,jdbcType=VARCHAR}, 
+      #{answerId,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.Comment">
+    insert into Comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fromName != null">
+        from_name,
+      </if>
+      <if test="toName != null">
+        to_name,
+      </if>
+      <if test="answerId != null">
+        answer_id,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="problemId != null">
+        problem_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fromName != null">
+        #{fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="toName != null">
+        #{toName,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        #{answerId,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null">
+        #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.CommentExample" resultType="java.lang.Long">
+    select count(*) from Comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Comment
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromName != null">
+        from_name = #{record.fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toName != null">
+        to_name = #{record.toName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerId != null">
+        answer_id = #{record.answerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentId != null">
+        comment_id = #{record.commentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.problemId != null">
+        problem_id = #{record.problemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Comment
+    set id = #{record.id,jdbcType=INTEGER},
+      from_name = #{record.fromName,jdbcType=VARCHAR},
+      to_name = #{record.toName,jdbcType=VARCHAR},
+      answer_id = #{record.answerId,jdbcType=INTEGER},
+      comment_id = #{record.commentId,jdbcType=INTEGER},
+      problem_id = #{record.problemId,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.Comment">
+    update Comment
+    <set>
+      <if test="fromName != null">
+        from_name = #{fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="toName != null">
+        to_name = #{toName,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        answer_id = #{answerId,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null">
+        problem_id = #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.Comment">
+    update Comment
+    set from_name = #{fromName,jdbcType=VARCHAR},
+      to_name = #{toName,jdbcType=VARCHAR},
+      answer_id = #{answerId,jdbcType=INTEGER},
+      comment_id = #{commentId,jdbcType=INTEGER},
+      problem_id = #{problemId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

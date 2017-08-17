@@ -1,5 +1,7 @@
 package com.fise.controller.answer;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -47,4 +49,29 @@ public class AnswerController {
         res=answerService.queryAnswer(page);
         return res;
     }
+    
+    /*查询问题的回答   */
+    @RequestMapping(value="/querybyid",method=RequestMethod.POST)
+    public Response queryById(@RequestBody @Valid Map<String, String> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        Page<Answer> page = new Page<Answer>();
+        Answer answer = new Answer();
+        page.setParam(answer);
+        
+        page.setPageNo(Integer.valueOf(map.get("page_no")));
+        
+        
+        if(map.get("problem_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        page.getParam().setProblemId(Integer.valueOf(map.get("problem_id")));
+        
+        String order=map.get("order");
+        res=answerService.queryAnswerById(page,order);
+        return res;
+    }
+    
+    
 }
