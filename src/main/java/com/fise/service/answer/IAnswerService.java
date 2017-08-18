@@ -9,9 +9,11 @@ public interface IAnswerService {
     public Response insertAnswer(Answer record);
     
     /*查询我的回答*/
-    public Response queryAnswer(Page<Answer> page);
+    public Response queryMyAnswer(Page<Answer> page);
     
     /*查询问题的回答 */
     public Response queryAnswerById(Page<Answer> page,String order);
     
+    /*根据回答id，查询更新信息*/
+    public Response query(Integer answer_id);
 }

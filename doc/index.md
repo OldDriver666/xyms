@@ -285,13 +285,18 @@ null 没有数据返回 看code是否成功
       "extra_param": null,
       "result": [
          {
-            "id": 2,
-            "name": "1",
-            "content": "22",
-            "created": 0,
-            "problem_id": 2,
-            "agree_num": 0,
-            "comment_num": 0
+            "addAgreeCount": 0,
+            "addCommentCount": 0,
+            "answer": {
+               "id": 1,
+               "name": "1",
+               "content": "22",
+               "status": 1,
+               "created": 0,
+               "problem_id": 2,
+               "agree_num": 0,
+               "comment_num": 2
+            }
          }
       ]
    }
@@ -338,6 +343,36 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+####根据回答id，查询更新消息
+|   接口地址    |   xiaoyusvr/answer/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "answer_id":x         //必填-回答id
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "id": 1,
+      "name": "1",
+      "content": "22",
+      "status": 1,
+      "created": 0,
+      "problem_id": 2,
+      "agree_num": 0,
+      "comment_num": 2
+   }
+}
+```     
 
 ####回答点赞
 |   接口地址    |   xiaoyusvr/agree    |

@@ -46,7 +46,11 @@ public class AnswerController {
         Response res = new Response();
         logger.info(page.toString());
         
-        res=answerService.queryAnswer(page);
+        if(StringUtil.isEmpty(page.getParam().getName())){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=answerService.queryMyAnswer(page);
         return res;
     }
     
@@ -73,5 +77,17 @@ public class AnswerController {
         return res;
     }
     
-    
+    /*根据回答ID，查询更新消息*/
+    @RequestMapping(value="/query",method=RequestMethod.POST)
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("answer_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=answerService.query(map.get("answer_id"));
+        return res;
+    }
 }
