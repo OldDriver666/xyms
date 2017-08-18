@@ -64,12 +64,12 @@ public class ProblemServiceImpl implements IProblemService{
         try {
             //在redis里存入该问题的浏览量
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            String key = problem.getId()+"browser";
+            String key = problem.getId()+"browsermy";
             String value = problem.getBrowseNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
             
             //在redis里存入该问题的回答量
-            key = problem.getId()+"answer";
+            key = problem.getId()+"answermy";
             value=problem.getAnswerNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
         } catch (Exception e) {
@@ -173,13 +173,13 @@ public class ProblemServiceImpl implements IProblemService{
             for(Problems problem:list){
                 ProblemResult pResult=new ProblemResult();
                 
-                String key=problem.getId()+"answer";
+                String key=problem.getId()+"answermy";
                 String value=jedis.get(key);
                 
                 pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
                 
                 
-                key=problem.getId()+"browser";
+                key=problem.getId()+"browsermy";
                 value=jedis.get(key);
                 
                 pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
@@ -206,11 +206,11 @@ public class ProblemServiceImpl implements IProblemService{
         Jedis jedis = null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            String key=problem.getId()+"answer";
+            String key=problem.getId()+"answermy";
             String value=problem.getAnswerNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
             
-            key=problem.getId()+"browser";
+            key=problem.getId()+"browsermy";
             value=problem.getBrowseNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
         } catch (Exception e) {

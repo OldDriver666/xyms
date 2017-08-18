@@ -48,7 +48,8 @@ null 没有数据返回 看code是否成功
 ```
 采用分页查询
 {
-     "param":{}	         
+     "param":{},	
+     "pageNo":x          //选填-默认1     
 }
 ```
 ####回复
@@ -118,7 +119,8 @@ null 没有数据返回 看code是否成功
 {
      "param":{
                   "title":""            //必填-模糊查询话题
-              }    
+              },
+     "pageNo":x                         //选填-默认1              
 }
 ```
 ####回复
@@ -170,7 +172,8 @@ null 没有数据返回 看code是否成功
 {
      "param":{
                   "name":x            //必填-用户名
-              }
+              },
+     "pageNo":x                       //选填-默认1          
 }
 ```
 ####回复
@@ -268,7 +271,8 @@ null 没有数据返回 看code是否成功
 {
      "param":{
                   "name":""              //必填-用户名
-             }
+             },
+     "pageNo":x                          //选填-默认1         
 }
 ```
 ####回复
@@ -421,7 +425,7 @@ msg  为已关注或已取消关注
 ```
 
 ####查询关注
-|   接口地址    |   xiaoyusvr/concern/query    |
+|   接口地址    |   xiaoyusvr/concern/isconcern    |
 |   ---         |   ---          |
 |   请求方式    |   HTTP POST         |
 |   参数格式    |   JSON              |
@@ -442,6 +446,83 @@ msg 为已关注或未关注
    "data": null
 }
 ```
+
+####查询用户关注问题
+|   接口地址    |   xiaoyusvr/concern/queryconcerns    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "name":""         //必填-用户名
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "addAnswerCount": 0,
+            "addBrowseCount": 0,
+            "problems": {
+               "id": 2,
+               "name": "2",
+               "title": "abc",
+               "content": "",
+               "picture": "",
+               "status": 1,
+               "created": 2015,
+               "answer_num": 1,
+               "browse_num": 0
+            }
+         }
+      ]
+   }
+}
+```
+
+####根据问题ID，查询关注问题详情
+|   接口地址    |   xiaoyusvr/concern/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "problem_id":"",            //必填-问题id
+     "name":""                   //必填-用户名
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "id": 2,
+      "name": "2",
+      "title": "abc",
+      "content": "",
+      "picture": "",
+      "status": 1,
+      "created": 2015,
+      "answer_num": 1,
+      "browse_num": 0
+   }
+}
+```     
 
 ####添加评论
 |   接口地址    |   xiaoyusvr/comment/add    |
@@ -466,7 +547,7 @@ msg 为已关注或未关注
 ```
 
 ####查询评论
-|   接口地址    |   xiaoyusvr/comment/query    |
+|   接口地址    |   xiaoyusvr/comment/querycomment    |
 |   ---         |   ---          |
 |   请求方式    |   HTTP POST         |
 |   参数格式    |   JSON              | 
@@ -476,7 +557,8 @@ msg 为已关注或未关注
 {
      "param":{
                   "answer_id":x        //必填-回答id
-              }
+              },
+     "pageNo":x                        //选填-默认1          
 }
 ```
 ####回复
@@ -499,4 +581,96 @@ msg 为已关注或未关注
       }
    ]
 }
-```                                                           
+```
+
+####查询我的评论
+|   接口地址    |   xiaoyusvr/comment/querymy    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |    
+
+####请求
+```
+{
+     "param":{
+                  "from_name":""       //必填-用户名
+             },
+     "page_no":x                       //选填-当前页
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "addreply": 0,
+            "comment": {
+               "id": 4,
+               "content": "go",
+               "status": 1,
+               "updated": 1503047436,
+               "created": 1503047436,
+               "from_name": "22",
+               "to_name": "",
+               "answer_id": 1,
+               "comment_id": 0,
+               "problem_id": 2
+            }
+         }
+      ]
+   }
+}
+```
+
+####查询评论
+|   接口地址    |   xiaoyusvr/comment/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "comment_id":x,             //必填-评论id
+     "page_no":x                 //必填-当前页面数
+}
+```
+
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 20,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "content": "测试",
+            "status": 1,
+            "updated": 1502962563,
+            "created": 1502962563,
+            "from_name": "wo",
+            "to_name": "",
+            "answer_id": 1,
+            "comment_id": 4,
+            "problem_id": 2
+         }
+      ]
+   }
+}
+```                                                                               

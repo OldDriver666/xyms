@@ -1,5 +1,7 @@
 package com.fise.controller.comment;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -39,7 +41,7 @@ public class CommentController {
     }
     
     /*查询评论*/
-    @RequestMapping(value="/query",method=RequestMethod.POST)
+    @RequestMapping(value="/querycomment",method=RequestMethod.POST)
     public Response queryComment(@RequestBody @Valid Page<Comment> page){
         Response res = new Response();
         logger.info(page.toString());
@@ -49,6 +51,34 @@ public class CommentController {
         }
         
         res=commentService.queryComment(page);
+        return res;
+    }
+    
+    /*查询我的评论*/
+    @RequestMapping(value="/querymy",method=RequestMethod.POST)
+    public Response querymy(@RequestBody @Valid Page<Comment> page){
+        Response res = new Response();
+        logger.info(page.toString());
+        
+        if(StringUtil.isEmpty(page.getParam().getFromName())){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=commentService.queryMyComment(page);
+        return res;
+    }
+    
+    /*查询评论*/
+    @RequestMapping(value="/query",method=RequestMethod.POST)
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("comment_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=commentService.query(map.get("comment_id"), map.get("page_no"));
         return res;
     }
 }

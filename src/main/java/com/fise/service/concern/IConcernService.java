@@ -8,5 +8,11 @@ public interface IConcernService {
     public Response addConcern(Concern record);
     
     /*查询用户是否关注*/
-    public Response queryConcern(Concern record);
+    public Response queryisConcern(Concern record);
+    
+    /*查询用户关注的问题*/
+    public Response queryConcerns(String name);
+    
+    /*根据问题ID，查询关注问题详情*/
+    public Response query(String name,Integer problem_id);
 }

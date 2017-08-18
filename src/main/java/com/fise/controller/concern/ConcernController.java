@@ -1,5 +1,7 @@
 package com.fise.controller.concern;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -38,8 +40,8 @@ public class ConcernController {
     }
     
     /*查询用户是否关注*/
-    @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response queryConcern(@RequestBody @Valid Concern record){
+    @RequestMapping(value="/isconcern",method=RequestMethod.POST)
+    public Response queryisConcern(@RequestBody @Valid Concern record){
         Response res = new Response();
         logger.info(record.toString());
         
@@ -47,7 +49,36 @@ public class ConcernController {
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=concernService.queryConcern(record);
+        res=concernService.queryisConcern(record);
         return res;
     }
+    
+    /*查询用户关注的问题*/
+    @RequestMapping(value="/queryconcerns",method=RequestMethod.POST)
+    public Response queryConcerns(@RequestBody @Valid Map<String, String> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(StringUtil.isEmpty(map.get("name"))){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=concernService.queryConcerns(map.get("name"));
+        return res;
+    }
+    
+    /*根据问题ID，查询关注问题详情*/
+    @RequestMapping(value="/query",method=RequestMethod.POST)
+    public Response query(@RequestBody @Valid Map<String, String> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(Integer.valueOf(map.get("problem_id"))==null || StringUtil.isEmpty(map.get("name"))){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=concernService.query(map.get("name"),Integer.valueOf(map.get("problem_id")));
+        return res;
+    }
+    
 }
