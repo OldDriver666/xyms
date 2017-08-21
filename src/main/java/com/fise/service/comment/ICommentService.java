@@ -8,7 +8,7 @@ public interface ICommentService {
     /*发布评论*/
     public Response addComment(Comment record);
     
-    /*查询回答评论*/
+    /*查询回答评论 */
     public Response queryComment(Page<Comment> page);
     
     /*查询我的评论*/

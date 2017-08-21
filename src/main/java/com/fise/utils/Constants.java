@@ -29,7 +29,7 @@ public interface Constants {
 	public String HEADER_FIELD_FIT_USER_AGENT = "FISE-UA";
 	
 	// 默认page size大小
-	public static final int DEFAULT_PAGE_SIZE = 20;
+	public static final int DEFAULT_PAGE_SIZE = 10;
 	
 	// 入场默认的押金(单位:分)
 	public static final int DEFAULT_BALANCE_FROZEN_AMOUNT = 5000;

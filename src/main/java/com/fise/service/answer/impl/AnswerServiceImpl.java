@@ -86,7 +86,7 @@ public class AnswerServiceImpl implements IAnswerService{
         }
         
         example.setOrderByClause("created desc");
-        page.setPageSize(10);
+        /*page.setPageSize(10);*/
         
         List<Answer> list=answerDao.selectBypage(example, page);
         
@@ -139,7 +139,7 @@ public class AnswerServiceImpl implements IAnswerService{
         }
         
         example.setOrderByClause(order+" desc");
-        page.setPageSize(10);
+        /*page.setPageSize(10);*/
         
         List<Answer> list=answerDao.selectBypage(example, page);
         

@@ -106,7 +106,9 @@ public class CommentServiceImpl implements ICommentService{
         
         List<Comment> list=commentDao.selectByPage(example, page);
         
-        res.success(list);
+        page.setResult(list);
+        page.setParam(null);
+        res.success(page);
         return res;
     }
 
@@ -117,7 +119,7 @@ public class CommentServiceImpl implements ICommentService{
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(1);
-        page.setPageSize(10);
+        /*page.setPageSize(10);*/
         example.setOrderByClause("created desc");
         
         if(!StringUtil.isEmpty(page.getParam().getFromName())){

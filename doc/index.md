@@ -566,20 +566,52 @@ msg 为已关注或未关注
 {
    "code": 0,
    "msg": "ok",
-   "data": [
-      {
-         "id": 2,
-         "content": "测试",
-         "status": 1,
-         "updated": 1502962563,
-         "created": 1502962563,
-         "from_name": "wo",
-         "to_name": "",
-         "answer_id": 1,
-         "comment_id": 0,
-         "problem_id": 2
-      }
-   ]
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 4,
+            "content": "go",
+            "status": 1,
+            "updated": 1503047436,
+            "created": 1503047436,
+            "from_name": "22",
+            "to_name": "",
+            "answer_id": 1,
+            "comment_id": 0,
+            "problem_id": 2
+         },
+         {
+            "id": 2,
+            "content": "测试",
+            "status": 1,
+            "updated": 1502962563,
+            "created": 1502962563,
+            "from_name": "wo",
+            "to_name": "",
+            "answer_id": 1,
+            "comment_id": 4,
+            "problem_id": 2
+         },
+         {
+            "id": 3,
+            "content": "1",
+            "status": 1,
+            "updated": 0,
+            "created": 0,
+            "from_name": "b",
+            "to_name": "c",
+            "answer_id": 1,
+            "comment_id": 2,
+            "problem_id": 2
+         }
+      ]
+   }
 }
 ```
 

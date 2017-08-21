@@ -89,7 +89,7 @@ public class ProblemServiceImpl implements IProblemService{
         ProblemsExample example = new ProblemsExample();
         Criteria criteria=example.createCriteria();        
         example.setOrderByClause("created desc");
-        param.setPageSize(10);
+        /*param.setPageSize(10);*/
         
         criteria.andStatusEqualTo(1);
         
@@ -115,7 +115,7 @@ public class ProblemServiceImpl implements IProblemService{
     public Response queryTitle(Page<Problems> param) {
         Response res = new Response();
         
-        param.setPageSize(10);
+        /*param.setPageSize(10);*/
         
         List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
         
@@ -149,7 +149,7 @@ public class ProblemServiceImpl implements IProblemService{
         ProblemsExample example = new ProblemsExample();
         Criteria criteria=example.createCriteria();        
         example.setOrderByClause("created desc");
-        param.setPageSize(10);
+        /*param.setPageSize(10);*/
         
         if(!StringUtil.isEmpty(param.getParam().getName())){
             criteria.andNameEqualTo(param.getParam().getName());

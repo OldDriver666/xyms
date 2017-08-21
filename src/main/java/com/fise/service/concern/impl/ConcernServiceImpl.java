@@ -169,7 +169,7 @@ public class ConcernServiceImpl implements IConcernService{
         cri.andIdIn(listint);
         
         Page<Problems> param = new Page<Problems>();
-        param.setPageSize(10);
+        /*param.setPageSize(10);*/
         List<Problems> lProblems=problemDao.selectBypage(proExample, param);
         
         Page<ProblemResult> page = new Page<ProblemResult>();

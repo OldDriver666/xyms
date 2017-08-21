@@ -1,8 +1,6 @@
 package com.fise.dao;
 
 import com.fise.base.Page;
-import com.fise.model.entity.Answer;
-import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import java.util.List;
