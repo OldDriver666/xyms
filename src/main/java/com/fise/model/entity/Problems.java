@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.framework.annotation.MaxLength;
 import com.fise.utils.JsonUtil;
 
 /**
@@ -24,6 +25,7 @@ public class Problems implements Serializable {
     /**
      * 提问内容
      */
+    @MaxLength(value=1500)
     private String content;
 
     /**

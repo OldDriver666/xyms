@@ -112,7 +112,15 @@ public class AnswerServiceImpl implements IAnswerService{
                 value=jedis.get(key);
                 aResult.setAddCommentCount(answer.getCommentNum()-Integer.valueOf(value));
                 
-                aResult.setAnswer(answer);
+                aResult.setId(answer.getId());
+                aResult.setName(answer.getName());
+                aResult.setProblemId(answer.getProblemId());
+                aResult.setContent(answer.getContent());
+                aResult.setAgreeNum(answer.getAgreeNum());
+                aResult.setCommentNum(answer.getCommentNum());
+                aResult.setStatus(answer.getStatus());
+                aResult.setCreated(answer.getCreated());
+                
                 listResult.add(aResult);            
             }
         } catch (NumberFormatException e) {

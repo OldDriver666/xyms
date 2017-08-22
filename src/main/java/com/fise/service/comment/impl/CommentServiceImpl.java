@@ -153,7 +153,18 @@ public class CommentServiceImpl implements ICommentService{
                 String value=jedis.get(key);
                 
                 re.setAddreply((int)count-Integer.valueOf(value));
-                re.setComment(c);
+                
+                re.setId(c.getId());
+                re.setFromName(c.getFromName());
+                re.setToName(c.getToName());
+                re.setCommentId(c.getCommentId());
+                re.setAnswerId(c.getAnswerId());
+                re.setProblemId(c.getProblemId());
+                re.setContent(c.getContent());
+                re.setStatus(c.getStatus());
+                re.setUpdated(c.getUpdated());
+                re.setCreated(c.getCreated());
+                
                 listresult.add(re);
             }
         } catch (NumberFormatException e) {

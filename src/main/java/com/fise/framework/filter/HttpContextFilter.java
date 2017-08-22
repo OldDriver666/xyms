@@ -35,7 +35,6 @@ public class HttpContextFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 		
 		if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
-		    response.setStatus(200);
 			return ;
 		}
 		

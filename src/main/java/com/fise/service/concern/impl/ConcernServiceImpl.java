@@ -196,7 +196,17 @@ public class ConcernServiceImpl implements IConcernService{
                 value=jedis.get(key);
                 
                 pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
-                pResult.setProblems(problem);
+                
+                pResult.setId(problem.getId());
+                pResult.setName(problem.getName());
+                pResult.setTitle(problem.getTitle());
+                pResult.setContent(problem.getContent());
+                pResult.setPicture(problem.getPicture());
+                pResult.setStatus(problem.getStatus());
+                pResult.setAnswerNum(problem.getAnswerNum());
+                pResult.setBrowseNum(problem.getBrowseNum());
+                pResult.setCreated(problem.getCreated());
+                
                 listResult.add(pResult);
             }
         } catch (NumberFormatException e) {
