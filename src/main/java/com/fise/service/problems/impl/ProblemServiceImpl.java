@@ -208,10 +208,15 @@ public class ProblemServiceImpl implements IProblemService{
     }
 
     @Override
-    public Response query(Integer problem_id) {
+    public Response query(Integer problem_id,String name) {
         Response res = new Response();
         
         Problems problem=problemsDao.selectByPrimaryKey(problem_id);
+        
+        if(!problem.getName().equals(name)){
+            res.success(problem);
+            return res;
+        }
         
         Jedis jedis = null;
         try {

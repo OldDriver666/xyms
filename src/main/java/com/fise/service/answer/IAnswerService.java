@@ -15,5 +15,5 @@ public interface IAnswerService {
     public Response queryAnswerById(Page<Answer> page,String order);
     
     /*根据回答id，查询更新信息*/
-    public Response query(Integer answer_id);
+    public Response query(Integer answer_id,String name);
 }

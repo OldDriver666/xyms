@@ -178,17 +178,29 @@ public class CommentServiceImpl implements ICommentService{
     }
 
     @Override
-    public Response query(Integer comment_id,Integer page_no) {
+    public Response query(Integer comment_id,Integer page_no,String fromname) {
         Response res = new Response();
         
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
         example.setOrderByClause("created desc");
+        criteria.andCommentIdEqualTo(comment_id);
+        
+        Page<Comment> page = new Page<>();
+        page.setPageNo(page_no);
+        
+        Comment comment=commentDao.selectByPrimaryKey(comment_id);
+        
+        List<Comment> list=commentDao.selectByPage(example, page);
+        page.setResult(list);
+        
+        if(!comment.getFromName().equals(fromname)){
+            return res.success(page);
+        }
         
         Jedis jedis=null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            criteria.andCommentIdEqualTo(comment_id);
             
             long count=commentDao.countByExample(example);
             String key=comment_id+"reply";
@@ -200,11 +212,6 @@ public class CommentServiceImpl implements ICommentService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        Page<Comment> page = new Page<>();
-        page.setPageNo(page_no);
-        
-        List<Comment> list=commentDao.selectByPage(example, page);
-        page.setResult(list);
         
         return res.success(page);
     }

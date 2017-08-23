@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,15 +71,15 @@ public class CommentController {
     
     /*查询评论*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, Integer> map){
+    public Response query(@RequestBody @Valid Map<String, Object> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("comment_id")==null){
+        if(map.get("comment_id")==null || map.get("page_no")==null || StringUtil.isEmpty(map.get("fromname")+"")){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=commentService.query(map.get("comment_id"), map.get("page_no"));
+        res=commentService.query((Integer)map.get("comment_id"), (Integer)map.get("page_no"),map.get("fromname")+"");
         return res;
     }
 }

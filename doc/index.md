@@ -192,17 +192,15 @@ null 没有数据返回 看code是否成功
          {
             "addAnswerCount": 0,
             "addBrowseCount": 0,
-            "problems": {
-               "id": 9,
-               "name": "5",
-               "title": "试一试",
-               "content": "sss",
-               "picture": "",
-               "status": 1,
-               "created": 1502957592,
-               "answer_num": 0,
-               "browse_num": 0
-            }
+            "id": 9,
+            "name": "5",
+            "title": "试一试",
+            "content": "sss",
+            "picture": "",
+            "status": 1,
+            "created": 1502957592,
+            "answer_num": 0,
+            "browse_num": 0
          }
       ]
    }
@@ -218,7 +216,8 @@ null 没有数据返回 看code是否成功
 ####请求
 ```
 {
-     "problem_id":x          //必填-问题id
+     "problem_id":x,          //必填-问题id
+     "name":""                //必填-用户名
 }
 ```
 ####回复
@@ -291,16 +290,14 @@ null 没有数据返回 看code是否成功
          {
             "addAgreeCount": 0,
             "addCommentCount": 0,
-            "answer": {
-               "id": 1,
-               "name": "1",
-               "content": "22",
-               "status": 1,
-               "created": 0,
-               "problem_id": 2,
-               "agree_num": 0,
-               "comment_num": 2
-            }
+            "id": 1,
+            "name": "1",
+            "content": "22",
+            "status": 1,
+            "created": 0,
+            "problem_id": 2,
+            "agree_num": 0,
+            "comment_num": 2
          }
       ]
    }
@@ -357,7 +354,8 @@ null 没有数据返回 看code是否成功
 ####请求
 ```
 {
-     "answer_id":x         //必填-回答id
+     "answer_id":x,         //必填-回答id
+     "name":""              //必填-用户名
 }
 ```
 ####回复
@@ -475,17 +473,15 @@ msg 为已关注或未关注
          {
             "addAnswerCount": 0,
             "addBrowseCount": 0,
-            "problems": {
-               "id": 2,
-               "name": "2",
-               "title": "abc",
-               "content": "",
-               "picture": "",
-               "status": 1,
-               "created": 2015,
-               "answer_num": 1,
-               "browse_num": 0
-            }
+            "id": 2,
+            "name": "2",
+            "title": "abc",
+            "content": "",
+            "picture": "",
+            "status": 1,
+            "created": 2015,
+            "answer_num": 1,
+            "browse_num": 0
          }
       ]
    }
@@ -645,18 +641,16 @@ msg 为已关注或未关注
       "result": [
          {
             "addreply": 0,
-            "comment": {
-               "id": 4,
-               "content": "go",
-               "status": 1,
-               "updated": 1503047436,
-               "created": 1503047436,
-               "from_name": "22",
-               "to_name": "",
-               "answer_id": 1,
-               "comment_id": 0,
-               "problem_id": 2
-            }
+            "id": 4,
+            "content": "go",
+            "status": 1,
+            "updated": 1503047436,
+            "created": 1503047436,
+            "from_name": "22",
+            "to_name": "",
+            "answer_id": 1,
+            "comment_id": 0,
+            "problem_id": 2
          }
       ]
    }
@@ -673,7 +667,8 @@ msg 为已关注或未关注
 ```
 {
      "comment_id":x,             //必填-评论id
-     "page_no":x                 //必填-当前页面数
+     "page_no":x,                //必填-当前页面数
+     "fromname":""               //必填-用户名
 }
 ```
 

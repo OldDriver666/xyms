@@ -18,5 +18,6 @@ public interface IProblemService {
     public Response queryMypro(Page<Problems> param);
     
     /*根据问题id，查询问题详情*/
-    public Response query(Integer problem_id);
+    public Response query(Integer problem_id,String name);
+    
 }

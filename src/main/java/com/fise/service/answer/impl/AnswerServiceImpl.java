@@ -163,10 +163,14 @@ public class AnswerServiceImpl implements IAnswerService{
     }
 
     @Override
-    public Response query(Integer answer_id) {
+    public Response query(Integer answer_id,String name) {
         Response res = new Response();
         
         Answer answer =answerDao.selectByPrimaryKey(answer_id);
+        
+        if(!answer.getName().equals(name)){
+            return res.success(answer);
+        }
         
         Jedis jedis = null;
         try {

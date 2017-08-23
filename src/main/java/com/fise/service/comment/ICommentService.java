@@ -15,5 +15,5 @@ public interface ICommentService {
     public Response queryMyComment(Page<Comment> page);
     
     /*查询评论*/
-    public Response query(Integer comment_id,Integer page_no);
+    public Response query(Integer comment_id,Integer page_no,String fromname);
 }

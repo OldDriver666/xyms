@@ -79,15 +79,15 @@ public class AnswerController {
     
     /*根据回答ID，查询更新消息*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, Integer> map){
+    public Response query(@RequestBody @Valid Map<String, Object> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("answer_id")==null){
+        if(map.get("answer_id")==null || StringUtil.isEmpty(map.get("name")+"")){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=answerService.query(map.get("answer_id"));
+        res=answerService.query((Integer)map.get("answer_id"),map.get("name")+"");
         return res;
     }
 }
