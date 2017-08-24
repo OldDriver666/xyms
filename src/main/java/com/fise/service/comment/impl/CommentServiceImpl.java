@@ -59,6 +59,7 @@ public class CommentServiceImpl implements ICommentService{
         
         Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
         problem.setAnswerNum(problem.getAnswerNum()+1);
+        problem.setUpdated(DateUtil.getLinuxTimeStamp());
         problemDao.updateByPrimaryKeySelective(problem);
         
         CommentExample example = new CommentExample();

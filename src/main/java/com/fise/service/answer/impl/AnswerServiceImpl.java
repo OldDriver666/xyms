@@ -43,6 +43,7 @@ public class AnswerServiceImpl implements IAnswerService{
         
         Problems problems = problemDao.selectByPrimaryKey(record.getProblemId());
         problems.setAnswerNum(problems.getAnswerNum()+1);
+        problems.setUpdated(DateUtil.getLinuxTimeStamp());
         problemDao.updateByPrimaryKey(problems);
         
         AnswerExample example = new AnswerExample();

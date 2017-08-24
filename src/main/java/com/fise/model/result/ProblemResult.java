@@ -26,6 +26,11 @@ public class ProblemResult implements Serializable{
     @JsonProperty("browse_num")
     private Integer browseNum;
     
+    @JsonProperty("school_id")
+    private Integer schoolId;
+    
+    private Integer updated;
+    
     private Integer status;
     
     private Integer created;
@@ -95,6 +100,18 @@ public class ProblemResult implements Serializable{
     }
     public void setCreated(Integer created) {
         this.created = created;
+    }
+    public Integer getSchoolId() {
+        return schoolId;
+    }
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
+    public Integer getUpdated() {
+        return updated;
+    }
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
     }
     
     

@@ -37,23 +37,38 @@ public class ProblemController {
     
     /*提交问题*/
     @RequestMapping(value="/insert",method=RequestMethod.POST)
-    public Response insertProblem(@RequestBody @Valid Problems record,MultipartFile file,HttpServletRequest req) throws IOException{
+    public Response insertProblem(@RequestBody @Valid Problems record,MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response res = new Response();
         logger.info(record.toString());
+        
+        if(record.getSchoolId()==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        MultipartFile file=null;
         String pictureURL = "";
         
-        //上传图片文件
-        if(file!=null){
-            String path=req.getSession().getServletContext().getRealPath("upload");
-            String filename=file.getOriginalFilename();
-            File dir=new File(path,filename);
-            if(!dir.exists()){
-                dir.mkdirs();
-            }
+        for(int i=0;i<uploadfile.length;i++){
+            file=uploadfile[i];
             
-            file.transferTo(dir);
-            pictureURL=path+"/"+filename;
+            //上传图片文件
+            if(file!=null){
+                String path=req.getSession().getServletContext().getRealPath("upload");
+                String filename=file.getOriginalFilename();
+                File dir=new File(path,filename);
+                if(!dir.exists()){
+                    dir.mkdirs();
+                }
+                
+                file.transferTo(dir);
+                if(i==0){
+                    pictureURL=path+"/"+filename;
+                }else {
+                    pictureURL=pictureURL+","+path+"/"+filename;
+                }
+            }
         }
+        
         record.setPicture(pictureURL);
         res=problemService.insert(record);
         return res;
@@ -64,6 +79,10 @@ public class ProblemController {
     public Response queryProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
         logger.info(param.toString());
+        
+        if(param.getParam().getSchoolId()==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
         
         res=problemService.queryAll(param);
         
@@ -106,6 +125,10 @@ public class ProblemController {
     public Response titlequery(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
         logger.info(param.toString());
+        
+        if(param.getParam().getSchoolId()==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
         
         if(StringUtil.isEmpty(param.getParam().getTitle())){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

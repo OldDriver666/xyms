@@ -50,6 +50,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         
         record.setCreated(DateUtil.getLinuxTimeStamp());
+        record.setUpdated(DateUtil.getLinuxTimeStamp());
         problemsDao.insertSelective(record);
         
         ProblemsExample example = new ProblemsExample();
@@ -92,6 +93,7 @@ public class ProblemServiceImpl implements IProblemService{
         /*param.setPageSize(10);*/
         
         criteria.andStatusEqualTo(1);
+        criteria.andSchoolIdEqualTo(param.getParam().getSchoolId());
         
         List<Problems> list=problemsDao.selectBypage(example, param);
         
@@ -127,6 +129,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         for(Problems problem:list){
             problem.setBrowseNum(problem.getBrowseNum()+1);
+            problem.setUpdated(DateUtil.getLinuxTimeStamp());
             problemsDao.updateByPrimaryKeySelective(problem);
         }
         
@@ -193,6 +196,8 @@ public class ProblemServiceImpl implements IProblemService{
                 pResult.setAnswerNum(problem.getAnswerNum());
                 pResult.setBrowseNum(problem.getBrowseNum());
                 pResult.setCreated(problem.getCreated());
+                pResult.setSchoolId(problem.getSchoolId());
+                pResult.setUpdated(problem.getUpdated());
                 
                 listResult.add(pResult);
             }

@@ -10,6 +10,8 @@
     <result column="answer_num" jdbcType="INTEGER" property="answerNum" />
     <result column="browse_num" jdbcType="INTEGER" property="browseNum" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -71,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, title, content, picture, answer_num, browse_num, status, created
+    id, name, title, content, picture, answer_num, browse_num, status, school_id, updated, 
+    created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.ProblemsExample" resultMap="BaseResultMap">
     select
@@ -114,12 +117,12 @@
   <insert id="insert" parameterType="com.fise.model.entity.Problems">
     insert into Problems (id, name, title, 
       content, picture, answer_num, 
-      browse_num, status, created
-      )
+      browse_num, status, school_id, 
+      updated, created)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{answerNum,jdbcType=INTEGER}, 
-      #{browseNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{created,jdbcType=INTEGER}
-      )
+      #{browseNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{schoolId,jdbcType=INTEGER}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.Problems">
     insert into Problems
@@ -147,6 +150,12 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="updated != null">
+        updated,
       </if>
       <if test="created != null">
         created,
@@ -176,6 +185,12 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
       </if>
       <if test="created != null">
         #{created,jdbcType=INTEGER},
@@ -215,6 +230,12 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=INTEGER},
       </if>
@@ -233,6 +254,8 @@
       answer_num = #{record.answerNum,jdbcType=INTEGER},
       browse_num = #{record.browseNum,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
+      school_id = #{record.schoolId,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -262,6 +285,12 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=INTEGER},
       </if>
@@ -277,6 +306,8 @@
       answer_num = #{answerNum,jdbcType=INTEGER},
       browse_num = #{browseNum,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -299,7 +330,8 @@
   	from Problems 
   	where 
   	title like '%${title}%' 
-  	and status=1
+  	and status=1 
+  	and school_id=${page.param.schoolId}
   	order by created desc 
   </select>
 </mapper>

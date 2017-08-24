@@ -49,6 +49,14 @@ public class Problems implements Serializable {
      * 1-可用   0-删除
      */
     private Integer status;
+    
+    @JsonProperty("school_id")
+    private Integer schoolId;
+
+    /**
+     * 更新时间
+     */
+    private Integer updated;
 
     /**
      * 创建时间
@@ -121,6 +129,22 @@ public class Problems implements Serializable {
         this.status = status;
     }
 
+    public Integer getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
+    }
+
     public Integer getCreated() {
         return created;
     }
@@ -130,7 +154,7 @@ public class Problems implements Serializable {
     }
 
     @Override
-    public String toString() {        
+    public String toString() {
         return JsonUtil.toJson(this);
     }
     
