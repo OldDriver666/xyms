@@ -10,6 +10,9 @@ public class CommentResult implements Serializable{
     
     private int addreply;
     
+    private int count;
+    
+    
     private Integer id;
 
     /**
@@ -128,6 +131,12 @@ public class CommentResult implements Serializable{
     }
     public void setCreated(Integer created) {
         this.created = created;
+    }
+    public int getCount() {
+        return count;
+    }
+    public void setCount(int count) {
+        this.count = count;
     }
     
     

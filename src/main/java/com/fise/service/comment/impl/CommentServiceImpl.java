@@ -165,6 +165,7 @@ public class CommentServiceImpl implements ICommentService{
                 re.setStatus(c.getStatus());
                 re.setUpdated(c.getUpdated());
                 re.setCreated(c.getCreated());
+                re.setCount((int)count);
                 
                 listresult.add(re);
             }
