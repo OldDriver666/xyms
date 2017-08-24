@@ -47,28 +47,29 @@ public class ProblemController {
         
         MultipartFile file=null;
         String pictureURL = "";
-        
-        for(int i=0;i<uploadfile.length;i++){
-            file=uploadfile[i];
-            
-            //上传图片文件
-            if(file!=null){
+                   
+        //上传图片文件
+        if(uploadfile!=null){
+            for(int i=0;i<uploadfile.length;i++){
+                file=uploadfile[i];
+                
                 String path=req.getSession().getServletContext().getRealPath("upload");
                 String filename=file.getOriginalFilename();
                 File dir=new File(path,filename);
                 if(!dir.exists()){
                     dir.mkdirs();
                 }
-                
+            
                 file.transferTo(dir);
                 if(i==0){
                     pictureURL=path+"/"+filename;
                 }else {
                     pictureURL=pictureURL+","+path+"/"+filename;
                 }
+        
             }
         }
-        
+                        
         record.setPicture(pictureURL);
         res=problemService.insert(record);
         return res;
