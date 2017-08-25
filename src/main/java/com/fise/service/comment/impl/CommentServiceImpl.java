@@ -218,4 +218,13 @@ public class CommentServiceImpl implements ICommentService{
         return res.success(page);
     }
 
+    @Override
+    public Response queryById(Integer comment_id) {
+        Response res = new Response();
+        
+        Comment comment=commentDao.selectByPrimaryKey(comment_id);
+        
+        return res.success(comment);        
+    }
+
 }

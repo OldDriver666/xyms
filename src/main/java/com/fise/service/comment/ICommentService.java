@@ -16,4 +16,7 @@ public interface ICommentService {
     
     /*查询评论*/
     public Response query(Integer comment_id,Integer page_no,String fromname);
+    
+    /*根据评论id查询评论*/
+    public Response queryById(Integer comment_id);
 }

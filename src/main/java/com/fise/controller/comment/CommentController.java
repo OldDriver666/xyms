@@ -82,4 +82,18 @@ public class CommentController {
         res=commentService.query((Integer)map.get("comment_id"), (Integer)map.get("page_no"),map.get("fromname")+"");
         return res;
     }
+    
+    /*根据评论id查询评论*/
+    @RequestMapping(value="/querybyid",method=RequestMethod.POST)
+    public Response queryById(@RequestBody @Valid Map<String , Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("comment_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=commentService.queryById(map.get("comment_id"));
+        return res;
+    }
 }
