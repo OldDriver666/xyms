@@ -720,4 +720,74 @@ msg 为已关注或未关注
 ```
 ####回复
 ```
-                                                                                    
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "id": 2,
+      "content": "测试",
+      "status": 1,
+      "updated": 1502962563,
+      "created": 1502962563,
+      "from_name": "wo",
+      "to_name": "",
+      "answer_id": 1,
+      "comment_id": 4,
+      "problem_id": 2
+   }
+}
+```
+
+####用户信息查询
+|   接口地址    |   xiaoyusvr/user/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "name":""            //必填-用户名
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "id": 2,
+      "sex": true,
+      "name": "2",
+      "domain": "user2",
+      "nick": "2",
+      "password": "800db50a2241bcf4f681ff577864dd1e",
+      "salt": "1736",
+      "province": "北京",
+      "city": "北京",
+      "country": "中国",
+      "phone": "",
+      "email": "",
+      "avatar": "g0/default/default.png",
+      "height": 0,
+      "weight": 0,
+      "birthday": "0",
+      "type": 18,
+      "departid": 3,
+      "status": 0,
+      "created": 1492676615,
+      "updated": 1490941999,
+      "pushShieldStatus": false,
+      "signInfo": "b",
+      "lng": "113.991055",
+      "lat": "22.681686",
+      "battery": 39,
+      "sq": 0,
+      "friendNeedAuth": true,
+      "loginSafeSwitch": false,
+      "searchAllow": true,
+      "onlineStatus": false,
+      "lastOnlineTime": 1499150910
+   }
+}
+```                                                                                         

@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.IMUserMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="departId" jdbcType="INTEGER" property="departid" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="push_shield_status" jdbcType="BIT" property="pushShieldStatus" />
+    <result column="sign_info" jdbcType="VARCHAR" property="signInfo" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="battery" jdbcType="INTEGER" property="battery" />
+    <result column="sq" jdbcType="INTEGER" property="sq" />
+    <result column="friend_need_auth" jdbcType="BIT" property="friendNeedAuth" />
+    <result column="login_safe_switch" jdbcType="BIT" property="loginSafeSwitch" />
+    <result column="search_allow" jdbcType="BIT" property="searchAllow" />
+    <result column="online_status" jdbcType="BIT" property="onlineStatus" />
+    <result column="last_online_time" jdbcType="INTEGER" property="lastOnlineTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sex, name, domain, nick, password, salt, province, city, country, phone, email, 
+    avatar, height, weight, birthday, type, departId, status, created, updated, push_shield_status, 
+    sign_info, lng, lat, battery, sq, friend_need_auth, login_safe_switch, search_allow, 
+    online_status, last_online_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.IMUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from IMUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from IMUser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from IMUser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMUserExample">
+    delete from IMUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.IMUser">
+    insert into IMUser (id, sex, name, domain, 
+      nick, password, salt, 
+      province, city, country, 
+      phone, email, avatar, 
+      height, weight, birthday, 
+      type, departId, status, 
+      created, updated, push_shield_status, 
+      sign_info, lng, lat, 
+      battery, sq, friend_need_auth, 
+      login_safe_switch, search_allow, online_status, 
+      last_online_time)
+    values (#{id,jdbcType=INTEGER}, #{sex,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, 
+      #{nick,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{height,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{birthday,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{departid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, #{pushShieldStatus,jdbcType=BIT}, 
+      #{signInfo,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, 
+      #{battery,jdbcType=INTEGER}, #{sq,jdbcType=INTEGER}, #{friendNeedAuth,jdbcType=BIT}, 
+      #{loginSafeSwitch,jdbcType=BIT}, #{searchAllow,jdbcType=BIT}, #{onlineStatus,jdbcType=BIT}, 
+      #{lastOnlineTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMUser">
+    insert into IMUser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="domain != null">
+        domain,
+      </if>
+      <if test="nick != null">
+        nick,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="departid != null">
+        departId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="pushShieldStatus != null">
+        push_shield_status,
+      </if>
+      <if test="signInfo != null">
+        sign_info,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="battery != null">
+        battery,
+      </if>
+      <if test="sq != null">
+        sq,
+      </if>
+      <if test="friendNeedAuth != null">
+        friend_need_auth,
+      </if>
+      <if test="loginSafeSwitch != null">
+        login_safe_switch,
+      </if>
+      <if test="searchAllow != null">
+        search_allow,
+      </if>
+      <if test="onlineStatus != null">
+        online_status,
+      </if>
+      <if test="lastOnlineTime != null">
+        last_online_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="departid != null">
+        #{departid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="pushShieldStatus != null">
+        #{pushShieldStatus,jdbcType=BIT},
+      </if>
+      <if test="signInfo != null">
+        #{signInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="battery != null">
+        #{battery,jdbcType=INTEGER},
+      </if>
+      <if test="sq != null">
+        #{sq,jdbcType=INTEGER},
+      </if>
+      <if test="friendNeedAuth != null">
+        #{friendNeedAuth,jdbcType=BIT},
+      </if>
+      <if test="loginSafeSwitch != null">
+        #{loginSafeSwitch,jdbcType=BIT},
+      </if>
+      <if test="searchAllow != null">
+        #{searchAllow,jdbcType=BIT},
+      </if>
+      <if test="onlineStatus != null">
+        #{onlineStatus,jdbcType=BIT},
+      </if>
+      <if test="lastOnlineTime != null">
+        #{lastOnlineTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.IMUserExample" resultType="java.lang.Long">
+    select count(*) from IMUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update IMUser
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=BIT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domain != null">
+        domain = #{record.domain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nick != null">
+        nick = #{record.nick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.departid != null">
+        departId = #{record.departid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushShieldStatus != null">
+        push_shield_status = #{record.pushShieldStatus,jdbcType=BIT},
+      </if>
+      <if test="record.signInfo != null">
+        sign_info = #{record.signInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lng != null">
+        lng = #{record.lng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lat != null">
+        lat = #{record.lat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.battery != null">
+        battery = #{record.battery,jdbcType=INTEGER},
+      </if>
+      <if test="record.sq != null">
+        sq = #{record.sq,jdbcType=INTEGER},
+      </if>
+      <if test="record.friendNeedAuth != null">
+        friend_need_auth = #{record.friendNeedAuth,jdbcType=BIT},
+      </if>
+      <if test="record.loginSafeSwitch != null">
+        login_safe_switch = #{record.loginSafeSwitch,jdbcType=BIT},
+      </if>
+      <if test="record.searchAllow != null">
+        search_allow = #{record.searchAllow,jdbcType=BIT},
+      </if>
+      <if test="record.onlineStatus != null">
+        online_status = #{record.onlineStatus,jdbcType=BIT},
+      </if>
+      <if test="record.lastOnlineTime != null">
+        last_online_time = #{record.lastOnlineTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update IMUser
+    set id = #{record.id,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=BIT},
+      name = #{record.name,jdbcType=VARCHAR},
+      domain = #{record.domain,jdbcType=VARCHAR},
+      nick = #{record.nick,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      salt = #{record.salt,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      departId = #{record.departid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      created = #{record.created,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER},
+      push_shield_status = #{record.pushShieldStatus,jdbcType=BIT},
+      sign_info = #{record.signInfo,jdbcType=VARCHAR},
+      lng = #{record.lng,jdbcType=VARCHAR},
+      lat = #{record.lat,jdbcType=VARCHAR},
+      battery = #{record.battery,jdbcType=INTEGER},
+      sq = #{record.sq,jdbcType=INTEGER},
+      friend_need_auth = #{record.friendNeedAuth,jdbcType=BIT},
+      login_safe_switch = #{record.loginSafeSwitch,jdbcType=BIT},
+      search_allow = #{record.searchAllow,jdbcType=BIT},
+      online_status = #{record.onlineStatus,jdbcType=BIT},
+      last_online_time = #{record.lastOnlineTime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMUser">
+    update IMUser
+    <set>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="departid != null">
+        departId = #{departid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="pushShieldStatus != null">
+        push_shield_status = #{pushShieldStatus,jdbcType=BIT},
+      </if>
+      <if test="signInfo != null">
+        sign_info = #{signInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="battery != null">
+        battery = #{battery,jdbcType=INTEGER},
+      </if>
+      <if test="sq != null">
+        sq = #{sq,jdbcType=INTEGER},
+      </if>
+      <if test="friendNeedAuth != null">
+        friend_need_auth = #{friendNeedAuth,jdbcType=BIT},
+      </if>
+      <if test="loginSafeSwitch != null">
+        login_safe_switch = #{loginSafeSwitch,jdbcType=BIT},
+      </if>
+      <if test="searchAllow != null">
+        search_allow = #{searchAllow,jdbcType=BIT},
+      </if>
+      <if test="onlineStatus != null">
+        online_status = #{onlineStatus,jdbcType=BIT},
+      </if>
+      <if test="lastOnlineTime != null">
+        last_online_time = #{lastOnlineTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMUser">
+    update IMUser
+    set sex = #{sex,jdbcType=BIT},
+      name = #{name,jdbcType=VARCHAR},
+      domain = #{domain,jdbcType=VARCHAR},
+      nick = #{nick,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      departId = #{departid,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created = #{created,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER},
+      push_shield_status = #{pushShieldStatus,jdbcType=BIT},
+      sign_info = #{signInfo,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR},
+      battery = #{battery,jdbcType=INTEGER},
+      sq = #{sq,jdbcType=INTEGER},
+      friend_need_auth = #{friendNeedAuth,jdbcType=BIT},
+      login_safe_switch = #{loginSafeSwitch,jdbcType=BIT},
+      search_allow = #{searchAllow,jdbcType=BIT},
+      online_status = #{onlineStatus,jdbcType=BIT},
+      last_online_time = #{lastOnlineTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
