@@ -329,9 +329,9 @@
   	<include refid="Base_Column_List" />
   	from Problems 
   	where 
-  	title like '%${title}%' 
+  	title like #{title,jdbcType=VARCHAR} 
   	and status=1 
-  	and school_id=${page.param.schoolId}
+  	and school_id=#{page.param.schoolId,jdbcType=INTEGER}
   	order by created desc 
   </select>
 </mapper>

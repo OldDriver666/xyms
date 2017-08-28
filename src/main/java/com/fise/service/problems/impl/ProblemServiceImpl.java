@@ -118,7 +118,7 @@ public class ProblemServiceImpl implements IProblemService{
         Response res = new Response();
         
         /*param.setPageSize(10);*/
-        
+        param.getParam().setTitle("%"+param.getParam().getTitle()+"%");
         List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
         
         if(list.size()==0){
