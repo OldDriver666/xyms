@@ -20,4 +20,6 @@ public interface IProblemService {
     /*根据问题id，查询问题详情*/
     public Response query(Integer problem_id,String name);
     
+    /*删除我的某个问题*/
+    public Response delMyPro(Integer problem_id);
 }

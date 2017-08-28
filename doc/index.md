@@ -790,4 +790,32 @@ msg 为已关注或未关注
       "lastOnlineTime": 1499150910
    }
 }
-```                                                                                         
+```
+
+####查询学校 
+|   接口地址    |   xiaoyusvr/school/queryschool    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+     "school_id":x          //必填-学校id
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "updated": 1503652816,
+      "created": 1503652816,
+      "school_id": 1352,
+      "school_name": "北京市丰台区丰台第二中学",
+      "district_id": 1,
+      "school_addr": ""
+   }
+}
+```                                                                                                

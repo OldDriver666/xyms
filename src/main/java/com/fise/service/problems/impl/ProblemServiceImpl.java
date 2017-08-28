@@ -243,4 +243,12 @@ public class ProblemServiceImpl implements IProblemService{
         return res;
     }
 
+    @Override
+    public Response delMyPro(Integer problem_id) {
+        Response res = new Response();
+        
+        
+        return null;
+    }
+
 }

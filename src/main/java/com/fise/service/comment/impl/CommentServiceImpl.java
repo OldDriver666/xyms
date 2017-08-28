@@ -187,6 +187,7 @@ public class CommentServiceImpl implements ICommentService{
         Criteria criteria = example.createCriteria();
         example.setOrderByClause("created desc");
         criteria.andCommentIdEqualTo(comment_id);
+        criteria.andStatusEqualTo(1);
         
         Page<Comment> page = new Page<>();
         page.setPageNo(page_no);
@@ -223,6 +224,11 @@ public class CommentServiceImpl implements ICommentService{
         Response res = new Response();
         
         Comment comment=commentDao.selectByPrimaryKey(comment_id);
+        
+        if(comment.getStatus()==0){
+            res.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+            res.setMsg("该评论已经被删除了！！！");
+        }
         
         return res.success(comment);        
     }
