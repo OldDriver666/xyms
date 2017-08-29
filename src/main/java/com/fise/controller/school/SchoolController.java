@@ -24,11 +24,11 @@ public class SchoolController {
     ISchoolService schoolService;
     
     @RequestMapping(value="/queryschool",method=RequestMethod.POST)
-    public Response querySchool(@RequestBody @Valid Map<String, Integer> map){
+    public Response querySchool(@RequestBody @Valid Map<String, Integer[]> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("school_id")==null){
+        if(map.get("school_id").length==0){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
