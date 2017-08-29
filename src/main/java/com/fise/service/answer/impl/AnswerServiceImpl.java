@@ -6,22 +6,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
+import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
+import com.fise.model.entity.IMUser;
+import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.AnswerExample.Criteria;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.AnswerResult;
 import com.fise.service.answer.IAnswerService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
-import com.fise.utils.StringUtil;
-
 import redis.clients.jedis.Jedis;
 
 @Service
@@ -32,6 +32,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     ProblemsMapper problemDao;
+    
+    @Autowired
+    IMUserMapper userDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -79,17 +82,18 @@ public class AnswerServiceImpl implements IAnswerService{
         AnswerExample example = new AnswerExample();
         Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(1);
-        
-        if(!StringUtil.isEmpty(page.getParam().getName())){
-            criteria.andNameEqualTo(page.getParam().getName());
-        }else{
-            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
+        criteria.andNameEqualTo(page.getParam().getName());
         
         example.setOrderByClause("created desc");
-        /*page.setPageSize(10);*/
         
         List<Answer> list=answerDao.selectBypage(example, page);
+        
+        //查询用户昵称和头像
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        criteria2.andNameEqualTo(page.getParam().getName());
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
         
         Page<AnswerResult> reslut = new Page<AnswerResult>();
         
@@ -113,14 +117,7 @@ public class AnswerServiceImpl implements IAnswerService{
                 value=jedis.get(key);
                 aResult.setAddCommentCount(answer.getCommentNum()-Integer.valueOf(value));
                 
-                aResult.setId(answer.getId());
-                aResult.setName(answer.getName());
-                aResult.setProblemId(answer.getProblemId());
-                aResult.setContent(answer.getContent());
-                aResult.setAgreeNum(answer.getAgreeNum());
-                aResult.setCommentNum(answer.getCommentNum());
-                aResult.setStatus(answer.getStatus());
-                aResult.setCreated(answer.getCreated());
+                setResult(aResult,answer,user);
                 
                 listResult.add(aResult);            
             }
@@ -148,17 +145,33 @@ public class AnswerServiceImpl implements IAnswerService{
         }
         
         example.setOrderByClause(order+" desc");
-        /*page.setPageSize(10);*/
         
         List<Answer> list=answerDao.selectBypage(example, page);
         
-        Page<Answer> reslut = new Page<Answer>();
+        List<AnswerResult> list1=new ArrayList<>();
+        
+        for(Answer answer:list){
+            AnswerResult result=new AnswerResult();
+            
+            //查询用户昵称和头像
+            IMUserExample userExample=new IMUserExample();
+            IMUserExample.Criteria criteria2 =userExample.createCriteria();
+            criteria2.andNameEqualTo(answer.getName());
+            List<IMUser> list2=userDao.selectByExample(userExample);
+            IMUser user=list2.get(0);
+            
+            setResult(result,answer,user);
+            
+            list1.add(result);
+        }
+        
+        Page<AnswerResult> reslut = new Page<AnswerResult>();
         
         reslut.setPageNo(page.getPageNo());
         reslut.setPageSize(page.getPageSize());
         reslut.setTotalCount(page.getTotalCount());
         reslut.setTotalPageCount(page.getTotalPageCount());
-        reslut.setResult(list);
+        reslut.setResult(list1);
        
         return res.success(reslut);
     }
@@ -166,11 +179,22 @@ public class AnswerServiceImpl implements IAnswerService{
     @Override
     public Response query(Integer answer_id,String name) {
         Response res = new Response();
+        AnswerResult result=new AnswerResult();
         
         Answer answer =answerDao.selectByPrimaryKey(answer_id);
         
+        //查询用户昵称和头像
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        
         if(!answer.getName().equals(name)){
-            return res.success(answer);
+            criteria2.andNameEqualTo(answer.getName());
+            List<IMUser> list2=userDao.selectByExample(userExample);
+            IMUser user=list2.get(0);
+            
+            setResult(result,answer,user);
+            
+            return res.success(result);
         }
         
         Jedis jedis = null;
@@ -190,7 +214,26 @@ public class AnswerServiceImpl implements IAnswerService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        return res.success(answer);
+        criteria2.andNameEqualTo(name);
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
+        
+        setResult(result,answer,user);
+        
+        return res.success(result);
+    }
+    
+    private void setResult(AnswerResult result,Answer answer,IMUser user){
+        result.setId(answer.getId());
+        result.setName(answer.getName());
+        result.setProblemId(answer.getProblemId());
+        result.setContent(answer.getContent());
+        result.setAgreeNum(answer.getAgreeNum());
+        result.setCommentNum(answer.getCommentNum());
+        result.setStatus(answer.getStatus());
+        result.setCreated(answer.getCreated());
+        result.setNick(user.getNick());
+        result.setAvatar(user.getAvatar());
     }
 
 }

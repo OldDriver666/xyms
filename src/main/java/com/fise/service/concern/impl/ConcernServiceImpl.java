@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.ConcernMapper;
+import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.ConcernExample;
+import com.fise.model.entity.IMUser;
+import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.ConcernExample.Criteria;
-import com.fise.model.result.ProblemResult;
+import com.fise.model.result.ProResult;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.ProblemsExample;
 import com.fise.service.concern.IConcernService;
@@ -31,6 +34,9 @@ public class ConcernServiceImpl implements IConcernService{
     
     @Autowired
     ProblemsMapper problemDao;
+    
+    @Autowired
+    IMUserMapper userDao;
     
     @Override
     public Response addConcern(Concern record) {
@@ -169,10 +175,10 @@ public class ConcernServiceImpl implements IConcernService{
         cri.andIdIn(listint);
         
         Page<Problems> param = new Page<Problems>();
-        /*param.setPageSize(10);*/
+        
         List<Problems> lProblems=problemDao.selectBypage(proExample, param);
         
-        Page<ProblemResult> page = new Page<ProblemResult>();
+        Page<ProResult> page = new Page<ProResult>();
         
         page.setPageNo(param.getPageNo());
         page.setPageSize(param.getPageSize());
@@ -180,22 +186,31 @@ public class ConcernServiceImpl implements IConcernService{
         page.setTotalPageCount(param.getTotalPageCount());
         
         Jedis jedis=null;
-        List<ProblemResult> listResult = new ArrayList<>();
+        List<ProResult> listResult = new ArrayList<>();
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             for(Problems problem:lProblems){
-                ProblemResult pResult=new ProblemResult();
+                ProResult pResult=new ProResult();
                 
                 String key=problem.getId()+"answer"+name;
                 String value=jedis.get(key);
                 
                 pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
-                
-                
+                                
                 key=problem.getId()+"browser"+name;
                 value=jedis.get(key);
                 
                 pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
+                
+                //查询用户昵称和头像
+                IMUserExample userExample=new IMUserExample();
+                IMUserExample.Criteria criteria2 =userExample.createCriteria();
+                criteria2.andNameEqualTo(problem.getName());
+                List<IMUser> list2=userDao.selectByExample(userExample);
+                IMUser user=list2.get(0);
+                
+                pResult.setNick(user.getNick());
+                pResult.setAvatar(user.getAvatar());
                 
                 pResult.setId(problem.getId());
                 pResult.setName(problem.getName());
@@ -227,6 +242,28 @@ public class ConcernServiceImpl implements IConcernService{
         
         Problems problem=problemDao.selectByPrimaryKey(problem_id);
         
+        ProResult pResult=new ProResult();
+        
+        //查询用户昵称和头像
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        criteria2.andNameEqualTo(problem.getName());
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
+        
+        pResult.setNick(user.getNick());
+        pResult.setAvatar(user.getAvatar());
+        
+        pResult.setId(problem.getId());
+        pResult.setName(problem.getName());
+        pResult.setTitle(problem.getTitle());
+        pResult.setContent(problem.getContent());
+        pResult.setPicture(problem.getPicture());
+        pResult.setStatus(problem.getStatus());
+        pResult.setAnswerNum(problem.getAnswerNum());
+        pResult.setBrowseNum(problem.getBrowseNum());
+        pResult.setCreated(problem.getCreated());
+        
         Jedis jedis = null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
@@ -243,7 +280,7 @@ public class ConcernServiceImpl implements IConcernService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        res.success(problem);
+        res.success(pResult);
         return res;
     }
     

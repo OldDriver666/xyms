@@ -20,12 +20,16 @@ public class CommentResult implements Serializable{
      */
     @JsonProperty("from_name")
     private String fromName;
+    
+    private String fromNick;
 
     /**
      * 回复对方
      */
     @JsonProperty("to_name")
     private String toName;
+    
+    private String toNick;
 
     /**
      * 回答问题ID
@@ -137,6 +141,18 @@ public class CommentResult implements Serializable{
     }
     public void setCount(int count) {
         this.count = count;
+    }
+    public String getFromNick() {
+        return fromNick;
+    }
+    public void setFromNick(String fromNick) {
+        this.fromNick = fromNick;
+    }
+    public String getToNick() {
+        return toNick;
+    }
+    public void setToNick(String toNick) {
+        this.toNick = toNick;
     }
     
     

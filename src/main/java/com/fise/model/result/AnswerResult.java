@@ -16,6 +16,16 @@ public class AnswerResult implements Serializable{
      * 用户名
      */
     private String name;
+    
+    /*
+     * 昵称
+     */
+    private String nick;
+    
+    /*
+     * 头像
+     */
+    private String avatar;
 
     /**
      * 问题ID
@@ -109,6 +119,18 @@ public class AnswerResult implements Serializable{
     }
     public void setCreated(Integer created) {
         this.created = created;
+    }
+    public String getNick() {
+        return nick;
+    }
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     
     

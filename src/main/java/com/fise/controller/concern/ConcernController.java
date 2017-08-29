@@ -73,11 +73,11 @@ public class ConcernController {
         Response res = new Response();
         logger.info(map.toString());
         
-        if(Integer.valueOf(map.get("problem_id"))==null || StringUtil.isEmpty(map.get("name"))){
+        if(Integer.valueOf(map.get("id"))==null || StringUtil.isEmpty(map.get("name"))){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=concernService.query(map.get("name"),Integer.valueOf(map.get("problem_id")));
+        res=concernService.query(map.get("name"),Integer.valueOf(map.get("id")));
         return res;
     }
     

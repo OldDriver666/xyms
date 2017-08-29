@@ -11,11 +11,14 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
+import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
+import com.fise.model.entity.IMUser;
+import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.CommentExample.Criteria;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.CommentResult;
@@ -37,6 +40,9 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired
     ProblemsMapper problemDao;
+    
+    @Autowired
+    IMUserMapper userDao;
     
     @Override
     public Response addComment(Comment record) {
@@ -94,6 +100,7 @@ public class CommentServiceImpl implements ICommentService{
     @Override
     public Response queryComment(Page<Comment> page) {
         Response res = new Response();
+        List<CommentResult> list1=new ArrayList<>();
         
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
@@ -107,9 +114,21 @@ public class CommentServiceImpl implements ICommentService{
         
         List<Comment> list=commentDao.selectByPage(example, page);
         
-        page.setResult(list);
-        page.setParam(null);
-        res.success(page);
+        Page<CommentResult> param=new Page<>();
+        
+        param.setPageNo(page.getPageNo());
+        param.setPageSize(page.getPageSize());
+        param.setTotalCount(page.getTotalCount());
+        param.setTotalPageCount(page.getTotalPageCount());
+        
+        for(Comment comment:list){
+            CommentResult result=new CommentResult();
+            
+            setNick(list1,comment,result);
+        }
+        
+        param.setResult(list1);
+        res.success(param);
         return res;
     }
 
@@ -120,7 +139,6 @@ public class CommentServiceImpl implements ICommentService{
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(1);
-        /*page.setPageSize(10);*/
         example.setOrderByClause("created desc");
         
         if(!StringUtil.isEmpty(page.getParam().getFromName())){
@@ -129,12 +147,12 @@ public class CommentServiceImpl implements ICommentService{
         
         List<Comment> list=commentDao.selectByPage(example, page);
         
-        Page<CommentResult> result = new Page<>();
+        Page<CommentResult> param = new Page<>();
         
-        result.setPageNo(page.getPageNo());
-        result.setPageSize(page.getPageSize());
-        result.setTotalCount(page.getTotalCount());
-        result.setTotalPageCount(page.getTotalPageCount());
+        param.setPageNo(page.getPageNo());
+        param.setPageSize(page.getPageSize());
+        param.setTotalCount(page.getTotalCount());
+        param.setTotalPageCount(page.getTotalPageCount());
         
         Jedis jedis=null;
         List<CommentResult> listresult = new ArrayList<>();
@@ -142,7 +160,7 @@ public class CommentServiceImpl implements ICommentService{
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             for(Comment c:list){
-                CommentResult re = new CommentResult();
+                CommentResult result = new CommentResult();
                 
                 example.clear();            
                 Criteria criter = example.createCriteria();
@@ -153,21 +171,9 @@ public class CommentServiceImpl implements ICommentService{
                 String key =c.getId()+"reply";
                 String value=jedis.get(key);
                 
-                re.setAddreply((int)count-Integer.valueOf(value));
+                result.setAddreply((int)count-Integer.valueOf(value));
                 
-                re.setId(c.getId());
-                re.setFromName(c.getFromName());
-                re.setToName(c.getToName());
-                re.setCommentId(c.getCommentId());
-                re.setAnswerId(c.getAnswerId());
-                re.setProblemId(c.getProblemId());
-                re.setContent(c.getContent());
-                re.setStatus(c.getStatus());
-                re.setUpdated(c.getUpdated());
-                re.setCreated(c.getCreated());
-                re.setCount((int)count);
-                
-                listresult.add(re);
+                setNick(listresult,c,result);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -175,13 +181,14 @@ public class CommentServiceImpl implements ICommentService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        result.setResult(listresult);
-        return res.success(result);
+        param.setResult(listresult);
+        return res.success(param);
     }
 
     @Override
     public Response query(Integer comment_id,Integer page_no,String fromname) {
         Response res = new Response();
+        List<CommentResult> list1=new ArrayList<>();
         
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
@@ -192,13 +199,27 @@ public class CommentServiceImpl implements ICommentService{
         Page<Comment> page = new Page<>();
         page.setPageNo(page_no);
         
-        Comment comment=commentDao.selectByPrimaryKey(comment_id);
+        Comment c=commentDao.selectByPrimaryKey(comment_id);
         
         List<Comment> list=commentDao.selectByPage(example, page);
-        page.setResult(list);
         
-        if(!comment.getFromName().equals(fromname)){
-            return res.success(page);
+        Page<CommentResult> param = new Page<>();
+        
+        param.setPageNo(page.getPageNo());
+        param.setPageSize(page.getPageSize());
+        param.setTotalCount(page.getTotalCount());
+        param.setTotalPageCount(page.getTotalPageCount());
+        
+        for(Comment comment:list){
+            CommentResult result=new CommentResult();
+            
+            setNick(list1,comment,result);           
+        }
+        
+        param.setResult(list1);
+        
+        if(!c.getFromName().equals(fromname)){
+            return res.success(param);
         }
         
         Jedis jedis=null;
@@ -216,7 +237,7 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         
-        return res.success(page);
+        return res.success(param);
     }
 
     @Override
@@ -230,7 +251,64 @@ public class CommentServiceImpl implements ICommentService{
             res.setMsg("该评论已经被删除了！！！");
         }
         
-        return res.success(comment);        
+        CommentResult result=new CommentResult();
+        
+        //查询用户昵称
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        criteria2.andNameEqualTo(comment.getFromName());
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
+        
+        result.setFromNick(user.getNick());
+        
+        criteria2.andNameEqualTo(comment.getToName());
+        List<IMUser> list3=userDao.selectByExample(userExample);
+        IMUser user1=list3.get(0);
+        
+        result.setToNick(user1.getNick());
+        
+        result.setId(comment.getId());
+        result.setFromName(comment.getFromName());
+        result.setToName(comment.getToName());
+        result.setProblemId(comment.getProblemId());
+        result.setAnswerId(comment.getAnswerId());
+        result.setCommentId(comment.getCommentId());
+        result.setContent(comment.getContent());
+        result.setStatus(comment.getStatus());
+        result.setUpdated(comment.getUpdated());
+        result.setCreated(comment.getCreated());
+        
+        return res.success(result);        
     }
 
+    private void setNick(List<CommentResult> list1,Comment comment,CommentResult result){
+        //查询用户昵称
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        criteria2.andNameEqualTo(comment.getFromName());
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
+        
+        result.setFromNick(user.getNick());
+        
+        criteria2.andNameEqualTo(comment.getToName());
+        List<IMUser> list3=userDao.selectByExample(userExample);
+        IMUser user1=list3.get(0);
+        
+        result.setToNick(user1.getNick());
+        
+        result.setId(comment.getId());
+        result.setFromName(comment.getFromName());
+        result.setToName(comment.getToName());
+        result.setProblemId(comment.getProblemId());
+        result.setAnswerId(comment.getAnswerId());
+        result.setCommentId(comment.getCommentId());
+        result.setContent(comment.getContent());
+        result.setStatus(comment.getStatus());
+        result.setUpdated(comment.getUpdated());
+        result.setCreated(comment.getCreated());
+        
+        list1.add(result);
+    }
 }

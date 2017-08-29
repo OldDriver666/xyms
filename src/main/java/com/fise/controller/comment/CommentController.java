@@ -89,11 +89,11 @@ public class CommentController {
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("comment_id")==null){
+        if(map.get("id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=commentService.queryById(map.get("comment_id"));
+        res=commentService.queryById(map.get("id"));
         return res;
     }
 }

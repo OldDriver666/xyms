@@ -69,24 +69,36 @@ null 没有数据返回 看code是否成功
       "extra_param": null,
       "result": [
          {
-            "id": 1,
-            "name": "1",
-            "title": "2",
-            "content": "",
+            "id": 23,
+            "name": "3",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "schoolname": "北京市延庆县第一中学",
+            "title": "dd",
+            "content": "ff",
             "picture": "",
-            "created": 2017,
-            "answer_num": 0,
-            "browse_num": 0
+            "status": 1,
+            "updated": 1503903049,
+            "created": 1503385377,
+            "answer_num": 6,
+            "browse_num": 1631,
+            "school_id": 353
          },
          {
-            "id": 5,
+            "id": 22,
             "name": "3",
-            "title": "4",
-            "content": "",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "schoolname": "北京市延庆县第一中学",
+            "title": "sdfdsf",
+            "content": "ddddddddddddddddddddddd",
             "picture": "",
-            "created": 2016,
-            "answer_num": 0,
-            "browse_num": 0
+            "status": 1,
+            "updated": 1503903049,
+            "created": 1503381289,
+            "answer_num": 6,
+            "browse_num": 1085,
+            "school_id": 353
          }
          ]
       }
@@ -194,17 +206,21 @@ null 没有数据返回 看code是否成功
       "extra_param": null,
       "result": [
          {
-            "addAnswerCount": 0,
-            "addBrowseCount": 0,
-            "id": 9,
-            "name": "5",
-            "title": "试一试",
-            "content": "sss",
+            "addBrowseCount": 293,
+            "id": 33,
+            "name": "3",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "schoolname": null,
+            "title": "good",
+            "content": "very good very good",
             "picture": "",
             "status": 1,
-            "created": 1502957592,
+            "updated": 1503903049,
+            "created": 1503655218,
             "answer_num": 0,
-            "browse_num": 0
+            "browse_num": 724,
+            "school_id": 0
          }
       ]
    }
@@ -230,15 +246,22 @@ null 没有数据返回 看code是否成功
    "code": 0,
    "msg": "ok",
    "data": {
-      "id": 9,
-      "name": "5",
-      "title": "试一试",
-      "content": "sss",
+      "addAnswerCount": 0,           //没有意义
+      "addBrowseCount": 0,           //没有意义
+      "id": 5,
+      "name": "3",
+      "nick": "3",
+      "avatar": "g0/default/default.png",
+      "schoolname": null,
+      "title": "bcd",
+      "content": "",
       "picture": "",
       "status": 1,
-      "created": 1502957592,
+      "updated": 1503571247,
+      "created": 2016,
       "answer_num": 0,
-      "browse_num": 0
+      "browse_num": 66,
+      "school_id": 353
    }
 }
 ```     
@@ -294,14 +317,16 @@ null 没有数据返回 看code是否成功
          {
             "addAgreeCount": 0,
             "addCommentCount": 0,
-            "id": 1,
-            "name": "1",
-            "content": "22",
+            "id": 33,
+            "name": "3",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "content": "阿里郎",
             "status": 1,
-            "created": 0,
-            "problem_id": 2,
-            "agree_num": 0,
-            "comment_num": 2
+            "created": 1503634945,
+            "problem_id": 32,
+            "agree_num": 1,
+            "comment_num": 4
          }
       ]
    }
@@ -336,11 +361,16 @@ null 没有数据返回 看code是否成功
       "extra_param": null,
       "result": [
          {
-            "id": 1,
-            "name": "1",
-            "content": "22",
-            "created": 0,
-            "problem_id": 2,
+            "addAgreeCount": 0,
+            "addCommentCount": 0,
+            "id": 9,
+            "name": "3",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "content": "df",
+            "status": 1,
+            "created": 1503452962,
+            "problem_id": 22,
             "agree_num": 0,
             "comment_num": 0
          }
@@ -475,17 +505,22 @@ msg 为已关注或未关注
       "extra_param": null,
       "result": [
          {
-            "addAnswerCount": 0,
-            "addBrowseCount": 0,
-            "id": 2,
-            "name": "2",
-            "title": "abc",
-            "content": "",
+            "addAnswerCount": 3,
+            "addBrowseCount": 3,
+            "id": 20,
+            "name": "3",
+            "nick": "3",
+            "avatar": "g0/default/default.png",
+            "schoolname": null,
+            "title": "5555555555555",
+            "content": "555555555555555555555555555555555555555555555gddddddd",
             "picture": "",
             "status": 1,
-            "created": 2015,
-            "answer_num": 1,
-            "browse_num": 0
+            "updated": null,
+            "created": 1503374009,
+            "answer_num": 63,
+            "browse_num": 857,
+            "school_id": null
          }
       ]
    }
@@ -501,7 +536,7 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "problem_id":"",            //必填-问题id
+     "id":"",                    //必填-问题id
      "name":""                   //必填-用户名
 }
 ```
@@ -511,15 +546,22 @@ msg 为已关注或未关注
    "code": 0,
    "msg": "ok",
    "data": {
-      "id": 2,
-      "name": "2",
-      "title": "abc",
-      "content": "",
+      "addAnswerCount": 0,
+      "addBrowseCount": 0,
+      "id": 22,
+      "name": "3",
+      "nick": "3",
+      "avatar": "g0/default/default.png",
+      "schoolname": null,
+      "title": "sdfdsf",
+      "content": "ddddddddddddddddddddddd",
       "picture": "",
       "status": 1,
-      "created": 2015,
-      "answer_num": 1,
-      "browse_num": 0
+      "updated": null,
+      "created": 1503381289,
+      "answer_num": 6,
+      "browse_num": 1090,
+      "school_id": null
    }
 }
 ```     
@@ -575,40 +617,52 @@ msg 为已关注或未关注
       "extra_param": null,
       "result": [
          {
-            "id": 4,
-            "content": "go",
+            "addreply": 0,
+            "count": 0,
+            "id": 167,
+            "fromNick": "3",
+            "toNick": "3",
+            "content": "ddddddddddddd",
             "status": 1,
-            "updated": 1503047436,
-            "created": 1503047436,
-            "from_name": "22",
-            "to_name": "",
-            "answer_id": 1,
-            "comment_id": 0,
-            "problem_id": 2
+            "updated": 1503655279,
+            "created": 1503655279,
+            "from_name": "3",
+            "to_name": "3",
+            "answer_id": 17,
+            "comment_id": 166,
+            "problem_id": 20
          },
          {
-            "id": 2,
-            "content": "测试",
+            "addreply": 0,
+            "count": 0,
+            "id": 166,
+            "fromNick": "3",
+            "toNick": "3",
+            "content": "dddddddddddd",
             "status": 1,
-            "updated": 1502962563,
-            "created": 1502962563,
-            "from_name": "wo",
-            "to_name": "",
-            "answer_id": 1,
-            "comment_id": 4,
-            "problem_id": 2
+            "updated": 1503655270,
+            "created": 1503655270,
+            "from_name": "3",
+            "to_name": "3",
+            "answer_id": 17,
+            "comment_id": 115,
+            "problem_id": 20
          },
          {
-            "id": 3,
-            "content": "1",
+            "addreply": 0,
+            "count": 0,
+            "id": 151,
+            "fromNick": "3",
+            "toNick": "3",
+            "content": "fffffffffffffffff44444444444",
             "status": 1,
-            "updated": 0,
-            "created": 0,
-            "from_name": "b",
-            "to_name": "c",
-            "answer_id": 1,
-            "comment_id": 2,
-            "problem_id": 2
+            "updated": 1503654411,
+            "created": 1503654411,
+            "from_name": "3",
+            "to_name": "3",
+            "answer_id": 17,
+            "comment_id": 148,
+            "problem_id": 20
          }
       ]
    }
@@ -645,17 +699,19 @@ msg 为已关注或未关注
       "result": [
          {
             "addreply": 0,
-            "id": 4,
-            "content": "go",
+            "count": 0,
+            "id": 167,
+            "fromNick": "3",
+            "toNick": "3",
+            "content": "ddddddddddddd",
             "status": 1,
-            "updated": 1503047436,
-            "created": 1503047436,
-            "from_name": "22",
-            "to_name": "",
-            "answer_id": 1,
-            "comment_id": 0,
-            "problem_id": 2,
-            "count":100
+            "updated": 1503655279,
+            "created": 1503655279,
+            "from_name": "3",
+            "to_name": "3",
+            "answer_id": 17,
+            "comment_id": 166,
+            "problem_id": 20
          }
       ]
    }
@@ -691,16 +747,20 @@ msg 为已关注或未关注
       "extra_param": null,
       "result": [
          {
-            "id": 2,
-            "content": "测试",
+            "addreply": 0,
+            "count": 0,
+            "id": 37,
+            "fromNick": "3",
+            "toNick": "3",
+            "content": "1",
             "status": 1,
-            "updated": 1502962563,
-            "created": 1502962563,
-            "from_name": "wo",
-            "to_name": "",
-            "answer_id": 1,
-            "comment_id": 4,
-            "problem_id": 2
+            "updated": 1503545860,
+            "created": 1503545860,
+            "from_name": "3",
+            "to_name": "3",
+            "answer_id": 22,
+            "comment_id": 28,
+            "problem_id": 25
          }
       ]
    }
@@ -716,7 +776,7 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "comment_id":x          //必填-评论id
+     "id":x          //必填-评论id
 }
 ```
 ####回复
@@ -725,16 +785,20 @@ msg 为已关注或未关注
    "code": 0,
    "msg": "ok",
    "data": {
-      "id": 2,
-      "content": "测试",
+      "addreply": 0,
+      "count": 0,
+      "id": 5,
+      "fromNick": "3",
+      "toNick": "3",
+      "content": "1",
       "status": 1,
-      "updated": 1502962563,
-      "created": 1502962563,
-      "from_name": "wo",
-      "to_name": "",
-      "answer_id": 1,
-      "comment_id": 4,
-      "problem_id": 2
+      "updated": 1503483792,
+      "created": 1503483792,
+      "from_name": "3",
+      "to_name": "3",
+      "answer_id": 17,
+      "comment_id": 0,
+      "problem_id": 20
    }
 }
 ```

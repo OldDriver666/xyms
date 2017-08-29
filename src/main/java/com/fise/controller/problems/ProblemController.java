@@ -45,6 +45,16 @@ public class ProblemController {
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
+        if(StringUtil.isEmpty(record.getName()) || StringUtil.isEmpty(record.getTitle())){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        if(StringUtil.isEmpty(record.getContent()) && StringUtil.isEmpty(record.getPicture())){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("内容不能为空");
+            return res;
+        }
+        
         MultipartFile file=null;
         String pictureURL = "";
                    
