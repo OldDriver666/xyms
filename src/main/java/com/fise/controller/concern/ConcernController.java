@@ -31,7 +31,7 @@ public class ConcernController {
         Response res = new Response();
         logger.info(record.toString());
         
-        if(StringUtil.isEmpty(record.getName()) || record.getProblemId()==null){
+        if(record.getUserId()==null || record.getProblemId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -45,7 +45,7 @@ public class ConcernController {
         Response res = new Response();
         logger.info(record.toString());
         
-        if(StringUtil.isEmpty(record.getName()) || record.getProblemId()==null){
+        if(record.getUserId()==null || record.getProblemId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -55,29 +55,29 @@ public class ConcernController {
     
     /*查询用户关注的问题*/
     @RequestMapping(value="/queryconcerns",method=RequestMethod.POST)
-    public Response queryConcerns(@RequestBody @Valid Map<String, String> map){
+    public Response queryConcerns(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(StringUtil.isEmpty(map.get("name"))){
+        if(map.get("user_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=concernService.queryConcerns(map.get("name"));
+        res=concernService.queryConcerns(map.get("user_id"));
         return res;
     }
     
     /*根据问题ID，查询关注问题详情*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, String> map){
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(Integer.valueOf(map.get("id"))==null || StringUtil.isEmpty(map.get("name"))){
+        if(map.get("id")==null || map.get("user_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=concernService.query(map.get("name"),Integer.valueOf(map.get("id")));
+        res=concernService.query(map.get("user_id"),map.get("id"));
         return res;
     }
     

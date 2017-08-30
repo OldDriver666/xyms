@@ -12,9 +12,10 @@ public class Agree implements Serializable {
     private Integer id;
 
     /**
-     * 用户名
+     * 用户id
      */
-    private String name;
+    @JsonProperty("user_id")
+    private Integer userId;
 
     /**
      * 回答id
@@ -47,12 +48,12 @@ public class Agree implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getAnswerId() {
@@ -88,7 +89,7 @@ public class Agree implements Serializable {
     }
 
     @Override
-    public String toString() {        
+    public String toString() {
         return JsonUtil.toJson(this);
     }
     

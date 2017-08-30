@@ -12,16 +12,16 @@ public class Comment implements Serializable {
     private Integer id;
 
     /**
-     * 用户名
+     * 用户id
      */
-    @JsonProperty("from_name")
-    private String fromName;
+    @JsonProperty("from_userid")
+    private Integer fromUserid;
 
     /**
      * 回复对方
      */
-    @JsonProperty("to_name")
-    private String toName;
+    @JsonProperty("to_userid")
+    private Integer toUserid;
 
     /**
      * 回答问题ID
@@ -71,20 +71,20 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public String getFromName() {
-        return fromName;
+    public Integer getFromUserid() {
+        return fromUserid;
     }
 
-    public void setFromName(String fromName) {
-        this.fromName = fromName;
+    public void setFromUserid(Integer fromUserid) {
+        this.fromUserid = fromUserid;
     }
 
-    public String getToName() {
-        return toName;
+    public Integer getToUserid() {
+        return toUserid;
     }
 
-    public void setToName(String toName) {
-        this.toName = toName;
+    public void setToUserid(Integer toUserid) {
+        this.toUserid = toUserid;
     }
 
     public Integer getAnswerId() {
@@ -144,8 +144,8 @@ public class Comment implements Serializable {
     }
 
     @Override
-    public String toString() {        
+    public String toString() {
         return JsonUtil.toJson(this);
     }
-       
+    
 }

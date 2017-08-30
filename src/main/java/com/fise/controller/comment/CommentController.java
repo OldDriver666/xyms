@@ -4,8 +4,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
-
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +31,7 @@ public class CommentController {
         Response res = new Response();
         logger.info(record.toString());
         
-        if(StringUtil.isEmpty(record.getFromName()) || record.getAnswerId()==null || record.getProblemId()==null){
+        if(record.getFromUserid()==null || record.getAnswerId()==null || record.getProblemId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -61,7 +59,7 @@ public class CommentController {
         Response res = new Response();
         logger.info(page.toString());
         
-        if(StringUtil.isEmpty(page.getParam().getFromName())){
+        if(page.getParam().getFromUserid()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -71,15 +69,15 @@ public class CommentController {
     
     /*查询评论*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, Object> map){
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("comment_id")==null || map.get("page_no")==null || StringUtil.isEmpty(map.get("fromname")+"")){
+        if(map.get("id")==null || map.get("page_no")==null || map.get("from_userid")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=commentService.query((Integer)map.get("comment_id"), (Integer)map.get("page_no"),map.get("fromname")+"");
+        res=commentService.query(map.get("id"), map.get("page_no"),map.get("from_userid"));
         return res;
     }
     

@@ -29,7 +29,7 @@ public class AgreeServiceImpl implements IAgreeService{
         
         AgreeExample example = new AgreeExample();
         AgreeExample.Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(agree.getName());
+        criteria.andUserIdEqualTo(agree.getUserId());
         criteria.andAnswerIdEqualTo(agree.getAnswerId());
         
         List<Agree> list=agreeDao.selectByExample(example);

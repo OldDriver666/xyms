@@ -44,7 +44,7 @@ public class ConcernServiceImpl implements IConcernService{
         
         ConcernExample example = new ConcernExample();
         Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(record.getName());
+        criteria.andUserIdEqualTo(record.getUserId());
         criteria.andProblemIdEqualTo(record.getProblemId());
         
         List<Concern> list=concernDao.selectByExample(example);
@@ -58,7 +58,7 @@ public class ConcernServiceImpl implements IConcernService{
             
             Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
             
-            addRedis(problem,record.getName());
+            addRedis(problem,record.getUserId());
             return res;            
         }
         
@@ -71,7 +71,7 @@ public class ConcernServiceImpl implements IConcernService{
             res.setMsg("已取消关注");
             
             Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
-            delRedis(problem,record.getName());
+            delRedis(problem,record.getUserId());
             return res;
         }
         
@@ -82,7 +82,7 @@ public class ConcernServiceImpl implements IConcernService{
         res.setMsg("已关注");
         
         Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
-        addRedis(problem,record.getName());
+        addRedis(problem,record.getUserId());
         
         return res;        
     }
@@ -94,7 +94,7 @@ public class ConcernServiceImpl implements IConcernService{
         
         ConcernExample example = new ConcernExample();
         Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(record.getName());
+        criteria.andUserIdEqualTo(record.getUserId());
         criteria.andProblemIdEqualTo(record.getProblemId());
         
         List<Concern> list=concernDao.selectByExample(example);
@@ -119,16 +119,16 @@ public class ConcernServiceImpl implements IConcernService{
      
     }
     
-    private void addRedis(Problems problem,String name){
+    private void addRedis(Problems problem,Integer user_id){
         Jedis jedis=null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             
-            String key = problem.getId()+"browser"+name;
+            String key = problem.getId()+"browser"+user_id;
             String value = problem.getBrowseNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
             
-            key = problem.getId()+"answer"+name;
+            key = problem.getId()+"answer"+user_id;
             value=problem.getAnswerNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
         } catch (Exception e) {               
@@ -138,15 +138,15 @@ public class ConcernServiceImpl implements IConcernService{
         }
     }
     
-    private void delRedis(Problems problem,String name){
+    private void delRedis(Problems problem,Integer user_id){
         Jedis jedis=null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             
-            String key = problem.getId()+"browser"+name;
+            String key = problem.getId()+"browser"+user_id;
             jedis.del(key);
             
-            key = problem.getId()+"answer"+name;
+            key = problem.getId()+"answer"+user_id;
             jedis.del(key);
         } catch (Exception e) {           
             e.printStackTrace();
@@ -157,12 +157,12 @@ public class ConcernServiceImpl implements IConcernService{
 
 
     @Override
-    public Response queryConcerns(String name) {
+    public Response queryConcerns(Integer user_id) {
         Response res = new Response();
         
         ConcernExample example = new ConcernExample();
         Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(name);
+        criteria.andUserIdEqualTo(user_id);
         criteria.andStatusEqualTo(1);
         example.setOrderByClause("created desc");
         
@@ -195,12 +195,12 @@ public class ConcernServiceImpl implements IConcernService{
             for(Problems problem:lProblems){
                 ProResult pResult=new ProResult();
                 
-                String key=problem.getId()+"answer"+name;
+                String key=problem.getId()+"answer"+user_id;
                 String value=jedis.get(key);
                 
                 pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
                                 
-                key=problem.getId()+"browser"+name;
+                key=problem.getId()+"browser"+user_id;
                 value=jedis.get(key);
                 
                 pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
@@ -222,7 +222,7 @@ public class ConcernServiceImpl implements IConcernService{
 
 
     @Override
-    public Response query(String name,Integer problem_id) {
+    public Response query(Integer user_id,Integer problem_id) {
         Response res = new Response();
         
         Problems problem=problemDao.selectByPrimaryKey(problem_id);
@@ -234,11 +234,11 @@ public class ConcernServiceImpl implements IConcernService{
         Jedis jedis = null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            String key=problem.getId()+"answer"+name;
+            String key=problem.getId()+"answer"+user_id;
             String value=problem.getAnswerNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
             
-            key=problem.getId()+"browser"+name;
+            key=problem.getId()+"browser"+user_id;
             value=problem.getBrowseNum()+"";
             jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
         } catch (Exception e) {
@@ -255,7 +255,7 @@ public class ConcernServiceImpl implements IConcernService{
         //查询用户昵称和头像
         IMUserExample userExample=new IMUserExample();
         IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andNameEqualTo(problem.getName());
+        criteria2.andIdEqualTo(problem.getUserId());
         List<IMUser> list2=userDao.selectByExample(userExample);
         IMUser user=list2.get(0);
         
@@ -263,7 +263,7 @@ public class ConcernServiceImpl implements IConcernService{
         pResult.setAvatar(user.getAvatar());
         
         pResult.setId(problem.getId());
-        pResult.setName(problem.getName());
+        pResult.setUserId(problem.getUserId());
         pResult.setTitle(problem.getTitle());
         pResult.setContent(problem.getContent());
         pResult.setPicture(problem.getPicture());

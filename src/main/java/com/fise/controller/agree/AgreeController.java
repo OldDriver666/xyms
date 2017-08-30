@@ -28,7 +28,7 @@ public class AgreeController {
         Response res = new Response();
         logger.info(agree.toString());
         
-        if(StringUtil.isEmpty(agree.getName()) && agree.getAnswerId()==null){
+        if(agree.getUserId()==null && agree.getAnswerId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         

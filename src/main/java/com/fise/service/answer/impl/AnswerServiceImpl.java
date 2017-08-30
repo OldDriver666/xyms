@@ -39,7 +39,7 @@ public class AnswerServiceImpl implements IAnswerService{
     @Override
     public Response insertAnswer(Answer record) {
         Response res = new Response();
-        
+        record.setUpdated(DateUtil.getLinuxTimeStamp());
         record.setCreated(DateUtil.getLinuxTimeStamp());
         
         answerDao.insertSelective(record);
@@ -51,7 +51,7 @@ public class AnswerServiceImpl implements IAnswerService{
         
         AnswerExample example = new AnswerExample();
         Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(record.getName());
+        criteria.andUserIdEqualTo(record.getUserId());
         example.setOrderByClause("created desc");
         
         List<Answer> list=answerDao.selectByExample(example);
@@ -82,7 +82,7 @@ public class AnswerServiceImpl implements IAnswerService{
         AnswerExample example = new AnswerExample();
         Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(1);
-        criteria.andNameEqualTo(page.getParam().getName());
+        criteria.andUserIdEqualTo(page.getParam().getUserId());
         
         example.setOrderByClause("created desc");
         
@@ -91,7 +91,7 @@ public class AnswerServiceImpl implements IAnswerService{
         //查询用户昵称和头像
         IMUserExample userExample=new IMUserExample();
         IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andNameEqualTo(page.getParam().getName());
+        criteria2.andIdEqualTo(page.getParam().getUserId());
         List<IMUser> list2=userDao.selectByExample(userExample);
         IMUser user=list2.get(0);
         
@@ -156,7 +156,7 @@ public class AnswerServiceImpl implements IAnswerService{
             //查询用户昵称和头像
             IMUserExample userExample=new IMUserExample();
             IMUserExample.Criteria criteria2 =userExample.createCriteria();
-            criteria2.andNameEqualTo(answer.getName());
+            criteria2.andIdEqualTo(answer.getUserId());
             List<IMUser> list2=userDao.selectByExample(userExample);
             IMUser user=list2.get(0);
             
@@ -177,7 +177,7 @@ public class AnswerServiceImpl implements IAnswerService{
     }
 
     @Override
-    public Response query(Integer answer_id,String name) {
+    public Response query(Integer answer_id,Integer user_id) {
         Response res = new Response();
         AnswerResult result=new AnswerResult();
         
@@ -187,8 +187,8 @@ public class AnswerServiceImpl implements IAnswerService{
         IMUserExample userExample=new IMUserExample();
         IMUserExample.Criteria criteria2 =userExample.createCriteria();
         
-        if(!answer.getName().equals(name)){
-            criteria2.andNameEqualTo(answer.getName());
+        if(answer.getUserId()!=user_id){
+            criteria2.andIdEqualTo(answer.getUserId());
             List<IMUser> list2=userDao.selectByExample(userExample);
             IMUser user=list2.get(0);
             
@@ -214,7 +214,7 @@ public class AnswerServiceImpl implements IAnswerService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        criteria2.andNameEqualTo(name);
+        criteria2.andIdEqualTo(user_id);
         List<IMUser> list2=userDao.selectByExample(userExample);
         IMUser user=list2.get(0);
         
@@ -225,7 +225,7 @@ public class AnswerServiceImpl implements IAnswerService{
     
     private void setResult(AnswerResult result,Answer answer,IMUser user){
         result.setId(answer.getId());
-        result.setName(answer.getName());
+        result.setUserId(answer.getUserId());
         result.setProblemId(answer.getProblemId());
         result.setContent(answer.getContent());
         result.setAgreeNum(answer.getAgreeNum());

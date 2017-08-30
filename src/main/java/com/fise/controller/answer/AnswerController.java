@@ -32,7 +32,7 @@ public class AnswerController {
         Response res = new Response();
         logger.info(record.toString());
         
-        if(StringUtil.isEmpty(record.getName()) || record.getProblemId()==null || StringUtil.isEmpty(record.getContent())){
+        if(record.getUserId()==null || record.getProblemId()==null || StringUtil.isEmpty(record.getContent())){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -46,7 +46,7 @@ public class AnswerController {
         Response res = new Response();
         logger.info(page.toString());
         
-        if(StringUtil.isEmpty(page.getParam().getName())){
+        if(page.getParam().getUserId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -79,15 +79,15 @@ public class AnswerController {
     
     /*根据回答ID，查询更新消息*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, Object> map){
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("answer_id")==null || StringUtil.isEmpty(map.get("name")+"")){
+        if(map.get("answer_id")==null || map.get("user_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=answerService.query((Integer)map.get("answer_id"),map.get("name")+"");
+        res=answerService.query(map.get("answer_id"),map.get("user_id"));
         return res;
     }
 }

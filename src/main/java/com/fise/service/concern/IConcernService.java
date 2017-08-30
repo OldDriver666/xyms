@@ -11,8 +11,8 @@ public interface IConcernService {
     public Response queryisConcern(Concern record);
     
     /*查询用户关注的问题*/
-    public Response queryConcerns(String name);
+    public Response queryConcerns(Integer user_id);
     
     /*根据问题ID，查询关注问题详情*/
-    public Response query(String name,Integer problem_id);
+    public Response query(Integer user_id,Integer problem_id);
 }

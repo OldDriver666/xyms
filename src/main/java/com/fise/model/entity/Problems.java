@@ -13,9 +13,10 @@ public class Problems implements Serializable {
     private Integer id;
 
     /**
-     * 用户名
+     * 用户id
      */
-    private String name;
+    @JsonProperty("user_id")
+    private Integer userId;
 
     /**
      * 话题
@@ -49,7 +50,7 @@ public class Problems implements Serializable {
      * 1-可用   0-删除
      */
     private Integer status;
-    
+
     @JsonProperty("school_id")
     private Integer schoolId;
 
@@ -73,12 +74,12 @@ public class Problems implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {

@@ -3,7 +3,7 @@
 <mapper namespace="com.fise.dao.AnswerMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.Answer">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="problem_id" jdbcType="INTEGER" property="problemId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="agree_num" jdbcType="INTEGER" property="agreeNum" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, problem_id, content, agree_num, comment_num, status, updated, created
+    id, user_id, problem_id, content, agree_num, comment_num, status, updated, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AnswerExample" resultMap="BaseResultMap">
     select
@@ -112,11 +112,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.Answer">
-    insert into Answer (id, name, problem_id, 
+    insert into Answer (id, user_id, problem_id, 
       content, agree_num, comment_num, 
       status, updated, created
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{problemId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
       #{content,jdbcType=VARCHAR}, #{agreeNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
       #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
       )
@@ -127,8 +127,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="problemId != null">
         problem_id,
@@ -156,8 +156,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="problemId != null">
         #{problemId,jdbcType=INTEGER},
@@ -194,8 +194,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.problemId != null">
         problem_id = #{record.problemId,jdbcType=INTEGER},
@@ -226,7 +226,7 @@
   <update id="updateByExample" parameterType="map">
     update Answer
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
       problem_id = #{record.problemId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
       agree_num = #{record.agreeNum,jdbcType=INTEGER},
@@ -241,8 +241,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.Answer">
     update Answer
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="problemId != null">
         problem_id = #{problemId,jdbcType=INTEGER},
@@ -270,7 +270,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.Answer">
     update Answer
-    set name = #{name,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=INTEGER},
       problem_id = #{problemId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       agree_num = #{agreeNum,jdbcType=INTEGER},

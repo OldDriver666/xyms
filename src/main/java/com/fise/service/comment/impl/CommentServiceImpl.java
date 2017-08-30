@@ -61,6 +61,7 @@ public class CommentServiceImpl implements ICommentService{
         
         Answer answer=answerDao.selectByPrimaryKey(record.getAnswerId());
         answer.setCommentNum(answer.getCommentNum()+1);
+        answer.setUpdated(DateUtil.getLinuxTimeStamp());
         answerDao.updateByPrimaryKeySelective(answer);
         
         Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
@@ -71,7 +72,7 @@ public class CommentServiceImpl implements ICommentService{
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
         
-        criteria.andFromNameEqualTo(record.getFromName());
+        criteria.andFromUseridEqualTo(record.getFromUserid());
         example.setOrderByClause("created desc");
         
         List<Comment> list=commentDao.selectByExample(example);
@@ -124,7 +125,8 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(list1,comment,result);
+            setNick(comment,result);
+            list1.add(result);
         }
         
         param.setResult(list1);
@@ -141,8 +143,8 @@ public class CommentServiceImpl implements ICommentService{
         criteria.andStatusEqualTo(1);
         example.setOrderByClause("created desc");
         
-        if(!StringUtil.isEmpty(page.getParam().getFromName())){
-            criteria.andFromNameEqualTo(page.getParam().getFromName());
+        if(page.getParam().getFromUserid()!=null){
+            criteria.andFromUseridEqualTo(page.getParam().getFromUserid());
         }
         
         List<Comment> list=commentDao.selectByPage(example, page);
@@ -173,7 +175,8 @@ public class CommentServiceImpl implements ICommentService{
                 
                 result.setAddreply((int)count-Integer.valueOf(value));
                 
-                setNick(listresult,c,result);
+                setNick(c,result);
+                listresult.add(result);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -186,7 +189,7 @@ public class CommentServiceImpl implements ICommentService{
     }
 
     @Override
-    public Response query(Integer comment_id,Integer page_no,String fromname) {
+    public Response query(Integer comment_id,Integer page_no,Integer from_userid) {
         Response res = new Response();
         List<CommentResult> list1=new ArrayList<>();
         
@@ -213,12 +216,13 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(list1,comment,result);           
+            setNick(comment,result);
+            list1.add(result);
         }
         
         param.setResult(list1);
         
-        if(!c.getFromName().equals(fromname)){
+        if(c.getFromUserid()!=from_userid){
             return res.success(param);
         }
         
@@ -253,54 +257,30 @@ public class CommentServiceImpl implements ICommentService{
         
         CommentResult result=new CommentResult();
         
-        //查询用户昵称
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andNameEqualTo(comment.getFromName());
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
-        
-        result.setFromNick(user.getNick());
-        
-        criteria2.andNameEqualTo(comment.getToName());
-        List<IMUser> list3=userDao.selectByExample(userExample);
-        IMUser user1=list3.get(0);
-        
-        result.setToNick(user1.getNick());
-        
-        result.setId(comment.getId());
-        result.setFromName(comment.getFromName());
-        result.setToName(comment.getToName());
-        result.setProblemId(comment.getProblemId());
-        result.setAnswerId(comment.getAnswerId());
-        result.setCommentId(comment.getCommentId());
-        result.setContent(comment.getContent());
-        result.setStatus(comment.getStatus());
-        result.setUpdated(comment.getUpdated());
-        result.setCreated(comment.getCreated());
+        setNick(comment,result);
         
         return res.success(result);        
     }
 
-    private void setNick(List<CommentResult> list1,Comment comment,CommentResult result){
+    private void setNick(Comment comment,CommentResult result){
         //查询用户昵称
         IMUserExample userExample=new IMUserExample();
         IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andNameEqualTo(comment.getFromName());
+        criteria2.andIdEqualTo(comment.getFromUserid());
         List<IMUser> list2=userDao.selectByExample(userExample);
         IMUser user=list2.get(0);
         
         result.setFromNick(user.getNick());
         
-        criteria2.andNameEqualTo(comment.getToName());
+        criteria2.andIdEqualTo(comment.getToUserid());
         List<IMUser> list3=userDao.selectByExample(userExample);
         IMUser user1=list3.get(0);
         
         result.setToNick(user1.getNick());
         
         result.setId(comment.getId());
-        result.setFromName(comment.getFromName());
-        result.setToName(comment.getToName());
+        result.setFromUserid(comment.getFromUserid());
+        result.setToUserid(comment.getToUserid());
         result.setProblemId(comment.getProblemId());
         result.setAnswerId(comment.getAnswerId());
         result.setCommentId(comment.getCommentId());
@@ -309,6 +289,5 @@ public class CommentServiceImpl implements ICommentService{
         result.setUpdated(comment.getUpdated());
         result.setCreated(comment.getCreated());
         
-        list1.add(result);
     }
 }

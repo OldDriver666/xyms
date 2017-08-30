@@ -3,7 +3,7 @@
 <mapper namespace="com.fise.dao.AgreeMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.Agree">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="answer_id" jdbcType="INTEGER" property="answerId" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, answer_id, status, updated, created
+    id, user_id, answer_id, status, updated, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AgreeExample" resultMap="BaseResultMap">
     select
@@ -109,10 +109,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.Agree">
-    insert into Agree (id, name, answer_id, 
+    insert into Agree (id, user_id, answer_id, 
       status, updated, created
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{answerId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{answerId,jdbcType=INTEGER}, 
       #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
       )
   </insert>
@@ -122,8 +122,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="answerId != null">
         answer_id,
@@ -142,8 +142,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="answerId != null">
         #{answerId,jdbcType=INTEGER},
@@ -171,8 +171,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.answerId != null">
         answer_id = #{record.answerId,jdbcType=INTEGER},
@@ -194,7 +194,7 @@
   <update id="updateByExample" parameterType="map">
     update Agree
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
       answer_id = #{record.answerId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
       updated = #{record.updated,jdbcType=INTEGER},
@@ -206,8 +206,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.Agree">
     update Agree
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="answerId != null">
         answer_id = #{answerId,jdbcType=INTEGER},
@@ -226,7 +226,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.Agree">
     update Agree
-    set name = #{name,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=INTEGER},
       answer_id = #{answerId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       updated = #{updated,jdbcType=INTEGER},

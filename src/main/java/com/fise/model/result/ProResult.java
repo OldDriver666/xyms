@@ -15,7 +15,8 @@ public class ProResult implements Serializable{
     /**
      * 用户名
      */
-    private String name;
+    @JsonProperty("user_id")
+    private Integer userId;
     
     /*
      * 昵称
@@ -85,12 +86,12 @@ public class ProResult implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {

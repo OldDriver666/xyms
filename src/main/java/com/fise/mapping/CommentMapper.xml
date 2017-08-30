@@ -3,8 +3,8 @@
 <mapper namespace="com.fise.dao.CommentMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.Comment">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="from_name" jdbcType="VARCHAR" property="fromName" />
-    <result column="to_name" jdbcType="VARCHAR" property="toName" />
+    <result column="from_userid" jdbcType="INTEGER" property="fromUserid" />
+    <result column="to_userid" jdbcType="INTEGER" property="toUserid" />
     <result column="answer_id" jdbcType="INTEGER" property="answerId" />
     <result column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="problem_id" jdbcType="INTEGER" property="problemId" />
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, from_name, to_name, answer_id, comment_id, problem_id, content, status, updated, 
+    id, from_userid, to_userid, answer_id, comment_id, problem_id, content, status, updated, 
     created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.CommentExample" resultMap="BaseResultMap">
@@ -114,11 +114,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.Comment">
-    insert into Comment (id, from_name, to_name, 
+    insert into Comment (id, from_userid, to_userid, 
       answer_id, comment_id, problem_id, 
       content, status, updated, 
       created)
-    values (#{id,jdbcType=INTEGER}, #{fromName,jdbcType=VARCHAR}, #{toName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{fromUserid,jdbcType=INTEGER}, #{toUserid,jdbcType=INTEGER}, 
       #{answerId,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
       #{content,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, 
       #{created,jdbcType=INTEGER})
@@ -129,11 +129,11 @@
       <if test="id != null">
         id,
       </if>
-      <if test="fromName != null">
-        from_name,
+      <if test="fromUserid != null">
+        from_userid,
       </if>
-      <if test="toName != null">
-        to_name,
+      <if test="toUserid != null">
+        to_userid,
       </if>
       <if test="answerId != null">
         answer_id,
@@ -161,11 +161,11 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="fromName != null">
-        #{fromName,jdbcType=VARCHAR},
+      <if test="fromUserid != null">
+        #{fromUserid,jdbcType=INTEGER},
       </if>
-      <if test="toName != null">
-        #{toName,jdbcType=VARCHAR},
+      <if test="toUserid != null">
+        #{toUserid,jdbcType=INTEGER},
       </if>
       <if test="answerId != null">
         #{answerId,jdbcType=INTEGER},
@@ -202,11 +202,11 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.fromName != null">
-        from_name = #{record.fromName,jdbcType=VARCHAR},
+      <if test="record.fromUserid != null">
+        from_userid = #{record.fromUserid,jdbcType=INTEGER},
       </if>
-      <if test="record.toName != null">
-        to_name = #{record.toName,jdbcType=VARCHAR},
+      <if test="record.toUserid != null">
+        to_userid = #{record.toUserid,jdbcType=INTEGER},
       </if>
       <if test="record.answerId != null">
         answer_id = #{record.answerId,jdbcType=INTEGER},
@@ -237,8 +237,8 @@
   <update id="updateByExample" parameterType="map">
     update Comment
     set id = #{record.id,jdbcType=INTEGER},
-      from_name = #{record.fromName,jdbcType=VARCHAR},
-      to_name = #{record.toName,jdbcType=VARCHAR},
+      from_userid = #{record.fromUserid,jdbcType=INTEGER},
+      to_userid = #{record.toUserid,jdbcType=INTEGER},
       answer_id = #{record.answerId,jdbcType=INTEGER},
       comment_id = #{record.commentId,jdbcType=INTEGER},
       problem_id = #{record.problemId,jdbcType=INTEGER},
@@ -253,11 +253,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.Comment">
     update Comment
     <set>
-      <if test="fromName != null">
-        from_name = #{fromName,jdbcType=VARCHAR},
+      <if test="fromUserid != null">
+        from_userid = #{fromUserid,jdbcType=INTEGER},
       </if>
-      <if test="toName != null">
-        to_name = #{toName,jdbcType=VARCHAR},
+      <if test="toUserid != null">
+        to_userid = #{toUserid,jdbcType=INTEGER},
       </if>
       <if test="answerId != null">
         answer_id = #{answerId,jdbcType=INTEGER},
@@ -285,8 +285,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.Comment">
     update Comment
-    set from_name = #{fromName,jdbcType=VARCHAR},
-      to_name = #{toName,jdbcType=VARCHAR},
+    set from_userid = #{fromUserid,jdbcType=INTEGER},
+      to_userid = #{toUserid,jdbcType=INTEGER},
       answer_id = #{answerId,jdbcType=INTEGER},
       comment_id = #{commentId,jdbcType=INTEGER},
       problem_id = #{problemId,jdbcType=INTEGER},

@@ -45,7 +45,7 @@ public class ProblemController {
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        if(StringUtil.isEmpty(record.getName()) || StringUtil.isEmpty(record.getTitle())){
+        if(record.getUserId()==null || StringUtil.isEmpty(record.getTitle())){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -155,7 +155,7 @@ public class ProblemController {
         Response res = new Response();
         logger.info(param.toString());
         
-        if(StringUtil.isEmpty(param.getParam().getName())){
+        if(param.getParam().getUserId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -165,15 +165,15 @@ public class ProblemController {
     
     /*根据问题id，查询问题详情    */
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, Object> map){
+    public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("problem_id")==null || StringUtil.isEmpty(map.get("name")+"")){
+        if(map.get("problem_id")==null || map.get("user_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=problemService.query((Integer)map.get("problem_id"),(String)map.get("name")+"");
+        res=problemService.query(map.get("problem_id"),map.get("user_id"));
         return res;
     }
 }

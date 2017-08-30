@@ -46,7 +46,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         ProblemsExample example = new ProblemsExample();
         Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(record.getName());
+        criteria.andUserIdEqualTo(record.getUserId());
         example.setOrderByClause("created desc");
         
         List<Problems> list=problemsDao.selectByExample(example);
@@ -81,7 +81,6 @@ public class ProblemServiceImpl implements IProblemService{
         ProblemsExample example = new ProblemsExample();
         Criteria criteria=example.createCriteria();        
         example.setOrderByClause("created desc");
-        /*param.setPageSize(10);*/
         
         criteria.andStatusEqualTo(1);
         criteria.andSchoolIdEqualTo(param.getParam().getSchoolId());
@@ -98,7 +97,6 @@ public class ProblemServiceImpl implements IProblemService{
         Response res = new Response();
         List<ProResult> list1=new ArrayList<>();
         
-        /*param.setPageSize(10);*/
         param.getParam().setTitle("%"+param.getParam().getTitle()+"%");
         List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
         
@@ -121,7 +119,7 @@ public class ProblemServiceImpl implements IProblemService{
         Criteria criteria=example.createCriteria();        
         example.setOrderByClause("created desc");
         criteria.andStatusEqualTo(1);
-        criteria.andNameEqualTo(param.getParam().getName());
+        criteria.andUserIdEqualTo(param.getParam().getUserId());
         
         List<Problems> list=problemsDao.selectBypage(example, param);
         
@@ -153,7 +151,7 @@ public class ProblemServiceImpl implements IProblemService{
                 //查询用户昵称和头像
                 IMUserExample userExample=new IMUserExample();
                 IMUserExample.Criteria criteria2 =userExample.createCriteria();
-                criteria2.andNameEqualTo(problem.getName());
+                criteria2.andIdEqualTo(problem.getUserId());
                 List<IMUser> list2=userDao.selectByExample(userExample);
                 IMUser user=list2.get(0);
                 
@@ -173,7 +171,7 @@ public class ProblemServiceImpl implements IProblemService{
     }
 
     @Override
-    public Response query(Integer problem_id,String name) {
+    public Response query(Integer problem_id,Integer user_id) {
         Response res = new Response();
         ProResult result=new ProResult();
         
@@ -184,8 +182,8 @@ public class ProblemServiceImpl implements IProblemService{
         
         Problems problem=problemsDao.selectByPrimaryKey(problem_id);
         
-        if(!problem.getName().equals(name)){
-            criteria2.andNameEqualTo(problem.getName());
+        if(problem.getUserId()!=user_id){
+            criteria2.andIdEqualTo(problem.getUserId());
             List<IMUser> list2=userDao.selectByExample(userExample);
             IMUser user=list2.get(0);
             
@@ -211,7 +209,7 @@ public class ProblemServiceImpl implements IProblemService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        criteria2.andNameEqualTo(name);
+        criteria2.andIdEqualTo(user_id);
         List<IMUser> list2=userDao.selectByExample(userExample);
         IMUser user=list2.get(0);
         
@@ -240,7 +238,7 @@ public class ProblemServiceImpl implements IProblemService{
             //查询用户昵称和头像
             IMUserExample userExample=new IMUserExample();
             IMUserExample.Criteria criteria2 =userExample.createCriteria();
-            criteria2.andNameEqualTo(problem.getName());
+            criteria2.andIdEqualTo(problem.getUserId());
             List<IMUser> list2=userDao.selectByExample(userExample);
             IMUser user=list2.get(0);
             
@@ -266,7 +264,7 @@ public class ProblemServiceImpl implements IProblemService{
     
     private void setResult(ProResult result,Problems problem,IMUser user){
         result.setId(problem.getId());
-        result.setName(problem.getName());
+        result.setUserId(problem.getUserId());
         result.setTitle(problem.getTitle());
         result.setContent(problem.getContent());
         result.setPicture(problem.getPicture());

@@ -28,7 +28,7 @@ http://192.168.2.196:8787/
 可以上传图片文件
 ```
 {
-     "name":"",       //必填-用户名 
+     "user_id":x,       //必填-用户id 
      "title":"",      //必填-话题
      "school_id":x,   //必填-用户学校id
      "content":""     //选填-提问内容
@@ -70,7 +70,7 @@ null 没有数据返回 看code是否成功
       "result": [
          {
             "id": 23,
-            "name": "3",
+            "user_id":x,
             "nick": "3",
             "avatar": "g0/default/default.png",
             "schoolname": "北京市延庆县第一中学",
@@ -86,7 +86,7 @@ null 没有数据返回 看code是否成功
          },
          {
             "id": 22,
-            "name": "3",
+            "user_id":x
             "nick": "3",
             "avatar": "g0/default/default.png",
             "schoolname": "北京市延庆县第一中学",
@@ -154,7 +154,7 @@ null 没有数据返回 看code是否成功
       "result": [
          {
             "id": 5,
-            "name": "3",
+            "user_id":x,
             "title": "bcd",
             "content": "",
             "picture": "",
@@ -164,7 +164,7 @@ null 没有数据返回 看code是否成功
          },
          {
             "id": 4,
-            "name": "2",
+            "user_id":x,
             "title": "abc",
             "content": "",
             "picture": "",
@@ -187,7 +187,7 @@ null 没有数据返回 看code是否成功
 ```
 {
      "param":{
-                  "name":x            //必填-用户名
+                  "user_id":x            //必填-用户id
               },
      "page_no":x                       //选填-默认1          
 }
@@ -208,7 +208,7 @@ null 没有数据返回 看code是否成功
          {
             "addBrowseCount": 293,
             "id": 33,
-            "name": "3",
+            "user_id":x,
             "nick": "3",
             "avatar": "g0/default/default.png",
             "schoolname": null,
@@ -237,7 +237,7 @@ null 没有数据返回 看code是否成功
 ```
 {
      "problem_id":x,          //必填-问题id
-     "name":""                //必填-用户名
+     "user_id":x                //必填-用户id
 }
 ```
 ####回复
@@ -249,7 +249,7 @@ null 没有数据返回 看code是否成功
       "addAnswerCount": 0,           //没有意义
       "addBrowseCount": 0,           //没有意义
       "id": 5,
-      "name": "3",
+      "user_id":x,
       "nick": "3",
       "avatar": "g0/default/default.png",
       "schoolname": null,
@@ -318,7 +318,7 @@ null 没有数据返回 看code是否成功
             "addAgreeCount": 0,
             "addCommentCount": 0,
             "id": 33,
-            "name": "3",
+            "user_id":x,
             "nick": "3",
             "avatar": "g0/default/default.png",
             "content": "阿里郎",
@@ -364,7 +364,7 @@ null 没有数据返回 看code是否成功
             "addAgreeCount": 0,
             "addCommentCount": 0,
             "id": 9,
-            "name": "3",
+            "user_id":x,
             "nick": "3",
             "avatar": "g0/default/default.png",
             "content": "df",
@@ -389,7 +389,7 @@ null 没有数据返回 看code是否成功
 ```
 {
      "answer_id":x,         //必填-回答id
-     "name":""              //必填-用户名
+     "user_id":x              //必填-用户id
 }
 ```
 ####回复
@@ -419,7 +419,7 @@ null 没有数据返回 看code是否成功
 ####请求
 ```
 {
-     "name":"",        //必填-用户名
+     "user_id":x,        //必填-用户id
      "answer_id":x     //必填-回答ID
 }
 ```
@@ -442,7 +442,7 @@ msg  为已点赞或 已取消点赞
 ####请求
 ```
 {
-     "name":"",            //必填-用户名
+     "user_id":x,            //必填-用户名
      "problem_id":x        //必填-问题ID
 }
 ```
@@ -465,7 +465,7 @@ msg  为已关注或已取消关注
 ####请求
 ```
 {
-     "name":"",       //必填-用户名
+     "user_id":x,       //必填-用户id
      "problem_id":x   //必填-问题ID
 }
 ```
@@ -488,7 +488,7 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "name":""         //必填-用户名
+     "user_id":x         //必填-用户id
 }
 ```
 ####回复
@@ -508,7 +508,7 @@ msg 为已关注或未关注
             "addAnswerCount": 3,
             "addBrowseCount": 3,
             "id": 20,
-            "name": "3",
+            "user_id":x,
             "nick": "3",
             "avatar": "g0/default/default.png",
             "schoolname": null,
@@ -536,8 +536,8 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "id":"",                    //必填-问题id
-     "name":""                   //必填-用户名
+     "id":x,                       //必填-问题id
+     "user_id":x                   //必填-用户id
 }
 ```
 ####回复
@@ -549,7 +549,7 @@ msg 为已关注或未关注
       "addAnswerCount": 0,
       "addBrowseCount": 0,
       "id": 22,
-      "name": "3",
+      "user_id":x,
       "nick": "3",
       "avatar": "g0/default/default.png",
       "schoolname": null,
@@ -575,8 +575,8 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "from_name":"",          //必填-用户名
-     "to_name":"",            //选填-回复人用户名
+     "from_userid":"",          //必填-用户id
+     "to_userid":"",            //选填-回复人用户id
      "answer_id":x,           //必填-回答id
      "comment_id":x,          //选填-评论id
      "problem_id":x,          //必填-问题id
@@ -679,7 +679,7 @@ msg 为已关注或未关注
 ```
 {
      "param":{
-                  "from_name":""       //必填-用户名
+                  "from_userid":""       //必填-用户id
              },
      "page_no":x                       //选填-当前页
 }
@@ -727,9 +727,9 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "comment_id":x,             //必填-评论id
+     "id":x,                     //必填-评论id
      "page_no":x,                //必填-当前页面数
-     "fromname":""               //必填-用户名
+     "from_userid":x             //必填-用户id
 }
 ```
 
@@ -812,7 +812,7 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "name":""            //必填-用户名
+     "user_id":x            //必填-用户id
 }
 ```
 ####回复
