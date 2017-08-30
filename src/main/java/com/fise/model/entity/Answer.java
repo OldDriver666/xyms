@@ -45,6 +45,11 @@ public class Answer implements Serializable {
     private Integer status;
 
     /**
+     * 更新时间
+     */
+    private Integer updated;
+
+    /**
      * 创建时间
      */
     private Integer created;
@@ -105,6 +110,14 @@ public class Answer implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
     }
 
     public Integer getCreated() {

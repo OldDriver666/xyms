@@ -35,6 +35,7 @@ public class AgreeServiceImpl implements IAgreeService{
         List<Agree> list=agreeDao.selectByExample(example);
         
         if(list.size()==0){
+            agree.setUpdated(DateUtil.getLinuxTimeStamp());
             agree.setCreated(DateUtil.getLinuxTimeStamp());
             agreeDao.insertSelective(agree);
             res.success();
@@ -42,6 +43,7 @@ public class AgreeServiceImpl implements IAgreeService{
             
             Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
             answer.setAgreeNum(answer.getAgreeNum()+1);
+            answer.setUpdated(DateUtil.getLinuxTimeStamp());
             answerDao.updateByPrimaryKey(answer);
             return res;
         }
@@ -49,22 +51,27 @@ public class AgreeServiceImpl implements IAgreeService{
         Agree agre=list.get(0);
         if(agre.getStatus()==1){
             agre.setStatus(0);
+            agre.setUpdated(DateUtil.getLinuxTimeStamp());
             agreeDao.updateByPrimaryKeySelective(agre);
             res.success();
             res.setMsg("已取消点赞");
             
             Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
             answer.setAgreeNum(answer.getAgreeNum()-1);
+            answer.setUpdated(DateUtil.getLinuxTimeStamp());
             answerDao.updateByPrimaryKey(answer);
             return res;
         }
+        
         agre.setStatus(1);
+        agre.setUpdated(DateUtil.getLinuxTimeStamp());
         agreeDao.updateByPrimaryKeySelective(agre);
         res.success();
         res.setMsg("已点赞");
         
         Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
         answer.setAgreeNum(answer.getAgreeNum()+1);
+        answer.setUpdated(DateUtil.getLinuxTimeStamp());
         answerDao.updateByPrimaryKey(answer);
         return res;
 

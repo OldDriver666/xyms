@@ -28,6 +28,11 @@ public class Concern implements Serializable {
     private Integer status;
 
     /**
+     * 更新时间
+     */
+    private Integer updated;
+
+    /**
      * 创建时间
      */
     private Integer created;
@@ -66,6 +71,14 @@ public class Concern implements Serializable {
         this.status = status;
     }
 
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
+    }
+
     public Integer getCreated() {
         return created;
     }
@@ -75,8 +88,8 @@ public class Concern implements Serializable {
     }
 
     @Override
-    public String toString() {        
+    public String toString() {
         return JsonUtil.toJson(this);
     }
-       
+    
 }

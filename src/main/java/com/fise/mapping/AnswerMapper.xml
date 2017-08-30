@@ -9,6 +9,7 @@
     <result column="agree_num" jdbcType="INTEGER" property="agreeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, problem_id, content, agree_num, comment_num, status, created
+    id, name, problem_id, content, agree_num, comment_num, status, updated, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AnswerExample" resultMap="BaseResultMap">
     select
@@ -113,10 +114,12 @@
   <insert id="insert" parameterType="com.fise.model.entity.Answer">
     insert into Answer (id, name, problem_id, 
       content, agree_num, comment_num, 
-      status, created)
+      status, updated, created
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{problemId,jdbcType=INTEGER}, 
       #{content,jdbcType=VARCHAR}, #{agreeNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{created,jdbcType=INTEGER})
+      #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.Answer">
     insert into Answer
@@ -141,6 +144,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="updated != null">
+        updated,
       </if>
       <if test="created != null">
         created,
@@ -167,6 +173,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
       </if>
       <if test="created != null">
         #{created,jdbcType=INTEGER},
@@ -203,6 +212,9 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=INTEGER},
       </if>
@@ -220,6 +232,7 @@
       agree_num = #{record.agreeNum,jdbcType=INTEGER},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
+      updated = #{record.updated,jdbcType=INTEGER},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -246,6 +259,9 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=INTEGER},
       </if>
@@ -260,6 +276,7 @@
       agree_num = #{agreeNum,jdbcType=INTEGER},
       comment_num = #{commentNum,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+      updated = #{updated,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

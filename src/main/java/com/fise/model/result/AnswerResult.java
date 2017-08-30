@@ -55,6 +55,7 @@ public class AnswerResult implements Serializable{
      */
     private Integer status;
 
+    private Integer updated;
     /**
      * 创建时间
      */
@@ -131,6 +132,12 @@ public class AnswerResult implements Serializable{
     }
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+    public Integer getUpdated() {
+        return updated;
+    }
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
     }
     
     

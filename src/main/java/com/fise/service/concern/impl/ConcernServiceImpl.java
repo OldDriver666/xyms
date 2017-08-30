@@ -50,6 +50,7 @@ public class ConcernServiceImpl implements IConcernService{
         List<Concern> list=concernDao.selectByExample(example);
         
         if(list.size()==0){
+            record.setUpdated(DateUtil.getLinuxTimeStamp());
             record.setCreated(DateUtil.getLinuxTimeStamp());
             concernDao.insertSelective(record);
             res.success();
@@ -64,6 +65,7 @@ public class ConcernServiceImpl implements IConcernService{
         Concern concern=list.get(0);
         if(concern.getStatus()==1){
             concern.setStatus(0);
+            concern.setUpdated(DateUtil.getLinuxTimeStamp());
             concernDao.updateByPrimaryKeySelective(concern);
             res.success();
             res.setMsg("已取消关注");
@@ -74,6 +76,7 @@ public class ConcernServiceImpl implements IConcernService{
         }
         
         concern.setStatus(1);
+        concern.setUpdated(DateUtil.getLinuxTimeStamp());
         concernDao.updateByPrimaryKeySelective(concern);
         res.success();
         res.setMsg("已关注");
@@ -202,25 +205,7 @@ public class ConcernServiceImpl implements IConcernService{
                 
                 pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
                 
-                //查询用户昵称和头像
-                IMUserExample userExample=new IMUserExample();
-                IMUserExample.Criteria criteria2 =userExample.createCriteria();
-                criteria2.andNameEqualTo(problem.getName());
-                List<IMUser> list2=userDao.selectByExample(userExample);
-                IMUser user=list2.get(0);
-                
-                pResult.setNick(user.getNick());
-                pResult.setAvatar(user.getAvatar());
-                
-                pResult.setId(problem.getId());
-                pResult.setName(problem.getName());
-                pResult.setTitle(problem.getTitle());
-                pResult.setContent(problem.getContent());
-                pResult.setPicture(problem.getPicture());
-                pResult.setStatus(problem.getStatus());
-                pResult.setAnswerNum(problem.getAnswerNum());
-                pResult.setBrowseNum(problem.getBrowseNum());
-                pResult.setCreated(problem.getCreated());
+                setResult(pResult,problem);
                 
                 listResult.add(pResult);
             }
@@ -244,25 +229,7 @@ public class ConcernServiceImpl implements IConcernService{
         
         ProResult pResult=new ProResult();
         
-        //查询用户昵称和头像
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andNameEqualTo(problem.getName());
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
-        
-        pResult.setNick(user.getNick());
-        pResult.setAvatar(user.getAvatar());
-        
-        pResult.setId(problem.getId());
-        pResult.setName(problem.getName());
-        pResult.setTitle(problem.getTitle());
-        pResult.setContent(problem.getContent());
-        pResult.setPicture(problem.getPicture());
-        pResult.setStatus(problem.getStatus());
-        pResult.setAnswerNum(problem.getAnswerNum());
-        pResult.setBrowseNum(problem.getBrowseNum());
-        pResult.setCreated(problem.getCreated());
+        setResult(pResult,problem);
         
         Jedis jedis = null;
         try {
@@ -284,5 +251,26 @@ public class ConcernServiceImpl implements IConcernService{
         return res;
     }
     
-    
+    private void setResult(ProResult pResult,Problems problem){
+        //查询用户昵称和头像
+        IMUserExample userExample=new IMUserExample();
+        IMUserExample.Criteria criteria2 =userExample.createCriteria();
+        criteria2.andNameEqualTo(problem.getName());
+        List<IMUser> list2=userDao.selectByExample(userExample);
+        IMUser user=list2.get(0);
+        
+        pResult.setNick(user.getNick());
+        pResult.setAvatar(user.getAvatar());
+        
+        pResult.setId(problem.getId());
+        pResult.setName(problem.getName());
+        pResult.setTitle(problem.getTitle());
+        pResult.setContent(problem.getContent());
+        pResult.setPicture(problem.getPicture());
+        pResult.setStatus(problem.getStatus());
+        pResult.setAnswerNum(problem.getAnswerNum());
+        pResult.setBrowseNum(problem.getBrowseNum());
+        pResult.setUpdated(problem.getUpdated());
+        pResult.setCreated(problem.getCreated());
+    }
 }

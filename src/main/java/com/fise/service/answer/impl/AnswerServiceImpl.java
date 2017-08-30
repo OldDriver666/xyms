@@ -231,6 +231,7 @@ public class AnswerServiceImpl implements IAnswerService{
         result.setAgreeNum(answer.getAgreeNum());
         result.setCommentNum(answer.getCommentNum());
         result.setStatus(answer.getStatus());
+        result.setUpdated(answer.getUpdated());
         result.setCreated(answer.getCreated());
         result.setNick(user.getNick());
         result.setAvatar(user.getAvatar());
