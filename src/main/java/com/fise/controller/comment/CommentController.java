@@ -15,7 +15,6 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Comment;
 import com.fise.service.comment.ICommentService;
-import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/comment")

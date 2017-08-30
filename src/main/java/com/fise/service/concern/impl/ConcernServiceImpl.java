@@ -157,7 +157,7 @@ public class ConcernServiceImpl implements IConcernService{
 
 
     @Override
-    public Response queryConcerns(Integer user_id) {
+    public Response queryConcerns(Integer user_id,Integer page_no) {
         Response res = new Response();
         
         ConcernExample example = new ConcernExample();
@@ -178,6 +178,7 @@ public class ConcernServiceImpl implements IConcernService{
         cri.andIdIn(listint);
         
         Page<Problems> param = new Page<Problems>();
+        param.setPageNo(page_no);
         
         List<Problems> lProblems=problemDao.selectBypage(proExample, param);
         

@@ -13,7 +13,6 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.Agree;
 import com.fise.service.agree.IAgreeService;
-import com.fise.utils.StringUtil;
 
 @RestController
 public class AgreeController {

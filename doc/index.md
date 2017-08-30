@@ -276,7 +276,7 @@ null 没有数据返回 看code是否成功
 ####请求
 ```
 {
-     "name":"",             //必填-用户名
+     "user_id":x,             //必填-用户id
      "problem_id":x,        //必填-问题id
      "content":""           //必填-内容
 }
@@ -296,7 +296,7 @@ null 没有数据返回 看code是否成功
 ```
 {
      "param":{
-                  "name":""              //必填-用户名
+                  "user_id":x              //必填-用户id
              },
      "page_no":x                          //选填-默认1         
 }
@@ -489,6 +489,7 @@ msg 为已关注或未关注
 ```
 {
      "user_id":x         //必填-用户id
+     "page_no":x         //选填-页面数   默认1
 }
 ```
 ####回复
@@ -626,8 +627,8 @@ msg 为已关注或未关注
             "status": 1,
             "updated": 1503655279,
             "created": 1503655279,
-            "from_name": "3",
-            "to_name": "3",
+            "from_userid": 3,
+            "to_userid": 3,
             "answer_id": 17,
             "comment_id": 166,
             "problem_id": 20
@@ -642,8 +643,8 @@ msg 为已关注或未关注
             "status": 1,
             "updated": 1503655270,
             "created": 1503655270,
-            "from_name": "3",
-            "to_name": "3",
+            "from_userid": 3,
+            "to_userid": 3,
             "answer_id": 17,
             "comment_id": 115,
             "problem_id": 20
@@ -658,8 +659,8 @@ msg 为已关注或未关注
             "status": 1,
             "updated": 1503654411,
             "created": 1503654411,
-            "from_name": "3",
-            "to_name": "3",
+            "from_userid": 3,
+            "to_userid": 3,
             "answer_id": 17,
             "comment_id": 148,
             "problem_id": 20
@@ -707,8 +708,8 @@ msg 为已关注或未关注
             "status": 1,
             "updated": 1503655279,
             "created": 1503655279,
-            "from_name": "3",
-            "to_name": "3",
+            "from_userid": 3,
+            "to_userid": 3,
             "answer_id": 17,
             "comment_id": 166,
             "problem_id": 20
@@ -756,8 +757,8 @@ msg 为已关注或未关注
             "status": 1,
             "updated": 1503545860,
             "created": 1503545860,
-            "from_name": "3",
-            "to_name": "3",
+            "from_userid": 3,
+            "to_userid": 3,
             "answer_id": 22,
             "comment_id": 28,
             "problem_id": 25
@@ -794,8 +795,8 @@ msg 为已关注或未关注
       "status": 1,
       "updated": 1503483792,
       "created": 1503483792,
-      "from_name": "3",
-      "to_name": "3",
+      "from_userid": 3,
+      "to_userid": 3,
       "answer_id": 17,
       "comment_id": 0,
       "problem_id": 20

@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +22,7 @@ import com.fise.base.Response;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-    private Logger logger=Logger.getLogger(getClass());
+    
      
     @RequestMapping(value="/fileupload",method=RequestMethod.POST)
     public Response fileupload(@RequestBody MultipartFile file,HttpServletRequest req) throws IOException{

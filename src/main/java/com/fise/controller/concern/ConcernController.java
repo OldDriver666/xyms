@@ -15,7 +15,6 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.Concern;
 import com.fise.service.concern.IConcernService;
-import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/concern")
@@ -63,7 +62,7 @@ public class ConcernController {
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=concernService.queryConcerns(map.get("user_id"));
+        res=concernService.queryConcerns(map.get("user_id"),map.get("page_no"));
         return res;
     }
     
