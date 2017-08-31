@@ -276,10 +276,14 @@ public class CommentServiceImpl implements ICommentService{
         
         criteria2.andIdEqualTo(comment.getToUserid());
         List<IMUser> list3=userDao.selectByExample(userExample);
-        IMUser user1=list3.get(0);
         
-        result.setToNick(user1.getNick());
-        result.setToAvatar(user1.getAvatar());
+        //判断是否有回复对象
+        if(list3.size()!=0){
+            IMUser user1=list3.get(0);
+            
+            result.setToNick(user1.getNick());
+            result.setToAvatar(user1.getAvatar());
+        }
         
         result.setId(comment.getId());
         result.setFromUserid(comment.getFromUserid());
