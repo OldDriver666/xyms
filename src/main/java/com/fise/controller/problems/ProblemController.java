@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.Concern;
 import com.fise.model.entity.Problems;
+import com.fise.service.concern.IConcernService;
 import com.fise.service.problems.IProblemService;
 import com.fise.utils.StringUtil;
 
@@ -34,6 +36,9 @@ public class ProblemController {
     
     @Resource
     IProblemService problemService;
+    
+    @Resource
+    IConcernService concernService;
     
     /*提交问题*/
     @RequestMapping(value="/insert",method=RequestMethod.POST)
@@ -82,7 +87,9 @@ public class ProblemController {
                         
         record.setPicture(pictureURL);
         res=problemService.insert(record);
-        return res;
+        //默认已经关注
+        res=concernService.addConcern((Concern)res.getData());
+        return res.success();
     }
     
     /*查询问题    分页形式*/

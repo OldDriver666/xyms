@@ -12,6 +12,7 @@ import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
+import com.fise.model.entity.Concern;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.Problems;
@@ -51,6 +52,11 @@ public class ProblemServiceImpl implements IProblemService{
         List<Problems> list=problemsDao.selectByExample(example);
         Problems problem=list.get(0);
         
+        //获取problemid和user_id
+        Concern concern = new Concern();
+        concern.setProblemId(problem.getId());
+        concern.setUserId(problem.getUserId());
+        
         Jedis jedis=null;
         try {
             //在redis里存入该问题的浏览量
@@ -69,7 +75,7 @@ public class ProblemServiceImpl implements IProblemService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
                
-        return res.success();
+        return res.success(concern);
     }
 
     @Override

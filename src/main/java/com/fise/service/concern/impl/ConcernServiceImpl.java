@@ -15,7 +15,6 @@ import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.ConcernExample;
 import com.fise.model.entity.IMUser;
-import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.ConcernExample.Criteria;
 import com.fise.model.result.ProResult;
 import com.fise.model.entity.Problems;
