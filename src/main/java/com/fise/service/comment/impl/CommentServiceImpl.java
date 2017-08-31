@@ -169,6 +169,7 @@ public class CommentServiceImpl implements ICommentService{
                 criter.andCommentIdEqualTo(c.getId());
                                 
                 long count=commentDao.countByExample(example);
+                result.setCount((int)count);
                 
                 String key =c.getId()+"reply";
                 String value=jedis.get(key);
@@ -271,12 +272,14 @@ public class CommentServiceImpl implements ICommentService{
         IMUser user=list2.get(0);
         
         result.setFromNick(user.getNick());
+        result.setFromAvatar(user.getAvatar());
         
         criteria2.andIdEqualTo(comment.getToUserid());
         List<IMUser> list3=userDao.selectByExample(userExample);
         IMUser user1=list3.get(0);
         
         result.setToNick(user1.getNick());
+        result.setToAvatar(user1.getAvatar());
         
         result.setId(comment.getId());
         result.setFromUserid(comment.getFromUserid());

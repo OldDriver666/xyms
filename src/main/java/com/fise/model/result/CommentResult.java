@@ -22,6 +22,8 @@ public class CommentResult implements Serializable{
     private Integer fromUserid;
     
     private String fromNick;
+    
+    private String fromAvatar;
 
     /**
      * 回复对方
@@ -31,6 +33,7 @@ public class CommentResult implements Serializable{
     
     private String toNick;
 
+    private String toAvatar;
     /**
      * 回答问题ID
      */
@@ -153,6 +156,18 @@ public class CommentResult implements Serializable{
     }
     public void setToNick(String toNick) {
         this.toNick = toNick;
+    }
+    public String getFromAvatar() {
+        return fromAvatar;
+    }
+    public void setFromAvatar(String fromAvatar) {
+        this.fromAvatar = fromAvatar;
+    }
+    public String getToAvatar() {
+        return toAvatar;
+    }
+    public void setToAvatar(String toAvatar) {
+        this.toAvatar = toAvatar;
     }
     
     
