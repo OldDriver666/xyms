@@ -254,11 +254,7 @@ public class ConcernServiceImpl implements IConcernService{
     
     private void setResult(ProResult pResult,Problems problem){
         //查询用户昵称和头像
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andIdEqualTo(problem.getUserId());
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
+        IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
         
         pResult.setNick(user.getNick());
         pResult.setAvatar(user.getAvatar());

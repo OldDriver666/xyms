@@ -14,7 +14,6 @@ import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
-import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.ProblemsExample;
 import com.fise.model.entity.ProblemsExample.Criteria;
@@ -125,10 +124,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         Page<ProResult> page = new Page<ProResult>();
         
-        page.setPageNo(param.getPageNo());
-        page.setPageSize(param.getPageSize());
-        page.setTotalCount(param.getTotalCount());
-        page.setTotalPageCount(param.getTotalPageCount());
+        setPage(page,param);
         
         Jedis jedis=null;
         List<ProResult> listResult = new ArrayList<>();
@@ -148,12 +144,8 @@ public class ProblemServiceImpl implements IProblemService{
                 
                 result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
                 
-                //查询用户昵称和头像
-                IMUserExample userExample=new IMUserExample();
-                IMUserExample.Criteria criteria2 =userExample.createCriteria();
-                criteria2.andIdEqualTo(problem.getUserId());
-                List<IMUser> list2=userDao.selectByExample(userExample);
-                IMUser user=list2.get(0);
+                //查询用户昵称和头像                
+                IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
                 
                 setResult(result, problem, user);
                 
@@ -174,18 +166,12 @@ public class ProblemServiceImpl implements IProblemService{
     public Response query(Integer problem_id,Integer user_id) {
         Response res = new Response();
         ProResult result=new ProResult();
-        
-        //查询用户昵称和头像
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        
-        
+                
         Problems problem=problemsDao.selectByPrimaryKey(problem_id);
         
         if(problem.getUserId()!=user_id){
-            criteria2.andIdEqualTo(problem.getUserId());
-            List<IMUser> list2=userDao.selectByExample(userExample);
-            IMUser user=list2.get(0);
+            //查询用户昵称和头像
+            IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             
             setResult(result, problem, user);
             
@@ -209,9 +195,7 @@ public class ProblemServiceImpl implements IProblemService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        criteria2.andIdEqualTo(user_id);
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
+        IMUser user=userDao.selectByPrimaryKey(user_id);
         
         setResult(result, problem, user);
         
@@ -236,11 +220,7 @@ public class ProblemServiceImpl implements IProblemService{
             problemsDao.updateByPrimaryKeySelective(problem);
             
             //查询用户昵称和头像
-            IMUserExample userExample=new IMUserExample();
-            IMUserExample.Criteria criteria2 =userExample.createCriteria();
-            criteria2.andIdEqualTo(problem.getUserId());
-            List<IMUser> list2=userDao.selectByExample(userExample);
-            IMUser user=list2.get(0);
+            IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             
             //查询学校名字
             IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());
@@ -253,10 +233,7 @@ public class ProblemServiceImpl implements IProblemService{
                
         Page<ProResult> page = new Page<ProResult>();
         
-        page.setPageNo(param.getPageNo());
-        page.setPageSize(param.getPageSize());
-        page.setTotalCount(param.getTotalCount());
-        page.setTotalPageCount(param.getTotalPageCount());
+        setPage(page,param);
         page.setResult(list1);
         
         return page;
@@ -276,5 +253,12 @@ public class ProblemServiceImpl implements IProblemService{
         result.setCreated(problem.getCreated());
         result.setNick(user.getNick());
         result.setAvatar(user.getAvatar());
+    }
+    
+    private void setPage(Page<ProResult> page,Page<Problems> param){
+        page.setPageNo(param.getPageNo());
+        page.setPageSize(param.getPageSize());
+        page.setTotalCount(param.getTotalCount());
+        page.setTotalPageCount(param.getTotalPageCount());
     }
 }

@@ -41,10 +41,7 @@ public class AgreeServiceImpl implements IAgreeService{
             res.success();
             res.setMsg("已点赞");
             
-            Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
-            answer.setAgreeNum(answer.getAgreeNum()+1);
-            answer.setUpdated(DateUtil.getLinuxTimeStamp());
-            answerDao.updateByPrimaryKey(answer);
+            addAnswerNum(agree,1);
             return res;
         }
         
@@ -56,10 +53,7 @@ public class AgreeServiceImpl implements IAgreeService{
             res.success();
             res.setMsg("已取消点赞");
             
-            Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
-            answer.setAgreeNum(answer.getAgreeNum()-1);
-            answer.setUpdated(DateUtil.getLinuxTimeStamp());
-            answerDao.updateByPrimaryKey(answer);
+            addAnswerNum(agree,-1);
             return res;
         }
         
@@ -69,12 +63,16 @@ public class AgreeServiceImpl implements IAgreeService{
         res.success();
         res.setMsg("已点赞");
         
-        Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
-        answer.setAgreeNum(answer.getAgreeNum()+1);
-        answer.setUpdated(DateUtil.getLinuxTimeStamp());
-        answerDao.updateByPrimaryKey(answer);
+        addAnswerNum(agree,1);
         return res;
 
+    }
+    
+    private void addAnswerNum(Agree agree,Integer num){
+        Answer answer=answerDao.selectByPrimaryKey(agree.getAnswerId());
+        answer.setAgreeNum(answer.getAgreeNum()+num);
+        answer.setUpdated(DateUtil.getLinuxTimeStamp());
+        answerDao.updateByPrimaryKey(answer);
     }
 
 }

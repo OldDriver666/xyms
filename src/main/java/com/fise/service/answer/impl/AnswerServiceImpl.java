@@ -15,7 +15,6 @@ import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.IMUser;
-import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.AnswerExample.Criteria;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.AnswerResult;
@@ -89,11 +88,7 @@ public class AnswerServiceImpl implements IAnswerService{
         List<Answer> list=answerDao.selectBypage(example, page);
         
         //查询用户昵称和头像
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andIdEqualTo(page.getParam().getUserId());
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
+        IMUser user=userDao.selectByPrimaryKey(page.getParam().getUserId());
         
         Page<AnswerResult> reslut = new Page<AnswerResult>();
         
@@ -154,11 +149,7 @@ public class AnswerServiceImpl implements IAnswerService{
             AnswerResult result=new AnswerResult();
             
             //查询用户昵称和头像
-            IMUserExample userExample=new IMUserExample();
-            IMUserExample.Criteria criteria2 =userExample.createCriteria();
-            criteria2.andIdEqualTo(answer.getUserId());
-            List<IMUser> list2=userDao.selectByExample(userExample);
-            IMUser user=list2.get(0);
+            IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
             setResult(result,answer,user);
             
@@ -182,15 +173,10 @@ public class AnswerServiceImpl implements IAnswerService{
         AnswerResult result=new AnswerResult();
         
         Answer answer =answerDao.selectByPrimaryKey(answer_id);
-        
-        //查询用户昵称和头像
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        
+                
         if(answer.getUserId()!=user_id){
-            criteria2.andIdEqualTo(answer.getUserId());
-            List<IMUser> list2=userDao.selectByExample(userExample);
-            IMUser user=list2.get(0);
+            //查询用户昵称和头像
+            IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
             setResult(result,answer,user);
             
@@ -214,9 +200,8 @@ public class AnswerServiceImpl implements IAnswerService{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
-        criteria2.andIdEqualTo(user_id);
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
+        //查询用户昵称和头像
+        IMUser user=userDao.selectByPrimaryKey(user_id);
         
         setResult(result,answer,user);
         

@@ -18,7 +18,6 @@ import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import com.fise.model.entity.IMUser;
-import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.CommentExample.Criteria;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.CommentResult;
@@ -65,6 +64,7 @@ public class CommentServiceImpl implements ICommentService{
         answerDao.updateByPrimaryKeySelective(answer);
         
         Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
+        //问题的回答数=回答数+评论数
         problem.setAnswerNum(problem.getAnswerNum()+1);
         problem.setUpdated(DateUtil.getLinuxTimeStamp());
         problemDao.updateByPrimaryKeySelective(problem);
@@ -264,23 +264,16 @@ public class CommentServiceImpl implements ICommentService{
     }
 
     private void setNick(Comment comment,CommentResult result){
-        //查询用户昵称
-        IMUserExample userExample=new IMUserExample();
-        IMUserExample.Criteria criteria2 =userExample.createCriteria();
-        criteria2.andIdEqualTo(comment.getFromUserid());
-        List<IMUser> list2=userDao.selectByExample(userExample);
-        IMUser user=list2.get(0);
+        //查询用户昵称和头像
+        IMUser user=userDao.selectByPrimaryKey(comment.getFromUserid());
         
         result.setFromNick(user.getNick());
         result.setFromAvatar(user.getAvatar());
         
-        criteria2.andIdEqualTo(comment.getToUserid());
-        List<IMUser> list3=userDao.selectByExample(userExample);
+        IMUser user1=userDao.selectByPrimaryKey(comment.getToUserid());
         
         //判断是否有回复对象
-        if(list3.size()!=0){
-            IMUser user1=list3.get(0);
-            
+        if(user1!=null){
             result.setToNick(user1.getNick());
             result.setToAvatar(user1.getAvatar());
         }
