@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,21 +22,36 @@ import com.fise.base.Response;
 @RequestMapping("/file")
 public class FileController {
     
-     
+    //上传图片 
     @RequestMapping(value="/fileupload",method=RequestMethod.POST)
-    public Response fileupload(@RequestBody MultipartFile file,HttpServletRequest req) throws IOException{
+    public Response fileupload(@RequestBody MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response response=new Response();
         
+        MultipartFile file=null;
+        String pictureURL = "";
+                   
+        //上传图片文件
+        if(uploadfile.length!=0){
+            for(int i=0;i<uploadfile.length;i++){
+                file=uploadfile[i];
+                
+                String path=req.getSession().getServletContext().getRealPath("upload");
+                String filename=file.getOriginalFilename();
+                File dir=new File(path,filename);
+                if(!dir.exists()){
+                    dir.mkdirs();
+                }
+            
+                file.transferTo(dir);
+                if(i==0){
+                    pictureURL=path+"/"+filename;
+                }else {
+                    pictureURL=pictureURL+","+path+"/"+filename;
+                }
         
-        String path=req.getSession().getServletContext().getRealPath("upload");
-        String filename=file.getOriginalFilename();
-        File dir=new File(path,filename);
-        if(!dir.exists()){
-            dir.mkdirs();
+            }
         }
-        
-        file.transferTo(dir);
-        response.success();
+        response.success(pictureURL);
         return response;
     }
     

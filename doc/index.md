@@ -884,4 +884,24 @@ msg 为已关注或未关注
          "school_addr": ""
    }
 }
-```                                                                                                
+```
+
+####上传图片 
+|   接口地址    |   xiaoyusvr/file/fileupload    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+上传图片
+```
+####回复
+```
+{
+     "code": 0,
+     "msg": "ok",  
+     "data":{
+     		     "pictureURL":""
+             }
+}                                                                                                           

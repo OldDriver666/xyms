@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -77,9 +78,9 @@ public class ProblemController {
             
                 file.transferTo(dir);
                 if(i==0){
-                    pictureURL=path+"/"+filename;
+                    pictureURL=path+"/"+filename+new Random().nextInt(16);
                 }else {
-                    pictureURL=pictureURL+","+path+"/"+filename;
+                    pictureURL=pictureURL+","+path+"/"+filename+new Random().nextInt(16);
                 }
         
             }
