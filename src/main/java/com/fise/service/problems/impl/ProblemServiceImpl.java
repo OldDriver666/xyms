@@ -175,6 +175,11 @@ public class ProblemServiceImpl implements IProblemService{
                 
         Problems problem=problemsDao.selectByPrimaryKey(problem_id);
         
+        //该问题的浏览数+1
+        problem.setBrowseNum(problem.getBrowseNum()+1);
+        problem.setUpdated(DateUtil.getLinuxTimeStamp());
+        problemsDao.updateByPrimaryKeySelective(problem);
+        
         if(problem.getUserId()!=user_id){
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
@@ -220,10 +225,6 @@ public class ProblemServiceImpl implements IProblemService{
     private Page<ProResult> getResult(List<ProResult> list1,List<Problems> list,Page<Problems> param){
         for(Problems problem:list){
             ProResult result = new ProResult(); 
-            
-            problem.setBrowseNum(problem.getBrowseNum()+1);
-            problem.setUpdated(DateUtil.getLinuxTimeStamp());
-            problemsDao.updateByPrimaryKeySelective(problem);
             
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());

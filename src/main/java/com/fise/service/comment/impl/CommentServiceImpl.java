@@ -19,7 +19,6 @@ import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.CommentExample.Criteria;
-import com.fise.model.entity.Problems;
 import com.fise.model.result.CommentResult;
 import com.fise.service.comment.ICommentService;
 import com.fise.utils.Constants;
@@ -63,11 +62,11 @@ public class CommentServiceImpl implements ICommentService{
         answer.setUpdated(DateUtil.getLinuxTimeStamp());
         answerDao.updateByPrimaryKeySelective(answer);
         
-        Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
+        /*Problems problem=problemDao.selectByPrimaryKey(record.getProblemId());
         //问题的回答数=回答数+评论数
         problem.setAnswerNum(problem.getAnswerNum()+1);
         problem.setUpdated(DateUtil.getLinuxTimeStamp());
-        problemDao.updateByPrimaryKeySelective(problem);
+        problemDao.updateByPrimaryKeySelective(problem);*/
         
         CommentExample example = new CommentExample();
         Criteria criteria = example.createCriteria();
