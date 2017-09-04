@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,12 +25,12 @@ public class FileController {
     
     //上传图片 
     @RequestMapping(value="/fileupload",method=RequestMethod.POST)
-    public Response fileupload(@RequestBody MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
+    public Response fileupload(@RequestBody @RequestParam("file") MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response response=new Response();
         
         MultipartFile file=null;
         String pictureURL = "";
-                   
+                
         //上传图片文件
         if(uploadfile.length!=0){
             for(int i=0;i<uploadfile.length;i++){

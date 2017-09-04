@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +44,7 @@ public class ProblemController {
     
     /*提交问题*/
     @RequestMapping(value="/insert",method=RequestMethod.POST)
-    public Response insertProblem(@RequestBody @Valid Problems record,MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
+    public Response insertProblem(@RequestBody @Valid Problems record,@RequestParam("file") MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response res = new Response();
         logger.info(record.toString());
         
@@ -65,7 +66,7 @@ public class ProblemController {
         String pictureURL = "";
                    
         //上传图片文件
-        if(uploadfile!=null){
+        if(uploadfile.length!=0){
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
