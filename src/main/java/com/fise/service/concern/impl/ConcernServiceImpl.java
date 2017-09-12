@@ -125,11 +125,15 @@ public class ConcernServiceImpl implements IConcernService{
             
             String key = problem.getId()+"browser"+user_id;
             String value = problem.getBrowseNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key = problem.getId()+"answer"+user_id;
             value=problem.getAnswerNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {               
             e.printStackTrace();
         }finally {
@@ -236,11 +240,15 @@ public class ConcernServiceImpl implements IConcernService{
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             String key=problem.getId()+"answer"+user_id;
             String value=problem.getAnswerNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=problem.getId()+"browser"+user_id;
             value=problem.getBrowseNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

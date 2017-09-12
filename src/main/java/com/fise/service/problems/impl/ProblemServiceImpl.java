@@ -63,12 +63,16 @@ public class ProblemServiceImpl implements IProblemService{
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             String key = problem.getId()+"browsermy";
             String value = problem.getBrowseNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             //在redis里存入该问题的回答量
             key = problem.getId()+"answermy";
             value=problem.getAnswerNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -195,11 +199,15 @@ public class ProblemServiceImpl implements IProblemService{
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             String key=problem.getId()+"answermy";
             String value=problem.getAnswerNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=problem.getId()+"browsermy";
             value=problem.getBrowseNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

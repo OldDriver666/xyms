@@ -61,11 +61,15 @@ public class AnswerServiceImpl implements IAnswerService{
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             String key=answer.getId()+"agree";
             String value=answer.getAgreeNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=answer.getId()+"comment";
             value=answer.getCommentNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -189,11 +193,15 @@ public class AnswerServiceImpl implements IAnswerService{
             
             String key=answer.getId()+"agree";
             String value=answer.getAgreeNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=answer.getId()+"comment";
             value=answer.getCommentNum()+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

@@ -87,7 +87,9 @@ public class CommentServiceImpl implements ICommentService{
             
             String key =comment.getId()+"reply";
             String value=(int)count+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -233,7 +235,9 @@ public class CommentServiceImpl implements ICommentService{
             long count=commentDao.countByExample(example);
             String key=comment_id+"reply";
             String value=count+"";
-            jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

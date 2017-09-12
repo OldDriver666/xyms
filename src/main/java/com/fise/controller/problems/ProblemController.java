@@ -44,7 +44,7 @@ public class ProblemController {
     
     /*提交问题*/
     @RequestMapping(value="/insert",method=RequestMethod.POST)
-    public Response insertProblem(@RequestBody @Valid Problems record,@RequestParam("file") MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
+    public Response insertProblem(@RequestBody @Valid Problems record) throws IOException{
         Response res = new Response();
         logger.info(record.toString());
         
@@ -62,7 +62,7 @@ public class ProblemController {
             return res;
         }
         
-        MultipartFile file=null;
+        /*MultipartFile file=null;
         String pictureURL = "";
                    
         //上传图片文件
@@ -87,7 +87,7 @@ public class ProblemController {
             }
         }
                         
-        record.setPicture(pictureURL);
+        record.setPicture(pictureURL);*/
         res=problemService.insert(record);
         //默认已经关注
         res=concernService.addConcern((Concern)res.getData());
