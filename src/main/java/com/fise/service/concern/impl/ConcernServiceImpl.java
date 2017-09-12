@@ -202,7 +202,6 @@ public class ConcernServiceImpl implements IConcernService{
                 
                 String key=problem.getId()+"answer"+user_id;
                 String value=jedis.get(key);
-                System.out.println("------------"+value);
                 
                 pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
                                 
