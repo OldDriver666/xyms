@@ -7,10 +7,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Map;
-import java.util.Random;
+
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -18,10 +18,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;

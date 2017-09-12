@@ -194,13 +194,15 @@ public class ConcernServiceImpl implements IConcernService{
         
         Jedis jedis=null;
         List<ProResult> listResult = new ArrayList<>();
-        try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            for(Problems problem:lProblems){
+        
+        for(Problems problem:lProblems){
+            try {
+                jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 ProResult pResult=new ProResult();
                 
                 String key=problem.getId()+"answer"+user_id;
                 String value=jedis.get(key);
+                System.out.println("------------"+value);
                 
                 pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
                                 
@@ -212,13 +214,14 @@ public class ConcernServiceImpl implements IConcernService{
                 setResult(pResult,problem);
                 
                 listResult.add(pResult);
+                                    
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }finally {
+                RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }finally {
-            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
-        
+               
         page.setResult(listResult);
         
         return res.success(page);
