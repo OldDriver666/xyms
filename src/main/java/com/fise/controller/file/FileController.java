@@ -6,10 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,7 +39,7 @@ public class FileController {
                 file=uploadfile[i];
                 
                 String path="/home/fise/www/upload";
-                String filename=file.getOriginalFilename()+new Random().nextInt(16);
+                String filename=file.getOriginalFilename()+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                 File dir=new File(path,filename);
                 if(!dir.exists()){
                     dir.mkdirs();
