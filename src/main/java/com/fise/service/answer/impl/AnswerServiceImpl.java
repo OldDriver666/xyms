@@ -103,9 +103,10 @@ public class AnswerServiceImpl implements IAnswerService{
         
         Jedis jedis=null;
         List<AnswerResult> listResult=new ArrayList<>();
-        try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            for(Answer answer:list){
+        
+        for(Answer answer:list){
+            try {
+                jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 AnswerResult aResult = new AnswerResult();
                 
                 String key=answer.getId()+"agree";
@@ -118,13 +119,14 @@ public class AnswerServiceImpl implements IAnswerService{
                 
                 setResult(aResult,answer,user);
                 
-                listResult.add(aResult);            
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }finally {
-            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
-        }       
+                listResult.add(aResult);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }finally {
+                RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
+            } 
+        }
+              
         reslut.setResult(listResult);
        
         return res.success(reslut);

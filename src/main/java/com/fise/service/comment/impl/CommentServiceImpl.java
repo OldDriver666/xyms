@@ -160,9 +160,9 @@ public class CommentServiceImpl implements ICommentService{
         Jedis jedis=null;
         List<CommentResult> listresult = new ArrayList<>();
         
-        try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            for(Comment c:list){
+        for(Comment c:list){
+            try {
+                jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 CommentResult result = new CommentResult();
                 
                 example.clear();            
@@ -179,11 +179,11 @@ public class CommentServiceImpl implements ICommentService{
                 
                 setNick(c,result);
                 listresult.add(result);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }finally {
+                RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }finally {
-            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         
         param.setResult(listresult);

@@ -36,7 +36,7 @@ public class FileController {
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
-                String path="/home/liuzx/bin/msfs_xiaoyu/tmp/upload";
+                String path="/home/fise/www/upload";
                 String filename=file.getOriginalFilename();
                 File dir=new File(path,filename);
                 if(!dir.exists()){
@@ -45,9 +45,9 @@ public class FileController {
             
                 file.transferTo(dir);
                 if(i==0){
-                    pictureURL="http://192.168.2.196:8701/tmp/upload/"+filename;
+                    pictureURL="http://192.168.2.196:8888/upload"+"/"+filename;
                 }else {
-                    pictureURL=pictureURL+",http://192.168.2.196:8701/tmp/upload/"+filename;
+                    pictureURL=pictureURL+"http://192.168.2.196:8888/upload/"+filename;
                 }
         
             }

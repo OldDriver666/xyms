@@ -138,9 +138,10 @@ public class ProblemServiceImpl implements IProblemService{
         
         Jedis jedis=null;
         List<ProResult> listResult = new ArrayList<>();
-        try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-            for(Problems problem:list){
+        
+        for(Problems problem:list){
+            try {
+                jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 ProResult result=new ProResult();
                 
                 String key=problem.getId()+"answermy";
@@ -160,13 +161,13 @@ public class ProblemServiceImpl implements IProblemService{
                 setResult(result, problem, user);
                 
                 listResult.add(result);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }finally {
+                RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }finally {
-            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
-        
+              
         page.setResult(listResult);
         
         return res.success(page);
