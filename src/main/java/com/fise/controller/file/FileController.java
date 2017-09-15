@@ -47,9 +47,9 @@ public class FileController {
             
                 file.transferTo(dir);
                 if(i==0){
-                    pictureURL="http://192.196.2.250:8888/upload"+"/"+filename;
+                    pictureURL="http://192.168.2.250:8888/upload"+"/"+filename;
                 }else {
-                    pictureURL=pictureURL+"http://192.196.2.250:8888/upload/"+filename;
+                    pictureURL=pictureURL+"http://192.168.2.250:8888/upload/"+filename;
                 }
         
             }
