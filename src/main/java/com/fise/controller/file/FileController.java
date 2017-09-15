@@ -39,7 +39,7 @@ public class FileController {
                 file=uploadfile[i];
                 
                 String path="/home/fise/www/upload";
-                String filename=file.getOriginalFilename()+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");;
                 File dir=new File(path,filename);
                 if(!dir.exists()){
                     dir.mkdirs();
