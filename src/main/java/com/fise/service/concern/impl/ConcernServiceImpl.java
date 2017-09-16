@@ -167,7 +167,6 @@ public class ConcernServiceImpl implements IConcernService{
         Criteria criteria = example.createCriteria();
         criteria.andUserIdEqualTo(user_id);
         criteria.andStatusEqualTo(1);
-        example.setOrderByClause("created desc");
         
         List<Concern> list=concernDao.selectByExample(example);
         
@@ -179,6 +178,7 @@ public class ConcernServiceImpl implements IConcernService{
         ProblemsExample proExample = new ProblemsExample();
         ProblemsExample.Criteria cri=proExample.createCriteria();
         cri.andIdIn(listint);
+        proExample.setOrderByClause("created desc");
         
         Page<Problems> param = new Page<Problems>();
         param.setPageNo(page_no);
