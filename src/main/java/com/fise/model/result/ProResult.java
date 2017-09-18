@@ -9,7 +9,7 @@ import com.fise.utils.JsonUtil;
 public class ProResult implements Serializable{
     private int addAnswerCount;
     private int addBrowseCount;
-    private String isConcern;
+    private String isConcern="已关注";  
     
     private Integer id;
 
