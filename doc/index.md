@@ -51,6 +51,7 @@ null 没有数据返回 看code是否成功
 {
      "param":{
      	          "school_id":x      //必填-用户学校id	  
+     	          "user_id":x        //必填-当前登录用户id
      		  },	
      "page_no":x                      //选填-默认1     
 }

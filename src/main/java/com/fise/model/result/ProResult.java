@@ -9,6 +9,7 @@ import com.fise.utils.JsonUtil;
 public class ProResult implements Serializable{
     private int addAnswerCount;
     private int addBrowseCount;
+    private String isConcern;
     
     private Integer id;
 
@@ -77,6 +78,14 @@ public class ProResult implements Serializable{
     private Integer created;
 
     private static final long serialVersionUID = 1L;
+
+    public String getIsConcern() {
+        return isConcern;
+    }
+
+    public void setIsConcern(String isConcern) {
+        this.isConcern = isConcern;
+    }
 
     public Integer getId() {
         return id;
