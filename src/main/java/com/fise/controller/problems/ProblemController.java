@@ -101,7 +101,7 @@ public class ProblemController {
         Concern record=new Concern();
         logger.info(param.toString());
         
-        if(param.getParam().getSchoolId()==null){
+        if(param.getParam().getSchoolId()==null || param.getParam().getUserId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
