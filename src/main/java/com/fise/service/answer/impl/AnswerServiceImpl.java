@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.dao.AgreeMapper;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
+import com.fise.model.entity.Agree;
+import com.fise.model.entity.AgreeExample;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.IMUser;
@@ -34,6 +37,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     IMUserMapper userDao;
+    
+    @Autowired
+    AgreeMapper agreeDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -179,13 +185,27 @@ public class AnswerServiceImpl implements IAnswerService{
         AnswerResult result=new AnswerResult();
         
         Answer answer =answerDao.selectByPrimaryKey(answer_id);
+        
+        //判断该问题是否已经点赞
+        Integer i=0;       //i=0 表示未点赞    i=1  表示已点赞
+        AgreeExample example = new AgreeExample();
+        AgreeExample.Criteria criteria=example.createCriteria();
+        criteria.andAnswerIdEqualTo(answer_id);
+        criteria.andUserIdEqualTo(user_id);
+        List<Agree> list=agreeDao.selectByExample(example);
+        
+        if(list.size()!=0){
+            i=list.get(0).getStatus()==1?1:0;
+        }else {
+            i=0;
+        }
                 
         if(answer.getUserId()!=user_id){
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
             setResult(result,answer,user);
-            
+            result.setStatus(i);
             return res.success(result);
         }
         
@@ -214,7 +234,7 @@ public class AnswerServiceImpl implements IAnswerService{
         IMUser user=userDao.selectByPrimaryKey(user_id);
         
         setResult(result,answer,user);
-        
+        result.setStatus(i);
         return res.success(result);
     }
     
