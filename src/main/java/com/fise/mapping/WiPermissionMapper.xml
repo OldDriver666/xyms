@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.WiPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.WiPermission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="module_id" jdbcType="INTEGER" property="moduleId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="insert_auth" jdbcType="INTEGER" property="insertAuth" />
+    <result column="update_auth" jdbcType="INTEGER" property="updateAuth" />
+    <result column="query_auth" jdbcType="INTEGER" property="queryAuth" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, company_id, role_id, module_id, status, insert_auth, update_auth, query_auth, 
+    updated, created
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.WiPermissionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wi_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wi_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wi_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.WiPermissionExample">
+    delete from wi_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.WiPermission">
+    insert into wi_permission (id, company_id, role_id, 
+      module_id, status, insert_auth, 
+      update_auth, query_auth, updated, 
+      created)
+    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+      #{moduleId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{insertAuth,jdbcType=INTEGER}, 
+      #{updateAuth,jdbcType=INTEGER}, #{queryAuth,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, 
+      #{created,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.WiPermission">
+    insert into wi_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="moduleId != null">
+        module_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="insertAuth != null">
+        insert_auth,
+      </if>
+      <if test="updateAuth != null">
+        update_auth,
+      </if>
+      <if test="queryAuth != null">
+        query_auth,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="insertAuth != null">
+        #{insertAuth,jdbcType=INTEGER},
+      </if>
+      <if test="updateAuth != null">
+        #{updateAuth,jdbcType=INTEGER},
+      </if>
+      <if test="queryAuth != null">
+        #{queryAuth,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.WiPermissionExample" resultType="java.lang.Long">
+    select count(*) from wi_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wi_permission
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.moduleId != null">
+        module_id = #{record.moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertAuth != null">
+        insert_auth = #{record.insertAuth,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateAuth != null">
+        update_auth = #{record.updateAuth,jdbcType=INTEGER},
+      </if>
+      <if test="record.queryAuth != null">
+        query_auth = #{record.queryAuth,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wi_permission
+    set id = #{record.id,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      module_id = #{record.moduleId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      insert_auth = #{record.insertAuth,jdbcType=INTEGER},
+      update_auth = #{record.updateAuth,jdbcType=INTEGER},
+      query_auth = #{record.queryAuth,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.WiPermission">
+    update wi_permission
+    <set>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null">
+        module_id = #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="insertAuth != null">
+        insert_auth = #{insertAuth,jdbcType=INTEGER},
+      </if>
+      <if test="updateAuth != null">
+        update_auth = #{updateAuth,jdbcType=INTEGER},
+      </if>
+      <if test="queryAuth != null">
+        query_auth = #{queryAuth,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiPermission">
+    update wi_permission
+    set company_id = #{companyId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      module_id = #{moduleId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      insert_auth = #{insertAuth,jdbcType=INTEGER},
+      update_auth = #{updateAuth,jdbcType=INTEGER},
+      query_auth = #{queryAuth,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="AuthResultMap" type="com.fise.model.result.ModulePermissResult">
+    <id column="id" jdbcType="INTEGER" property="permiss_id" />
+    <result column="module_id" jdbcType="VARCHAR" property="module_id" />
+    <result column="name" jdbcType="VARCHAR" property="module_name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="module_type" jdbcType="INTEGER" property="module_type" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="insert_auth" jdbcType="INTEGER" property="insert_auth" />
+    <result column="update_auth" jdbcType="INTEGER" property="update_auth" />
+    <result column="query_auth" jdbcType="INTEGER" property="query_auth" />
+    <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  
+  <select id="selectAuthByRole" parameterType="map" resultMap="AuthResultMap">
+    select p.id,m.name,m.url,m.module_type,m.id as module_id,m.priority,m.parent_id,
+           p.status,insert_auth,p.update_auth,p.query_auth
+    from wi_permission p left JOIN wi_module m
+         on p.module_id=m.id and p.company_id=m.belong_company
+    where p.company_id=#{company,jdbcType=INTEGER} 
+          and p.role_id=#{role,jdbcType=INTEGER}
+          and m.parent_id=#{parent,jdbcType=INTEGER}
+          <if test="needall != 1">
+            and p.status = 1 and m.status=1
+          </if>
+  </select>
+</mapper>

@@ -14,7 +14,7 @@ public class IMUser implements Serializable {
     /**
      * 1男2女0未知
      */
-    private Boolean sex;
+    private Integer sex;
 
     /**
      * 用户名
@@ -114,7 +114,7 @@ public class IMUser implements Serializable {
     /**
      * 0关闭勿扰 1开启勿扰
      */
-    private Boolean pushShieldStatus;
+    private Integer pushShieldStatus;
 
     /**
      * 个性签名
@@ -132,22 +132,22 @@ public class IMUser implements Serializable {
     /**
      * 加好友是否需要验证
      */
-    private Boolean friendNeedAuth;
+    private Integer friendNeedAuth;
 
     /**
      * 登录保护
      */
-    private Boolean loginSafeSwitch;
+    private Integer loginSafeSwitch;
 
     /**
      * 允许通过搜索找到我
      */
-    private Boolean searchAllow;
+    private Integer searchAllow;
 
     /**
      * 1-在线 0-离线
      */
-    private Boolean onlineStatus;
+    private Integer onlineStatus;
 
     /**
      * 最后一次上线时间
@@ -164,11 +164,11 @@ public class IMUser implements Serializable {
         this.id = id;
     }
 
-    public Boolean getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
@@ -324,11 +324,11 @@ public class IMUser implements Serializable {
         this.updated = updated;
     }
 
-    public Boolean getPushShieldStatus() {
+    public Integer getPushShieldStatus() {
         return pushShieldStatus;
     }
 
-    public void setPushShieldStatus(Boolean pushShieldStatus) {
+    public void setPushShieldStatus(Integer pushShieldStatus) {
         this.pushShieldStatus = pushShieldStatus;
     }
 
@@ -372,35 +372,35 @@ public class IMUser implements Serializable {
         this.sq = sq;
     }
 
-    public Boolean getFriendNeedAuth() {
+    public Integer getFriendNeedAuth() {
         return friendNeedAuth;
     }
 
-    public void setFriendNeedAuth(Boolean friendNeedAuth) {
+    public void setFriendNeedAuth(Integer friendNeedAuth) {
         this.friendNeedAuth = friendNeedAuth;
     }
 
-    public Boolean getLoginSafeSwitch() {
+    public Integer getLoginSafeSwitch() {
         return loginSafeSwitch;
     }
 
-    public void setLoginSafeSwitch(Boolean loginSafeSwitch) {
+    public void setLoginSafeSwitch(Integer loginSafeSwitch) {
         this.loginSafeSwitch = loginSafeSwitch;
     }
 
-    public Boolean getSearchAllow() {
+    public Integer getSearchAllow() {
         return searchAllow;
     }
 
-    public void setSearchAllow(Boolean searchAllow) {
+    public void setSearchAllow(Integer searchAllow) {
         this.searchAllow = searchAllow;
     }
 
-    public Boolean getOnlineStatus() {
+    public Integer getOnlineStatus() {
         return onlineStatus;
     }
 
-    public void setOnlineStatus(Boolean onlineStatus) {
+    public void setOnlineStatus(Integer onlineStatus) {
         this.onlineStatus = onlineStatus;
     }
 

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.WiMessageTypeMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.WiMessageType">
+    <id column="msg_type" jdbcType="INTEGER" property="msgType" />
+    <result column="msg_name" jdbcType="VARCHAR" property="msgName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    msg_type, msg_name
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.WiMessageTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wi_message_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wi_message_type
+    where msg_type = #{msgType,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wi_message_type
+    where msg_type = #{msgType,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.WiMessageTypeExample">
+    delete from wi_message_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.WiMessageType">
+    insert into wi_message_type (msg_type, msg_name)
+    values (#{msgType,jdbcType=INTEGER}, #{msgName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.WiMessageType">
+    insert into wi_message_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msgType != null">
+        msg_type,
+      </if>
+      <if test="msgName != null">
+        msg_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msgType != null">
+        #{msgType,jdbcType=INTEGER},
+      </if>
+      <if test="msgName != null">
+        #{msgName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.WiMessageTypeExample" resultType="java.lang.Long">
+    select count(*) from wi_message_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wi_message_type
+    <set>
+      <if test="record.msgType != null">
+        msg_type = #{record.msgType,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgName != null">
+        msg_name = #{record.msgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wi_message_type
+    set msg_type = #{record.msgType,jdbcType=INTEGER},
+      msg_name = #{record.msgName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.WiMessageType">
+    update wi_message_type
+    <set>
+      <if test="msgName != null">
+        msg_name = #{msgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where msg_type = #{msgType,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiMessageType">
+    update wi_message_type
+    set msg_name = #{msgName,jdbcType=VARCHAR}
+    where msg_type = #{msgType,jdbcType=INTEGER}
+  </update>
+</mapper>

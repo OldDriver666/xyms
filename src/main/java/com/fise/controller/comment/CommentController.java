@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Comment;
 import com.fise.service.comment.ICommentService;
 
@@ -25,6 +26,7 @@ public class CommentController {
     ICommentService commentService;
     
     /*发布评论*/
+    @IgnoreAuth
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response addComment(@RequestBody @Valid Comment record){
         Response res = new Response();
@@ -39,6 +41,7 @@ public class CommentController {
     }
     
     /*查询评论*/
+    @IgnoreAuth
     @RequestMapping(value="/querycomment",method=RequestMethod.POST)
     public Response queryComment(@RequestBody @Valid Page<Comment> page){
         Response res = new Response();
@@ -53,6 +56,7 @@ public class CommentController {
     }
     
     /*查询我的评论*/
+    @IgnoreAuth
     @RequestMapping(value="/querymy",method=RequestMethod.POST)
     public Response querymy(@RequestBody @Valid Page<Comment> page){
         Response res = new Response();
@@ -67,6 +71,7 @@ public class CommentController {
     }
     
     /*查询评论*/
+    @IgnoreAuth
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
@@ -81,6 +86,7 @@ public class CommentController {
     }
     
     /*根据评论id查询评论*/
+    @IgnoreAuth
     @RequestMapping(value="/querybyid",method=RequestMethod.POST)
     public Response queryById(@RequestBody @Valid Map<String , Integer> map){
         Response res = new Response();

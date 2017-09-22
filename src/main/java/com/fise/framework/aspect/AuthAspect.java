@@ -65,7 +65,7 @@ public class AuthAspect {
         }
         HttpContext.setVersionName(versionName);
         HttpContext.setPlatform(platform);
-        if (uri.startsWith("/boss") || uri.startsWith("/managesvr")) {
+        if (uri.startsWith("/boss") || uri.startsWith("/xiaoyusvr")) {
             HttpContext.setMemberId(Integer.parseInt(id));
             accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
             redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Agree;
 import com.fise.service.agree.IAgreeService;
 
@@ -22,6 +23,7 @@ public class AgreeController {
     IAgreeService agreeService;
     
     /*点击赞同  取消赞同*/
+    @IgnoreAuth
     @RequestMapping(value="/agree",method=RequestMethod.POST)
     public Response bottonAgree(@RequestBody @Valid Agree agree){
         Response res = new Response();

@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 
 @RestController
 @RequestMapping("/file")
 public class FileController {
     
     //上传图片 
+    @IgnoreAuth
     @RequestMapping(value="/fileupload",method=RequestMethod.POST)
     public Response fileupload(@RequestBody @RequestParam("file") MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response response=new Response();
@@ -58,6 +60,7 @@ public class FileController {
         return response;
     }
     
+    @IgnoreAuth
     @RequestMapping(value="/filedown",method=RequestMethod.POST)
     public void filedown(@RequestBody Map<String, String> map,HttpServletRequest req,HttpServletResponse resp) throws IOException{
         

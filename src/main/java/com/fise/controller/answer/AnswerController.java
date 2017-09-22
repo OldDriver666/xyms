@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Answer;
 import com.fise.service.answer.IAnswerService;
 import com.fise.utils.StringUtil;
@@ -27,6 +28,7 @@ public class AnswerController {
     IAnswerService answerService;
     
     /*提交回答*/
+    @IgnoreAuth
     @RequestMapping(value="/insert",method=RequestMethod.POST)
     public Response addAnswer(@RequestBody @Valid Answer record){
         Response res = new Response();
@@ -41,6 +43,7 @@ public class AnswerController {
     }
     
     /*查询我的回答*/
+    @IgnoreAuth
     @RequestMapping(value="/querymy",method=RequestMethod.POST)
     public Response queryMyAnswer(@RequestBody @Valid Page<Answer> page){
         Response res = new Response();
@@ -55,6 +58,7 @@ public class AnswerController {
     }
     
     /*查询问题的回答   */
+    @IgnoreAuth
     @RequestMapping(value="/querybyid",method=RequestMethod.POST)
     public Response queryById(@RequestBody @Valid Map<String, String> map){
         Response res = new Response();
@@ -78,6 +82,7 @@ public class AnswerController {
     }
     
     /*根据回答ID，查询更新消息*/
+    @IgnoreAuth
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();

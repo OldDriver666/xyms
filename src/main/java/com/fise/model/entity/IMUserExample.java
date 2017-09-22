@@ -194,52 +194,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andSexEqualTo(Boolean value) {
+        public Criteria andSexEqualTo(Integer value) {
             addCriterion("sex =", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotEqualTo(Boolean value) {
+        public Criteria andSexNotEqualTo(Integer value) {
             addCriterion("sex <>", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexGreaterThan(Boolean value) {
+        public Criteria andSexGreaterThan(Integer value) {
             addCriterion("sex >", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSexGreaterThanOrEqualTo(Integer value) {
             addCriterion("sex >=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexLessThan(Boolean value) {
+        public Criteria andSexLessThan(Integer value) {
             addCriterion("sex <", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexLessThanOrEqualTo(Boolean value) {
+        public Criteria andSexLessThanOrEqualTo(Integer value) {
             addCriterion("sex <=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexIn(List<Boolean> values) {
+        public Criteria andSexIn(List<Integer> values) {
             addCriterion("sex in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotIn(List<Boolean> values) {
+        public Criteria andSexNotIn(List<Integer> values) {
             addCriterion("sex not in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexBetween(Boolean value1, Boolean value2) {
+        public Criteria andSexBetween(Integer value1, Integer value2) {
             addCriterion("sex between", value1, value2, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSexNotBetween(Integer value1, Integer value2) {
             addCriterion("sex not between", value1, value2, "sex");
             return (Criteria) this;
         }
@@ -1514,52 +1514,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusEqualTo(Boolean value) {
+        public Criteria andPushShieldStatusEqualTo(Integer value) {
             addCriterion("push_shield_status =", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusNotEqualTo(Boolean value) {
+        public Criteria andPushShieldStatusNotEqualTo(Integer value) {
             addCriterion("push_shield_status <>", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusGreaterThan(Boolean value) {
+        public Criteria andPushShieldStatusGreaterThan(Integer value) {
             addCriterion("push_shield_status >", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andPushShieldStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("push_shield_status >=", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusLessThan(Boolean value) {
+        public Criteria andPushShieldStatusLessThan(Integer value) {
             addCriterion("push_shield_status <", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andPushShieldStatusLessThanOrEqualTo(Integer value) {
             addCriterion("push_shield_status <=", value, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusIn(List<Boolean> values) {
+        public Criteria andPushShieldStatusIn(List<Integer> values) {
             addCriterion("push_shield_status in", values, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusNotIn(List<Boolean> values) {
+        public Criteria andPushShieldStatusNotIn(List<Integer> values) {
             addCriterion("push_shield_status not in", values, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andPushShieldStatusBetween(Integer value1, Integer value2) {
             addCriterion("push_shield_status between", value1, value2, "pushShieldStatus");
             return (Criteria) this;
         }
 
-        public Criteria andPushShieldStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andPushShieldStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("push_shield_status not between", value1, value2, "pushShieldStatus");
             return (Criteria) this;
         }
@@ -1904,52 +1904,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthEqualTo(Boolean value) {
+        public Criteria andFriendNeedAuthEqualTo(Integer value) {
             addCriterion("friend_need_auth =", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthNotEqualTo(Boolean value) {
+        public Criteria andFriendNeedAuthNotEqualTo(Integer value) {
             addCriterion("friend_need_auth <>", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthGreaterThan(Boolean value) {
+        public Criteria andFriendNeedAuthGreaterThan(Integer value) {
             addCriterion("friend_need_auth >", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andFriendNeedAuthGreaterThanOrEqualTo(Integer value) {
             addCriterion("friend_need_auth >=", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthLessThan(Boolean value) {
+        public Criteria andFriendNeedAuthLessThan(Integer value) {
             addCriterion("friend_need_auth <", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthLessThanOrEqualTo(Boolean value) {
+        public Criteria andFriendNeedAuthLessThanOrEqualTo(Integer value) {
             addCriterion("friend_need_auth <=", value, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthIn(List<Boolean> values) {
+        public Criteria andFriendNeedAuthIn(List<Integer> values) {
             addCriterion("friend_need_auth in", values, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthNotIn(List<Boolean> values) {
+        public Criteria andFriendNeedAuthNotIn(List<Integer> values) {
             addCriterion("friend_need_auth not in", values, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthBetween(Boolean value1, Boolean value2) {
+        public Criteria andFriendNeedAuthBetween(Integer value1, Integer value2) {
             addCriterion("friend_need_auth between", value1, value2, "friendNeedAuth");
             return (Criteria) this;
         }
 
-        public Criteria andFriendNeedAuthNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andFriendNeedAuthNotBetween(Integer value1, Integer value2) {
             addCriterion("friend_need_auth not between", value1, value2, "friendNeedAuth");
             return (Criteria) this;
         }
@@ -1964,52 +1964,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchEqualTo(Boolean value) {
+        public Criteria andLoginSafeSwitchEqualTo(Integer value) {
             addCriterion("login_safe_switch =", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchNotEqualTo(Boolean value) {
+        public Criteria andLoginSafeSwitchNotEqualTo(Integer value) {
             addCriterion("login_safe_switch <>", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchGreaterThan(Boolean value) {
+        public Criteria andLoginSafeSwitchGreaterThan(Integer value) {
             addCriterion("login_safe_switch >", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andLoginSafeSwitchGreaterThanOrEqualTo(Integer value) {
             addCriterion("login_safe_switch >=", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchLessThan(Boolean value) {
+        public Criteria andLoginSafeSwitchLessThan(Integer value) {
             addCriterion("login_safe_switch <", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchLessThanOrEqualTo(Boolean value) {
+        public Criteria andLoginSafeSwitchLessThanOrEqualTo(Integer value) {
             addCriterion("login_safe_switch <=", value, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchIn(List<Boolean> values) {
+        public Criteria andLoginSafeSwitchIn(List<Integer> values) {
             addCriterion("login_safe_switch in", values, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchNotIn(List<Boolean> values) {
+        public Criteria andLoginSafeSwitchNotIn(List<Integer> values) {
             addCriterion("login_safe_switch not in", values, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchBetween(Boolean value1, Boolean value2) {
+        public Criteria andLoginSafeSwitchBetween(Integer value1, Integer value2) {
             addCriterion("login_safe_switch between", value1, value2, "loginSafeSwitch");
             return (Criteria) this;
         }
 
-        public Criteria andLoginSafeSwitchNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andLoginSafeSwitchNotBetween(Integer value1, Integer value2) {
             addCriterion("login_safe_switch not between", value1, value2, "loginSafeSwitch");
             return (Criteria) this;
         }
@@ -2024,52 +2024,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowEqualTo(Boolean value) {
+        public Criteria andSearchAllowEqualTo(Integer value) {
             addCriterion("search_allow =", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowNotEqualTo(Boolean value) {
+        public Criteria andSearchAllowNotEqualTo(Integer value) {
             addCriterion("search_allow <>", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowGreaterThan(Boolean value) {
+        public Criteria andSearchAllowGreaterThan(Integer value) {
             addCriterion("search_allow >", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSearchAllowGreaterThanOrEqualTo(Integer value) {
             addCriterion("search_allow >=", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowLessThan(Boolean value) {
+        public Criteria andSearchAllowLessThan(Integer value) {
             addCriterion("search_allow <", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowLessThanOrEqualTo(Boolean value) {
+        public Criteria andSearchAllowLessThanOrEqualTo(Integer value) {
             addCriterion("search_allow <=", value, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowIn(List<Boolean> values) {
+        public Criteria andSearchAllowIn(List<Integer> values) {
             addCriterion("search_allow in", values, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowNotIn(List<Boolean> values) {
+        public Criteria andSearchAllowNotIn(List<Integer> values) {
             addCriterion("search_allow not in", values, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowBetween(Boolean value1, Boolean value2) {
+        public Criteria andSearchAllowBetween(Integer value1, Integer value2) {
             addCriterion("search_allow between", value1, value2, "searchAllow");
             return (Criteria) this;
         }
 
-        public Criteria andSearchAllowNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSearchAllowNotBetween(Integer value1, Integer value2) {
             addCriterion("search_allow not between", value1, value2, "searchAllow");
             return (Criteria) this;
         }
@@ -2084,52 +2084,52 @@ public class IMUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusEqualTo(Boolean value) {
+        public Criteria andOnlineStatusEqualTo(Integer value) {
             addCriterion("online_status =", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusNotEqualTo(Boolean value) {
+        public Criteria andOnlineStatusNotEqualTo(Integer value) {
             addCriterion("online_status <>", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusGreaterThan(Boolean value) {
+        public Criteria andOnlineStatusGreaterThan(Integer value) {
             addCriterion("online_status >", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andOnlineStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("online_status >=", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusLessThan(Boolean value) {
+        public Criteria andOnlineStatusLessThan(Integer value) {
             addCriterion("online_status <", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andOnlineStatusLessThanOrEqualTo(Integer value) {
             addCriterion("online_status <=", value, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusIn(List<Boolean> values) {
+        public Criteria andOnlineStatusIn(List<Integer> values) {
             addCriterion("online_status in", values, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusNotIn(List<Boolean> values) {
+        public Criteria andOnlineStatusNotIn(List<Integer> values) {
             addCriterion("online_status not in", values, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andOnlineStatusBetween(Integer value1, Integer value2) {
             addCriterion("online_status between", value1, value2, "onlineStatus");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andOnlineStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("online_status not between", value1, value2, "onlineStatus");
             return (Criteria) this;
         }

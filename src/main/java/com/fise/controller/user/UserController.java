@@ -1,7 +1,5 @@
 package com.fise.controller.user;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -12,31 +10,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.param.QueryUserParam;
+import com.fise.service.auth.IAuthService;
 import com.fise.service.user.IUserService;
-import com.fise.utils.StringUtil;
-
-
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/boss/user")
 public class UserController {
-    private Logger logger =Logger.getLogger(getClass());
+    
+    private Logger logger=Logger.getLogger(getClass());
     
     @Resource
-    IUserService userService;
+    IUserService IQueryUserService;
     
-    /*查询用户信息*/
+    @Resource
+    IAuthService authService;
+    
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response query(@RequestBody @Valid Map<String, String> map){
-        Response res = new Response();
-        logger.info(map.toString());
+    public Response queryUserInfo(@RequestBody @Valid Page<QueryUserParam> param){
         
-        if(StringUtil.isEmpty(map.get("name"))){
-            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
+        Response response=new Response();
+
+        logger.info(param.toString());
+        response=IQueryUserService.queryUser(param);
+       
         
-        res=userService.queryUser(map.get("name"));
-        return res;
+        return response;
     }
 }

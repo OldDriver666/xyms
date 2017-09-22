@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.ProResult;
@@ -42,6 +43,7 @@ public class ProblemController {
     IConcernService concernService;
     
     /*提交问题*/
+    @IgnoreAuth
     @RequestMapping(value="/insert",method=RequestMethod.POST)
     public Response insertProblem(@RequestBody @Valid Problems record) throws IOException{
         Response res = new Response();
@@ -94,6 +96,7 @@ public class ProblemController {
     }
     
     /*查询问题    分页形式*/
+    @IgnoreAuth
     @RequestMapping(value="/queryall",method=RequestMethod.POST)
     public Response queryProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -121,6 +124,7 @@ public class ProblemController {
     }
     
     /*查询图片*/
+    @IgnoreAuth
     @RequestMapping(value="/picture",method=RequestMethod.POST)
     public void filedown(@RequestBody Map<String, String> map,HttpServletResponse resp) throws IOException{
         
@@ -151,6 +155,7 @@ public class ProblemController {
     }
     
     /*根据话题  模糊查询  分页展示*/
+    @IgnoreAuth
     @RequestMapping(value="/titlequery",method=RequestMethod.POST)
     public Response titlequery(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -169,6 +174,7 @@ public class ProblemController {
     }
     
     /*查询我的问题     获取更新的回答数量信息*/
+    @IgnoreAuth
     @RequestMapping(value="/myproblem",method=RequestMethod.POST)
     public Response myProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -183,6 +189,7 @@ public class ProblemController {
     }
     
     /*根据问题id，查询问题详情    */
+    @IgnoreAuth
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();

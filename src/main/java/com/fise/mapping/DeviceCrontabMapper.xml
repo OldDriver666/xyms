@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.DeviceCrontabMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.DeviceCrontab">
+    <id column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="task_type" jdbcType="INTEGER" property="taskType" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="task_param" jdbcType="VARCHAR" property="taskParam" />
+    <result column="begin_time" jdbcType="VARCHAR" property="beginTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="repeat_mode" jdbcType="BIT" property="repeatMode" />
+    <result column="repeat_value" jdbcType="VARCHAR" property="repeatValue" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_id, device_id, task_type, task_name, task_param, begin_time, end_time, status, 
+    repeat_mode, repeat_value, updated, created
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.DeviceCrontabExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from DeviceCrontab
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DeviceCrontab
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from DeviceCrontab
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.DeviceCrontabExample">
+    delete from DeviceCrontab
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.DeviceCrontab">
+    insert into DeviceCrontab (task_id, device_id, task_type, 
+      task_name, task_param, begin_time, 
+      end_time, status, repeat_mode, 
+      repeat_value, updated, created
+      )
+    values (#{taskId,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, #{taskType,jdbcType=INTEGER}, 
+      #{taskName,jdbcType=VARCHAR}, #{taskParam,jdbcType=VARCHAR}, #{beginTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{repeatMode,jdbcType=BIT}, 
+      #{repeatValue,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.DeviceCrontab">
+    insert into DeviceCrontab
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="taskType != null">
+        task_type,
+      </if>
+      <if test="taskName != null">
+        task_name,
+      </if>
+      <if test="taskParam != null">
+        task_param,
+      </if>
+      <if test="beginTime != null">
+        begin_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="repeatMode != null">
+        repeat_mode,
+      </if>
+      <if test="repeatValue != null">
+        repeat_value,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="taskType != null">
+        #{taskType,jdbcType=INTEGER},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskParam != null">
+        #{taskParam,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="repeatMode != null">
+        #{repeatMode,jdbcType=BIT},
+      </if>
+      <if test="repeatValue != null">
+        #{repeatValue,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.DeviceCrontabExample" resultType="java.lang.Long">
+    select count(*) from DeviceCrontab
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update DeviceCrontab
+    <set>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskType != null">
+        task_type = #{record.taskType,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskName != null">
+        task_name = #{record.taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskParam != null">
+        task_param = #{record.taskParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null">
+        begin_time = #{record.beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.repeatMode != null">
+        repeat_mode = #{record.repeatMode,jdbcType=BIT},
+      </if>
+      <if test="record.repeatValue != null">
+        repeat_value = #{record.repeatValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update DeviceCrontab
+    set task_id = #{record.taskId,jdbcType=INTEGER},
+      device_id = #{record.deviceId,jdbcType=INTEGER},
+      task_type = #{record.taskType,jdbcType=INTEGER},
+      task_name = #{record.taskName,jdbcType=VARCHAR},
+      task_param = #{record.taskParam,jdbcType=VARCHAR},
+      begin_time = #{record.beginTime,jdbcType=VARCHAR},
+      end_time = #{record.endTime,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT},
+      repeat_mode = #{record.repeatMode,jdbcType=BIT},
+      repeat_value = #{record.repeatValue,jdbcType=VARCHAR},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.DeviceCrontab">
+    update DeviceCrontab
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="taskType != null">
+        task_type = #{taskType,jdbcType=INTEGER},
+      </if>
+      <if test="taskName != null">
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskParam != null">
+        task_param = #{taskParam,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        begin_time = #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="repeatMode != null">
+        repeat_mode = #{repeatMode,jdbcType=BIT},
+      </if>
+      <if test="repeatValue != null">
+        repeat_value = #{repeatValue,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.DeviceCrontab">
+    update DeviceCrontab
+    set device_id = #{deviceId,jdbcType=INTEGER},
+      task_type = #{taskType,jdbcType=INTEGER},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      task_param = #{taskParam,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      repeat_mode = #{repeatMode,jdbcType=BIT},
+      repeat_value = #{repeatValue,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where task_id = #{taskId,jdbcType=INTEGER}
+  </update>
+</mapper>

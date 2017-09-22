@@ -54,14 +54,14 @@
     	<property name="defaultEncoding" value="utf-8"/>
     </bean>
     
-    <!-- 
-    <bean id="AuthAspect" class=""/>
+    
+    <bean id="AuthAspect" class="com.fise.framework.aspect.AuthAspect"/>
     
     <aop:config>
     	<aop:aspect ref="AuthAspect">
-    		<aop:around method="execute" pointcut=""/>
+    		<aop:around method="execute" pointcut="@annotation(org.springframework.web.bind.annotation.RequestMapping)"/>
     	</aop:aspect>
     </aop:config> 
-    -->
+   
     
 </beans>    

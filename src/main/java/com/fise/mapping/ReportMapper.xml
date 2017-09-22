@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.ReportMapper">
+  <!-- 查时间段内指定公司用户注册/激活统计数据 -->
+  <resultMap type="com.fise.model.result.ActivateResult" id="ActivateResultMap">
+    <result column="query_date" jdbcType="VARCHAR" property="queryDate" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+  </resultMap>
+  <select id="queryActivateCountByDate" parameterType="com.fise.model.param.ReportActivateParam" resultMap="ActivateResultMap">
+    select FROM_UNIXTIME(created,'%Y%m%d') as query_date,
+           count(1) as count 
+    from IMUser 
+    where departId = #{param.organId,jdbcType=INTEGER}
+      and FROM_UNIXTIME(created,'%Y%m%d') &gt;= #{param.beginDate,jdbcType=VARCHAR}
+      and FROM_UNIXTIME(created,'%Y%m%d') &lt;= #{param.endDate,jdbcType=VARCHAR}
+    group by FROM_UNIXTIME(created,'%Y%m%d')
+    order by created desc;
+  </select>
+
+  <resultMap type="com.fise.base.KeyValueMap" id="userSexResultMap">
+    <result column="sex" jdbcType="VARCHAR" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserSexCount" parameterType="java.lang.Integer" resultMap="userSexResultMap">
+    select case sex when 1 then '男' when 2 then '女' else '未知' end as sex,
+           count(1) as count 
+    from IMUser 
+    where departId = #{companyId,jdbcType=INTEGER}
+    group by sex;
+  </select>
+
+  <resultMap type="com.fise.base.KeyValueMap" id="userTypeResultMap">
+    <result column="type" jdbcType="INTEGER" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserTypeCount" parameterType="java.lang.Integer" resultMap="userTypeResultMap">
+    select type,
+           count(1) as count 
+    from IMUser 
+    where departId = #{companyId,jdbcType=INTEGER}
+    group by type;
+  </select>
+
+  <resultMap type="com.fise.base.KeyValueMap" id="userAddResultMap">
+    <result column="province" jdbcType="VARCHAR" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserProviceCount" parameterType="java.lang.Integer" resultMap="userAddResultMap">
+    select if(length(province) &gt; 0,province,'未知') as province,
+           count(1) as count 
+    from IMUser 
+    where departId = #{companyId,jdbcType=INTEGER}
+    group by province;
+  </select>
+	
+  <resultMap type="com.fise.model.result.MessageDayResult" id="daymessage">
+  	<result column="time" jdbcType="VARCHAR" property="keyName"/>
+  	<result column="count" jdbcType="INTEGER" property="keyValue"/>
+  </resultMap>	
+  <select id="querydaymessages" parameterType="map" resultMap="daymessage">
+  	SELECT FROM_UNIXTIME(created,'%Y-%m-%d') as time,
+  	COUNT(1) as count 
+  	from ${tablename} 
+  	GROUP BY FROM_UNIXTIME(created,'%Y-%m-%d') 
+  	HAVING time='${daytime}'
+  </select>	
+  
+  <resultMap type="com.fise.model.result.MessageTypeResult" id="typemessage">
+  	<result column="type" jdbcType="INTEGER" property="keyName"/>
+  	<result column="count" jdbcType="INTEGER" property="keyValue"/>
+  </resultMap>
+  <select id="querytypemessages" parameterType="java.lang.String" resultMap="typemessage">
+  	SELECT type,COUNT(1) as count 
+  	from ${tablename} 
+  	GROUP BY type 
+  </select>
+</mapper>
