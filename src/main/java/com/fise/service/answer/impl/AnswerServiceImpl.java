@@ -252,4 +252,37 @@ public class AnswerServiceImpl implements IAnswerService{
         result.setAvatar(user.getAvatar());
     }
 
+    @Override
+    public Response queryBack(Page<Answer> page) {
+        Response resp = new Response();
+        
+        AnswerExample example = new AnswerExample();
+        AnswerExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("created desc");
+        
+        if(page.getParam().getUserId()!=null){
+            criteria.andUserIdEqualTo(page.getParam().getUserId());
+        }
+        if(page.getParam().getProblemId()!=null){
+            criteria.andProblemIdEqualTo(page.getParam().getProblemId());
+        }
+        
+        List<Answer> list=answerDao.selectBypage(example, page);
+        page.setParam(null);
+        page.setResult(list);
+        resp.success(page);
+        return resp;
+    }
+
+    @Override
+    public Response update(Answer param) {
+        Response resp = new Response();
+        
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        answerDao.updateByPrimaryKeySelective(param);
+        
+        resp.success();
+        return resp;
+    }
+
 }

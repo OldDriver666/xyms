@@ -95,4 +95,27 @@ public class AnswerController {
         res=answerService.query(map.get("answer_id"),map.get("user_id"));
         return res;
     }
+    
+    /*后台管理  查询回答信息*/
+    @RequestMapping(value="/queryback",method=RequestMethod.POST)
+    public Response queryBack(@RequestBody @Valid Page<Answer> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=answerService.queryBack(param);
+        return resp;
+    }
+    
+    /*后台管理  更新回答信息*/
+    @RequestMapping(value="/update",method=RequestMethod.POST)
+    public Response update(@RequestBody @Valid Answer param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(param.getId()==null){
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        resp=answerService.update(param);
+        return resp;
+    }
 }

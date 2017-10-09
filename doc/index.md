@@ -2889,3 +2889,843 @@ type和name都是选填，如果都不填，则查询所有信息
    ]
 }
 ```
+
+####问答圈问题查询
+|    接口地址       |  xiaoyusvr/problem/queryback   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+user_id 不填则查询所有，分页查询
+{
+     "param":{
+     	            "user_id":250060      //选填-要查询的用户ID
+     		  },	
+     "page_no":1                      
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 5,
+      "total_page_count": 1,
+      "param": null,  
+      "extra_param": null,
+      "result": [
+         {
+            "id": 71,
+            "title": "Ewwwwwww",
+            "content": "Wwwwww",
+            "picture": "",
+            "status": 1,
+            "updated": 1505802100,
+            "created": 1504236766,
+            "user_id": 250060,
+            "answer_num": 0,
+            "browse_num": 6,
+            "school_id": 62490
+         }
+       ]
+     } 
+}      
+```
+
+####问题更新
+|    接口地址       |  xiaoyusvr/problem/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+   "id":x,                    //必填-更新的问题ID
+   "user_id":x,               //选填-发布问题的用户ID
+   "title":"",                //选填-问题的话题 
+   "content":"",              //选填-问题的内容
+   "answer_num":x,            //选填-问题的回答数
+   "browse_num":x,            //选填-问题的浏览数
+   "status":x                 //选填-问题状态  1--可用   0--不可用
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####回答查询
+|    接口地址       |  xiaoyusvr/answer/queryback   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+user_id 和  problem_id 都不填则查询所有
+{
+   "param":{
+                   "user_id":1,       //选填-回答的用户ID
+                   "problem_id":2     //选填-回答的问题ID
+                },
+   "page_no":x
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "content": "22",
+            "status": 1,
+            "updated": 0,
+            "created": 0,
+            "user_id": 1,
+            "problem_id": 2,
+            "agree_num": 0,
+            "comment_num": 5
+         }
+      ]
+   }
+}
+```
+
+####回答更新
+|    接口地址       |  xiaoyusvr/answer/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+   "id":1,                     //必填-回答的id
+   "user_id":11,               //选填-回答的用户id
+   "problem_id":11,            //选填-回答的问题id
+   "content":"国庆快到了",        //选填-回答内容
+   "agree_num":0,              //选填-赞同数
+   "comment_num":5,            //选填-评论数
+   "status":0                  //选填-回答状态  1--可用  0--不可用
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####关注查询
+|    接口地址       |  xiaoyusvr/concern/queryback   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+user_id 和   problem_id 都不填则查询所有
+{
+    "param":{
+                     "user_id":3,                 //选填-用户ID
+                     "problem_id":30              //选填-关注的问题ID
+            },
+    "page_no":x             
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 13,
+            "status": 0,
+            "updated": 0,
+            "created": 1503577744,
+            "user_id": 3,
+            "problem_id": 30
+         }
+      ]
+   }
+}
+```
+
+####关注更新
+|    接口地址       |  xiaoyusvr/concern/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+   "id":x,                //必填-关注id
+   "user_id":x,           //选填-用户id  
+   "problem_id":x,        //选填-问题id
+   "status":0             //选填-1--已关注   0--未关注
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####评论查询
+|    接口地址       |  xiaoyusvr/comment/queryback   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+answer_id comment_id problem_id 都不填则查询所有
+{
+  "param":{
+                "answer_id":1,               //选填-回答id
+                "comment_id":4,              //选填-评论id
+                "problem_id":2               //选填-问题id   
+           },
+   "page_no":1               //选填-页码数  默认为1
+}
+```
+####回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 4,
+            "content": "go",
+            "status": 1,
+            "updated": 1503047436,
+            "created": 1503047436,
+            "from_userid": 22,
+            "to_userid": 0,
+            "answer_id": 1,
+            "comment_id": 2,
+            "problem_id": 2
+         }
+      ]
+   }
+}
+```
+
+####评论更新
+|    接口地址       |  xiaoyusvr/comment/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "id":2,                           //必填-评论id
+    "from_userid":1,                  //选填-发起评论的人id
+    "to_userid":1,                    //选填-接收评论的人id  
+    "answer_id":1,                    //选填-评论的回答id
+    "comment_id":1,                   //选填-评论的评论id  
+    "problem_id":1,                   //选填-评论的问题id
+    "content":1,                      //选填-内容 
+    "status":0                        //选填-评论状态   0--不可用  1--可用
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####点赞查询
+|    接口地址       |  xiaoyusvr/agree/queryback   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+user_id 和  answer_id 都不填则查询所有
+{"param":
+           {
+				"user_id":3,          //选填-用户id
+				"answer_id":1         //选填-问题id
+            },
+ "page_no":1                          //选填-页码数   默认为1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "status": 0,
+            "updated": 0,
+            "created": 1502877000,
+            "user_id": 3,
+            "answer_id": 1
+         }
+      ]
+   }
+}
+```
+
+####点赞查询
+|    接口地址       |  xiaoyusvr/agree/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "id":1,                  //必填-点赞表id
+    "user_id":0,             //选填-用户id
+    "answer_id":0,           //选填-回答id
+    "status":0               //选填-状态    1--可用   0--不可用  
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   广告查询
+|    接口地址       |  xiaoyusvr/app/advert/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+adc_name 不填则查询所有
+{
+    "param":{
+                 "adc_name":"";              //选填-广告名字
+             },
+    "page_no":1                              //选填-当前页面       
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "status": 1,
+            "prority": 12,
+            "created": 324132415,
+            "updated": 222235555,
+            "description": "实里",
+            "adv_index": "tiantianxiuxixu",
+            "adc_name": "天天秀秀",
+            "adv_url": "http://img.yingyonghui.com/card/com.ss.android.ugc.aweme/img_6_1501662610941.jpg",
+            "delay_time": 1000,
+            "inner_type": "app",
+            "inner_id": 1,
+            "inner_name": "修图"
+         }
+      ]
+   }
+}
+```
+
+####应用商城   广告更新
+|    接口地址       |  xiaoyusvr/app/advert/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "id":3,                  //必填-广告id
+    "adv_index":"",          //选填 
+    "adv_name":"",           //选填
+    "adv_url":"",            //选填
+    "status":1,              //选填 0-待审核 1-发布 2-下架
+    "prority":x,             //选填
+    "delay_time":x,          //选填  
+    "description":"",        //选填
+    "inner_type":"",         //选填
+    "inner_id":x,            //选填
+    "inner_name":""          //选填
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   频道查询
+|    接口地址       |  xiaoyusvr/app/channel/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+####请求
+```
+channel_name 不填则查询所有
+{
+    "param":{
+                 "channel_name":"男生频道"         //选填-频道名字
+            },
+    "page_no":1                                 
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "description": "男生专用",
+            "status": 1,
+            "updated": 0,
+            "created": 0,
+            "prority": 1,
+            "image": "http://appimg.hicloud.com/hwmarket/files/portallinkimage/5e12fa89ceb4446f9112102a80a529bb.png",
+            "channel_name": "男生频道",
+            "back_ground": "#ffae00",
+            "text_color": "#ffffff"
+         }
+      ]
+   }
+}
+```
+
+####应用商城   频道更新
+|    接口地址       |  xiaoyusvr/app/channel/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求    
+```
+{
+     "id":5,                      //必填-频道id
+     "channel_name":"",           //选填-频道名字
+     "back_ground":"",            //选填-背景颜色
+     "description":"",            //选填-频道描述
+     "status":1,                  //选填- 0-关闭 1-正常
+     "prority":x,                 //选填-权值
+     "text_color":"",             //选填-文字颜色
+     "image":""                   //选填-图片
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   频道应用查询
+|    接口地址       |  xiaoyusvr/app/channellist/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+都不填则查询所有
+{
+    "param":{
+                 "channel_id":5,     //选填-频道id
+                 "app_id":2          //选填-应用id 
+             }
+    "page_no":1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "status": 1,
+            "updated": 1,
+            "prority": 0,
+            "channel_id": 5,
+            "app_id": 2
+         }
+      ]
+   }
+}
+```
+
+####应用商城   频道应用查询
+|    接口地址       |  xiaoyusvr/app/channellist/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+     "id":x,                 //必填-关系id
+     "channel_id":x,         //选填-频道id 
+     "app_id":x,             //选填-应用id 
+     "status":x,             //选填- 1--可用  0--不可用
+     "prority":x             //选填-权值
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   应用信息查询
+|    接口地址       |  xiaoyusvr/appinformation/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+不填则查询所有
+{
+     "param":{
+                       "app_name":"超级"    //选填
+                   },
+     "page_no":1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 5,
+            "category": "日常工具",
+            "status": 1,
+            "description": "课程学习",
+            "version": "9.1.2",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "images": "http://p17.qhimg.com/dm/180_300_/t0175b5305e91387007.jpg;http://p16.qhimg.com/dm/180_300_/t01b32d85a47074f32a.jpg;http://p16.qhimg.com/dm/180_300_/t018ec0d9633156b02b.jpg",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "size": "19.32M",
+            "updated": 0,
+            "created": 0,
+            "prority": 60,
+            "remarks": "你是",
+            "label": "asdas",
+            "star": "4.2",
+            "orientation": 0,
+            "app_index": "chaoji",
+            "app_name": "超级",
+            "app_spell": "chaoji",
+            "package_name": "com.fise.app",
+            "dev_id": 0,
+            "dev_name": "广州超级周末科技有限公司",
+            "top_category": "软件",
+            "version_code": "853",
+            "icon_type": 1
+         }
+      ]
+   }
+}
+```
+
+####应用商城   应用信息更新
+|    接口地址       |  xiaoyusvr/appinformation/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+      "id":8,                       //必填-id
+      "app_index":"",
+      "app_name":"",
+      "app_spell":"",
+      "package_name":"",
+      "dev_id":x,
+      "dev_name":"",
+      "top_category":"",
+      "category":"",
+      "status":x,
+      "description":"",
+      "version":"",
+      "version_code":"",
+      "icon":"",
+      "icon_type":x,
+      "images":"",
+      "download":"",
+      "size":"",
+      "prority":x,
+      "remarks":"",
+      "label":"",
+      "star":"",
+      "orientation":"" 
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   appsplash查询
+|    接口地址       |  xiaoyusvr/appsplash/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+     "param":{
+                    "name":""      //选填             
+             },
+     "page_no":1                   //选填
+} 
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "name": "自拍神器",
+            "url": "http://p0.qhimg.com/t01e44dbaa14c1be685.jpg",
+            "prority": 100,
+            "status": true,
+            "delay": 3,
+            "updated": 0,
+            "action_url": "app:2"
+         },
+         {
+            "id": 2,
+            "name": "课程表",
+            "url": "http://p8.qhimg.com/t01080e733044551360.png",
+            "prority": 90,
+            "status": true,
+            "delay": 3,
+            "updated": 0,
+            "action_url": "app:3"
+         },
+         {
+            "id": 3,
+            "name": "遇见软件",
+            "url": "http://p8.qhimg.com/t0146a917f3f71eb7ca.jpg",
+            "prority": 50,
+            "status": true,
+            "delay": 3,
+            "updated": 0,
+            "action_url": "channel:5"
+         }
+      ]
+   }
+}
+```
+
+####应用商城   appsplash更新
+|    接口地址       |  xiaoyusvr/appsplash/update   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+     "id":3,                     //必填
+     "name":"",                  //选填
+     "url":"",                   //选填
+     "action_url":"",            //选填
+     "prority":x,                //选填
+     "status":0,                 //选填
+     "delay":x                   //选填
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####敏感词添加
+|    接口地址       |  xiaoyusvr/sensitiveword/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "sensitive_word":""          //必填-敏感词
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####敏感词查询
+|    接口地址       |  xiaoyusvr/sensitiveword/query   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+sensitive_word 不填则查询所有
+{
+     "param":{
+             	"sensitive_word":""          //选填-敏感词 
+              },
+	 "page_no":1                             //选填-页码数   默认为1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1063,
+      "total_page_count": 107,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "sensitive_word": "阿扁推翻"
+         },
+         {
+            "id": 2,
+            "sensitive_word": "阿宾"
+         },
+         {
+            "id": 3,
+            "sensitive_word": "阿賓"
+         },
+         {
+            "id": 4,
+            "sensitive_word": "挨了一炮"
+         },
+         {
+            "id": 5,
+            "sensitive_word": "爱液横流"
+         },
+         {
+            "id": 6,
+            "sensitive_word": "安街逆"
+         },
+         {
+            "id": 7,
+            "sensitive_word": "安局办公楼"
+         },
+         {
+            "id": 8,
+            "sensitive_word": "安局豪华"
+         },
+         {
+            "id": 9,
+            "sensitive_word": "安门事"
+         },
+         {
+            "id": 10,
+            "sensitive_word": "安眠藥"
+         }
+      ]
+   }
+}
+```
+
+####敏感词删除
+|    接口地址       |  xiaoyusvr/sensitiveword/delete   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+	"id":x           //必填-敏感词ID
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```

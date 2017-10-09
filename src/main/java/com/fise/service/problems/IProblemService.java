@@ -22,4 +22,10 @@ public interface IProblemService {
     
     /*删除我的某个问题*/
     public Response delMyPro(Integer problem_id);
+    
+    /*后台管理 查询问题*/
+    public Response queryBack(Page<Problems> param);
+    
+    /*后台管理  修改问题*/
+    public Response update(Problems param);
 }

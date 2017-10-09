@@ -40,8 +40,8 @@ public class FileController {
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
-                String path="/home/fise/www/upload";
-                String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");;
+                String path="/home/fise/bin/www/upload";
+                String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
                 File dir=new File(path,filename);
                 if(!dir.exists()){
                     dir.mkdirs();

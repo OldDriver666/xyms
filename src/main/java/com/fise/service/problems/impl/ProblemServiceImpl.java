@@ -277,4 +277,34 @@ public class ProblemServiceImpl implements IProblemService{
         page.setTotalCount(param.getTotalCount());
         page.setTotalPageCount(param.getTotalPageCount());
     }
+
+    @Override
+    public Response queryBack(Page<Problems> param) {
+        Response resp = new Response();
+        
+        ProblemsExample example = new ProblemsExample();
+        ProblemsExample.Criteria criteria=example.createCriteria();
+        
+        if(param.getParam().getUserId()!=null){
+            criteria.andUserIdEqualTo(param.getParam().getUserId());
+        }
+        
+        example.setOrderByClause("created desc");
+        List<Problems> list=problemsDao.selectBypage(example, param);
+        
+        param.setResult(list);
+        param.setParam(null);
+        resp.success(param);
+        return resp;
+    }
+
+    @Override
+    public Response update(Problems param) {
+        Response resp = new Response();
+        
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        problemsDao.updateByPrimaryKeySelective(param);
+        resp.success();
+        return resp;
+    }
 }

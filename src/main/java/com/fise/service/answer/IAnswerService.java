@@ -16,4 +16,10 @@ public interface IAnswerService {
     
     /*根据回答id，查询更新信息*/
     public Response query(Integer answer_id,Integer user_id);
+    
+    /*后台管理  查询回答信息*/
+    public Response queryBack(Page<Answer> page);
+    
+    /*后台管理  更新回答信息*/
+    public Response update(Answer param);
 }

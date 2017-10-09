@@ -19,4 +19,10 @@ public interface ICommentService {
     
     /*根据评论id查询评论*/
     public Response queryById(Integer comment_id);
+    
+    /*后台管理  评论查询*/
+    public Response queryBack(Page<Comment> page);
+    
+    /*后台管理  评论更新*/
+    public Response update(Comment param);
 }

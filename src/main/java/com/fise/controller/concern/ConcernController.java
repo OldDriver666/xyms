@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Concern;
@@ -85,4 +86,26 @@ public class ConcernController {
         return res;
     }
     
+    /*后台管理   查询关注*/
+    @RequestMapping(value="/queryback",method=RequestMethod.POST)
+    public Response queryBack(@RequestBody @Valid Page<Concern> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=concernService.queryBack(param);
+        return resp;
+    }
+    
+    /*后台管理  关注更新*/
+    @RequestMapping(value="/update",method=RequestMethod.POST)
+    public Response update(@RequestBody @Valid Concern param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(param.getId()==null) return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        
+        resp=concernService.update(param);
+        
+        return resp;
+    }
 }

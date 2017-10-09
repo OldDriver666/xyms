@@ -99,4 +99,26 @@ public class CommentController {
         res=commentService.queryById(map.get("id"));
         return res;
     }
+    
+    /*后台管理  评论查询*/
+    @RequestMapping(value="/queryback",method=RequestMethod.POST)
+    public Response queryBack(@RequestBody @Valid Page<Comment> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=commentService.queryBack(param);
+        return resp;
+    }
+    
+    /*后台管理  评论更新*/
+    @RequestMapping(value="/update",method=RequestMethod.POST)
+    public Response update(@RequestBody @Valid Comment param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(param.getId()==null) return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        
+        resp=commentService.update(param);
+        return resp;
+    }
 }

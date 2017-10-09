@@ -279,4 +279,39 @@ public class ConcernServiceImpl implements IConcernService{
         pResult.setUpdated(problem.getUpdated());
         pResult.setCreated(problem.getCreated());
     }
+
+
+    @Override
+    public Response queryBack(Page<Concern> page) {
+        Response resp = new Response();
+        
+        ConcernExample example = new ConcernExample();
+        ConcernExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("created desc");
+        
+        if(page.getParam().getUserId()!=null){
+            criteria.andUserIdEqualTo(page.getParam().getUserId());
+        }
+        if(page.getParam().getProblemId()!=null){
+            criteria.andProblemIdEqualTo(page.getParam().getProblemId());
+        }
+        
+        List<Concern> list=concernDao.selectByPage(example, page);
+        
+        page.setResult(list);
+        page.setParam(null);
+        resp.success(page);
+        return resp;
+    }
+
+
+    @Override
+    public Response update(Concern param) {
+        Response resp = new Response();
+        
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        concernDao.updateByPrimaryKeySelective(param);
+        
+        return resp.success();
+    }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AgreeMapper;
 import com.fise.dao.AnswerMapper;
@@ -73,6 +74,37 @@ public class AgreeServiceImpl implements IAgreeService{
         answer.setAgreeNum(answer.getAgreeNum()+num);
         answer.setUpdated(DateUtil.getLinuxTimeStamp());
         answerDao.updateByPrimaryKey(answer);
+    }
+
+    @Override
+    public Response queryBack(Page<Agree> page) {
+        Response resp = new Response();
+        
+        AgreeExample example = new AgreeExample();
+        AgreeExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("created desc");
+        
+        if(page.getParam().getAnswerId()!=null){
+            criteria.andAnswerIdEqualTo(page.getParam().getAnswerId());
+        }
+        if(page.getParam().getUserId()!=null){
+            criteria.andUserIdEqualTo(page.getParam().getUserId());
+        }
+        
+        List<Agree> list=agreeDao.selectBypage(example, page);
+        
+        page.setParam(null);
+        page.setResult(list);
+        return resp.success(page);
+    }
+
+    @Override
+    public Response update(Agree agree) {
+        Response resp = new Response();
+        
+        agree.setUpdated(DateUtil.getLinuxTimeStamp());
+        agreeDao.updateByPrimaryKeySelective(agree);
+        return resp.success();
     }
 
     

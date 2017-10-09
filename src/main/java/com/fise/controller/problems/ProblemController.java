@@ -202,4 +202,29 @@ public class ProblemController {
         res=problemService.query(map.get("problem_id"),map.get("user_id"));
         return res;
     }
+    
+    /*后台管理 查询问题*/
+    @RequestMapping(value="/queryback",method=RequestMethod.POST)
+    public Response queryBack(@RequestBody @Valid Page<Problems> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=problemService.queryBack(param);
+        return resp;
+    }
+    
+    /*后台管理  修改问题*/
+    @RequestMapping(value="/update",method=RequestMethod.POST)
+    public Response update(@RequestBody @Valid Problems param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(param.getId()==null){
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        resp=problemService.update(param);
+        return resp;
+    }
+    
 }

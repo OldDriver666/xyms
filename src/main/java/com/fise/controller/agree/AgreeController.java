@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Agree;
@@ -35,5 +36,27 @@ public class AgreeController {
         
         res=agreeService.addAgree(agree);
         return res;
+    }
+    
+    /*后台管理   点赞查询*/
+    @RequestMapping(value="/agree/queryback",method=RequestMethod.POST)
+    public Response queryBack(@RequestBody @Valid Page<Agree> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=agreeService.queryBack(param);
+        return resp;
+    }
+    
+    /*后台管理    点赞更新*/
+    @RequestMapping(value="/agree/update",method=RequestMethod.POST)
+    public Response update(@RequestBody @Valid Agree agree){
+        Response resp = new Response();
+        logger.info(agree.toString());
+        
+        if(agree.getId()==null) return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        
+        resp=agreeService.update(agree);
+        return resp;
     }
 }

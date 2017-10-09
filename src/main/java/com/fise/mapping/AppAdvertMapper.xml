@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.AppAdvertMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.AppAdvert">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="adv_index" jdbcType="VARCHAR" property="advIndex" />
+    <result column="adv_name" jdbcType="VARCHAR" property="advName" />
+    <result column="adv_url" jdbcType="VARCHAR" property="advUrl" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="prority" jdbcType="INTEGER" property="prority" />
+    <result column="delay_time" jdbcType="INTEGER" property="delayTime" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="inner_type" jdbcType="VARCHAR" property="innerType" />
+    <result column="inner_id" jdbcType="INTEGER" property="innerId" />
+    <result column="inner_name" jdbcType="VARCHAR" property="innerName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, adv_index, adv_name, adv_url, status, prority, delay_time, created, updated, 
+    description, inner_type, inner_id, inner_name
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.AppAdvertExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_advert
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_advert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from app_advert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.AppAdvertExample">
+    delete from app_advert
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.AppAdvert">
+    insert into app_advert (id, adv_index, adv_name, 
+      adv_url, status, prority, 
+      delay_time, created, updated, 
+      description, inner_type, inner_id, 
+      inner_name)
+    values (#{id,jdbcType=INTEGER}, #{advIndex,jdbcType=VARCHAR}, #{advName,jdbcType=VARCHAR}, 
+      #{advUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
+      #{delayTime,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{innerType,jdbcType=VARCHAR}, #{innerId,jdbcType=INTEGER}, 
+      #{innerName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.AppAdvert">
+    insert into app_advert
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="advIndex != null">
+        adv_index,
+      </if>
+      <if test="advName != null">
+        adv_name,
+      </if>
+      <if test="advUrl != null">
+        adv_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="prority != null">
+        prority,
+      </if>
+      <if test="delayTime != null">
+        delay_time,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="innerType != null">
+        inner_type,
+      </if>
+      <if test="innerId != null">
+        inner_id,
+      </if>
+      <if test="innerName != null">
+        inner_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="advIndex != null">
+        #{advIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="advName != null">
+        #{advName,jdbcType=VARCHAR},
+      </if>
+      <if test="advUrl != null">
+        #{advUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="prority != null">
+        #{prority,jdbcType=INTEGER},
+      </if>
+      <if test="delayTime != null">
+        #{delayTime,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="innerType != null">
+        #{innerType,jdbcType=VARCHAR},
+      </if>
+      <if test="innerId != null">
+        #{innerId,jdbcType=INTEGER},
+      </if>
+      <if test="innerName != null">
+        #{innerName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.AppAdvertExample" resultType="java.lang.Long">
+    select count(*) from app_advert
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update app_advert
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.advIndex != null">
+        adv_index = #{record.advIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advName != null">
+        adv_name = #{record.advName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advUrl != null">
+        adv_url = #{record.advUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.prority != null">
+        prority = #{record.prority,jdbcType=INTEGER},
+      </if>
+      <if test="record.delayTime != null">
+        delay_time = #{record.delayTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.innerType != null">
+        inner_type = #{record.innerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.innerId != null">
+        inner_id = #{record.innerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.innerName != null">
+        inner_name = #{record.innerName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update app_advert
+    set id = #{record.id,jdbcType=INTEGER},
+      adv_index = #{record.advIndex,jdbcType=VARCHAR},
+      adv_name = #{record.advName,jdbcType=VARCHAR},
+      adv_url = #{record.advUrl,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      prority = #{record.prority,jdbcType=INTEGER},
+      delay_time = #{record.delayTime,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      inner_type = #{record.innerType,jdbcType=VARCHAR},
+      inner_id = #{record.innerId,jdbcType=INTEGER},
+      inner_name = #{record.innerName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.AppAdvert">
+    update app_advert
+    <set>
+      <if test="advIndex != null">
+        adv_index = #{advIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="advName != null">
+        adv_name = #{advName,jdbcType=VARCHAR},
+      </if>
+      <if test="advUrl != null">
+        adv_url = #{advUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="prority != null">
+        prority = #{prority,jdbcType=INTEGER},
+      </if>
+      <if test="delayTime != null">
+        delay_time = #{delayTime,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="innerType != null">
+        inner_type = #{innerType,jdbcType=VARCHAR},
+      </if>
+      <if test="innerId != null">
+        inner_id = #{innerId,jdbcType=INTEGER},
+      </if>
+      <if test="innerName != null">
+        inner_name = #{innerName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.AppAdvert">
+    update app_advert
+    set adv_index = #{advIndex,jdbcType=VARCHAR},
+      adv_name = #{advName,jdbcType=VARCHAR},
+      adv_url = #{advUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      prority = #{prority,jdbcType=INTEGER},
+      delay_time = #{delayTime,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      inner_type = #{innerType,jdbcType=VARCHAR},
+      inner_id = #{innerId,jdbcType=INTEGER},
+      inner_name = #{innerName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_advert
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+</mapper>

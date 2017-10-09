@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.ConcernExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface ConcernMapper {
     int updateByPrimaryKeySelective(Concern record);
 
     int updateByPrimaryKey(Concern record);
+    
+    List<Concern> selectByPage(@Param("example") ConcernExample example,@Param("page") Page<Concern> page);
 }

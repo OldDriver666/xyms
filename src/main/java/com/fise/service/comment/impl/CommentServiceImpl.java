@@ -293,4 +293,39 @@ public class CommentServiceImpl implements ICommentService{
         result.setCreated(comment.getCreated());
         
     }
+
+    @Override
+    public Response queryBack(Page<Comment> page) {
+        Response resp = new Response();
+        
+        CommentExample example = new CommentExample();
+        CommentExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("created desc");
+        
+        if(page.getParam().getAnswerId()!=null){
+            criteria.andAnswerIdEqualTo(page.getParam().getAnswerId());
+        }
+        if(page.getParam().getProblemId()!=null){
+            criteria.andProblemIdEqualTo(page.getParam().getProblemId());
+        }
+        if(page.getParam().getCommentId()!=null){
+            criteria.andCommentIdEqualTo(page.getParam().getCommentId());
+        }
+        
+        List<Comment> list=commentDao.selectByPage(example, page);
+        
+        page.setParam(null);
+        page.setResult(list);
+        return resp.success(page);
+    }
+
+    @Override
+    public Response update(Comment param) {
+        Response resp = new Response();
+        
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        commentDao.updateByPrimaryKeySelective(param);
+        
+        return resp.success();
+    }
 }
