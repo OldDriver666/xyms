@@ -1248,7 +1248,27 @@ null 没有数据返回 看code是否成功
 
 //回复
 无回复 看结果
-```  
+```
+
+####添加角色权限
+|   接口地址    |   xiaoyusvr/boss/role/insertAuth        |
+|   ---         |   ---                   |  
+
+```
+//请求
+{
+    "role_id":x,                   //必填 权限ID 
+    "module_id":x,                 //必填-模块ID
+    "company_id":x,                //必填-公司ID
+    "status":x,                    //必填-1-可见 0-不可见
+    "insert_auth":x,               //必填-权限
+    "update_auth":x,               //必填-权限
+    "query_auth":x                 //必填-权限
+}
+
+//回复
+无回复 看结果
+```
 
 ####获取菜单列表
 |   接口地址    |   xiaoyusvr/boss/module/query         |

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
+import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleParam;
 import com.fise.model.param.QueryRoleParam;
 import com.fise.model.param.RolePermissionParam;
@@ -97,13 +98,13 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/insertAuth", method = RequestMethod.POST)
-    public Response insertAuth(@RequestBody @Valid InsertRoleParam role) {
+    public Response insertAuth(@RequestBody @Valid InsertAuthParam role) {
         Response response = new Response();
 
         if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-        response = roleSvr.insertRole(role);
+        response = roleSvr.insertAuth(role);
         logger.info("新增角色:" + role.toString() + " 结果:" + response.getMsg());
         return response;
     }

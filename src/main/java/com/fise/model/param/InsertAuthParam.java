@@ -23,6 +23,60 @@ public class InsertAuthParam implements Serializable {
     @JsonProperty("company_id")
     private Integer companyId;
 
+    @NotNull
+    private Integer status;
+    
+    @NotNull
+    @JsonProperty("insert_auth")
+    private Integer insertAuth;
+
+    @NotNull
+    @JsonProperty("update_auth")
+    private Integer updateAuth;
+
+    @NotNull
+    @JsonProperty("query_auth")
+    private Integer queryAuth;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+
+    public Integer getInsertAuth() {
+        return insertAuth;
+    }
+
+
+    public void setInsertAuth(Integer insertAuth) {
+        this.insertAuth = insertAuth;
+    }
+
+
+    public Integer getUpdateAuth() {
+        return updateAuth;
+    }
+
+
+    public void setUpdateAuth(Integer updateAuth) {
+        this.updateAuth = updateAuth;
+    }
+
+
+    public Integer getQueryAuth() {
+        return queryAuth;
+    }
+
+
+    public void setQueryAuth(Integer queryAuth) {
+        this.queryAuth = queryAuth;
+    }
+
 
     public Integer getRoleId() {
         return roleId;

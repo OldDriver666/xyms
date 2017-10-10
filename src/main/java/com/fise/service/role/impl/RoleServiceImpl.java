@@ -181,10 +181,10 @@ public class RoleServiceImpl implements IRoleService {
         data.setCompanyId(param.getCompanyId());
         data.setModuleId(param.getModuleId());
         data.setRoleId(param.getRoleId());
-        data.setInsertAuth(1);
-        data.setUpdateAuth(1);
-        data.setQueryAuth(1);
-        data.setStatus(1);
+        data.setInsertAuth(param.getInsertAuth());
+        data.setUpdateAuth(param.getUpdateAuth());
+        data.setQueryAuth(param.getQueryAuth());
+        data.setStatus(param.getStatus());
         Integer tNow = DateUtil.getLinuxTimeStamp();
         data.setUpdated(tNow);
         data.setCreated(tNow);
