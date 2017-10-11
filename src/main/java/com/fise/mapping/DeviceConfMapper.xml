@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.DeviceConfMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.DeviceConf">
+    <id column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="master_id" jdbcType="INTEGER" property="masterId" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="alarm_takeoff" jdbcType="BIT" property="alarmTakeoff" />
+    <result column="alarm_battery" jdbcType="BIT" property="alarmBattery" />
+    <result column="alarm_poweroff" jdbcType="BIT" property="alarmPoweroff" />
+    <result column="listen_silent" jdbcType="BIT" property="listenSilent" />
+    <result column="step_mode" jdbcType="BIT" property="stepMode" />
+    <result column="alarm_call" jdbcType="BIT" property="alarmCall" />
+    <result column="electricize" jdbcType="BIT" property="electricize" />
+    <result column="mode" jdbcType="BIT" property="mode" />
+    <result column="bell_mode" jdbcType="BIT" property="bellMode" />
+    <result column="schoolId" jdbcType="INTEGER" property="schoolid" />
+    <result column="light_time" jdbcType="INTEGER" property="lightTime" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    device_id, master_id, group_id, mobile, alarm_takeoff, alarm_battery, alarm_poweroff, 
+    listen_silent, step_mode, alarm_call, electricize, mode, bell_mode, schoolId, light_time, 
+    updated, created
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.DeviceConfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from DeviceConf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DeviceConf
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from DeviceConf
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.DeviceConfExample">
+    delete from DeviceConf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.DeviceConf">
+    insert into DeviceConf (device_id, master_id, group_id, 
+      mobile, alarm_takeoff, alarm_battery, 
+      alarm_poweroff, listen_silent, step_mode, 
+      alarm_call, electricize, mode, bell_mode, 
+      schoolId, light_time, updated, 
+      created)
+    values (#{deviceId,jdbcType=INTEGER}, #{masterId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
+      #{mobile,jdbcType=VARCHAR}, #{alarmTakeoff,jdbcType=BIT}, #{alarmBattery,jdbcType=BIT}, 
+      #{alarmPoweroff,jdbcType=BIT}, #{listenSilent,jdbcType=BIT}, #{stepMode,jdbcType=BIT}, 
+      #{alarmCall,jdbcType=BIT}, #{electricize,jdbcType=BIT}, #{mode,jdbcType=BIT}, #{bellMode,jdbcType=BIT}, 
+      #{schoolid,jdbcType=INTEGER}, #{lightTime,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, 
+      #{created,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.DeviceConf">
+    insert into DeviceConf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="masterId != null">
+        master_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="alarmTakeoff != null">
+        alarm_takeoff,
+      </if>
+      <if test="alarmBattery != null">
+        alarm_battery,
+      </if>
+      <if test="alarmPoweroff != null">
+        alarm_poweroff,
+      </if>
+      <if test="listenSilent != null">
+        listen_silent,
+      </if>
+      <if test="stepMode != null">
+        step_mode,
+      </if>
+      <if test="alarmCall != null">
+        alarm_call,
+      </if>
+      <if test="electricize != null">
+        electricize,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="bellMode != null">
+        bell_mode,
+      </if>
+      <if test="schoolid != null">
+        schoolId,
+      </if>
+      <if test="lightTime != null">
+        light_time,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="masterId != null">
+        #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmTakeoff != null">
+        #{alarmTakeoff,jdbcType=BIT},
+      </if>
+      <if test="alarmBattery != null">
+        #{alarmBattery,jdbcType=BIT},
+      </if>
+      <if test="alarmPoweroff != null">
+        #{alarmPoweroff,jdbcType=BIT},
+      </if>
+      <if test="listenSilent != null">
+        #{listenSilent,jdbcType=BIT},
+      </if>
+      <if test="stepMode != null">
+        #{stepMode,jdbcType=BIT},
+      </if>
+      <if test="alarmCall != null">
+        #{alarmCall,jdbcType=BIT},
+      </if>
+      <if test="electricize != null">
+        #{electricize,jdbcType=BIT},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=BIT},
+      </if>
+      <if test="bellMode != null">
+        #{bellMode,jdbcType=BIT},
+      </if>
+      <if test="schoolid != null">
+        #{schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="lightTime != null">
+        #{lightTime,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.DeviceConfExample" resultType="java.lang.Long">
+    select count(*) from DeviceConf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update DeviceConf
+    <set>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.masterId != null">
+        master_id = #{record.masterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmTakeoff != null">
+        alarm_takeoff = #{record.alarmTakeoff,jdbcType=BIT},
+      </if>
+      <if test="record.alarmBattery != null">
+        alarm_battery = #{record.alarmBattery,jdbcType=BIT},
+      </if>
+      <if test="record.alarmPoweroff != null">
+        alarm_poweroff = #{record.alarmPoweroff,jdbcType=BIT},
+      </if>
+      <if test="record.listenSilent != null">
+        listen_silent = #{record.listenSilent,jdbcType=BIT},
+      </if>
+      <if test="record.stepMode != null">
+        step_mode = #{record.stepMode,jdbcType=BIT},
+      </if>
+      <if test="record.alarmCall != null">
+        alarm_call = #{record.alarmCall,jdbcType=BIT},
+      </if>
+      <if test="record.electricize != null">
+        electricize = #{record.electricize,jdbcType=BIT},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=BIT},
+      </if>
+      <if test="record.bellMode != null">
+        bell_mode = #{record.bellMode,jdbcType=BIT},
+      </if>
+      <if test="record.schoolid != null">
+        schoolId = #{record.schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lightTime != null">
+        light_time = #{record.lightTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update DeviceConf
+    set device_id = #{record.deviceId,jdbcType=INTEGER},
+      master_id = #{record.masterId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      alarm_takeoff = #{record.alarmTakeoff,jdbcType=BIT},
+      alarm_battery = #{record.alarmBattery,jdbcType=BIT},
+      alarm_poweroff = #{record.alarmPoweroff,jdbcType=BIT},
+      listen_silent = #{record.listenSilent,jdbcType=BIT},
+      step_mode = #{record.stepMode,jdbcType=BIT},
+      alarm_call = #{record.alarmCall,jdbcType=BIT},
+      electricize = #{record.electricize,jdbcType=BIT},
+      mode = #{record.mode,jdbcType=BIT},
+      bell_mode = #{record.bellMode,jdbcType=BIT},
+      schoolId = #{record.schoolid,jdbcType=INTEGER},
+      light_time = #{record.lightTime,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.DeviceConf">
+    update DeviceConf
+    <set>
+      <if test="masterId != null">
+        master_id = #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmTakeoff != null">
+        alarm_takeoff = #{alarmTakeoff,jdbcType=BIT},
+      </if>
+      <if test="alarmBattery != null">
+        alarm_battery = #{alarmBattery,jdbcType=BIT},
+      </if>
+      <if test="alarmPoweroff != null">
+        alarm_poweroff = #{alarmPoweroff,jdbcType=BIT},
+      </if>
+      <if test="listenSilent != null">
+        listen_silent = #{listenSilent,jdbcType=BIT},
+      </if>
+      <if test="stepMode != null">
+        step_mode = #{stepMode,jdbcType=BIT},
+      </if>
+      <if test="alarmCall != null">
+        alarm_call = #{alarmCall,jdbcType=BIT},
+      </if>
+      <if test="electricize != null">
+        electricize = #{electricize,jdbcType=BIT},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=BIT},
+      </if>
+      <if test="bellMode != null">
+        bell_mode = #{bellMode,jdbcType=BIT},
+      </if>
+      <if test="schoolid != null">
+        schoolId = #{schoolid,jdbcType=INTEGER},
+      </if>
+      <if test="lightTime != null">
+        light_time = #{lightTime,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.DeviceConf">
+    update DeviceConf
+    set master_id = #{masterId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      alarm_takeoff = #{alarmTakeoff,jdbcType=BIT},
+      alarm_battery = #{alarmBattery,jdbcType=BIT},
+      alarm_poweroff = #{alarmPoweroff,jdbcType=BIT},
+      listen_silent = #{listenSilent,jdbcType=BIT},
+      step_mode = #{stepMode,jdbcType=BIT},
+      alarm_call = #{alarmCall,jdbcType=BIT},
+      electricize = #{electricize,jdbcType=BIT},
+      mode = #{mode,jdbcType=BIT},
+      bell_mode = #{bellMode,jdbcType=BIT},
+      schoolId = #{schoolid,jdbcType=INTEGER},
+      light_time = #{lightTime,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from DeviceConf
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

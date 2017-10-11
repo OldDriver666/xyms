@@ -1649,7 +1649,7 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ```
 
-####查询配置 
+####查询部门配置 
 |   接口地址    |   xiaoyusvr/boss/departconf/queryimdepartconfig        |
 |   ---         |   ---                   |
 |   请求方式    |   HTTP POST             |
@@ -3748,4 +3748,96 @@ sensitive_word 不填则查询所有
 ####回复
 ```
 无内容，直接查看返回码
+```
+
+####查询设备配置 
+|   接口地址    |   xiaoyusvr/boss/querydevice        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+device_id 和  master_id 都不填则查询所有
+{
+    "param":{
+                  "device_id":x,          //选填-设备id
+                  "master_id":x           //选填-管理员id
+             },
+    "page_no":1                           //选填-页码数
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "mobile": "13423720455",
+            "electricize": 0,
+            "mode": 1,
+            "updated": 1504770239,
+            "created": 1502772239,
+            "device_id": 250033,
+            "master_id": 1000,
+            "group_id": 369,
+            "alarm_tokenoff": 1,
+            "alarm_battery": 1,
+            "alarm_poweroff": 1,
+            "listen_silent": 1,
+            "step_mode": 1,
+            "alarm_call": 1,
+            "bell_mode": 2,
+            "school_id": 63025,
+            "light_time": 15
+         },
+         {
+            "mobile": "13423720455",
+            "electricize": 0,
+            "mode": 1,
+            "updated": 1504769615,
+            "created": 1503401356,
+            "device_id": 250044,
+            "master_id": 1000,
+            "group_id": 370,
+            "alarm_tokenoff": 1,
+            "alarm_battery": 1,
+            "alarm_poweroff": 1,
+            "listen_silent": 1,
+            "step_mode": 1,
+            "alarm_call": 1,
+            "bell_mode": 2,
+            "school_id": 63025,
+            "light_time": 30
+         },
+         {
+            "mobile": "13423720455",
+            "electricize": 0,
+            "mode": 1,
+            "updated": 1505811287,
+            "created": 1504597875,
+            "device_id": 250065,
+            "master_id": 1000,
+            "group_id": 375,
+            "alarm_tokenoff": 1,
+            "alarm_battery": 1,
+            "alarm_poweroff": 1,
+            "listen_silent": 1,
+            "step_mode": 1,
+            "alarm_call": 1,
+            "bell_mode": 2,
+            "school_id": 86098,
+            "light_time": 60
+         }
+      ]
+   }
+}
 ```
