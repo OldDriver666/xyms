@@ -48,4 +48,14 @@ public class AppChannelController {
         resp = appChannelService.update(param);
         return resp;       
     }
+    
+    /*应用商城   新增频道*/
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
+    public Response insert(@RequestBody @Valid AppChannel param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=appChannelService.insert(param);
+        return resp;
+    }
 }

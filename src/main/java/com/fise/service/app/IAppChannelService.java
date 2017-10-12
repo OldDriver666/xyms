@@ -10,4 +10,7 @@ public interface IAppChannelService {
     
     /*应用商城    频道更新*/
     public Response update(AppChannel param);
+    
+    /*应用商城   新增频道*/
+    public Response insert(AppChannel param);
 }

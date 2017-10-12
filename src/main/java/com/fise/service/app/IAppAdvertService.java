@@ -10,4 +10,7 @@ public interface IAppAdvertService {
     
     /*应用商城   更新广告*/
     public Response update(AppAdvert record);
+    
+    /*应用商城   新增广告*/
+    public Response insert(AppAdvert record);
 }

@@ -35,7 +35,7 @@ public class AppSplash implements Serializable {
     /**
      * 0-弃用 1-启用
      */
-    private Boolean status;
+    private Integer status;
 
     /**
      * 显示延时
@@ -89,11 +89,11 @@ public class AppSplash implements Serializable {
         this.prority = prority;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

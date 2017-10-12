@@ -48,4 +48,14 @@ public class AppSplashController {
         resp=appSplashService.update(param);
         return resp;
     }
+    
+    /*应用商城  新增appsplash*/
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
+    public Response insert(@RequestBody @Valid AppSplash param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=appSplashService.insert(param);
+        return resp;
+    }
 }

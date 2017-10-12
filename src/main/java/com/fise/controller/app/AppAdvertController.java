@@ -48,4 +48,14 @@ public class AppAdvertController {
         resp = appAdvertService.update(param);
         return resp;
     }
+    
+    /*应用商城   新增广告*/
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
+    public Response insert(@RequestBody @Valid AppAdvert param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=appAdvertService.insert(param);
+        return resp;
+    }
 }

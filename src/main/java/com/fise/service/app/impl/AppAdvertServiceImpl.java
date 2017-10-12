@@ -50,4 +50,15 @@ public class AppAdvertServiceImpl implements IAppAdvertService{
         return resp.success();
     }
 
+    @Override
+    public Response insert(AppAdvert record) {
+        Response resp = new Response();
+        
+        record.setCreated(DateUtil.getLinuxTimeStamp());
+        record.setUpdated(DateUtil.getLinuxTimeStamp());
+        
+        appAdvertDao.insertSelective(record);
+        return resp.success();
+    }
+
 }

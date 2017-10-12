@@ -10,4 +10,7 @@ public interface IAppInfoemationService {
     
     /*应用商城   产品信息更新*/
     public Response update(AppInformation param);
+    
+    /*应用商城   新增产品信息*/
+    public Response insert(AppInformation param);
 }

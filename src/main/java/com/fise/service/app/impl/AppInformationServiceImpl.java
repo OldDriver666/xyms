@@ -47,6 +47,17 @@ public class AppInformationServiceImpl implements IAppInfoemationService{
         
         return resp.success();
     }
+
+    @Override
+    public Response insert(AppInformation param) {
+        Response resp = new Response();
+        
+        param.setCreated(DateUtil.getLinuxTimeStamp());
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        
+        appInformationDao.insertSelective(param);
+        return resp.success();
+    }
     
     
 }

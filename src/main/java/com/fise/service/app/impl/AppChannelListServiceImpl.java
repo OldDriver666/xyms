@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AppChannelListMapper;
@@ -47,6 +48,14 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
         param.setUpdated(DateUtil.getLinuxTimeStamp());
         appChannelListDao.updateByPrimaryKeySelective(param);
         
+        return resp.success();
+    }
+
+    @Override
+    public Response insert(AppChannelList param) {
+        Response resp = new Response();
+        
+        appChannelListDao.insertSelective(param);
         return resp.success();
     }
 

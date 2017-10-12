@@ -49,4 +49,15 @@ public class AppChannelServiceImpl implements IAppChannelService{
         return resp.success();
     }
 
+    @Override
+    public Response insert(AppChannel param) {
+        Response resp = new Response();
+        
+        param.setCreated(DateUtil.getLinuxTimeStamp());
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        
+        appChannelDao.insertSelective(param);
+        return resp.success();
+    }
+
 }

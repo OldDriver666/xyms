@@ -48,4 +48,18 @@ public class AppChannelListController {
         resp = appChannelListService.update(param);
         return resp;
     }
+    
+    /*应用商城 新增频道应用*/
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
+    public Response insert(@RequestBody @Valid AppChannelList param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(param.getChannelId()==null || param.getAppId()==null){
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        resp=appChannelListService.insert(param);
+        return resp;
+    }
 }

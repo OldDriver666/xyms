@@ -3322,6 +3322,32 @@ adc_name 不填则查询所有
 无内容，直接查看返回码
 ```
 
+####应用商城   新增广告
+|    接口地址       |  xiaoyusvr/app/advert/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+      "adv_index":"",
+      "adc_name":"mingz",
+      "adv_url":"dddd",
+      "status":0,
+      "prority":11,
+      "delay_time":1000,
+      "description":"mafan",
+      "inner_type":"222",
+      "inner_id":22,
+      "inner_name":"222"
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
 ####应用商城   频道查询
 |    接口地址       |  xiaoyusvr/app/channel/query   |
 |    ---     |      ---          |
@@ -3392,6 +3418,29 @@ channel_name 不填则查询所有
 无内容，直接查看返回码
 ```
 
+####应用商城   新增频道
+|    接口地址       |  xiaoyusvr/app/channel/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+      "channel_name":"xxx",
+      "back_ground":"mingz",
+      "description":"dddd",
+      "status":0,
+      "prority":11,
+      "text_color":"11",
+      "image":"mafan"      
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
 ####应用商城   频道应用查询
 |    接口地址       |  xiaoyusvr/app/channellist/query   |
 |    ---     |      ---          |
@@ -3449,6 +3498,26 @@ channel_name 不填则查询所有
      "app_id":x,             //选填-应用id 
      "status":x,             //选填- 1--可用  0--不可用
      "prority":x             //选填-权值
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   新增频道应用
+|    接口地址       |  xiaoyusvr/app/channellist/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+      "channel_id":6,           //必填-频道ID
+      "app_id":5,               //必填-应用id
+      "status":0,
+      "prority":0          
 }
 ```
 ####回复
@@ -3556,6 +3625,44 @@ channel_name 不填则查询所有
 无内容，直接查看返回码
 ```
 
+####应用商城   应用信息更新
+|    接口地址       |  xiaoyusvr/appinformation/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+      "app_index":"6",
+      "app_name":"5",
+      "app_spell":"0",
+      "package_name":"0",
+      "dev_id":1,
+      "dev_name":"222",
+      "top_category":"211",
+      "category":"223",
+      "status":0,
+      "description":"dsdas",
+      "version":"2.35",
+      "version_code":"78",
+      "icon":"356",
+      "icon_type":3,
+      "images":"fdf",
+      "download":"ewqewq",
+      "size":"dwdwd",
+      "prority":33,
+      "remarks":"wewqe",
+      "label":"dasdi",
+      "star":"dda",
+      "orientation":1          
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
 ####应用商城   appsplash查询
 |    接口地址       |  xiaoyusvr/appsplash/query   |
 |    ---     |      ---          |
@@ -3589,7 +3696,7 @@ channel_name 不填则查询所有
             "name": "自拍神器",
             "url": "http://p0.qhimg.com/t01e44dbaa14c1be685.jpg",
             "prority": 100,
-            "status": true,
+            "status": 1,
             "delay": 3,
             "updated": 0,
             "action_url": "app:2"
@@ -3599,7 +3706,7 @@ channel_name 不填则查询所有
             "name": "课程表",
             "url": "http://p8.qhimg.com/t01080e733044551360.png",
             "prority": 90,
-            "status": true,
+            "status": 1,
             "delay": 3,
             "updated": 0,
             "action_url": "app:3"
@@ -3609,7 +3716,7 @@ channel_name 不填则查询所有
             "name": "遇见软件",
             "url": "http://p8.qhimg.com/t0146a917f3f71eb7ca.jpg",
             "prority": 50,
-            "status": true,
+            "status": 1,
             "delay": 3,
             "updated": 0,
             "action_url": "channel:5"
@@ -3629,6 +3736,28 @@ channel_name 不填则查询所有
 ```
 {
      "id":3,                     //必填
+     "name":"",                  //选填
+     "url":"",                   //选填
+     "action_url":"",            //选填
+     "prority":x,                //选填
+     "status":0,                 //选填
+     "delay":x                   //选填
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```
+
+####应用商城   新增appsplash
+|    接口地址       |  xiaoyusvr/appsplash/insert   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
      "name":"",                  //选填
      "url":"",                   //选填
      "action_url":"",            //选填

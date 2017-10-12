@@ -10,4 +10,7 @@ public interface IAppSplashService {
     
     /*应用商城  appsplash更新*/
     public Response update(AppSplash param);
+    
+    /*应用商城  新增appsplash*/
+    public Response insert(AppSplash param);
 }

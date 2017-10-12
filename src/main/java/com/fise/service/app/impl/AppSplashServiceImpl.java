@@ -47,5 +47,15 @@ public class AppSplashServiceImpl implements IAppSplashService{
         
         return resp.success();
     }
+
+    @Override
+    public Response insert(AppSplash param) {
+        Response resp = new Response();
+        
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        
+        appSplashDao.insertSelective(param);
+        return resp.success();
+    }
         
 }

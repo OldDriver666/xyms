@@ -14,6 +14,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.AppInformation;
 import com.fise.service.app.IAppInfoemationService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/appinformation")
@@ -46,6 +47,20 @@ public class AppInformationController {
         }
         
         resp = appInfoemationService.update(param);
+        return resp;
+    }
+    
+    /*应用商城   新增产品信息*/
+    @RequestMapping(value="insert",method=RequestMethod.POST)
+    public Response insert(@RequestBody @Valid AppInformation param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        if(StringUtil.isEmpty(param.getAppIndex()) || StringUtil.isEmpty(param.getAppName()) || StringUtil.isEmpty(param.getAppSpell())){
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        resp=appInfoemationService.insert(param);
         return resp;
     }
 }
