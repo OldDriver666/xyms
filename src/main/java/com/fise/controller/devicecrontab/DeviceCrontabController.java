@@ -45,7 +45,7 @@ public class DeviceCrontabController {
         Response response=new Response();
         logger.info(param.toString());
         
-        if(StringUtil.isEmpty(param.getName())){
+        if(param.getDeviceId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
