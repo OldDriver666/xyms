@@ -58,7 +58,7 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         
         Response response=new Response();
         
-        IMUserExample example=new IMUserExample();
+        /*IMUserExample example=new IMUserExample();
         IMUserExample.Criteria criteria=example.createCriteria();
         
         if(!StringUtil.isEmpty(param.getName())){
@@ -69,11 +69,11 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         
         if(list.size()==0){
             return response.failure(ErrorCode.ERROR_CAMERA_CONF_DEVICE_EXISTED);
-        }
+        }*/
         
         DeviceControlExample example1 =new DeviceControlExample();
         Criteria criteria1 =example1.createCriteria();
-        criteria1.andDeviceIdEqualTo(list.get(0).getId());
+        criteria1.andDeviceIdEqualTo(param.getDeviceId());
         
         if(!StringUtil.isEmpty(param.getMobile())){
             criteria1.andMobileEqualTo(param.getMobile());

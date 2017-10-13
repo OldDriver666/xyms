@@ -2,6 +2,7 @@ package com.fise.model.param;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
 
@@ -13,21 +14,20 @@ public class DeviceControlParam implements Serializable{
     /**
      * 用户名
      */
-    private String name;
+    @JsonProperty("device_id")
+    private Integer deviceId;
     
     /**
      * 电话号码
      */
     private String mobile;
-    
 
-
-    public String getName() {
-        return name;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getMobile() {
