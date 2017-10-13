@@ -87,7 +87,7 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         return response;
     }
 
-    /*@Override
+    @Override
     public Response updateDeviceControl(DeviceControl record) {
         
         Response response=new Response();
@@ -114,14 +114,14 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         deviceControlDao.updateByPrimaryKeySelective(record);
         return response.success();
     }
-*/
-    /*@Override
+
+    @Override
     public Response delDeviceControl(DeviceControlParam param) {
         
         Response response=new Response();
         
-        deviceControlDao.deleteByPrimaryKey(param.getId());
+        deviceControlDao.deleteByPrimaryKey(param.getDeviceId());
         return response.success();
     }
-*/
+
 }

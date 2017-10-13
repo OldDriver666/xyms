@@ -11,9 +11,9 @@ public interface IDeviceControlService {
     /*查询儿童手表联系人*/
     Response queryDeviceControl(DeviceControlParam param);
     
-    /*修改儿童手表联系人
+    /*修改儿童手表联系人*/
     Response updateDeviceControl(DeviceControl record);
     
-    删除儿童手表联系人
-    Response delDeviceControl(DeviceControlParam param);*/
+    /*删除儿童手表联系人*/
+    Response delDeviceControl(DeviceControlParam param);
 }
