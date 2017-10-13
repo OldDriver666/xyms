@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.service.school.ISchoolService;
  
 @RestController
@@ -23,6 +24,7 @@ public class SchoolController {
     @Resource
     ISchoolService schoolService;
     
+    @IgnoreAuth
     @RequestMapping(value="/queryschool",method=RequestMethod.POST)
     public Response querySchool(@RequestBody @Valid Map<String, Integer[]> map){
         Response res = new Response();
