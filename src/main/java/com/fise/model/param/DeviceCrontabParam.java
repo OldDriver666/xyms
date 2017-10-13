@@ -11,6 +11,9 @@ public class DeviceCrontabParam implements Serializable{
     @JsonProperty("task_id")
     private Integer taskId;
     
+    @JsonProperty("device_id")
+    private Integer deviceId;
+    
     private String name;
 
     public Integer getTaskId() {
@@ -27,6 +30,14 @@ public class DeviceCrontabParam implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
     @Override

@@ -120,7 +120,7 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         
         Response response=new Response();
         
-        deviceControlDao.deleteByPrimaryKey(param.getDeviceId());
+        deviceControlDao.deleteByPrimaryKey(param.getId());
         return response.success();
     }
 

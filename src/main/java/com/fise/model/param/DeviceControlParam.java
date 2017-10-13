@@ -11,6 +11,7 @@ public class DeviceControlParam implements Serializable{
     
     private static final long serialVersionUID=1L;
     
+    private Integer id;
     /**
      * 用户名
      */
@@ -36,6 +37,14 @@ public class DeviceControlParam implements Serializable{
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

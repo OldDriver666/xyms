@@ -44,7 +44,7 @@ public class DeviceCrontabServiceImpl implements IDeviceCrontabService{
         
         Response response=new Response();
         
-        IMUserExample example=new IMUserExample();
+        /*IMUserExample example=new IMUserExample();
         IMUserExample.Criteria criteria=example.createCriteria();
         
         if(!StringUtil.isEmpty(param.getName())){
@@ -55,11 +55,11 @@ public class DeviceCrontabServiceImpl implements IDeviceCrontabService{
         
         if(list.size()==0){
             return response.failure(ErrorCode.ERROR_CAMERA_CONF_DEVICE_EXISTED);
-        }
+        }*/
         
         DeviceCrontabExample example1=new DeviceCrontabExample();
         DeviceCrontabExample.Criteria criteria1=example1.createCriteria();
-        criteria1.andDeviceIdEqualTo(list.get(0).getId());
+        criteria1.andDeviceIdEqualTo(param.getDeviceId());
         
         List<DeviceCrontab> list1=deviceCrontabDao.selectByExample(example1);
         

@@ -72,7 +72,7 @@ public class DeviceControlController {
         Response response=new Response();
         logger.info(param.toString());
         
-        if(param.getDeviceId()==null){
+        if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         response=deviceControlService.delDeviceControl(param);
