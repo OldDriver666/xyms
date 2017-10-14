@@ -8,8 +8,23 @@
          
 	<display-name>Archetype Created Web Application</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
+	<servlet-mapping>    
+     	<servlet-name>default</servlet-name>    
+     	<url-pattern>*.js</url-pattern>    
+     	<url-pattern>*.css</url-pattern>
+     	<url-pattern>*.png</url-pattern>
+     	<url-pattern>*.gif</url-pattern>
+     	<url-pattern>*.map</url-pattern>
+     	<url-pattern>*.swf</url-pattern> 
+     	<url-pattern>*.xap</url-pattern>
+     	<url-pattern>*.html</url-pattern>   
+     	<url-pattern>/html/fonts/*</url-pattern>
+     	<url-pattern>/html/layui/font/*</url-pattern>    
+     	<url-pattern>/html/manage/*</url-pattern>    
+	</servlet-mapping> 
 	
 	<!-- 注意filter的配置有先后顺序 -->
 	<filter>
@@ -21,7 +36,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	
 	<!-- RESTful put、delete -->
 	<filter>
         <filter-name>httpContextFilter</filter-name>
