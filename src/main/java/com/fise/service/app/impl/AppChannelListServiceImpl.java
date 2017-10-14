@@ -55,6 +55,8 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
     public Response insert(AppChannelList param) {
         Response resp = new Response();
         
+        param.setUpdated(DateUtil.getLinuxTimeStamp());
+        
         appChannelListDao.insertSelective(param);
         return resp.success();
     }
