@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9;IE=8;IE=7;IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>登录</title>
+	<link rel="stylesheet" href="layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="css/bootstrap.css"/>
+
+<style type="text/css">
+.beg-login-bg {
+	background: url(images/login-bg-1.jpg) no-repeat center center fixed;
+	background-color: #393D49;
+}
+.beg-login-box {
+	width: 450px;
+	height: 330px;
+	margin: 10% auto;
+	background-color: rgba(255, 255, 255, 0.407843);
+	border-radius: 10px;
+	color: aliceblue;
+}
+.beg-login-box header {
+	padding: 10px;
+	border-bottom: 1px solid aliceblue;
+}
+.beg-login-box header h1 {
+	text-align: center;
+	font-size: 25px;
+	line-height: 40px;
+}
+.beg-login-box .beg-login-main {
+	height: 185px;
+	padding: 30px 60px 0;
+}
+.input-group .form-control, .input-group .input-group-addon{
+	border-radius:0;
+}
+</style>
+</head>
+
+<body class="beg-login-bg">
+<div class="beg-login-box">
+	<header>
+		<h1>小雨后台登录</h1>
+	</header>
+	<div class="beg-login-main">
+		<form id="form_login">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input id="ipt_username" class="form-control" placeholder="用户名/邮箱" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					<input id="ipt_password" class="form-control" placeholder="密码" type="password">
+				</div>
+			</div>
+			<input type="submit" id="btn_submit" class="btn btn-lg btn-primary btn-block" value="登录">
+		</form>
+	</div>
+	<footer>
+		<p></p>
+	</footer>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.4.4.js"></script>-->
+<script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="js/Util.js"></script>
+<script src="resource/lib/jquery.md5.js"></script>
+<script src="js/json2.js"></script>
+<script>
+    $("#form_login").submit(function(){
+        return false;
+    });
+    $("#btn_submit").bind('click',function(){
+		var url = ctx + "xiaoyusvr/boss/admin/login";
+		var data = {"account":$("#ipt_username").val(),"password": $.md5($("#ipt_password").val())};
+        Util.ajaxLoginData(url,data,"POST",true,function(result) {
+            if(result.code == ReturnCode.SUCCESS ){
+                Util.cookieStorage.setCookie("accessToken",result.data.accessToken);
+                Util.cookieStorage.setCookie("account",result.data.account);
+				Util.cookieStorage.setCookie("companyId",result.data.companyId);
+				Util.cookieStorage.setCookie("departId",result.data.departId);
+				Util.cookieStorage.setCookie("id",result.data.id);
+                Util.cookieStorage.setCookie("nickName",result.data.nickName);
+				Util.cookieStorage.setCookie("phone",result.data.phone);
+                Util.cookieStorage.setCookie("roleId",result.data.roleId);
+                window.location.href = "index.html";
+            }  else {
+                alert(result.msg);
+            }
+        },function() {
+            alert("服务器开个小差，请稍后重试！");
+        });
+    });
+
+</script>
+</body>
+
+</html>

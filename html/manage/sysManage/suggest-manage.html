@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="javascript:;">
+							<span class="glyphicon glyphicon-user"></span>
+						</a>
+					</div>
+					<div class="navbar-form navbar-left">
+						<div class="form-group">
+							<input id="input-search-uname" type="text" class="form-control" placeholder="请输入用户名">
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
+					<div class="navbar-form navbar-right">
+						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加用户意见</span>
+						</button>
+					</div>
+					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑用户意见</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl" data-action="" class="form-horizontal">
+										<input type="hidden" id="input-suggest_id">
+										<div class="form-group">
+											<label for="input-user_id" class="col-sm-2 control-label"><span class="necessary">*</span>用户ID</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-user_id" name="userid" placeholder="请输入用户ID">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-uname" class="col-sm-2 control-label"><span class="necessary">*</span>用户名</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-uname" name="uname" placeholder="请输入用户名">
+											</div>
+										</div>
+										<div class="form-group" id="input-status-txt-wrap">
+											<label class="col-sm-2 control-label"><span class="necessary">*</span>状态</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 已经回复
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-disabled" value="0"> 初始正常
+												</label>
+											</div>
+										</div>
+										<div class="form-group" id="input-suggestion-wrap">
+											<label for="input-suggestion" class="col-sm-2 control-label"><span class="necessary"></span>意见内容</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-suggestion" name="suggestion" placeholder="输入意见内容">
+											</div>
+										</div>
+										<div class="form-group" id="input-suggestion-txt-wrap">
+											<label class="col-sm-2 control-label">意见内容</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-suggestion-txt" name="input-suggestion-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-contact" class="col-sm-2 control-label"><span class="necessary"></span>联系方式 </label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-contact" name="contact" placeholder="请输入联系方式 ">
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>用户ID</th>
+					<th>用户名</th>
+					<th>记录状态</th>
+					<th>意见内容</th>
+					<th>联系方式</th>
+					<th>更新时间</th>
+					<th>创建时间</th>
+					<th class="table-manage">管理</th>
+				</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="6">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script src="../../resource/lib/jquery.md5.js"></script>
+<script type ="text/javascript" src="js/suggest-manage.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td style="display:none;">${suggest_id}</td>
+	<td>${user_id}</td>
+	<td>${uname}</td>
+	<td>{{if status == 1}}已经回复{{else status == 0}}初始正常{{/if}}</td>
+	<td>${suggestion}</td>
+	<td>${contact}</td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
+	<td class="table-update">
+	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	</td>
+</tr>
+</script>
+<script type="text/javascript">
+	toastr.options={
+	    positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+</body>
+</html>

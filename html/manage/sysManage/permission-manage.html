@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/pagination.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+	<style>
+		#modal-loading{
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 2000;
+			display: none;
+			overflow: hidden;
+			-webkit-overflow-scrolling: touch;
+			outline: 0;
+		}
+		#modal-loading .modal-dialog{
+			width:200px;
+			margin:180px auto;
+		}
+
+	</style>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-form navbar-left">
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="search-userRoles" id="search-input-userRoles" class="form-control">
+									<option value="">请选择角色类型</option>
+								</select>
+							</div>
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
+					<div class="navbar-form navbar-left">
+					</div>
+					<div class="navbar-form navbar-right">
+						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加角色权限</span>
+						</button>
+					</div>
+					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑角色权限</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl" data-action="" class="form-horizontal">
+										<input type="hidden" id="input-permissId">
+										<div class="form-group" id="input-moduleName-wrap">
+											<label for="input-moduleName" class="col-sm-2 control-label"><span class="necessary">*</span>菜单名称</label>
+											<div class="col-sm-10">
+												<select name="moduleName" id="input-moduleName" class="form-control">
+													<option value="">请选择菜单名称</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="input-moduleName-txt-wrap">
+											<label class="col-sm-2 control-label">菜单名称</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-moduleName-txt" name="roleName-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="input-moduleId-wrap">
+											<label for="input-moduleId" class="col-sm-2 control-label"><span class="necessary">*</span>菜单ID</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-moduleId" name="moduleId" placeholder="请输入菜单ID">
+											</div>
+										</div>
+										<div class="form-group" id="edit_insert_auth">
+											<label class="col-sm-2 control-label">新增权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert_auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group" id="edit_update_auth">
+											<label class="col-sm-2 control-label">修改权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update_auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group" id="edit_query_auth">
+											<label class="col-sm-2 control-label">查询权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query_auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group" id="input-userRoles-wrap">
+											<label for="input-userRoles" class="col-sm-2 control-label"><span class="necessary">*</span>角色类型</label>
+											<div class="col-sm-10">
+												<select name="userRoles" id="input-userRoles" class="form-control">
+													<option value="">请选择角色类型</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="input-userRoles-txt-wrap">
+											<label class="col-sm-2 control-label">角色类型</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-userRoles-txt" name="userRoles-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+										<label class="col-sm-2 control-label">状态</label>
+										<div class="col-sm-10">
+											<label class="radio-inline">
+												<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 可见
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="status" id="radio-status-disabled" value="0"> 不可见
+											</label>
+										</div>
+									</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">添加权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert-auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert-auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">修改权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update-auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update-auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">查询权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query-auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query-auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+
+					<div class="modal fade" id="addTempl-modal2" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">批量添加设备信息</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-horizontal">
+										<div class="form-group">
+											<label class="col-sm-2 control-label"><span class="necessary">*</span>选择文件</label>
+											<div class="col-sm-10">
+												<input type="file" id="filepath" name="filetxt" onchange="uploadfile(this)">
+											</div>
+										</div>
+										<div class="form-group" id="input-userRoles-wrap2">
+											<label for="input-userRoles2" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型</label>
+											<div class="col-sm-10">
+												<select name="userRoles2" id="input-userRoles2" class="form-control">
+													<option value="">请选择</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit2" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>菜单ID</th>
+					<th>菜单名称</th>
+					<th>Priority</th>
+					<th>URL</th>
+					<!--<th>新增权限</th>-->
+					<!--<th>修改权限</th>-->
+					<!--<th>查询权限</th>-->
+					<th>ParentID</th>
+					<th>状态</th>
+					<th class="table-manage">管理</th>
+				</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="6">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="fileContentTxt" style="display: none;"></div>
+
+<div class="modal fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body" style="text-align: center;">
+				正在添加数据<br><img src="../../images/uploading.gif">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="js/permission-manage.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td style="display:none;">${permiss_id}</td>
+	<td >${module_id}</td>
+	<td>${module_name}</td>
+	<td>${priority}</td>
+	<td>${url}</td>
+	<td style="display:none;">{{if insert_auth == 1}}启用{{else insert_auth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if update_auth == 1}}启用{{else update_auth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if query_auth == 1}}启用{{else query_auth == 0}}禁用{{/if}}</td>
+	<td>${parent_id}</td>
+	<td>{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
+	<td class="table-update">
+	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	    <!--<a href="javascript:void(0);" onclick="action.deleteItem(${permissId},'${moduleId}')">删除</a>-->
+	</td>
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="pageUserRoles">
+    <option value=${id}>${role_name}</option>
+</script>
+<script type="text/x-jquery-tmpl" id="pageMenu">
+    <option value=${id}>${name}</option>
+</script>
+<script type="text/x-jquery-tmpl" id="page_dev_active_count">
+ ${ActiveDevice}
+</script>
+<script type="text/x-jquery-tmpl" id="page_dev_unActive_count">
+ ${UnActiveDevice}
+</script>
+<script type="text/x-jquery-tmpl" id="page_dev_online_count">
+ ${OnlineDevice}
+</script>
+
+<script type="text/javascript">
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+<script>
+function uploadfile(input) {
+    //html5 支持chrome IE10 FF
+    if (window.FileReader) {
+        var file = input.files[0];
+        filename = file.name.split(".")[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            $(".fileContentTxt").html(this.result);
+        };
+        reader.readAsText(file);
+    }
+    //支持IE 7 8 9 10
+	/*else if (typeof window.ActiveXObject != 'undefined'){
+	 var xmlDoc;
+	 xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+	 xmlDoc.async = false;
+	 xmlDoc.load(input.value);
+	 alert("支持IE 7 8 9 10"+xmlDoc.xml);
+	 }
+	 //支持FF
+	 else if (document.implementation && document.implementation.createDocument) {
+	 var xmlDoc;
+	 xmlDoc = document.implementation.createDocument("", "", null);
+	 xmlDoc.async = false;
+	 xmlDoc.load(input.value);
+	 alert("支持FF"+xmlDoc.xml);
+	 } else {
+	 alert('error');
+	 }*/
+}
+</script>
+</body>
+</html>

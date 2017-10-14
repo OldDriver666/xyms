@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>修改密码</title>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+
+</head>
+
+<body>
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">昵称：</label>
+		<div class="col-sm-10" style="padding-top: 7px;">
+			<span class="form-control-static nickName_txt"></span>
+			<span id="btn-NickName" title="修改昵称" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#NickName-modal">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">用户名：</label>
+		<div class="col-sm-10">
+			<p class="form-control-static userName_txt"></p>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">密码：</label>
+		<div class="col-sm-10" style="padding-top: 7px;">
+			<span id="btn-editPW" title="修改密码" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#editPW-modal">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</span>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="editPW-modal" tabindex="-1" role="dialog" aria-labelledby="editPW-modal-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="editPW-modal-label">修改密码</h4>
+			</div>
+			<div class="modal-body">
+				<form id="form-editPW" data-action="" class="form-horizontal">
+					<input type="hidden" id="input-id">
+					<div class="form-group">
+						<label for="ipt_old_password" class="col-sm-2 control-label"><span class="necessary">*</span>新密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="ipt_old_password" name="password" placeholder="请输入新密码">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="ipt_new_password" class="col-sm-2 control-label"><span class="necessary">*</span>再次输入新密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="ipt_new_password" name="confirmPassword" placeholder="请再次输入新密码">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="btn_submit" type="button" class="btn btn-primary">提交</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="NickName-modal" tabindex="-1" role="dialog" aria-labelledby="NickName-modal-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="NickName-modal-label">修改昵称</h4>
+			</div>
+			<div class="modal-body">
+				<form id="form-NickName" data-action="" class="form-horizontal">
+					<div class="form-group">
+						<label for="ipt_nickname" class="col-sm-2 control-label"><span class="necessary">*</span>昵称</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="ipt_nickname" name="nickname" placeholder="输入昵称">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="btn_submit1" type="button" class="btn btn-primary">提交</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+
+
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../../js/Util.js"></script>
+<script src="../../resource/lib/jquery.md5.js"></script>
+
+<script>
+$(function() {
+    //获取cookie
+	var departId = Util.cookieStorage.getCookie("departId");
+	var companyId = Util.cookieStorage.getCookie("companyId");
+	var roleId = Util.cookieStorage.getCookie("roleId");
+	var id = Util.cookieStorage.getCookie("id");
+	var nickName = Util.cookieStorage.getCookie("nickName");
+    var account = Util.cookieStorage.getCookie("account");
+
+    $(".nickName_txt").text(nickName);
+    $(".userName_txt").text(account);
+
+	$("#ipt_old_password").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#ipt_new_password").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#ipt_nickname").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+    //修改密码
+    $("#btn_submit").bind('click', function (e) {
+		var pwd1 = $("#ipt_old_password").val();
+		var pwd2 = $("#ipt_new_password").val();
+		if (pwd1 == "" ) {
+			$("#ipt_old_password").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_old_password").parent().append(err_html);
+			return;
+		} else if(pwd2 == ""){
+			$("#ipt_new_password").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_new_password").parent().append(err_html);
+			return;
+		}else if(pwd1 == pwd2){
+			var pwd =  $.md5(pwd2);
+			var url = ctx + "xiaoyusvr/boss/admin/update";
+			var moduleId = 0;
+			var data = new Object();
+			data.login_id = parseInt(id);
+			data.admin_id = parseInt(id);
+			data.password = pwd;
+
+			Util.ajaxLoadData(url, data,moduleId,"POST", true, function (result) {
+				if (result.code == ReturnCode.SUCCESS) {
+					$("#editPW-modal").modal('hide');
+					alert("修改完成！");
+				} else {
+					alert(result.msg);
+				}
+			}, function () {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		}else{
+			alert("两次输入的密码不一致！")
+		}
+    });
+
+    //修改昵称
+    $("#btn_submit1").bind('click',function(e){
+		if ($("#ipt_nickname").val() == "") {
+			$("#ipt_nickname").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_nickname").parent().append(err_html);
+			return;
+		}else {
+			var newNickName = $("#ipt_nickname").val();
+			var url = ctx + "xiaoyusvr/boss/admin/update";
+			var moduleId = 0;
+			var data = new Object();
+			data.login_id = parseInt(id);
+			data.admin_id = parseInt(id);
+			data.nick_name = newNickName;
+
+			Util.ajaxLoadData(url, data,moduleId, "POST", true, function (result) {
+				if (result.code == ReturnCode.SUCCESS) {
+					Util.cookieStorage.setCookie("nickname", newNickName);
+					$(".nickName_txt").text(newNickName);
+					$("#NickName-modal").modal('hide');
+					alert("修改完成！");
+				} else {
+					alert(result.msg);
+				}
+			}, function () {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		}
+    });
+
+});
+</script>
+
+</body>
+
+</html>

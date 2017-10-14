@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/pagination.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+	<style>
+		#modal-loading{
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 2000;
+			display: none;
+			overflow: hidden;
+			-webkit-overflow-scrolling: touch;
+			outline: 0;
+		}
+		#modal-loading .modal-dialog{
+			width:200px;
+			margin:180px auto;
+		}
+
+	</style>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div id="dev-query-condition" class="navbar-form navbar-left">
+						<div class="form-group">
+							<label for="input-search-account" class=" control-label"><span class="necessary">*</span>小雨号</label>
+							<input id="input-search-account" type="text" name="account" class="form-control"
+								   placeholder="请输入查询设备小雨号">
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>用户ID</th>
+					<th>EventKey</th>
+					<th>纬度</th>
+					<th>经度</th>
+					<th>位置信息来源</th>
+					<th>电量</th>
+					<th>信号</th>
+					<th>事件Level</th>
+					<th>事件Param</th>
+					<th>更新时间</th>
+					<th>创建时间</th>
+				</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="6">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="fileContentTxt" style="display: none;"></div>
+
+<div class="modal fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body" style="text-align: center;">
+				正在添加数据<br><img src="../../images/uploading.gif">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="js/event-query.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td style="display:none;">${id}</td>
+	<td>${userId}</td>
+	<td>{{if eventKey == 0}}实时{{else eventKey == 1}}离开{{else eventKey == 2}}进入{{else eventKey == 3}}低电{{else eventKey == 4}}充电{{else eventKey == 5}}去电{{else eventKey == 6}}SOS{{else eventKey == 7}}主叫{{else eventKey == 8}}被叫{{else eventKey == 9}}关机{{else eventKey == 10}}话费{{else eventKey == 11}}脱离{{else eventKey == 13}}升级{{else eventKey == 16}}计步{{else eventKey == 17}}戴上{{/if}}</td>
+	<td>${locationX}</td>
+	<td>${locationY}</td>
+	<td>{{if locationFrom == 0}}GPS定位{{else locationFrom == 1}}基站定位{{else locationFrom == 2}}WIFI定位{{/if}}</td>
+	<td>${battery}</td>
+	 <td>${sq}</td>
+	 <td>{{if eventLevel == 0}}广播{{else eventLevel == 1}}消息{{else eventLevel == 2}}采集{{else eventLevel == 3}}自动{{/if}}</td>
+	 <td>${param}</td>
+	<td>${ Util.formatDateTime(updated)}</td>
+	<td>${ Util.formatDateTime(created)}</td>
+	<!--<td>
+	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	    <a href="javascript:void(0);" onclick="action.deleteItem(${fise_id})">删除</a>
+	</td>-->
+</tr>
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="pageDevType">
+    <option value=${DeviceType}>${DeviceName}</option>
+</script>
+<script type="text/javascript">
+	toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+<script>
+function uploadfile(input) {
+    //html5 支持chrome IE10 FF
+    if (window.FileReader) {
+        var file = input.files[0];
+        filename = file.name.split(".")[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            $(".fileContentTxt").html(this.result);
+        };
+        reader.readAsText(file);
+    }
+    //支持IE 7 8 9 10
+	/*else if (typeof window.ActiveXObject != 'undefined'){
+	 var xmlDoc;
+	 xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+	 xmlDoc.async = false;
+	 xmlDoc.load(input.value);
+	 alert("支持IE 7 8 9 10"+xmlDoc.xml);
+	 }
+	 //支持FF
+	 else if (document.implementation && document.implementation.createDocument) {
+	 var xmlDoc;
+	 xmlDoc = document.implementation.createDocument("", "", null);
+	 xmlDoc.async = false;
+	 xmlDoc.load(input.value);
+	 alert("支持FF"+xmlDoc.xml);
+	 } else {
+	 alert('error');
+	 }*/
+}
+</script>
+</body>
+</html>

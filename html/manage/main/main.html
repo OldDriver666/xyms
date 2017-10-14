@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link id="layuicss-skinlayercss" rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" media="all">
+<link rel="stylesheet" href="../../css/global.css" media="all">
+<link rel="stylesheet" href="../../css/main.css" media="all">
+<script type="text/javascript" src="../../js/echarts.min.js"></script>
+<script type="text/javascript" src="../../js/echarts-map-china.js"></script>
+
+
+</head>
+<body>
+<div class="main-cont-wrap">
+	<div class="main-cont">
+		<div class="tit-wrap"><label class="tit">今日统计信息</label></div>
+		<div id="summary">
+			<table class="summary">
+				<tbody>
+					<tr>
+						<td>
+							<span class="text">小雨用户在线数</span>
+							<div class="value summary-ellipsis" id="xwUserOnlineInfo"></div>
+						</td>
+						<td>
+							<span class="text">小雨用户注册数</span>
+							<div class="value summary-ellipsis" id="xwUserRegInfo"></div>
+						</td>
+						<td>
+							<span class="text">设备在线数</span>
+							<div class="value summary-ellipsis" id="devUserOnlineInfo"></div>
+						</td>
+						<td>
+							<span class="text">设备激活数</span>
+							<div class="value summary-ellipsis" id="devUserActiveInfo"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="head-filter-wrap">
+		<form class="layui-form" action="">
+			<div class="layui-field-box">
+				<div class="layui-form-item">			
+			      	<span class="float-l label">时间：</span>
+			      	<div class="control-bar float-l mg-r-20">
+			        	<ul class="group">
+					        <li class="curr first" data-days="3">最近3天</li>
+					        <li data-days="7">最近7天</li>
+					        <li data-days="15">最近15天</li>
+					        <li data-days="30">最近30天</li>
+		            	</ul>
+			      	</div>
+				    
+				</div>
+				
+			</div>
+		</form>
+	</div>
+
+	<div class="user-attr  clearfix">
+        <div class="clearfix table-grid">
+            <div class="left">
+                <div class="table-grid-item">
+                    <div id="tongji-userReg" style="width:600px; height:380px; margin:0 auto;"></div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="table-grid-item">
+                    <div id="tongji-userSex"  style="width:600px; height:380px; margin:0 auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user-attr  clearfix">
+        <div class="clearfix table-grid">
+            <div class="left">
+                <div class="table-grid-item">
+                    <div id="tongji-userClient" style="width:600px; height:380px; margin:0 auto;"></div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="table-grid-item">
+                    <div id="tongji-userArea" style="width:600px; height:380px; margin:0 auto;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="js/main-stat.js"></script>
+<script src="../../js/json2.js"></script>
+
+<script type="text/x-jquery-tmpl" id="pageUserOnline">
+${online_XM}
+</script>
+<script type="text/x-jquery-tmpl" id="pageUserReg">
+${active_XM}
+</script>
+<script type="text/x-jquery-tmpl" id="pageDevOnline">
+${online_device}
+</script>
+<script type="text/x-jquery-tmpl" id="pageDevActive">
+${active_device}
+</script>
+<script>
+	layui.use(['form', 'laydate'], function() {
+		var form = layui.form(),
+			layer = layui.layer,
+			laydate = layui.laydate;
+
+		//自定义验证规则
+		form.verify({
+			title: function(value) {
+				if(value.length < 5) {
+					return '标题至少得5个字符啊';
+				}
+			}
+		});
+	});
+</script>
+
+<script>
+    var userRegChart = echarts.init(document.getElementById('tongji-userReg'));
+	var userClientChart = echarts.init(document.getElementById('tongji-userClient'));
+    var userAreaChart = echarts.init(document.getElementById('tongji-userArea'));
+	var userSexChart = echarts.init(document.getElementById('tongji-userSex'));
+</script>
+
+</body>
+</html>

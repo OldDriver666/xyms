@@ -1,0 +1,175 @@
+table .tdImg img{
+	width:50px;
+	height:50px;
+}
+.layui-field-box {
+	background-color: #fff;
+	margin-bottom:20px;
+}
+.layui-field-box .layui-form-item{
+	margin-bottom: 0!important;
+}
+.layui-btn .layui-icon{
+	font-size:18px!important;
+}
+.head-filter-wrap{
+}
+.head-filter-wrap .control-bar {
+	color: #323437;
+}
+.head-filter-wrap .label {
+	display: inline-block;
+	height: 26px;
+	padding-right: 5px;
+	line-height: 26px;
+	color: #787a7d;
+}
+.head-filter-wrap .date-select-bar {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #e1e3e4;
+	border-radius: 2px;
+}
+.head-filter-wrap .date-select-bar a {
+	display: inline-block;
+	float: left;
+	height: 24px;
+	line-height: 24px;
+	padding: 0 10px;
+	color: #323437;
+	background-color: #fff;
+}
+.head-filter-wrap .date-select-bar a:first-child.cur {
+	border-radius: 2px 0 0 2px;
+	left: -1px;
+}
+.head-filter-wrap .date-select-bar .cur {
+	position: relative;
+	bottom: -1px;
+	margin-top: -2px;
+	padding-top: 1px;
+	height: 25px;
+	background-color: #4da7fd;
+	color: #fff;
+}
+.float-l{
+	float:left;
+}
+.float-r{
+	float:right;
+}
+.mg-r-10{
+	margin-right:10px;
+}
+.mg-r-20{
+	margin-right:20px;
+}
+.w-120{
+	width: 120px;
+}
+.head-filter-wrap .layui-input{
+	height: 26px;
+	line-height: 26px;
+	line-height: 24px\9;
+}
+.head-filter-wrap .layui-form-mid {
+	padding: 3px 0!important;
+}
+.head-filter-wrap .group {
+	float: left;
+	background-color: #fff;
+	border-radius: 2px;
+}
+.head-filter-wrap .group li {
+	cursor: pointer;
+	padding: 0 12px;
+	border: 1px solid #e1e3e4;
+	margin-left: -1px;
+	height: 24px;
+	line-height: 24px;
+	float: left;
+}
+.head-filter-wrap .group .curr {
+	position: relative;
+	z-index: 1;
+	border: 1px solid #009688;
+	color: #fff;
+	background-color: #009688;
+}
+.head-filter-wrap .group li:first-child {
+	margin-left: 0;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+.main-cont #summary{
+	padding: 20px 0 30px 0;
+	/*    border-bottom: 1px solid #f0f0f0;*/
+}
+.main-cont #summary table{
+	border-spacing: 0;
+}
+.main-cont #summary table.summary {
+	border-collapse: separate;
+	table-layout: fixed;
+	width: 100%;
+}
+.main-cont #summary table.summary tr td {
+	text-align: center;
+	border-right: 1px solid #f0f0f0;
+	padding: 0 20px;
+}
+.main-cont #summary table.summary tr td span.text {
+	color: #323437;
+}
+.main-cont #summary table.summary tr td div.value {
+	margin-top: 20px;
+	font-size: 20px;
+	color: #121315;
+}
+.main-cont-wrap{
+	background-color: #ececec;
+	padding: 10px;
+	min-width: 1000px;
+}
+.main-cont-wrap .main-cont{
+	background-color: #fff;
+	margin-bottom: 20px;
+}
+.main-cont-wrap .main-cont .tit-wrap{
+	padding: 14px 15px 0;
+}
+.main-cont-wrap .main-cont .tit-wrap .tit {
+	font-size: 14px;
+	color: #323437;
+	font-weight: 700;
+}
+
+div.user-attr {
+	background-color: #ececec;
+}
+div.table-grid div.left {
+	float: left;
+	width: 49%;
+}
+div.table-grid div.right {
+	float: right;
+	width: 49%;
+}
+div.table-grid div.table-grid-item {
+	margin-top: 1px;
+	background-color: #fff;
+	height: 392px;
+	border: 1px solid #e1e2e2;
+	border-radius: 2px;
+	margin-bottom: 18px;
+	padding-top: 10px;
+	overflow-x: auto;
+}
+.table-grid .table-grid-item .title {
+	padding: 20px 20px 10px;
+}
+div.table-grid div.table-grid-item div.title div.float-l {
+	color: #323437;
+	font-weight: 700;
+	font-size: 14px;
+}

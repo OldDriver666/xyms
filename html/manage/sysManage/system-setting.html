@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="javascript:;">
+							<span class="glyphicon glyphicon-user"></span>
+						</a>
+					</div>
+					<div class="navbar-form navbar-left">
+						<div class="form-group">
+							<input id="input-search-type" type="text" class="form-control" placeholder="请输入配置类型">
+							<input id="input-search-name" type="text" class="form-control" placeholder="请输入配置名称">
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
+					<div class="navbar-form navbar-right">
+						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加系统配置</span>
+						</button>
+					</div>
+					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑系统配置</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl" data-action="" class="form-horizontal">
+										<input type="hidden" id="input-id">
+										<div class="form-group">
+											<label for="input-confType" class="col-sm-2 control-label"><span class="necessary">*</span>配置类型</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-confType" name="conftype" placeholder="请输入配置类型">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-confName" class="col-sm-2 control-label"><span class="necessary">*</span>配置名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-confName" name="confname" placeholder="请输入配置名称">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-confValue" class="col-sm-2 control-label"><span class="necessary"></span>值</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-confValue" name="confvalue" placeholder="请输入值">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-confAction" class="col-sm-2 control-label">Action</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-confAction" name="confAction" placeholder="请输入Action">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-confParent_id" class="col-sm-2 control-label">ParentID</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-confParent_id" name="confParent_id" placeholder="请输入ParentID">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label class="col-sm-2 control-label">状态</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-disabled" value="0"> 弃用
+												</label>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>配置类型</th>
+					<th>配置名称</th>
+					<th>值</th>
+					<th>Action</th>
+					<th>ParentID</th>
+					<th>状态</th>
+					<th class="table-manage">管理</th>
+				</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="6">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="js/system-setting.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td style="display:none;">${config_id}</td>
+	<td>${type}</td>
+	<td>${name}</td>
+	<td>${value}</td>
+	<td>${action}</td>
+	<td>${parent_id}</td>
+	<td>{{if status == 1}}启用{{else status == 0}}弃用{{/if}}</td>
+	<td class="table-update">
+	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	    <a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteConfig(${config_id})">删除</a>
+	</td>
+</tr>
+</script>
+<script type="text/javascript">
+	toastr.options={
+	    positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+</body>
+</html>
