@@ -1,6 +1,8 @@
 package com.fise.service.problems.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -159,8 +161,23 @@ public class ProblemServiceImpl implements IProblemService{
                 IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
                 
                 setResult(result, problem, user);
-                
+
                 listResult.add(result);
+                
+                //listResult集合排序，addAnswerCount，addBrowseCount降序排列
+                /*Collections.sort(listResult, new Comparator<ProResult>() {
+
+                    @Override
+                    public int compare(ProResult o1, ProResult o2) {
+                        int i=o1.getAnswerNum()-o2.getAnswerNum();
+                        
+                        if(i==0){
+                            return o1.getAddBrowseCount()-o2.getAddBrowseCount();
+                        }
+                        return i;
+                    }
+                    
+                });*/
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }finally {
@@ -296,7 +313,7 @@ public class ProblemServiceImpl implements IProblemService{
         param.setParam(null);
         resp.success(param);
         return resp;
-    }
+    } 
 
     @Override
     public Response update(Problems param) {

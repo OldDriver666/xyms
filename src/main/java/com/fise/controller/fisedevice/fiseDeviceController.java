@@ -1,22 +1,31 @@
 package com.fise.controller.fisedevice;
 
+import java.io.IOException;
+import java.util.List;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
 import com.fise.service.auth.IAuthService;
 import com.fise.service.fisedevice.IFiseDeviceService;
 import com.fise.utils.StringUtil;
+import com.fise.utils.excel.ExcelImporterUtils;
+
 
 @RestController
 @RequestMapping("/boss/fisedevice")
@@ -111,5 +120,22 @@ public class fiseDeviceController {
 		
 		
 		return response;
+	}
+	
+	/*excel批量导入设备*/
+	@RequestMapping(value="/excel_import",method=RequestMethod.POST)
+	public Response excelImport(@RequestBody @Valid @RequestParam("file") MultipartFile file,HttpServletRequest req) throws IOException,Exception{
+	    Response resp = new Response();
+	    
+        List<ExcelFiseDevice> unfrozenList = ExcelImporterUtils.importSheet(file.getInputStream(), ExcelFiseDevice.class,ExcelFiseDevice.class.getSimpleName());
+        
+        if (null == unfrozenList || unfrozenList.size() == 0) {
+           resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+           resp.setMsg("Excel 数据为空！！");
+           return resp;
+        }
+        
+        resp=fiseDeviceService.insertExcel(unfrozenList);
+        return resp;
 	}
 }

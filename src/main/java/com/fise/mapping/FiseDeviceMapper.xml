@@ -304,4 +304,33 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </select>
+  
+  <resultMap id="ExcellResultMap" type="com.fise.model.entity.ExcelFiseDevice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="IME" jdbcType="VARCHAR" property="ime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="departId" jdbcType="INTEGER" property="departid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  
+  <insert id="excelImport" parameterType="java.util.List">
+  	insert into 
+  	FiseDevice 
+  	(id, IME, status, 
+      account, departId, type, 
+      mobile, mark, updated, 
+      created) 
+    values 
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=INTEGER}, #{item.ime,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}, 
+      #{item.account,jdbcType=VARCHAR}, #{item.departid,jdbcType=INTEGER}, #{item.type,jdbcType=INTEGER}, 
+      #{item.mobile,jdbcType=VARCHAR}, #{item.mark,jdbcType=VARCHAR}, #{item.updated,jdbcType=INTEGER}, 
+      #{item.created,jdbcType=INTEGER})
+    </foreach>  
+  </insert>
 </mapper>
