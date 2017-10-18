@@ -40,7 +40,7 @@ public class FileController {
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
-                String path="/home/fise/ui/xiaoyu/dist/upload";
+                String path="/home/fise/bin/www/upload";
                 String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
                 File dir=new File(path,filename);
                 if(!dir.exists()){
@@ -49,9 +49,9 @@ public class FileController {
             
                 file.transferTo(dir);
                 if(i==0){
-                    pictureURL="http://192.168.2.250:8888/dist/upload"+"/"+filename;
+                    pictureURL="http://192.168.2.250:8888/upload"+"/"+filename;
                 }else {
-                    pictureURL=pictureURL+"http://192.168.2.250:8888/dist/upload/"+filename;
+                    pictureURL=pictureURL+"http://192.168.2.250:8888/upload/"+filename;
                 }
         
             }
