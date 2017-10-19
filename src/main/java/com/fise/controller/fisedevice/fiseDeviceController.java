@@ -123,7 +123,6 @@ public class fiseDeviceController {
 	}
 	
 	/*excel批量导入设备*/
-	@IgnoreAuth
 	@RequestMapping(value="/excel_import",method=RequestMethod.POST)
 	public Response excelImport(@RequestBody @Valid @RequestParam("file") MultipartFile file,HttpServletRequest req) throws IOException,Exception{
 	    Response resp = new Response();
