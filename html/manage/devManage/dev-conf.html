@@ -28,7 +28,6 @@
 		td{
 			min-width: 80px;
 		}
-
 	</style>
 </head>
 
@@ -70,7 +69,6 @@
 					<th>亮屏时间</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
-					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -113,51 +111,35 @@
 	<td>${master_id}</td>
 	<td>${group_id}</td>
 	<td>${mobile}</td>
-	<td>${alarm_takeoff}</td>
-	<td>${alarm_battery}</td>
-	<td>${alarm_poweroff}</td>
-	<td>${listen_silent}</td>
-	<td>${step_mode}</td>
-	<td>${alarm_call}</td>
+	<td >{{if alarm_tokenoff == 0}}关闭 {{else alarm_tokenoff == 1}}打开{{/if}}</td>
+	<td>{{if alarm_battery == 0}}关闭 {{else alarm_battery == 1}}打开{{/if}}</td>
+	<td>{{if alarm_poweroff == 0}}关闭 {{else alarm_poweroff == 1}}打开{{/if}}</td>
+	<td>{{if listen_silent == 0}}关闭 {{else listen_silent == 1}}打开{{/if}}</td>
+	<td>{{if step_mode == 0}}关闭 {{else step_mode == 1}}打开{{/if}}</td>
+	<td>{{if alarm_call == 0}}关闭 {{else alarm_call == 1}}打开{{/if}}</td>
 	<td>{{if electricize == 0}}没充 {{else electricize == 1}}充电{{/if}}</td>
 	<td>{{if mode == 1}}普通模式 {{else mode == 2}}省电模式 {{else mode == 3}}休眠模式{{/if}}</td>
 	<td>{{if bell_mode == 0}}静音 {{else bell_mode == 1}}震动 {{else bell_mode == 2}}响铃{{/if}}</td>
-	<td>${schoolId}</td>
+	<td >${school_id}</td>
 	<td>${light_time}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
-	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	</td>
 </tr>
 </script>
 
-
-<script type="text/x-jquery-tmpl" id="pageDevType">
-    <option value=${client_type}>${client_name}</option>
-</script>
-<script type="text/x-jquery-tmpl" id="page_dev_online_count">
- ${online_device}
-</script>
-<script type="text/x-jquery-tmpl" id="page_dev_active_count">
- ${active_device}
-</script>
-<script type="text/x-jquery-tmpl" id="page_xw_online_count">
- ${online_XM}
-</script>
-<script type="text/x-jquery-tmpl" id="page_xw_active_count">
- ${active_XM}
-</script>
-
 <script type="text/javascript">
-	var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
-	var Lens = myDevTypeArray.length;
-	function typeNameQuery(type){
-		 for(var i=0; i< Lens; i++){
-			 if(myDevTypeArray[i].client_type == type){
-				 return myDevTypeArray[i].client_name;
-			 }
-		 }
+	function querySchool(school_id) {
+		var url = ctx + "xiaoyusvr/school/queryschool";
+		var data = new Object();
+		data.school_id = [school_id];
+
+		Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
+			if (result.code == ReturnCode.SUCCESS) {
+				 return result.data[0].school_name
+			}else{
+				alert(result.msg);
+			}
+		});
 	}
     toastr.options={
         positionClass : 'toast-center-center',
@@ -178,24 +160,6 @@ function uploadfile(input) {
         };
         reader.readAsText(file);
     }
-    //支持IE 7 8 9 10
-	/*else if (typeof window.ActiveXObject != 'undefined'){
-	 var xmlDoc;
-	 xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-	 xmlDoc.async = false;
-	 xmlDoc.load(input.value);
-	 alert("支持IE 7 8 9 10"+xmlDoc.xml);
-	 }
-	 //支持FF
-	 else if (document.implementation && document.implementation.createDocument) {
-	 var xmlDoc;
-	 xmlDoc = document.implementation.createDocument("", "", null);
-	 xmlDoc.async = false;
-	 xmlDoc.load(input.value);
-	 alert("支持FF"+xmlDoc.xml);
-	 } else {
-	 alert('error');
-	 }*/
 }
 </script>
 </body>
