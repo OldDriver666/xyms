@@ -25,6 +25,13 @@
 			width:200px;
 			margin:180px auto;
 		}
+		td{
+			min-width: 80px;
+		}
+		.title{
+			width:20%;
+			word-break: break-word;
+		}
 		.content{
 			width:40%;
 			word-break: break-all;
@@ -150,7 +157,7 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td >${id}</td>
-	<td style="width:7%">${title}</td>
+	<td class="title">${title}</td>
 	<td class="content">{{html content}}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td>${user_id}</td>
