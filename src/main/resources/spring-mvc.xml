@@ -24,6 +24,9 @@
     <!-- 开启参数验证 -->
     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
     
+    <!-- 静态资源访问-->
+	<mvc:default-servlet-handler/> 
+    
     <!-- 避免IE执行ajax时，返回json出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter" 
     	class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

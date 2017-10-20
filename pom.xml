@@ -260,6 +260,7 @@
 			<build>
 				<filters>
 					<filter>src/main/resources/env/jdbc-dev.properties</filter>
+					<filter>src/main/resources/env/redis-dev.properties</filter>
 				</filters>
 			</build>
 		</profile>
@@ -272,6 +273,7 @@
 			<build>
 				<filters>
 					<filter>src/main/resources/env/jdbc-test.properties</filter>
+					<filter>src/main/resources/env/redis-test.properties</filter>
 				</filters>
 			</build>
 		</profile>
@@ -284,6 +286,7 @@
 			<build>
 				<filters>
 					<filter>src/main/resources/env/jdbc-produce.properties</filter>
+					<filter>src/main/resources/env/redis-produce.properties</filter>
 				</filters>
 			</build>
 		</profile>
@@ -308,6 +311,7 @@
 			<directory>src/main/resources</directory>
 			<includes>
 				<include>jdbc.properties</include>
+				<include>redis.properties</include>
 			</includes>
 			<filtering>true</filtering>		<!-- 需要进行变量替换的文件 -->
 		</resource>

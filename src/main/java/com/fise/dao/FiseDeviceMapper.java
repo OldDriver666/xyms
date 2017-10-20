@@ -1,6 +1,7 @@
 package com.fise.dao;
 
 import com.fise.base.Page;
+import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.entity.FiseDeviceExample;
 import com.fise.model.param.QueryFiseDeviceParam;
@@ -32,4 +33,6 @@ public interface FiseDeviceMapper {
     int updateByPrimaryKey(FiseDevice record);
     
     List<FiseDevice> selectByPage(@Param("example") FiseDeviceExample example,@Param("page") Page<QueryFiseDeviceParam> page);
+    
+    int excelImport(List<ExcelFiseDevice> list);
 }

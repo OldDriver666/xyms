@@ -1,7 +1,10 @@
 package com.fise.service.fisedevice;
 
+import java.util.List;
+
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
 
@@ -17,4 +20,7 @@ public interface IFiseDeviceService {
 	
 	/*修改fise设备信息*/
 	public Response updateFiseDevice(FiseDevice param);
+	
+	/*Excel批量插入fise设备*/
+	public Response insertExcel(List<ExcelFiseDevice> param);
 }

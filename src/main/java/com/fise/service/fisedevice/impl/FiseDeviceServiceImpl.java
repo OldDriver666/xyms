@@ -1,6 +1,7 @@
 package com.fise.service.fisedevice.impl;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,13 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.FiseDeviceMapper;
+import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.entity.FiseDeviceExample;
 import com.fise.model.entity.FiseDeviceExample.Criteria;
 import com.fise.model.param.QueryFiseDeviceParam;
 import com.fise.service.fisedevice.IFiseDeviceService;
+import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
 @Service
@@ -159,5 +162,21 @@ public class FiseDeviceServiceImpl implements IFiseDeviceService{
 		return response;
 		
 	}
+
+    @Override
+    public Response insertExcel(List<ExcelFiseDevice> param) {
+        Response resp = new Response();
+        
+        Iterator<ExcelFiseDevice> it=param.iterator();
+        
+        while(it.hasNext()){
+            ExcelFiseDevice record=it.next();
+            record.setUpdated(DateUtil.getLinuxTimeStamp());
+            record.setCreated(DateUtil.getLinuxTimeStamp());
+        }
+        
+        fiseDevicedao.excelImport(param);
+        return resp.success();
+    }
 
 }

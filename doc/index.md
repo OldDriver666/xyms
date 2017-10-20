@@ -1489,7 +1489,22 @@ type和name都是选填，如果都不填，则查询所有信息
 #####回复
 ```
 无内容，直接查看返回码
-```          
+```      
+
+####新增设备信息
+|   接口地址    |   xiaoyusvr/boss/fisedevice/excel_import         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+  
+#####请求
+```
+上传Excel的文档
+```
+#####回复
+```
+无内容，直接查看返回码
+```  
 
 ####查询设备信息(分页查询)
 |   接口地址    |   xiaoyusvr/boss/fisedevice/queryfisedevice         |
