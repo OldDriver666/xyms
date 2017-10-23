@@ -1,5 +1,6 @@
 package com.fise.service.app.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,13 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AppChannelListMapper;
+import com.fise.dao.AppInformationMapper;
+import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppChannelList;
 import com.fise.model.entity.AppChannelListExample;
+import com.fise.model.entity.AppInformation;
+import com.fise.model.entity.AppInformationExample;
+import com.fise.model.result.AppBaseResult;
 import com.fise.service.app.IAppChannelListService;
 import com.fise.utils.DateUtil;
 
@@ -19,6 +25,9 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
 
     @Autowired
     AppChannelListMapper appChannelListDao;
+    
+    @Autowired
+	AppInformationMapper appInfoDao;
     
     @Override
     public Response query(Page<AppChannelList> param) {
@@ -60,5 +69,43 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
         appChannelListDao.insertSelective(param);
         return resp.success();
     }
+    
+    @Override
+	public Response queryByIdList(Page<AppChannel> param, List<Integer> idList) {
+		Response response = new Response();
+		AppInformationExample example = new AppInformationExample();
+		AppInformationExample.Criteria con = example.createCriteria();
+		con.andStatusEqualTo(1);
+		example.setOrderByClause("prority desc");
+		con.andIdIn(idList);
+		param.setPageSize(10);
+		List<AppInformation> appList = appInfoDao.selectByPage(example, param);
+		if (appList.size() == 0) {
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，没有更多应用咯~");
+			return response;
+		}
+		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
+		for (int i = 0; i < appList.size(); i++) {
+			AppBaseResult appBase = new AppBaseResult();
+			appBase.init(appList.get(i));
+			appData.add(appBase);
+		}
+
+		Page<AppBaseResult> page = new Page<AppBaseResult>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
+		if (haveMore > 0) {
+			page.setHasMore(true);
+		} else {
+			page.setHasMore(false);
+		}
+		page.setResult(appData);
+		response.success(page);
+		return response;
+	}
 
 }

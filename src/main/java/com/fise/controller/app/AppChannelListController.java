@@ -1,5 +1,7 @@
 package com.fise.controller.app;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppChannelList;
+import com.fise.model.result.AppChannelResult;
 import com.fise.service.app.IAppChannelListService;
+import com.fise.service.app.IAppChannelService;
 
 @RestController
 @RequestMapping("/app/channellist")
@@ -22,6 +28,9 @@ public class AppChannelListController {
     
     @Resource
     IAppChannelListService appChannelListService;
+    
+    @Resource
+    IAppChannelService appChannelService;
     
     /*应用商城   频道应用查询*/
     @RequestMapping(value="/query",method=RequestMethod.POST)
@@ -62,4 +71,36 @@ public class AppChannelListController {
         resp=appChannelListService.insert(param);
         return resp;
     }
+    
+    
+    /**
+	 * 获取指定频道下的app的list
+	 * 
+	 * @param param
+	 * @return
+	 */
+	@IgnoreAuth
+	@RequestMapping(value = "/channel", method = RequestMethod.POST)
+	public Response getChannelInfo(@RequestBody @Valid Page<AppChannel> param) {
+		Response response = new Response();
+		Integer channelId = param.getParam().getId();
+		AppChannelResult data = new AppChannelResult();
+		AppChannel channel = new AppChannel();
+		channel = appChannelService.getChannelInfo(channelId);
+		if (null==channel) {
+			response.failure(ErrorCode.ERROR_PARAM_MEMBER_MOBILE_IS_EMPTY);
+			response.setMsg("亲，频道信息不存在哦~");
+			return response;
+		}
+		data.init(channel);
+		List<Integer> appIdList = appChannelService.getChannelAppId(channelId);
+		if(appIdList.size()==0){
+			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，该频道下没有应用哦~");
+			return response;
+		}
+		
+		response = appChannelListService.queryByIdList(param, appIdList);
+		return response;
+	}
 }
