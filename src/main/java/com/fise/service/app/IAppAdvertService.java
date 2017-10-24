@@ -13,4 +13,7 @@ public interface IAppAdvertService {
     
     /*应用商城   新增广告*/
     public Response insert(AppAdvert record);
+    
+    /*查询出所有的Advert，并根据权重进行降序排序。*/
+    public Response  queryAdvertAll();
 }

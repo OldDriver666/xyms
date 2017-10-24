@@ -295,7 +295,7 @@ public class AppInformationExample {
         }
 
         public Criteria andAppNameLike(String value) {
-            addCriterion("app_name like", value, "appName");
+            addCriterion("CONCAT( app_name , app_spell ) like", value, "appName");
             return (Criteria) this;
         }
 

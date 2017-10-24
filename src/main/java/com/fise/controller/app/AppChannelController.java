@@ -1,5 +1,7 @@
 package com.fise.controller.app;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppChannel;
 import com.fise.service.app.IAppChannelService;
 
@@ -58,4 +61,14 @@ public class AppChannelController {
         resp=appChannelService.insert(param);
         return resp;
     }
+    
+    /*应用市场 根据权重展示不用的频道*/
+    @IgnoreAuth
+    @RequestMapping(value = "/channelAll", method = RequestMethod.POST)
+	public Response getChannelAll(@RequestBody @Valid Map<String, String> param) {
+		Response response = new Response();
+		logger.info(param.toString());
+		response = appChannelService.queryChannelAll();
+		return response;
+	}
 }

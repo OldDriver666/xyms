@@ -1,5 +1,7 @@
 package com.fise.controller.app;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppInformation;
 import com.fise.service.app.IAppInfoemationService;
 import com.fise.utils.StringUtil;
@@ -51,7 +54,7 @@ public class AppInformationController {
     }
     
     /*应用商城   新增产品信息*/
-    @RequestMapping(value="insert",method=RequestMethod.POST)
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
     public Response insert(@RequestBody @Valid AppInformation param){
         Response resp = new Response();
         logger.info(param.toString());
@@ -63,4 +66,55 @@ public class AppInformationController {
         resp=appInfoemationService.insert(param);
         return resp;
     }
+    /**
+     *当参数中，传app_name的时候，是做分页查询，查询出多条数据。
+     *当参数中，不传app_name的时候，是做所有的查询，查询出所有的app。这时候该接口用于加载app栏
+     * @param param
+     * @return
+     */
+    /*应用市场 加载所有可用的App*/
+    @IgnoreAuth
+    @RequestMapping(value="/queryAll",method=RequestMethod.POST)
+    public Response queryAll(@RequestBody @Valid Page<AppInformation> param){
+        Response resp = new Response();
+        logger.info(param.toString());
+        
+        resp=appInfoemationService.queryAll(param);
+        return resp;
+    }
+    
+    /*根据app_name返回两条数据*/
+    @IgnoreAuth
+    @RequestMapping(value = "/simpleSearch", method = RequestMethod.POST)
+	public Response getsimpleSearch(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		logger.info(param.toString());
+		String appName = (String) param.get("app_name");
+		response = appInfoemationService.queryByAppName(appName);
+		return response;
+	}
+    
+    /*热门搜索app,展示app_name*/
+    @IgnoreAuth
+    @RequestMapping(value = "/hotSearch", method = RequestMethod.POST)
+	public Response getHotSearch(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		logger.info(param.toString());
+		response = appInfoemationService.hotSearch();
+		return response;
+	}
+    
+   /*获取单个的app的具体信息*/
+    @IgnoreAuth
+    @RequestMapping(value = "/appinfo", method = RequestMethod.POST)
+	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		Integer appIdex = (Integer) param.get("app_id");
+		if(appIdex.equals("")||appIdex==null){
+			return response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+		}
+		response = appInfoemationService.queryByAppId(appIdex);
+		return response;
+	}
+
 }
