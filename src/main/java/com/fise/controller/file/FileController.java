@@ -40,7 +40,11 @@ public class FileController {
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
+                /*内网上传图片路径*/
                 String path="/home/fise/bin/www/upload";
+                /*外网上传图片路径*/
+                //String path="/home/fise/www/upload";
+                
                 String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
                 File dir=new File(path,filename);
                 if(!dir.exists()){
@@ -49,9 +53,15 @@ public class FileController {
             
                 file.transferTo(dir);
                 if(i==0){
+                    /*内网上传图片路径*/
                     pictureURL="http://192.168.2.250:8888/upload"+"/"+filename;
+                    /*外网上传图片路径*/
+                    //pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
                 }else {
+                    /*内网上传图片路径*/
                     pictureURL=pictureURL+"http://192.168.2.250:8888/upload/"+filename;
+                    /*外网上传图片路径*/
+                    //pictureURL=pictureURL+"http://120.78.145.162:8080/upload/"+filename;
                 }
         
             }

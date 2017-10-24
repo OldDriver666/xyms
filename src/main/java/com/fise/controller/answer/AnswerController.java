@@ -70,6 +70,10 @@ public class AnswerController {
         
         page.setPageNo(Integer.valueOf(map.get("page_no")));
         
+        if(map.get("user_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        answer.setUserId(Integer.valueOf(map.get("user_id")));
         
         if(map.get("problem_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

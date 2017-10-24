@@ -11,6 +11,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
+import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -41,6 +42,9 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired
     IMUserMapper userDao;
+    
+    @Autowired
+    IMRelationShipMapper relationShipDao;
     
     @Override
     public Response addComment(Comment record) {
@@ -113,6 +117,11 @@ public class CommentServiceImpl implements ICommentService{
         
         criteria.andStatusEqualTo(1);
         example.setOrderByClause("created desc");
+        //根据好友关系查询
+        List<Integer> userlist = relationShipDao.findrelation(page.getParam().getId());
+        userlist.add(page.getParam().getId());
+        criteria.andFromUseridIn(userlist);
+        criteria.andToUseridIn(userlist);
         
         List<Comment> list=commentDao.selectByPage(example, page);
         

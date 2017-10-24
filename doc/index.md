@@ -51,8 +51,7 @@ null 没有数据返回 看code是否成功
 ```
 采用分页查询
 {
-     "param":{
-     	          "school_id":x      //必填-用户学校id	  
+     "param":{  
      	          "user_id":x        //必填-当前登录用户id
      		  },	
      "page_no":x                      //选填-默认1     
@@ -347,6 +346,7 @@ null 没有数据返回 看code是否成功
 {
      "page_no":"x",        //必填-查询当前页数     
      "problem_id":"x",     //必填-问题Id
+     "user_id":"x",        //必填-登录用户ID
      "order":"created"     //必填-created  表示按时间查询     agree_num   表示按热度查询 
 }
 ```
@@ -603,6 +603,7 @@ msg 为已关注或未关注
 {
      "param":{
                   "answer_id":x        //必填-回答id
+                  "id":x               //必填-登录用户ID
               },
      "page_no":x                        //选填-默认1          
 }

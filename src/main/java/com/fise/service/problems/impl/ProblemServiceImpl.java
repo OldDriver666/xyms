@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
@@ -38,10 +39,13 @@ public class ProblemServiceImpl implements IProblemService{
     @Autowired
     IMSchoolMapper schoolDao;
     
+    @Autowired
+    IMRelationShipMapper relationShipDao;
+    
     @Override
     public Response insert(Problems record) {
         Response res = new Response();
-                
+        //更新时间        
         record.setCreated(DateUtil.getLinuxTimeStamp());
         record.setUpdated(DateUtil.getLinuxTimeStamp());
         problemsDao.insertSelective(record);
@@ -93,8 +97,11 @@ public class ProblemServiceImpl implements IProblemService{
         Criteria criteria=example.createCriteria();        
         example.setOrderByClause("created desc");
         
+        //根据好友关系查询
         criteria.andStatusEqualTo(1);
-        criteria.andSchoolIdEqualTo(param.getParam().getSchoolId());
+        List<Integer> userlist=relationShipDao.findrelation(param.getParam().getUserId());
+        userlist.add(param.getParam().getUserId());
+        criteria.andUserIdIn(userlist);
         
         List<Problems> list=problemsDao.selectBypage(example, param);
                        
@@ -256,10 +263,10 @@ public class ProblemServiceImpl implements IProblemService{
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             
             //查询学校名字
-            IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());
+            //IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());
             
             setResult(result, problem, user);
-            result.setSchoolname(school.getSchoolname());
+            result.setSchoolname(null);
             
             list1.add(result);
         }

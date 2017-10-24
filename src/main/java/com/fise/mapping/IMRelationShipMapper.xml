@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.IMRelationShipMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMRelationShip">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="smallId" jdbcType="INTEGER" property="smallid" />
+    <result column="bigId" jdbcType="INTEGER" property="bigid" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="smallPriority" jdbcType="BIT" property="smallpriority" />
+    <result column="bigPriority" jdbcType="BIT" property="bigpriority" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, smallId, bigId, status, smallPriority, bigPriority, created, updated
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.IMRelationShipExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from IMRelationShip
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from IMRelationShip
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from IMRelationShip
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMRelationShipExample">
+    delete from IMRelationShip
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.IMRelationShip">
+    insert into IMRelationShip (id, smallId, bigId, 
+      status, smallPriority, bigPriority, 
+      created, updated)
+    values (#{id,jdbcType=INTEGER}, #{smallid,jdbcType=INTEGER}, #{bigid,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{smallpriority,jdbcType=BIT}, #{bigpriority,jdbcType=BIT}, 
+      #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMRelationShip">
+    insert into IMRelationShip
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="smallid != null">
+        smallId,
+      </if>
+      <if test="bigid != null">
+        bigId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="smallpriority != null">
+        smallPriority,
+      </if>
+      <if test="bigpriority != null">
+        bigPriority,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="smallid != null">
+        #{smallid,jdbcType=INTEGER},
+      </if>
+      <if test="bigid != null">
+        #{bigid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="smallpriority != null">
+        #{smallpriority,jdbcType=BIT},
+      </if>
+      <if test="bigpriority != null">
+        #{bigpriority,jdbcType=BIT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.IMRelationShipExample" resultType="java.lang.Long">
+    select count(*) from IMRelationShip
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update IMRelationShip
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.smallid != null">
+        smallId = #{record.smallid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bigid != null">
+        bigId = #{record.bigid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.smallpriority != null">
+        smallPriority = #{record.smallpriority,jdbcType=BIT},
+      </if>
+      <if test="record.bigpriority != null">
+        bigPriority = #{record.bigpriority,jdbcType=BIT},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update IMRelationShip
+    set id = #{record.id,jdbcType=INTEGER},
+      smallId = #{record.smallid,jdbcType=INTEGER},
+      bigId = #{record.bigid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
+      smallPriority = #{record.smallpriority,jdbcType=BIT},
+      bigPriority = #{record.bigpriority,jdbcType=BIT},
+      created = #{record.created,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMRelationShip">
+    update IMRelationShip
+    <set>
+      <if test="smallid != null">
+        smallId = #{smallid,jdbcType=INTEGER},
+      </if>
+      <if test="bigid != null">
+        bigId = #{bigid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="smallpriority != null">
+        smallPriority = #{smallpriority,jdbcType=BIT},
+      </if>
+      <if test="bigpriority != null">
+        bigPriority = #{bigpriority,jdbcType=BIT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMRelationShip">
+    update IMRelationShip
+    set smallId = #{smallid,jdbcType=INTEGER},
+      bigId = #{bigid,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      smallPriority = #{smallpriority,jdbcType=BIT},
+      bigPriority = #{bigpriority,jdbcType=BIT},
+      created = #{created,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findrelation" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	SELECT bigId as user_id FROM 
+  	((SELECT bigId FROM IMRelationShip where smallId=#{id,jdbcType=INTEGER} AND status &lt;> 0) 
+  	union 
+  	(SELECT smallId FROM `IMRelationShip` where bigId=#{id,jdbcType=INTEGER} AND status &lt;> 0)) 
+  	relationship  	
+  </select>
+</mapper>

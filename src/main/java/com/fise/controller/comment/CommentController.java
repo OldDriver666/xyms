@@ -47,7 +47,7 @@ public class CommentController {
         Response res = new Response();
         logger.info(page.toString());
         
-        if(page.getParam().getAnswerId()==null){
+        if(page.getParam().getAnswerId()==null || page.getParam().getId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         

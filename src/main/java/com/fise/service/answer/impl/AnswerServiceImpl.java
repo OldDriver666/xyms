@@ -3,6 +3,7 @@ package com.fise.service.answer.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.asm.internal.Relationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AgreeMapper;
 import com.fise.dao.AnswerMapper;
+import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -40,6 +42,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     AgreeMapper agreeDao;
+    
+    @Autowired
+    IMRelationShipMapper relationShipDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -152,6 +157,11 @@ public class AnswerServiceImpl implements IAnswerService{
         }
         
         example.setOrderByClause(order+" desc");
+        
+        //查询好友回答
+        List<Integer> userlist=relationShipDao.findrelation(page.getParam().getUserId());
+        userlist.add(page.getParam().getUserId());
+        criteria.andUserIdIn(userlist);
         
         List<Answer> list=answerDao.selectBypage(example, page);
         

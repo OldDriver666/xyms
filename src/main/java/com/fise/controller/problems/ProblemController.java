@@ -96,7 +96,7 @@ public class ProblemController {
     }
     
     /*查询问题    分页形式*/
-    @IgnoreAuth
+    /*@IgnoreAuth
     @RequestMapping(value="/queryall",method=RequestMethod.POST)
     public Response queryProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -121,7 +121,7 @@ public class ProblemController {
         }
         return res;
                    
-    }
+    }*/
     
     /*查询图片*/
     @IgnoreAuth
@@ -152,6 +152,33 @@ public class ProblemController {
         os.close();
         bis.close();
         
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value="/queryall",method=RequestMethod.POST)
+    public Response queryProblem(@RequestBody @Valid Page<Problems> param){
+        Response res = new Response();
+        Response res1 = new Response();
+        Concern record=new Concern();
+        logger.info(param.toString());
+        
+        if(param.getParam().getUserId()==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=problemService.queryAll(param);
+        
+        //添加判断用户是否关注该问题
+        Page<ProResult> page=(Page<ProResult>)res.getData();
+        List<ProResult> list=page.getResult();
+        for(int i=0;i<list.size();i++){
+            record.setProblemId(list.get(i).getId());
+            record.setUserId(param.getParam().getUserId());
+            res1=concernService.queryisConcern(record);
+            list.get(i).setIsConcern(res1.getMsg());
+        }
+        return res;
+                   
     }
     
     /*根据话题  模糊查询  分页展示*/
