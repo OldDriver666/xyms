@@ -26,7 +26,7 @@ public class AppDetailResult {
 
     private String version;
     
-    private String versionCode;
+    private Integer versionCode;
 
     private String icon;
 
@@ -92,13 +92,7 @@ public class AppDetailResult {
 		this.images = images;
 	}
 
-	public String getVersionCode() {
-		return versionCode;
-	}
-
-	public void setVersionCode(String versionCode) {
-		this.versionCode = versionCode;
-	}
+	
 
 	public Integer getIconType() {
 		return iconType;
@@ -188,7 +182,15 @@ public class AppDetailResult {
         this.version = version;
     }
 
-    public String getIcon() {
+    public Integer getVersionCode() {
+		return versionCode;
+	}
+
+	public void setVersionCode(Integer versionCode) {
+		this.versionCode = versionCode;
+	}
+
+	public String getIcon() {
         return icon;
     }
 
@@ -246,7 +248,6 @@ public class AppDetailResult {
         	imageList.add(listStr[i]);
         }
        this.images=imageList;
-        
     }
     
     @Override

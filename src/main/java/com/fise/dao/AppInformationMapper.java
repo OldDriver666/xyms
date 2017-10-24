@@ -28,6 +28,6 @@ public interface AppInformationMapper {
     int updateByPrimaryKeySelective(AppInformation record);
 
     int updateByPrimaryKey(AppInformation record);
-    
+
     List<AppInformation> selectByPage(@Param("example") AppInformationExample example,@Param("page") Page<?> page);
 }

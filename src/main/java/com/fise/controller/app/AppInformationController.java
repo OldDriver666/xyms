@@ -32,7 +32,6 @@ public class AppInformationController {
     public Response query(@RequestBody @Valid Page<AppInformation> param){
         Response resp = new Response();
         logger.info(param.toString());
-        
         resp=appInfoemationService.query(param);
         return resp;
     }
@@ -66,6 +65,16 @@ public class AppInformationController {
         resp=appInfoemationService.insert(param);
         return resp;
     }
+    
+    @IgnoreAuth
+	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
+	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		Integer appId = (Integer) param.get("app_id");
+		response = appInfoemationService.appDelete(appId);
+		return response;
+	}
+    
     /**
      *当参数中，传app_name的时候，是做分页查询，查询出多条数据。
      *当参数中，不传app_name的时候，是做所有的查询，查询出所有的app。这时候该接口用于加载app栏
@@ -109,11 +118,11 @@ public class AppInformationController {
     @RequestMapping(value = "/appinfo", method = RequestMethod.POST)
 	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
-		Integer appIdex = (Integer) param.get("app_id");
-		if(appIdex.equals("")||appIdex==null){
+		Integer appId = (Integer) param.get("app_id");
+		if(appId.equals("")||appId==null){
 			return response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 		}
-		response = appInfoemationService.queryByAppId(appIdex);
+		response = appInfoemationService.queryByAppId(appId);
 		return response;
 	}
 

@@ -66,8 +66,7 @@ public class AppInformation implements Serializable {
      */
     private String version;
 
-    @JsonProperty("version_code")
-    private String versioncode;
+    private Integer versioncode;
 
     /**
      * 应用图标
@@ -219,11 +218,11 @@ public class AppInformation implements Serializable {
         this.version = version;
     }
 
-    public String getVersioncode() {
+    public Integer getVersioncode() {
         return versioncode;
     }
 
-    public void setVersioncode(String versioncode) {
+    public void setVersioncode(Integer versioncode) {
         this.versioncode = versioncode;
     }
 

@@ -295,7 +295,7 @@ public class AppInformationExample {
         }
 
         public Criteria andAppNameLike(String value) {
-            addCriterion("CONCAT( app_name , app_spell ) like", value, "appName");
+            addCriterion("app_name like", value, "appName");
             return (Criteria) this;
         }
 
@@ -944,62 +944,52 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeEqualTo(String value) {
+        public Criteria andVersioncodeEqualTo(Integer value) {
             addCriterion("versioncode =", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeNotEqualTo(String value) {
+        public Criteria andVersioncodeNotEqualTo(Integer value) {
             addCriterion("versioncode <>", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeGreaterThan(String value) {
+        public Criteria andVersioncodeGreaterThan(Integer value) {
             addCriterion("versioncode >", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeGreaterThanOrEqualTo(String value) {
+        public Criteria andVersioncodeGreaterThanOrEqualTo(Integer value) {
             addCriterion("versioncode >=", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeLessThan(String value) {
+        public Criteria andVersioncodeLessThan(Integer value) {
             addCriterion("versioncode <", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeLessThanOrEqualTo(String value) {
+        public Criteria andVersioncodeLessThanOrEqualTo(Integer value) {
             addCriterion("versioncode <=", value, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeLike(String value) {
-            addCriterion("versioncode like", value, "versioncode");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersioncodeNotLike(String value) {
-            addCriterion("versioncode not like", value, "versioncode");
-            return (Criteria) this;
-        }
-
-        public Criteria andVersioncodeIn(List<String> values) {
+        public Criteria andVersioncodeIn(List<Integer> values) {
             addCriterion("versioncode in", values, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeNotIn(List<String> values) {
+        public Criteria andVersioncodeNotIn(List<Integer> values) {
             addCriterion("versioncode not in", values, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeBetween(String value1, String value2) {
+        public Criteria andVersioncodeBetween(Integer value1, Integer value2) {
             addCriterion("versioncode between", value1, value2, "versioncode");
             return (Criteria) this;
         }
 
-        public Criteria andVersioncodeNotBetween(String value1, String value2) {
+        public Criteria andVersioncodeNotBetween(Integer value1, Integer value2) {
             addCriterion("versioncode not between", value1, value2, "versioncode");
             return (Criteria) this;
         }

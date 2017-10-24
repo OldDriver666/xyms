@@ -14,15 +14,18 @@ public interface IAppInfoemationService {
     /*应用商城   新增产品信息*/
     public Response insert(AppInformation param);
     
+    /*应用商城  删除应用的信息*/
+    public Response appDelete(Integer appId);
+    
     /*应用市场 加载所有可用的App或是根据app_name做分页查询*/
     public Response queryAll(Page<AppInformation> page);
     
     /*应用市场 根据app_name查询出两条数据*/
     public Response queryByAppName(String param);
     
-    //热门搜索，返回四个热门的appName即可
+    /*热门搜索，返回四个热门的appName即可*/
     public Response hotSearch();
     
-  //根据索引查询单个App
+    /*根据索引查询单个App*/
     public Response queryByAppId(Integer param);
 }

@@ -14,7 +14,7 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="version" jdbcType="VARCHAR" property="version" />
-    <result column="versioncode" jdbcType="VARCHAR" property="versioncode" />
+    <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="icon_type" jdbcType="INTEGER" property="iconType" />
     <result column="images" jdbcType="VARCHAR" property="images" />
@@ -143,7 +143,7 @@
       #{appSpell,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, 
       #{devName,jdbcType=VARCHAR}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
-      #{versioncode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
+      #{versioncode,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
       #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
       #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
       #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, 
@@ -266,7 +266,7 @@
         #{version,jdbcType=VARCHAR},
       </if>
       <if test="versioncode != null">
-        #{versioncode,jdbcType=VARCHAR},
+        #{versioncode,jdbcType=INTEGER},
       </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
@@ -352,7 +352,7 @@
         version = #{record.version,jdbcType=VARCHAR},
       </if>
       <if test="record.versioncode != null">
-        versioncode = #{record.versioncode,jdbcType=VARCHAR},
+        versioncode = #{record.versioncode,jdbcType=INTEGER},
       </if>
       <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
@@ -409,7 +409,7 @@
       status = #{record.status,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
       version = #{record.version,jdbcType=VARCHAR},
-      versioncode = #{record.versioncode,jdbcType=VARCHAR},
+      versioncode = #{record.versioncode,jdbcType=INTEGER},
       icon = #{record.icon,jdbcType=VARCHAR},
       icon_type = #{record.iconType,jdbcType=INTEGER},
       images = #{record.images,jdbcType=VARCHAR},
@@ -463,7 +463,7 @@
         version = #{version,jdbcType=VARCHAR},
       </if>
       <if test="versioncode != null">
-        versioncode = #{versioncode,jdbcType=VARCHAR},
+        versioncode = #{versioncode,jdbcType=INTEGER},
       </if>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
@@ -517,7 +517,7 @@
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       version = #{version,jdbcType=VARCHAR},
-      versioncode = #{versioncode,jdbcType=VARCHAR},
+      versioncode = #{versioncode,jdbcType=INTEGER},
       icon = #{icon,jdbcType=VARCHAR},
       icon_type = #{iconType,jdbcType=INTEGER},
       images = #{images,jdbcType=VARCHAR},
@@ -532,7 +532,6 @@
       orientation = #{orientation,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
