@@ -49,9 +49,9 @@ public class ProblemController {
         Response res = new Response();
         logger.info(record.toString());
         
-        if(record.getSchoolId()==null){
+        /*if(record.getSchoolId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
+        }*/
         
         if(record.getUserId()==null || StringUtil.isEmpty(record.getTitle())){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

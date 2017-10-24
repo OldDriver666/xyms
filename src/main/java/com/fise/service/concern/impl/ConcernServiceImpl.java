@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.ConcernMapper;
@@ -171,6 +172,13 @@ public class ConcernServiceImpl implements IConcernService{
         List<Concern> list=concernDao.selectByExample(example);
         
         List<Integer> listint= new ArrayList<>();
+        
+        if(listint.size()==0){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("你没有关注任何问题！！");
+            return res;
+        }
+        
         for(Concern c:list){
             listint.add(c.getProblemId());
         }
