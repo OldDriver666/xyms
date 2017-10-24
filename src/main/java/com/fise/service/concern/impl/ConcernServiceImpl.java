@@ -173,7 +173,7 @@ public class ConcernServiceImpl implements IConcernService{
         
         List<Integer> listint= new ArrayList<>();
         
-        if(listint.size()==0){
+        if(list.size()==0){
             res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
             res.setMsg("你没有关注任何问题！！");
             return res;
