@@ -12,7 +12,7 @@ public class AppBaseResult {
 	private String download;
 	private String description;
 	private String version;
-	private String versionCode;
+	private Integer versionCode;
 	private String category;
 	private String star;
 	private String icon;
@@ -68,11 +68,11 @@ public class AppBaseResult {
 		this.version = version;
 	}
 
-	public String getVersionCode() {
+	public Integer getVersionCode() {
 		return versionCode;
 	}
 
-	public void setVersionCode(String versionCode) {
+	public void setVersionCode(Integer versionCode) {
 		this.versionCode = versionCode;
 	}
 

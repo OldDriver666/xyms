@@ -109,6 +109,19 @@ public class AppInformationServiceImpl implements IAppInfoemationService{
         appInformationDao.insertSelective(param);
         return resp.success();
     }
+    
+    @Override
+	public Response appDelete(Integer param) {
+		Response response = new Response();
+		int result=appInformationDao.deleteByPrimaryKey(param);
+		if(result==0){
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("删除App失败");
+			return response;
+		}
+		return response;
+	}
+    
     @Override
 	public Response queryByAppName(String param) {
 
