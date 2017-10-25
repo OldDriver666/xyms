@@ -72,13 +72,13 @@ public class FileController {
     
     @IgnoreAuth
     @RequestMapping(value="/filedown",method=RequestMethod.POST)
-    public void filedown(@RequestBody Map<String, String> map,HttpServletRequest req,HttpServletResponse resp) throws IOException{
-        
+    public Response filedown(@RequestBody Map<String, String> map,HttpServletRequest req,HttpServletResponse resp) throws IOException{
+        Response res = new Response();
         if(map.get("filedown")==null || "".equals(map.get("filedown"))){
             resp.getWriter().write("参数不能为空");
         }
         String fileName=map.get("filedown");
-        fileName=req.getSession().getServletContext().getRealPath("upload")+"/"+fileName;
+        fileName="http://192.168.2.250:8888/upload"+"/"+fileName;
         BufferedInputStream bis=new BufferedInputStream(new FileInputStream(new File(fileName)));
         
         String filename=URLEncoder.encode(map.get("filedown"),"utf-8");
@@ -96,5 +96,6 @@ public class FileController {
         os.close();
         bis.close();
         
+        return res.success();
     }
 }
