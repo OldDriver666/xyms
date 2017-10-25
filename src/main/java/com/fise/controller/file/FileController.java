@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.utils.Constants;
 
 @RestController
 @RequestMapping("/file")
@@ -54,12 +55,12 @@ public class FileController {
                 file.transferTo(dir);
                 if(i==0){
                     /*内网上传图片路径*/
-                    pictureURL="http://192.168.2.250:8888/upload"+"/"+filename;
+                    pictureURL=Constants.FILE_UPLOAD_URL+"/"+filename;
                     /*外网上传图片路径*/
                     //pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
                 }else {
                     /*内网上传图片路径*/
-                    pictureURL=pictureURL+"http://192.168.2.250:8888/upload/"+filename;
+                    pictureURL=pictureURL+Constants.FILE_UPLOAD_URL+"/"+filename;
                     /*外网上传图片路径*/
                     //pictureURL=pictureURL+"http://120.78.145.162:8080/upload/"+filename;
                 }
@@ -78,7 +79,7 @@ public class FileController {
             resp.getWriter().write("参数不能为空");
         }
         String fileName=map.get("filedown");
-        fileName="http://192.168.2.250:8888/upload"+"/"+fileName;
+        fileName="/home/fise/bin/www/upload/"+fileName;
         BufferedInputStream bis=new BufferedInputStream(new FileInputStream(new File(fileName)));
         
         String filename=URLEncoder.encode(map.get("filedown"),"utf-8");

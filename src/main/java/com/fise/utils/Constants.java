@@ -129,4 +129,7 @@ public interface Constants {
 	public static final String ES_GYM_TYPE = "gym";
 	
 	public static final String FISE_SUPPER_ACCOUNT_NAME = "Administrator";
+	
+	//内网图片上传文件目录
+	public static final String FILE_UPLOAD_URL="http://192.168.2.250:8888/upload";
 }
