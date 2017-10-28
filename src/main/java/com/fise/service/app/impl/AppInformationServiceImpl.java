@@ -52,7 +52,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService{
         example.setOrderByClause("prority desc");
         
         if(!StringUtil.isEmpty(param.getParam().getAppName())){
-            criteria.andAppNameEqualTo(param.getParam().getAppName());
+        	criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
         }
         
         List<AppInformation> list=appInformationDao.selectByPage(example, param);
