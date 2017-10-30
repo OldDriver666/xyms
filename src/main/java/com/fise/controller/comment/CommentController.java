@@ -16,6 +16,7 @@ import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Comment;
 import com.fise.service.comment.ICommentService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/comment")
@@ -34,6 +35,12 @@ public class CommentController {
         
         if(record.getFromUserid()==null || record.getAnswerId()==null || record.getProblemId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        if(StringUtil.isEmpty(record.getContent())){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("内容不能为空");
+            return res;
         }
         
         res=commentService.addComment(record);

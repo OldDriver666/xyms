@@ -2,6 +2,7 @@ package com.fise.service.comment.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,21 @@ import com.fise.dao.CommentMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
+import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.SensitiveWords;
+import com.fise.model.entity.SensitiveWordsExample;
 import com.fise.model.entity.CommentExample.Criteria;
 import com.fise.model.result.CommentResult;
 import com.fise.service.comment.ICommentService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
+import com.fise.utils.sensitiveword.SensitivewordFilter;
 
 import redis.clients.jedis.Jedis;
 
@@ -46,13 +51,22 @@ public class CommentServiceImpl implements ICommentService{
     @Autowired
     IMRelationShipMapper relationShipDao;
     
+    @Autowired
+    SensitiveWordsMapper sensitiveWordsDao;
+    
     @Override
     public Response addComment(Comment record) {
         Response res = new Response();
         
-        if(StringUtil.isEmpty(record.getContent())){
-            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-            res.setMsg("内容不能为空");
+        //检测敏感词
+        SensitiveWordsExample sensitiveWordsExample = new SensitiveWordsExample();
+        SensitiveWordsExample.Criteria criteria1 = sensitiveWordsExample.createCriteria();
+        List<SensitiveWords> sensitiveWordsList=sensitiveWordsDao.selectByExample(sensitiveWordsExample);
+        SensitivewordFilter filter = new SensitivewordFilter(sensitiveWordsList);
+        Set<String> set = filter.getSensitiveWord(record.getContent(), 1);
+        if(set.size()!=0){
+            res.failure(ErrorCode.ERROR_SENSITIVEWORDS_EXISTED);
+            res.setMsg("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
             return res;
         }
         
