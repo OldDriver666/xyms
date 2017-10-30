@@ -91,8 +91,11 @@ public class ProblemController {
         record.setPicture(pictureURL);*/
         res=problemService.insert(record);
         //默认已经关注
-        res=concernService.addConcern((Concern)res.getData());
-        return res.success();
+        if(res.getData()!=null){
+            res=concernService.addConcern((Concern)res.getData());
+            return res.success();
+        }
+        return res;
     }
     
     /*查询问题    分页形式*/

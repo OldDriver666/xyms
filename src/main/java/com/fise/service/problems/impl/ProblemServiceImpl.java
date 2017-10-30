@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
+import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.IMSchool;
@@ -21,10 +24,14 @@ import com.fise.model.entity.IMUser;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.ProblemsExample;
 import com.fise.model.entity.ProblemsExample.Criteria;
+import com.fise.model.entity.SensitiveWords;
+import com.fise.model.entity.SensitiveWordsExample;
 import com.fise.model.result.ProResult;
 import com.fise.service.problems.IProblemService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.sensitiveword.SensitivewordFilter;
+
 import redis.clients.jedis.Jedis;
 
 @Service
@@ -42,9 +49,25 @@ public class ProblemServiceImpl implements IProblemService{
     @Autowired
     IMRelationShipMapper relationShipDao;
     
+    @Autowired
+    SensitiveWordsMapper sensitiveWordsDao;
+    
     @Override
     public Response insert(Problems record) {
         Response res = new Response();
+        
+        //检测敏感词
+        SensitiveWordsExample sensitiveWordsExample = new SensitiveWordsExample();
+        SensitiveWordsExample.Criteria criteria1 = sensitiveWordsExample.createCriteria();
+        List<SensitiveWords> sensitiveWordsList=sensitiveWordsDao.selectByExample(sensitiveWordsExample);
+        SensitivewordFilter filter = new SensitivewordFilter(sensitiveWordsList);
+        Set<String> set = filter.getSensitiveWord(record.getContent(), 1);
+        if(set.size()!=0){
+            res.failure(ErrorCode.ERROR_SENSITIVEWORDS_EXISTED);
+            res.setMsg("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
+            return res;
+        }
+        
         //更新时间        
         record.setCreated(DateUtil.getLinuxTimeStamp());
         record.setUpdated(DateUtil.getLinuxTimeStamp());
