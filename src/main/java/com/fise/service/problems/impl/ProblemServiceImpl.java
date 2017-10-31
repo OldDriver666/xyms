@@ -123,14 +123,18 @@ public class ProblemServiceImpl implements IProblemService{
         //根据好友关系查询
         criteria.andStatusEqualTo(1);
         List<Integer> userlist=relationShipDao.findrelation(param.getParam().getUserId());
+        //判断好友是否为空
+        if(userlist.size()==0){
+            userlist=new ArrayList<Integer>();
+        }
         userlist.add(param.getParam().getUserId());
         criteria.andUserIdIn(userlist);
         
         List<Problems> list=problemsDao.selectBypage(example, param);
                        
-        Page<ProResult> page = getResult(list1, list, param);
-               
+        Page<ProResult> page = getResult(list1, list, param);       
         return res.success(page);
+        
     }
 
     @Override
@@ -187,7 +191,7 @@ public class ProblemServiceImpl implements IProblemService{
                 
                 result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
                 
-                //查询用户昵称和头像                
+                //查询用户昵称和头像
                 IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
                 
                 setResult(result, problem, user);

@@ -183,6 +183,10 @@ public class AnswerServiceImpl implements IAnswerService{
         
         //查询好友回答
         List<Integer> userlist=relationShipDao.findrelation(page.getParam().getUserId());
+        //判断好友是否为空
+        if(userlist.size()==0){
+            userlist=new ArrayList<Integer>();
+        }
         userlist.add(page.getParam().getUserId());
         criteria.andUserIdIn(userlist);
         
