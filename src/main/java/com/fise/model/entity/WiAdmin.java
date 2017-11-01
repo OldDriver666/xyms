@@ -56,7 +56,7 @@ public class WiAdmin implements Serializable {
     private String accessToken;
 
     /**
-     * 0-不可用，1-可用
+     * 1-不可用，2-可用
      */
     private Integer status;
 
@@ -74,6 +74,30 @@ public class WiAdmin implements Serializable {
      * 更新时间´
      */
     private Integer updated;
+    
+    private Integer creatorId;
+
+    /**
+     * 开发者注册时，身份证号码
+     */
+    private String idCard;
+
+    /**
+     * 开发者注册时，上传三张身份证照片。
+     */
+    private String cardPhoto;
+
+    /**
+     * 对该开发者进行描述
+     */
+    private String description;
+
+    /**
+     * 描述是否审核通过及原因
+     */
+    private String remarks;
+
+    private Integer userType;
 
     private static final long serialVersionUID = 1L;
 
@@ -166,14 +190,14 @@ public class WiAdmin implements Serializable {
     }
 
     public Integer getStatus() {
-        return status;
-    }
+		return status;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public Integer getLastLogin() {
+	public Integer getLastLogin() {
         return lastLogin;
     }
 
@@ -195,5 +219,53 @@ public class WiAdmin implements Serializable {
 
     public void setUpdated(Integer updated) {
         this.updated = updated;
+    }
+
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getCardPhoto() {
+        return cardPhoto;
+    }
+
+    public void setCardPhoto(String cardPhoto) {
+        this.cardPhoto = cardPhoto;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 }

@@ -1,8 +1,12 @@
 package com.fise.service.app;
 
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.AppInformation;
+import com.fise.model.param.AppCheckUpParam;
 
 public interface IAppInfoemationService {
     /*应用商城   产品信息查询*/
@@ -28,4 +32,12 @@ public interface IAppInfoemationService {
     
     /*根据索引查询单个App*/
     public Response queryByAppId(Integer param);
+    
+    public Response appInsert(AppInformation param,MultipartFile[] uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
+    
+    public Response appModify(AppInformation param);
+    
+    public Response checkup(AppCheckUpParam developer);
+    
+    public Response queryByDevId(Page<AppInformation> page);
 }

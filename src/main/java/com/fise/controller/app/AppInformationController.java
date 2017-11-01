@@ -9,13 +9,16 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppInformation;
+import com.fise.model.param.AppCheckUpParam;
 import com.fise.service.app.IAppInfoemationService;
 import com.fise.utils.StringUtil;
 
@@ -66,14 +69,6 @@ public class AppInformationController {
         return resp;
     }
     
-    @IgnoreAuth
-	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
-	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
-		Response response = new Response();
-		Integer appId = (Integer) param.get("app_id");
-		response = appInfoemationService.appDelete(appId);
-		return response;
-	}
     
     /**
      *当参数中，传app_name的时候，是做分页查询，查询出多条数据。
@@ -125,5 +120,76 @@ public class AppInformationController {
 		response = appInfoemationService.queryByAppId(appId);
 		return response;
 	}
-
+    
+    /**
+     * App增删改查接口(分管理员和开发者(开发者多一个creator_idd))
+     * 传与不传 userType
+     * 传的话是开发者，我们根据开发者的id，展示给他自己创建的app
+     * 
+     * 不传的话，是管理员。管理员可以看到所有的app
+     */
+    @IgnoreAuth
+	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
+	public Response appInsert(@RequestBody AppInformation param, 
+			                  @RequestParam("images") MultipartFile[] uploadPhoto,
+			                  @RequestParam("app") MultipartFile uploadApp,
+			                  @RequestParam("icon") MultipartFile uploadIcon) {
+        Response response = new Response();
+		
+		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
+		return response;
+    }
+    
+    
+    @IgnoreAuth
+   	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
+   	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
+   		Response response = new Response();
+   		Integer appId = (Integer) param.get("app_id");
+   		response = appInfoemationService.appDelete(appId);
+   		return response;
+   	}
+    /**
+     * App审核接口，由管理员进行审核,也就是改变app的状态。
+     */
+    
+    @IgnoreAuth
+	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
+    public Response checkup(@RequestBody AppCheckUpParam param){
+    	logger.info(param.toString());
+    	Response response=new Response();
+    	response=appInfoemationService.checkup(param);
+		return response;
+    }
+    
+    
+    /**
+     * 修改App的参数
+     * @param param
+     * @return
+     */
+    @IgnoreAuth
+	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
+	public Response appModify(@RequestBody @Valid AppInformation param) {
+    	logger.info(param.toString());
+		Response response = new Response();
+		response = appInfoemationService.appModify(param);
+		return response;
+	}
+    
+    @IgnoreAuth
+   	@RequestMapping(value = "/appQuery", method = RequestMethod.POST)
+   	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
+       	logger.info(param.getParam().toString());
+   		Response response = new Response();
+   		Integer devId=param.getParam().getDevId();
+   		if(devId!=null){
+   			response=appInfoemationService.queryByDevId(param);	
+   			return response;
+   		}
+   		response=appInfoemationService.query(param);
+   		
+   		return response;
+   	}
+    
 }
