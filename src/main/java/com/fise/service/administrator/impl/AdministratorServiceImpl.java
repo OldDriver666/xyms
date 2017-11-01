@@ -102,6 +102,11 @@ public class AdministratorServiceImpl implements IAdministratorService {
         data.setNickName(admin.getNickName());
         data.setPhone(admin.getPhone());
         data.setRoleId(admin.getRoleId());
+        data.setCreatorId(admin.getCreatorId());
+        data.setIdCard(admin.getIdCard());
+        data.setDescription(admin.getDescription());
+        data.setRemarks(admin.getRemarks());
+        data.setUserType(admin.getUserType());
         // 查询公司所属的专属主页面
         WiOrganizationExample example = new WiOrganizationExample();
         WiOrganizationExample.Criteria con = example.createCriteria();
