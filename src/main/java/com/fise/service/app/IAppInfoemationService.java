@@ -1,6 +1,8 @@
 package com.fise.service.app;
 
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.Page;
@@ -33,7 +35,7 @@ public interface IAppInfoemationService {
     /*根据索引查询单个App*/
     public Response queryByAppId(Integer param);
     
-    public Response appInsert(AppInformation param,MultipartFile[] uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
+    public Response appInsert(AppInformation param,List<MultipartFile> uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
     
     public Response appModify(AppInformation param);
     

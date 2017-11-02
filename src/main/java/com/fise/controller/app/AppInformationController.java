@@ -1,8 +1,10 @@
 package com.fise.controller.app;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
@@ -122,7 +125,7 @@ public class AppInformationController {
 	}
     
     /**
-     * App增删改查接口(分管理员和开发者(开发者多一个creator_idd))
+     * App增删改查接口(分管理员和开发者(开发者多一个creator_id))
      * 传与不传 userType
      * 传的话是开发者，我们根据开发者的id，展示给他自己创建的app
      * 
@@ -130,12 +133,30 @@ public class AppInformationController {
      */
     @IgnoreAuth
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
-	public Response appInsert(@RequestBody AppInformation param, 
-			                  @RequestParam("images") MultipartFile[] uploadPhoto,
-			                  @RequestParam("app") MultipartFile uploadApp,
-			                  @RequestParam("icon") MultipartFile uploadIcon) {
+	public Response appInsert(HttpServletRequest request) {
         Response response = new Response();
-		
+        MultipartHttpServletRequest multipart=(MultipartHttpServletRequest) request;
+        AppInformation param =new AppInformation();
+        param.setAppIndex(request.getParameter("app_index"));
+        param.setAppName(request.getParameter("app_name"));
+        param.setAppSpell(request.getParameter("app_spell"));
+        param.setPackageName(request.getParameter("package_name"));
+        param.setDevId(Integer.parseInt(request.getParameter("dev_id")));
+        param.setDevName(request.getParameter("dev_name"));
+        param.setTopCategory(request.getParameter("top_category"));
+        param.setCategory(request.getParameter("category"));
+        param.setDescription(request.getParameter("description"));
+        param.setVersion(request.getParameter("version"));
+        param.setVersioncode(Integer.parseInt(request.getParameter("versioncode")));
+        param.setPrority(Integer.parseInt(request.getParameter("prority")));
+        param.setIconType(Integer.parseInt(request.getParameter("icon_type")));
+        param.setRemarks(request.getParameter("remarks"));
+        param.setLabel(request.getParameter("label"));
+        param.setStar(request.getParameter("star"));
+        param.setOrientation(Integer.parseInt(request.getParameter("orientation")));
+        List<MultipartFile> uploadPhoto =multipart.getFiles("iamges");
+        MultipartFile uploadApp=multipart.getFile("app");
+        MultipartFile uploadIcon=multipart.getFile("icon");
 		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
 		return response;
     }

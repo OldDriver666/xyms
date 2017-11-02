@@ -26,8 +26,6 @@ public class DeveloperInsert {
 
 	private String email;
 	
-	private Integer creatorId;
-
 	private String idCard;
 
 	private String cardPhoto;
@@ -86,14 +84,6 @@ public class DeveloperInsert {
 		this.email = email;
 	}
 	
-	public Integer getCreatorId() {
-		return creatorId;
-	}
-
-	public void setCreatorId(Integer creatorId) {
-		this.creatorId = creatorId;
-	}
-
 	public String getIdCard() {
 		return idCard;
 	}
