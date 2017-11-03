@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
@@ -123,9 +124,13 @@ public class fiseDeviceController {
 	}
 	
 	/*excel批量导入设备*/
+	@IgnoreAuth
 	@RequestMapping(value="/excel_import",method=RequestMethod.POST)
-	public Response excelImport(@RequestBody @Valid @RequestParam("file") MultipartFile file,HttpServletRequest req) throws IOException,Exception{
+	public Response excelImport(HttpServletRequest req) throws IOException,Exception{
 	    Response resp = new Response();
+	    
+	    MultipartHttpServletRequest request=(MultipartHttpServletRequest) req;
+	    MultipartFile file=request.getFile("file");
 	    
         List<ExcelFiseDevice> unfrozenList = ExcelImporterUtils.importSheet(file.getInputStream(), ExcelFiseDevice.class,ExcelFiseDevice.class.getSimpleName());
         

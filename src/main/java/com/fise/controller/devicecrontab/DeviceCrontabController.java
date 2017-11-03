@@ -14,7 +14,6 @@ import com.fise.base.Response;
 import com.fise.model.entity.DeviceCrontab;
 import com.fise.model.param.DeviceCrontabParam;
 import com.fise.service.devicecrontab.IDeviceCrontabService;
-import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/devicecrontab")
