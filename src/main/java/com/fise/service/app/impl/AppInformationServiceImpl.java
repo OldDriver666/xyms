@@ -216,7 +216,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 	@Override
 	public Response appInsert(AppInformation param, 
-			                  MultipartFile[] uploadPhoto, 
+		                      List<MultipartFile> uploadPhoto, 
 			                  MultipartFile uploadApp,
 			                  MultipartFile uploadIcon) {
 
@@ -228,7 +228,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			return response;
 		}
 
-		if (uploadPhoto == null || uploadPhoto.length == 0) {
+		if (uploadPhoto == null || uploadPhoto.size() == 0) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图片");
 			return response;
@@ -313,14 +313,14 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	// 上传图片
-	private List<String> photoUpload(MultipartFile[] uploadfile) throws IllegalStateException, IOException {
+	private List<String> photoUpload(List<MultipartFile> uploadfile) throws IllegalStateException, IOException {
 		MultipartFile file = null;
 		String pictureURL = "";
 		List<String> result = new ArrayList<String>();
 		// 上传图片文件
-		if (uploadfile.length != 0) {
-			for (int i = 0; i < uploadfile.length; i++) {
-				file = uploadfile[i];
+		if (uploadfile.size() != 0) {
+			for (int i = 0; i < uploadfile.size(); i++) {
+				file = uploadfile.get(i);
 
 				/* 内网上传图片路径 */
 				String path = "/home/fise/bin/www/upload";
@@ -330,24 +330,15 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
 				File dir = new File(path, filename);
-				if (!dir.exists()) {
+				if (!dir.exists()) 
+				{
 					dir.mkdirs();
 				}
 
 				file.transferTo(dir);
 
-				if (i == 0) {
-					/* 内网上传图片路径 */
-					pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
-					/* 外网上传图片路径 */
-					// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
-				} else {
-					/* 内网上传图片路径 */
-					pictureURL = pictureURL+Constants.FILE_UPLOAD_URL+"/"+filename;
-					/* 外网上传图片路径 */
-					// pictureURL=pictureURL+"http://120.78.145.162:8080/upload/"+filename;
-				}
-
+				pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+				
 				result.add(pictureURL);
 			}
 		}

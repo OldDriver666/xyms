@@ -22,6 +22,7 @@ import com.fise.model.param.DeveloperInsert;
 import com.fise.model.param.DeveloperUpdate;
 import com.fise.model.result.DeveloperResult;
 import com.fise.service.administrator.IDeveloperService;
+import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 
 @Service
@@ -32,7 +33,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	private WiAdminMapper adminDao;
 
 	@Override
-	public Response insert(DeveloperInsert param, MultipartFile[] uploadfile) {
+	public Response insert(DeveloperInsert param,List< MultipartFile> uploadfile) {
 		Response response = new Response();
 
 		WiAdmin developer = new WiAdmin();
@@ -44,7 +45,6 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		// 默认不可用
 		developer.setStatus(0);
 		developer.setCreated(DateUtil.getLinuxTimeStamp());
-		developer.setCreatorId(param.getCreatorId());
 		developer.setIdCard(param.getIdCard());
 		// 三张身份证的照片，上传到服务器中，获取它们的地址值，用;隔开
 		List<String> images = null;
@@ -61,7 +61,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			imagesUrl.append(images.get(i-1) + ";");
 		}
 		imagesUrl.append(images.get(images.size()-1));
-		
+	
 		developer.setCardPhoto(param.getCardPhoto());
 		developer.setDescription(param.getDescription());
 		developer.setUserType(param.getUserType());
@@ -73,19 +73,19 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	}
 
 	// @RequestBody @RequestParam("image")
-	private List<String> photoUpload(MultipartFile[] uploadfile) throws IllegalStateException, IOException {
+	private List<String> photoUpload(List<MultipartFile> uploadfile) throws IllegalStateException, IOException {
 		MultipartFile file = null;
 		String pictureURL = "";
 		List<String> result = new ArrayList<String>();
 		// 上传图片文件
-		if (uploadfile.length != 0) {
-			for (int i = 0; i < uploadfile.length; i++) {
-				file = uploadfile[i];
+		if (uploadfile.size() != 0) {
+			for (int i = 0; i < uploadfile.size(); i++) {
+				file = uploadfile.get(i);
 
 				/* 内网上传图片路径 */
 				String path = "/home/fise/bin/www/upload";
 				/* 外网上传图片路径 */
-				// String path="/home/fise/www/upload";
+				//String path="D:/logs";
 
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -96,18 +96,8 @@ public class DeveloperServiceImpl implements IDeveloperService {
 
 				file.transferTo(dir);
 
-				if (i == 0) {
-					/* 内网上传图片路径 */
-					pictureURL = "http://192.168.2.250:8888/upload" + "/" + filename;
-					/* 外网上传图片路径 */
-					// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
-				} else {
-					/* 内网上传图片路径 */
-					pictureURL = pictureURL + "http://192.168.2.250:8888/upload/" + filename;
-					/* 外网上传图片路径 */
-					// pictureURL=pictureURL+"http://120.78.145.162:8080/upload/"+filename;
-				}
-
+			    pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+					
 				result.add(pictureURL);
 			}
 		}
@@ -115,6 +105,29 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		return result;
 	}
 
+	private String fileUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
+
+		/* 内网上传图片路径 */
+		String path = "/home/fise/bin/www/upload";
+		/* 外网上传图片路径 */
+	    //String path="D:/logs";
+
+		String filename = uploadfile.getOriginalFilename().replace(".",
+				new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
+		File dir = new File(path, filename);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		uploadfile.transferTo(dir);
+
+		/* 内网上传图片路径 */
+		String downloadURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+		/* 外网上传图片路径 */
+		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
+
+		return downloadURL;
+	}
 	@Override
 	public Response update(DeveloperUpdate developer) {
 		
