@@ -35,7 +35,6 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	@Override
 	public Response insert(DeveloperInsert param,List< MultipartFile> uploadfile) {
 		Response response = new Response();
-
 		WiAdmin developer = new WiAdmin();
 		developer.setAccount(param.getAccount());
 		developer.setPassword(param.getPassword());
@@ -105,29 +104,6 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		return result;
 	}
 
-	private String fileUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
-
-		/* 内网上传图片路径 */
-		String path = "/home/fise/bin/www/upload";
-		/* 外网上传图片路径 */
-	    //String path="D:/logs";
-
-		String filename = uploadfile.getOriginalFilename().replace(".",
-				new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
-		File dir = new File(path, filename);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-
-		uploadfile.transferTo(dir);
-
-		/* 内网上传图片路径 */
-		String downloadURL = Constants.FILE_UPLOAD_URL + "/" + filename;
-		/* 外网上传图片路径 */
-		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
-
-		return downloadURL;
-	}
 	@Override
 	public Response update(DeveloperUpdate developer) {
 		
@@ -162,6 +138,24 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		DeveloperResult result=new DeveloperResult();
 		result.init(wiadmin);
 		response.success(wiadmin);
+		return response;
+	}
+
+	@Override
+	public Response queryAccount(String account) {
+		Response response = new Response();
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andAccountEqualTo(account);
+		
+		List<WiAdmin> queryAccount =adminDao.selectByExample(example);
+		if(queryAccount.size()!=0){
+			response.failure(ErrorCode.ERROR_ACCOUNT_ALREADY_EXISTED);
+			response.setMsg("该账户已注册");
+			return response;
+		}
+		response.setCode(200);
+		response.setMsg("该账户未注册");
 		return response;
 	}
 

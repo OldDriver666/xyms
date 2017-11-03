@@ -67,5 +67,15 @@ public class DeveloperController {
 		response=devservice.query(id);
 		return response;
 	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/queryAccount", method = RequestMethod.POST)
+	public Response queryAccount(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		String account=(String) map.get("account");
+		response=devservice.queryAccount(account);
+		return response;
+	}
 
 }
