@@ -215,10 +215,8 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appInsert(AppInformation param, 
-		                      List<MultipartFile> uploadPhoto, 
-			                  MultipartFile uploadApp,
-			                  MultipartFile uploadIcon) {
+	public Response appInsert(AppInformation param, List<MultipartFile> uploadPhoto, MultipartFile uploadApp,
+			MultipartFile uploadIcon) {
 
 		Response response = new Response();
 
@@ -233,7 +231,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("请选择上传的图片");
 			return response;
 		}
-		
+
 		if (uploadIcon.isEmpty()) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图标");
@@ -255,9 +253,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setVersion(param.getVersion());
 		appInfo.setVersioncode(param.getVersioncode());
 		// 图标
-		String icon=null;
+		String icon = null;
 		try {
-		 icon=iconUpload(uploadIcon);
+			icon = iconUpload(uploadIcon);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图标失败");
@@ -266,25 +264,21 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setIcon(icon);
 
 		// images
-		List<String> images=null;
+		List<String> images = null;
 		try {
-			 images=photoUpload(uploadPhoto);
+			images = photoUpload(uploadPhoto);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图片失败");
 			return response;
 		}
-		StringBuffer image=new StringBuffer();
-		for(int i=1;i<images.size();i++){
-			image.append(images.get(i-1)+";");
-		}
-		image.append(images.get(images.size()-1));
-		appInfo.setImages(image.toString());
-		
+		String imageurl=StringUtil.combineStr(images);
+		appInfo.setImages(imageurl);
+
 		// download
-		String app=null;
+		String app = null;
 		try {
-			 app =appUpload(uploadApp);
+			app = appUpload(uploadApp);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传应用失败");
@@ -330,15 +324,14 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
 				File dir = new File(path, filename);
-				if (!dir.exists()) 
-				{
+				if (!dir.exists()) {
 					dir.mkdirs();
 				}
 
 				file.transferTo(dir);
 
 				pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
-				
+
 				result.add(pictureURL);
 			}
 		}
@@ -395,8 +388,73 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appModify(AppInformation param) {
+	public Response appModify(AppInformation param, 
+			                  List<MultipartFile> uploadPhoto, 
+			                  MultipartFile uploadApp,
+			                  MultipartFile uploadIcon) {
 		Response response = new Response();
+		AppInformation appinfo = appInformationDao.selectByPrimaryKey(param.getId());
+
+		// 说明App的截图有被修改过:先全部删除截图，然后再全部上传截图。
+		List<String> imageurl=null;
+		if (uploadPhoto.size() != 0&&!uploadPhoto.isEmpty()) {
+			String images=appinfo.getImages();
+			List<String> str= StringUtil.splitStr(images);
+			for (String string : str) {
+				boolean photoResult=deleteFile(string);
+				if (!photoResult) {
+					response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+					response.setMsg("截图删除失败");
+					return response;
+				}
+			}
+			try {
+				imageurl=photoUpload(uploadPhoto);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("截图修改失败");
+				return response;	
+			}
+			
+		}
+
+		// 说明app的下载地址有被修改:先删除原有的app;再上传新的app。
+		String appurl = null;
+		if (!uploadApp.isEmpty()) {
+			String downLoad = appinfo.getDownload();
+			boolean appResult = deleteFile(downLoad);
+			if (!appResult) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("应用删除失败");
+				return response;
+			}
+			try {
+				appurl = appUpload(uploadApp);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("应用修改失败");
+				return response;
+			}
+		}
+		// 说明图标的有被修改
+		String iconurl=null;
+		if (!uploadIcon.isEmpty()) {
+			String icon = appinfo.getIcon();
+			boolean appResult = deleteFile(icon);
+			if (!appResult) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("图标删除失败");
+				return response;
+			}
+			try {
+				iconurl = iconUpload(uploadIcon);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("图标修改失败");
+				return response;
+			}
+		}
+
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
 		con.andIdEqualTo(param.getId());
@@ -409,14 +467,25 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setDevId(param.getDevId());
 		appInfo.setDevName(param.getDevName());
 		appInfo.setTopCategory(param.getTopCategory());
+		if(imageurl.size()!=0||!imageurl.isEmpty()){
+			appInfo.setImages(StringUtil.combineStr(imageurl)); 
+		}
+		
 		appInfo.setCategory(param.getCategory());
+		if(appurl!=null){
+		      appInfo.setDownload(appurl);	
+		}
+
 		// 0-待审核 1-发布 2-拒绝 3-下架
 		appInfo.setStatus(param.getStatus());
+		appInfo.setIconType(param.getIconType());
+		if(iconurl!=null){
+			appInfo.setIcon(iconurl);
+		}
 		appInfo.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInfo.setDescription(param.getDescription());
 		appInfo.setVersion(param.getVersion());
 		appInfo.setVersioncode(param.getVersioncode());
-		// ......
 
 		int result = appInformationDao.updateByExampleSelective(appInfo, example);
 		if (result == 0) {
@@ -455,10 +524,10 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
-		//先根据devdId查出对应得有哪些
+		// 先根据devdId查出对应得有哪些
 		criteria.andDevIdEqualTo(param.getParam().getDevId());
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
-		if(list.size()==0){
+		if (list.size() == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
 			response.setMsg("App资源不足");
 			return response;
@@ -469,4 +538,17 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		return response;
 	}
+
+	private boolean deleteFile(String filename) {
+
+		File file = new File(filename);
+		if (!file.exists()) {
+			// 表示要删除的原文件不存在
+			return true;
+		} else {
+			file.delete();
+		}
+		return true;
+	}
+	
 }

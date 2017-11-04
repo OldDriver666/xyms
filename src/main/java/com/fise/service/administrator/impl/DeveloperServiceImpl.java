@@ -82,9 +82,9 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				file = uploadfile.get(i);
 
 				/* 内网上传图片路径 */
-				String path = "/home/fise/bin/www/upload";
+				//String path = "/home/fise/bin/www/upload";
 				/* 外网上传图片路径 */
-				//String path="D:/logs";
+				String path="D:/logs";
 
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");

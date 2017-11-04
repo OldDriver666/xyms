@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -133,30 +134,11 @@ public class AppInformationController {
      */
     @IgnoreAuth
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
-	public Response appInsert(HttpServletRequest request) {
+	public Response appInsert(@ModelAttribute AppInformation param,
+			                  @RequestParam("images") List<MultipartFile> uploadPhoto,
+			                  @RequestParam("app") MultipartFile uploadApp,
+			                  @RequestParam("icon") MultipartFile uploadIcon) {
         Response response = new Response();
-        MultipartHttpServletRequest multipart=(MultipartHttpServletRequest) request;
-        AppInformation param =new AppInformation();
-        param.setAppIndex(request.getParameter("app_index"));
-        param.setAppName(request.getParameter("app_name"));
-        param.setAppSpell(request.getParameter("app_spell"));
-        param.setPackageName(request.getParameter("package_name"));
-        param.setDevId(Integer.parseInt(request.getParameter("dev_id")));
-        param.setDevName(request.getParameter("dev_name"));
-        param.setTopCategory(request.getParameter("top_category"));
-        param.setCategory(request.getParameter("category"));
-        param.setDescription(request.getParameter("description"));
-        param.setVersion(request.getParameter("version"));
-        param.setVersioncode(Integer.parseInt(request.getParameter("versioncode")));
-        param.setPrority(Integer.parseInt(request.getParameter("prority")));
-        param.setIconType(Integer.parseInt(request.getParameter("icon_type")));
-        param.setRemarks(request.getParameter("remarks"));
-        param.setLabel(request.getParameter("label"));
-        param.setStar(request.getParameter("star"));
-        param.setOrientation(Integer.parseInt(request.getParameter("orientation")));
-        List<MultipartFile> uploadPhoto =multipart.getFiles("iamges");
-        MultipartFile uploadApp=multipart.getFile("app");
-        MultipartFile uploadIcon=multipart.getFile("icon");
 		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
 		return response;
     }
@@ -191,10 +173,13 @@ public class AppInformationController {
      */
     @IgnoreAuth
 	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
-	public Response appModify(@RequestBody @Valid AppInformation param) {
-    	logger.info(param.toString());
-		Response response = new Response();
-		response = appInfoemationService.appModify(param);
+	public Response appModify(@ModelAttribute AppInformation param,
+                              @RequestParam("images") List<MultipartFile> uploadPhoto,
+                              @RequestParam("app") MultipartFile uploadApp,
+                              @RequestParam("icon") MultipartFile uploadIcon) {
+    	Response response = new Response();
+    	
+		response = appInfoemationService.appModify(param,uploadPhoto,uploadApp,uploadIcon);
 		return response;
 	}
     

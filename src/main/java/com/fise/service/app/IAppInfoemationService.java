@@ -37,7 +37,7 @@ public interface IAppInfoemationService {
     
     public Response appInsert(AppInformation param,List<MultipartFile> uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
     
-    public Response appModify(AppInformation param);
+    public Response appModify(AppInformation param,List<MultipartFile> uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
     
     public Response checkup(AppCheckUpParam developer);
     

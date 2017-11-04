@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
+import com.fise.utils.StringUtil;
 
 public class AppDetailResult {
 	
@@ -241,13 +242,7 @@ public class AppDetailResult {
         this.star=data.getStar();
         this.orientation=data.getOrientation();
         this.packageName=data.getPackageName();
-        String imageStr= data.getImages();
-        String[] listStr=imageStr.split(";");
-        List<String> imageList=new ArrayList<String>();
-        for(int i=0;i<listStr.length;i++){
-        	imageList.add(listStr[i]);
-        }
-       this.images=imageList;
+        this.images= StringUtil.splitStr(data.getImages());
     }
     
     @Override
