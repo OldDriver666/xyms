@@ -63,7 +63,6 @@ public class AppChannelController {
     }
     
     /*应用市场 根据权重展示不用的频道*/
-    @IgnoreAuth
     @RequestMapping(value = "/channelAll", method = RequestMethod.POST)
 	public Response getChannelAll(@RequestBody @Valid Map<String, String> param) {
 		Response response = new Response();

@@ -120,9 +120,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appDelete(Integer param) {
+	public Response appDelete(Integer id) {
 		Response response = new Response();
-		int result = appInformationDao.deleteByPrimaryKey(param);
+		AppInformation appInfo=new AppInformation();
+		appInfo.setId(id);
+		appInfo.setStatus(4);
+		int result = appInformationDao.updateByPrimaryKeySelective(appInfo);
 		if (result == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
 			response.setMsg("删除App失败");

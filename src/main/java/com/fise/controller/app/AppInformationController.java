@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
@@ -138,7 +136,9 @@ public class AppInformationController {
 		return response;
     }
     
-    
+    /**
+     * 对于App的删除只做逻辑删除，不做物理删除。
+     */
    	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
    	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
    		Response response = new Response();
@@ -189,6 +189,4 @@ public class AppInformationController {
    		return response;
    	}
    	
-   	//开发者对App的增删改查
-    
 }

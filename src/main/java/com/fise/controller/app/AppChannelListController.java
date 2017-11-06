@@ -79,7 +79,6 @@ public class AppChannelListController {
 	 * @param param
 	 * @return
 	 */
-	@IgnoreAuth
 	@RequestMapping(value = "/channel", method = RequestMethod.POST)
 	public Response getChannelInfo(@RequestBody @Valid Page<AppChannel> param) {
 		Response response = new Response();

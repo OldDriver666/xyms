@@ -63,7 +63,6 @@ public class AppAdvertController {
     }
     
     /*应用市场   广告栏加载*/
-    @IgnoreAuth
 	@RequestMapping(value = "/advertAll", method = RequestMethod.POST)
 	public Response getAdvertAll(@RequestBody @Valid Map<String, String> param) {
 		Response response = new Response();
