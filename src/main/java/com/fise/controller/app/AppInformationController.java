@@ -81,7 +81,6 @@ public class AppInformationController {
      * @return
      */
     /*应用市场 加载所有可用的App*/
-    @IgnoreAuth
     @RequestMapping(value="/queryAll",method=RequestMethod.POST)
     public Response queryAll(@RequestBody @Valid Page<AppInformation> param){
         Response resp = new Response();
@@ -92,7 +91,6 @@ public class AppInformationController {
     }
     
     /*根据app_name返回两条数据*/
-    @IgnoreAuth
     @RequestMapping(value = "/simpleSearch", method = RequestMethod.POST)
 	public Response getsimpleSearch(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
@@ -103,7 +101,6 @@ public class AppInformationController {
 	}
     
     /*热门搜索app,展示app_name*/
-    @IgnoreAuth
     @RequestMapping(value = "/hotSearch", method = RequestMethod.POST)
 	public Response getHotSearch(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
@@ -113,7 +110,6 @@ public class AppInformationController {
 	}
     
    /*获取单个的app的具体信息*/
-    @IgnoreAuth
     @RequestMapping(value = "/appinfo", method = RequestMethod.POST)
 	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
@@ -132,7 +128,6 @@ public class AppInformationController {
      * 
      * 不传的话，是管理员。管理员可以看到所有的app
      */
-    @IgnoreAuth
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
 	public Response appInsert(@ModelAttribute AppInformation param,
 			                  @RequestParam("app_images") List<MultipartFile> uploadPhoto,
@@ -144,7 +139,6 @@ public class AppInformationController {
     }
     
     
-    @IgnoreAuth
    	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
    	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
    		Response response = new Response();
@@ -155,8 +149,6 @@ public class AppInformationController {
     /**
      * App审核接口，由管理员进行审核,也就是改变app的状态。
      */
-    
-    @IgnoreAuth
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
     public Response checkup(@RequestBody AppCheckUpParam param){
     	logger.info(param.toString());
@@ -171,7 +163,6 @@ public class AppInformationController {
      * @param param
      * @return
      */
-    @IgnoreAuth
 	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
 	public Response appModify(@ModelAttribute AppInformation param,
                               @RequestParam("images") List<MultipartFile> uploadPhoto,
@@ -183,19 +174,21 @@ public class AppInformationController {
 		return response;
 	}
     
-    @IgnoreAuth
    	@RequestMapping(value = "/appQuery", method = RequestMethod.POST)
    	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
        	logger.info(param.getParam().toString());
    		Response response = new Response();
    		Integer devId=param.getParam().getDevId();
-   		if(devId!=null){
-   			response=appInfoemationService.queryByDevId(param);	
+   		String appName=param.getParam().getAppName();
+   		if(devId!=null||appName!=null){
+   			response=appInfoemationService.queryByParam(param);	
    			return response;
    		}
    		response=appInfoemationService.query(param);
    		
    		return response;
    	}
+   	
+   	//开发者对App的增删改查
     
 }

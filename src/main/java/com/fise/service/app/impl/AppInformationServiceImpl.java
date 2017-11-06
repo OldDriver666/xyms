@@ -528,13 +528,18 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response queryByDevId(Page<AppInformation> param) {
+	public Response queryByParam(Page<AppInformation> param) {
 		Response response = new Response();
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
 		// 先根据devdId查出对应得有哪些
-		criteria.andDevIdEqualTo(param.getParam().getDevId());
+		if(param.getParam().getDevId()!=null){
+			criteria.andDevIdEqualTo(param.getParam().getDevId());	
+		}
+		if(param.getParam().getAppName()!=null){
+			criteria.andAppNameEqualTo(param.getParam().getAppName());
+		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
 		if (list.size() == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);

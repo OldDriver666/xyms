@@ -41,5 +41,5 @@ public interface IAppInfoemationService {
     
     public Response checkup(AppCheckUpParam developer);
     
-    public Response queryByDevId(Page<AppInformation> page);
+    public Response queryByParam(Page<AppInformation> page);
 }
