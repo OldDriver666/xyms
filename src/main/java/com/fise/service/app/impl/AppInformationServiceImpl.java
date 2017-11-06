@@ -296,7 +296,16 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setLabel(param.getLabel());
 		appInfo.setStar(param.getStar());
 		appInfo.setOrientation(param.getOrientation());
-		return null;
+		
+	    int result=	appInformationDao.insertSelective(appInfo);
+		if (result == 0) {
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("新增应用失败");
+			return response;
+		}
+		response.setMsg("新增应用成功");
+		response.setCode(200);
+		return response;
 	}
 
 	private String getAppSize(long size) {
