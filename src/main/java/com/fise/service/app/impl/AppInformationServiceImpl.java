@@ -540,8 +540,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		if(param.getParam().getDevId()!=null){
 			criteria.andDevIdEqualTo(param.getParam().getDevId());	
 		}
-		if(param.getParam().getAppName()!=null){
+		if(StringUtil.isNotEmpty(param.getParam().getAppName())){
 			criteria.andAppNameEqualTo(param.getParam().getAppName());
+		}
+		if(param.getParam().getStatus()!=null){
+			criteria.andStatusEqualTo(param.getParam().getStatus());
 		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
 		if (list.size() == 0) {
