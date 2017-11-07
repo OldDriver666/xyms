@@ -31,7 +31,6 @@ public class DeveloperController {
 	@Resource
 	IDeveloperService devservice;
 
-	@IgnoreAuth
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Response register(@ModelAttribute DeveloperInsert developer,
 			                 @RequestParam("images") List<MultipartFile> files) {
@@ -40,7 +39,6 @@ public class DeveloperController {
 		response=devservice.insert(developer,files);
 		return response;
 	}
-	@IgnoreAuth
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
 	public Response checkup(@RequestBody @Valid DeveloperUpdate developer){
 		Response response=new Response();
@@ -49,7 +47,6 @@ public class DeveloperController {
 		return response;
 	}
 	
-	@IgnoreAuth
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Response query(@RequestBody @Valid Map<String , Object> map){
 		Response response=new Response();
@@ -59,7 +56,6 @@ public class DeveloperController {
 		return response;
 	}
 	
-	@IgnoreAuth
 	@RequestMapping(value = "/queryAccount", method = RequestMethod.POST)
 	public Response queryAccount(@RequestBody @Valid Map<String , Object> map){
 		Response response=new Response();

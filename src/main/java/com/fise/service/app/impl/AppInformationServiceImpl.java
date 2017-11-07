@@ -33,20 +33,25 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	AppInformationMapper appInformationDao;
 
 	@Override
-	public Response query(Page<AppInformation> page) {
+	public Response query(Page<AppInformation> param) {
 		Response response = new Response();
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
 
-		if (!StringUtil.isEmpty(page.getParam().getAppName())) {
-			criteria.andAppNameEqualTo(page.getParam().getAppName());
+		if (!StringUtil.isEmpty(param.getParam().getAppName())) {
+			criteria.andAppNameEqualTo(param.getParam().getAppName());
 		}
-		List<AppInformation> list = appInformationDao.selectByPage(example, page);
-		page.setParam(null);
+		List<AppInformation> list = appInformationDao.selectByPage(example, param);
+		Page<AppInformation> page =new Page<AppInformation>();
+		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setHasMore(hasMore);
 		page.setResult(list);
+		response.success(page);
 
-		return response.success(page);
+		return response;
 	}
 
 	@Override
@@ -84,17 +89,10 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
-
+		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+		page.setHasMore(hasMore);
 		page.setResult(appData);
-
 		response.success(page);
-
 		return response;
 	}
 
@@ -552,9 +550,13 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("App资源不足");
 			return response;
 		}
-		param.setParam(null);
-		param.setResult(list);
-		response.success(param);
+		Page<AppInformation> page =new Page<AppInformation>();
+		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+		page.setHasMore(hasMore);
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		response.success(page);
 
 		return response;
 	}
