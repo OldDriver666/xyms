@@ -1,7 +1,9 @@
 package com.fise.service.app.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,16 +95,12 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
-		page.setPageNo(param.getPageNo());
-		page.setPageSize(param.getPageSize());
+		Map<String ,Object> map=new HashMap<String ,Object>();
+	    boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+	    map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
 		page.setResult(appData);
 		response.success(page);
 		return response;

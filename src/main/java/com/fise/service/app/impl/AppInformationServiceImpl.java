@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,24 +35,19 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	AppInformationMapper appInformationDao;
 
 	@Override
-	public Response query(Page<AppInformation> param) {
+	public Response query(Page<AppInformation> page) {
 		Response response = new Response();
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
 
-		if (!StringUtil.isEmpty(param.getParam().getAppName())) {
-			criteria.andAppNameEqualTo(param.getParam().getAppName());
+		if (!StringUtil.isEmpty(page.getParam().getAppName())) {
+			criteria.andAppNameEqualTo(page.getParam().getAppName());
 		}
-		List<AppInformation> list = appInformationDao.selectByPage(example, param);
-		Page<AppInformation> page =new Page<AppInformation>();
-		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
-		page.setTotalCount(param.getTotalCount());
-		page.setTotalPageCount(param.getTotalPageCount());
-		page.setHasMore(hasMore);
+		List<AppInformation> list = appInformationDao.selectByPage(example, page);
+		page.setParam(null);
 		page.setResult(list);
 		response.success(page);
-
 		return response;
 	}
 
@@ -84,13 +81,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
-
-		page.setPageNo(param.getPageNo());
-		page.setPageSize(param.getPageSize());
+        Map<String ,Object> map=new HashMap<String ,Object>();
+		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+		map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
-		page.setHasMore(hasMore);
 		page.setResult(appData);
 		response.success(page);
 		return response;
@@ -550,14 +546,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("App资源不足");
 			return response;
 		}
-		Page<AppInformation> page =new Page<AppInformation>();
-		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
-		page.setHasMore(hasMore);
-		page.setTotalCount(param.getTotalCount());
-		page.setTotalPageCount(param.getTotalPageCount());
-		page.setResult(list);
-		response.success(page);
-
+		param.setParam(null);
+		param.setResult(list);
+		response.success(param);
 		return response;
 	}
 

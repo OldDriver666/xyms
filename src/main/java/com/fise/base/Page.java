@@ -36,10 +36,6 @@ public class Page<T> implements Pagination, Serializable {
 	@JsonProperty("extra_param")
 	private Map<String, Object> extraParam;
 
-	//是否有下一页
-	@JsonProperty("hasMore")
-	private boolean hasMore;
-
 	@JsonProperty("result")
 	private List<T> result; // 当前页记录List形式
 
@@ -50,14 +46,6 @@ public class Page<T> implements Pagination, Serializable {
 	public Page(int pageNo, int pageSize) {
 		this.pageNo = pageNo;
 		this.pageSize = pageSize;
-	}
-
-	public boolean isHasMore() {
-		return hasMore;
-	}
-
-	public void setHasMore(boolean hasMore) {
-		this.hasMore = hasMore;
 	}
 
 	public int getPageNo() {
