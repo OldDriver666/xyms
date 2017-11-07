@@ -19,7 +19,8 @@ public interface IDeveloperService {
 	/*开发者查询*/
 	public Response query(Integer id);
 	
-	/*开发者删除，同时删除该开发者创建的资源*/
+	/*开发者删除(只做逻辑删除)*/
+	public Response delete(Integer id);
 	
 	/*开发者注册时检查account是否唯一*/
 	public Response queryAccount(String account);

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
-import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppAdvert;
 import com.fise.service.app.IAppAdvertService;
 

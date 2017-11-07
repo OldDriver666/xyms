@@ -159,4 +159,28 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		return response;
 	}
 
+	@Override
+	public Response delete(Integer id) {
+		Response response = new Response();
+		WiAdmin wiadmin=new WiAdmin();
+		WiAdmin queryDev=  adminDao.selectByPrimaryKey(id);
+		if(queryDev==null){
+			response.setErrorCode(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
+			response.setMsg("开发者已不存在");
+			return response;
+		}
+		
+		WiAdminExample example = new WiAdminExample();
+		Criteria updWhere = example.createCriteria();
+		updWhere.andIdEqualTo(id);
+		wiadmin.setStatus(4);
+		int result=adminDao.updateByExampleSelective(wiadmin, example);
+		if (result==0){
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("开发者删除失败");
+			return response;
+		}
+		return response;
+	}
+
 }

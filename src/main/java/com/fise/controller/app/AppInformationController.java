@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
-import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.param.AppCheckUpParam;
 import com.fise.service.app.IAppInfoemationService;
@@ -190,5 +189,4 @@ public class AppInformationController {
    		
    		return response;
    	}
-   	
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fise.base.Response;
-import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.param.DeveloperInsert;
 import com.fise.model.param.DeveloperUpdate;
 import com.fise.service.administrator.IDeveloperService;
@@ -55,6 +52,15 @@ public class DeveloperController {
 		response=devservice.query(id);
 		return response;
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public Response delete(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		Integer id=(Integer) map.get("developer_id");
+		response=devservice.delete(id);
+		return response;
+	}	
 	
 	@RequestMapping(value = "/queryAccount", method = RequestMethod.POST)
 	public Response queryAccount(@RequestBody @Valid Map<String , Object> map){
