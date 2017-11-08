@@ -134,27 +134,20 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		Response response = new Response();
 		WiAdminExample example = new WiAdminExample();
 		Criteria con = example.createCriteria();
-		boolean flag=true;
+		con.andUserTypeNotEqualTo(0);
 		if(param.getParam().getDevId()!=null){
 			con.andIdEqualTo(param.getParam().getDevId());
-			flag=false;
 		}
 		if(StringUtil.isNotEmpty(param.getParam().getAccount())){
 			con.andAccountEqualTo(param.getParam().getAccount());
-			flag=false;
 		}
 	
 		if(param.getParam().getStatus()!=null){
 			int status=param.getParam().getStatus();
 			con.andStatusEqualTo((byte)status);
-			flag=false;
 		}
 		if(param.getParam().getUserType()!=null){
 			con.andUserTypeEqualTo(param.getParam().getUserType());
-			flag=false;
-		}
-		if(flag){
-			con.andUserTypeNotEqualTo(0);
 		}
 		
 		List<WiAdmin> adminList =adminDao.selectByPage(example, param);
@@ -163,7 +156,6 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			response.setMsg("开发者资源不足");
 			return response;
 		}
-		
 		List<DeveloperResult> list=new ArrayList<DeveloperResult>();
 		for(int i=0;i<adminList.size();i++){
 			DeveloperResult result=new DeveloperResult();

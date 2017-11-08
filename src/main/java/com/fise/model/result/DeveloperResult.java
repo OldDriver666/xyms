@@ -4,6 +4,8 @@ import com.fise.model.entity.WiAdmin;
 import com.fise.utils.JsonUtil;
 
 public class DeveloperResult {
+	private Integer developerId;
+	
 	private String account;
 
 	private String nickName;
@@ -27,6 +29,14 @@ public class DeveloperResult {
 	private String idCard;
 
 	private String cardPhoto;
+
+	public Integer getDeveloperId() {
+		return developerId;
+	}
+
+	public void setDeveloperId(Integer developerId) {
+		this.developerId = developerId;
+	}
 
 	public String getAccount() {
 		return account;
@@ -125,6 +135,7 @@ public class DeveloperResult {
 	}
 
 	public void init(WiAdmin admin) {
+		this.developerId=admin.getId();
 		this.account=admin.getAccount();
 		this.nickName=admin.getNickName();
 		this.phone=admin.getPhone();
