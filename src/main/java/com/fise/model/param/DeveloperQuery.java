@@ -13,6 +13,9 @@ public class DeveloperQuery {
 	private Integer status;
 	
 	private String account;
+	
+	@JsonProperty("user_type")
+	private Integer userType;
 
 	public Integer getDevId() {
 		return devId;
@@ -38,6 +41,14 @@ public class DeveloperQuery {
 		this.account = account;
 	}
 	
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		return JsonUtil.toJson(this);

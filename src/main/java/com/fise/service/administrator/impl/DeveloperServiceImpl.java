@@ -134,18 +134,29 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		Response response = new Response();
 		WiAdminExample example = new WiAdminExample();
 		Criteria con = example.createCriteria();
-		con.andUserTypeEqualTo(1);
+		boolean flag=true;
 		if(param.getParam().getDevId()!=null){
 			con.andIdEqualTo(param.getParam().getDevId());
+			flag=false;
 		}
 		if(StringUtil.isNotEmpty(param.getParam().getAccount())){
 			con.andAccountEqualTo(param.getParam().getAccount());
+			flag=false;
 		}
 	
 		if(param.getParam().getStatus()!=null){
 			int status=param.getParam().getStatus();
 			con.andStatusEqualTo((byte)status);
+			flag=false;
 		}
+		if(param.getParam().getUserType()!=null){
+			con.andUserTypeEqualTo(param.getParam().getUserType());
+			flag=false;
+		}
+		if(flag){
+			con.andUserTypeNotEqualTo(0);
+		}
+		
 		List<WiAdmin> adminList =adminDao.selectByPage(example, param);
 		if(adminList.size()==0){
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
