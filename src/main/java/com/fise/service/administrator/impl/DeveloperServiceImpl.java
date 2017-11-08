@@ -13,17 +13,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiAdminExample.Criteria;
 import com.fise.model.param.DeveloperInsert;
+import com.fise.model.param.DeveloperQuery;
 import com.fise.model.param.DeveloperUpdate;
 import com.fise.model.result.DeveloperResult;
 import com.fise.service.administrator.IDeveloperService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 @Service
 public class DeveloperServiceImpl implements IDeveloperService {
@@ -127,18 +130,43 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	}
 
 	@Override
-	public Response query(Integer id) {
+	public Response query(Page<DeveloperQuery> param) {
 		Response response = new Response();
-		WiAdmin wiadmin=  adminDao.selectByPrimaryKey(id);
-		if(wiadmin==null){
-			response.setErrorCode(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
-			response.setMsg("开发者不存在");
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andUserTypeEqualTo(1);
+		if(param.getParam().getDevId()!=null){
+			con.andIdEqualTo(param.getParam().getDevId());
+		}
+		if(StringUtil.isNotEmpty(param.getParam().getAccount())){
+			con.andAccountEqualTo(param.getParam().getAccount());
+		}
+	
+		if(param.getParam().getStatus()!=null){
+			int status=param.getParam().getStatus();
+			con.andStatusEqualTo((byte)status);
+		}
+		List<WiAdmin> adminList =adminDao.selectByPage(example, param);
+		if(adminList.size()==0){
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
+			response.setMsg("开发者资源不足");
 			return response;
 		}
-		DeveloperResult result=new DeveloperResult();
-		result.init(wiadmin);
-		response.success(wiadmin);
-		return response;
+		
+		List<DeveloperResult> list=new ArrayList<DeveloperResult>();
+		for(int i=0;i<adminList.size();i++){
+			DeveloperResult result=new DeveloperResult();
+			result.init(adminList.get(i));
+			list.add(result);
+		}
+		Page <DeveloperResult> page=new Page <DeveloperResult>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+        response.success(page);
+        return response;
 	}
 
 	@Override

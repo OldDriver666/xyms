@@ -62,14 +62,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		example.setOrderByClause("prority desc");
 
 		if (!StringUtil.isEmpty(param.getParam().getAppName())) {
-			criteria.andAppNameEqualTo(param.getParam().getAppName());
 			criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
-
 		}
 
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
 		if (list.size() == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，没有更多应用咯~");
 			return response;
 		}
@@ -121,7 +119,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setStatus(4);
 		int result = appInformationDao.updateByPrimaryKeySelective(appInfo);
 		if (result == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("删除App失败");
 			return response;
 		}
@@ -145,7 +143,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		int result = data.size();
 		switch (result) {
 		case 0:
-			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，找不到您要的APP~");
 			break;
 		case 1:
@@ -542,7 +540,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
 		if (list.size() == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("App资源不足");
 			return response;
 		}

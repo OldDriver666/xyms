@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.DeveloperInsert;
+import com.fise.model.param.DeveloperQuery;
 import com.fise.model.param.DeveloperUpdate;
 
 public interface IDeveloperService {
@@ -17,7 +19,7 @@ public interface IDeveloperService {
 	public Response update(DeveloperUpdate developer);
 	
 	/*开发者查询*/
-	public Response query(Integer id);
+	public Response query(Page< DeveloperQuery> developer);
 	
 	/*开发者删除(只做逻辑删除)*/
 	public Response delete(Integer id);

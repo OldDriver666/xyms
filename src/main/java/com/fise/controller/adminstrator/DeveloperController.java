@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.DeveloperInsert;
+import com.fise.model.param.DeveloperQuery;
 import com.fise.model.param.DeveloperUpdate;
 import com.fise.service.administrator.IDeveloperService;
 
@@ -45,11 +47,9 @@ public class DeveloperController {
 	}
 	
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
-	public Response query(@RequestBody @Valid Map<String , Object> map){
+	public Response query(@RequestBody @Valid Page<DeveloperQuery> developer){
 		Response response=new Response();
-		logger.info(map.toString());
-		Integer id=(Integer) map.get("developer_id");
-		response=devservice.query(id);
+	    response=devservice.query(developer);
 		return response;
 	}
 	

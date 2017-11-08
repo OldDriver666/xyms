@@ -13,6 +13,12 @@ public class DeveloperResult {
 	private String email;
 
 	private Integer status;
+	
+	private Integer created;
+	
+	private Integer creatorId;
+	
+	private String accessToken;
 
 	private String remarks;
 
@@ -94,6 +100,30 @@ public class DeveloperResult {
 		this.cardPhoto = cardPhoto;
 	}
 
+	public Integer getCreated() {
+		return created;
+	}
+
+	public void setCreated(Integer created) {
+		this.created = created;
+	}
+
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
 	public void init(WiAdmin admin) {
 		this.account=admin.getAccount();
 		this.nickName=admin.getNickName();
@@ -104,6 +134,9 @@ public class DeveloperResult {
 		this.cardPhoto=admin.getCardPhoto();
 		this.description=admin.getDescription();
 		this.remarks=admin.getRemarks();
+		this.accessToken=admin.getAccessToken();
+		this.created=admin.getCreated();
+		this.creatorId=admin.getCreatorId();
 	}
 	
 	@Override

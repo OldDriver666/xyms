@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface WiAdminMapper {
     int updateByPrimaryKeySelective(WiAdmin record);
 
     int updateByPrimaryKey(WiAdmin record);
+    
+    List<WiAdmin> selectByPage(@Param("example") WiAdminExample example,@Param("page") Page<?> page);
 }

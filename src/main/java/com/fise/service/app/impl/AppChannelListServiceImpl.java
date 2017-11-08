@@ -83,7 +83,7 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
 		param.setPageSize(10);
 		List<AppInformation> appList = appInfoDao.selectByPage(example, param);
 		if (appList.size() == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，没有更多应用咯~");
 			return response;
 		}
