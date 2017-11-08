@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppChannel;
 import com.fise.service.app.IAppChannelService;
 
@@ -43,7 +44,7 @@ public class AppChannelController {
         
         if(param.getId()==null){
             resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-            resp.setMsg("参数   id  不能为空！！");
+            resp.setMsg("参数id不能为空！！！");
             return resp;
         }
         
@@ -62,6 +63,7 @@ public class AppChannelController {
     }
     
     /*应用市场 根据权重展示不用的频道*/
+    @IgnoreAuth
     @RequestMapping(value = "/channelAll", method = RequestMethod.POST)
 	public Response getChannelAll(@RequestBody @Valid Map<String, String> param) {
 		Response response = new Response();

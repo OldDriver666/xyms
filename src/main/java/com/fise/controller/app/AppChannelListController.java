@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppChannelList;
 import com.fise.model.result.AppChannelResult;
@@ -78,6 +79,7 @@ public class AppChannelListController {
 	 * @param param
 	 * @return
 	 */
+    @IgnoreAuth
 	@RequestMapping(value = "/channel", method = RequestMethod.POST)
 	public Response getChannelInfo(@RequestBody @Valid Page<AppChannel> param) {
 		Response response = new Response();

@@ -46,7 +46,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, page);
 		page.setParam(null);
-		page.setResult(list);
+		page.setResult(list); 
 		response.success(page);
 		return response;
 	}

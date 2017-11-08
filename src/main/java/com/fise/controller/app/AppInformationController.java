@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.param.AppCheckUpParam;
 import com.fise.service.app.IAppInfoemationService;
@@ -78,6 +79,7 @@ public class AppInformationController {
      * @return
      */
     /*应用市场 加载所有可用的App*/
+    @IgnoreAuth
     @RequestMapping(value="/queryAll",method=RequestMethod.POST)
     public Response queryAll(@RequestBody @Valid Page<AppInformation> param){
         Response resp = new Response();
@@ -88,6 +90,7 @@ public class AppInformationController {
     }
     
     /*根据app_name返回两条数据*/
+    @IgnoreAuth
     @RequestMapping(value = "/simpleSearch", method = RequestMethod.POST)
 	public Response getsimpleSearch(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
@@ -98,6 +101,7 @@ public class AppInformationController {
 	}
     
     /*热门搜索app,展示app_name*/
+    @IgnoreAuth
     @RequestMapping(value = "/hotSearch", method = RequestMethod.POST)
 	public Response getHotSearch(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
@@ -107,6 +111,7 @@ public class AppInformationController {
 	}
     
    /*获取单个的app的具体信息*/
+    @IgnoreAuth
     @RequestMapping(value = "/appinfo", method = RequestMethod.POST)
 	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
