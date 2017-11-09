@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
-import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
@@ -123,7 +122,6 @@ public class fiseDeviceController {
 	}
 	
 	/*excel批量导入设备*/
-	@IgnoreAuth
 	@RequestMapping(value="/excel_import",method=RequestMethod.POST)
 	public Response excelImport(HttpServletRequest req) throws IOException,Exception{
 	    Response resp = new Response();

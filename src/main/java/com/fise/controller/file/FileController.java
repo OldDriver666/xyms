@@ -53,6 +53,9 @@ public class FileController {
                 }
             
                 file.transferTo(dir);
+                System.out.println("=========="+path+"/"+filename);
+                //在Linux服务器里将上传文件改为fise用户权限
+                Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
                 if(i==0){
                     /*内网上传图片路径*/
                     pictureURL=Constants.FILE_UPLOAD_URL+"/"+filename;

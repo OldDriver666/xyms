@@ -19,7 +19,7 @@ public interface IDeveloperService {
 	public Response update(DeveloperUpdate developer);
 	
 	/*开发者查询*/
-	public Response query(Page< DeveloperQuery> developer);
+	public Response query(Page<DeveloperQuery> developer);
 	
 	/*开发者删除(只做逻辑删除)*/
 	public Response delete(Integer id);
