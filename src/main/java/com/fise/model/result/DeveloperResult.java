@@ -4,6 +4,8 @@ import com.fise.model.entity.WiAdmin;
 import com.fise.utils.JsonUtil;
 
 public class DeveloperResult {
+	private Integer developerId;
+	
 	private String account;
 
 	private String nickName;
@@ -13,6 +15,12 @@ public class DeveloperResult {
 	private String email;
 
 	private Integer status;
+	
+	private Integer created;
+	
+	private Integer creatorId;
+	
+	private String accessToken;
 
 	private String remarks;
 
@@ -21,6 +29,14 @@ public class DeveloperResult {
 	private String idCard;
 
 	private String cardPhoto;
+
+	public Integer getDeveloperId() {
+		return developerId;
+	}
+
+	public void setDeveloperId(Integer developerId) {
+		this.developerId = developerId;
+	}
 
 	public String getAccount() {
 		return account;
@@ -94,7 +110,32 @@ public class DeveloperResult {
 		this.cardPhoto = cardPhoto;
 	}
 
+	public Integer getCreated() {
+		return created;
+	}
+
+	public void setCreated(Integer created) {
+		this.created = created;
+	}
+
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
 	public void init(WiAdmin admin) {
+		this.developerId=admin.getId();
 		this.account=admin.getAccount();
 		this.nickName=admin.getNickName();
 		this.phone=admin.getPhone();
@@ -104,6 +145,9 @@ public class DeveloperResult {
 		this.cardPhoto=admin.getCardPhoto();
 		this.description=admin.getDescription();
 		this.remarks=admin.getRemarks();
+		this.accessToken=admin.getAccessToken();
+		this.created=admin.getCreated();
+		this.creatorId=admin.getCreatorId();
 	}
 	
 	@Override

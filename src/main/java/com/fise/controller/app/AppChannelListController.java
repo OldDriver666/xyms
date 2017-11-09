@@ -79,7 +79,7 @@ public class AppChannelListController {
 	 * @param param
 	 * @return
 	 */
-	@IgnoreAuth
+    @IgnoreAuth
 	@RequestMapping(value = "/channel", method = RequestMethod.POST)
 	public Response getChannelInfo(@RequestBody @Valid Page<AppChannel> param) {
 		Response response = new Response();
@@ -95,7 +95,7 @@ public class AppChannelListController {
 		data.init(channel);
 		List<Integer> appIdList = appChannelService.getChannelAppId(channelId);
 		if(appIdList.size()==0){
-			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，该频道下没有应用哦~");
 			return response;
 		}

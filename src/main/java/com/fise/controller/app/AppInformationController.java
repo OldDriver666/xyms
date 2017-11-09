@@ -4,17 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
@@ -131,38 +130,19 @@ public class AppInformationController {
      * 
      * 不传的话，是管理员。管理员可以看到所有的app
      */
-    @IgnoreAuth
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
-	public Response appInsert(HttpServletRequest request) {
+	public Response appInsert(@ModelAttribute AppInformation param,
+			                  @RequestParam("app_images") List<MultipartFile> uploadPhoto,
+			                  @RequestParam("app") MultipartFile uploadApp,
+			                  @RequestParam("app_icon") MultipartFile uploadIcon) {
         Response response = new Response();
-        MultipartHttpServletRequest multipart=(MultipartHttpServletRequest) request;
-        AppInformation param =new AppInformation();
-        param.setAppIndex(request.getParameter("app_index"));
-        param.setAppName(request.getParameter("app_name"));
-        param.setAppSpell(request.getParameter("app_spell"));
-        param.setPackageName(request.getParameter("package_name"));
-        param.setDevId(Integer.parseInt(request.getParameter("dev_id")));
-        param.setDevName(request.getParameter("dev_name"));
-        param.setTopCategory(request.getParameter("top_category"));
-        param.setCategory(request.getParameter("category"));
-        param.setDescription(request.getParameter("description"));
-        param.setVersion(request.getParameter("version"));
-        param.setVersioncode(Integer.parseInt(request.getParameter("versioncode")));
-        param.setPrority(Integer.parseInt(request.getParameter("prority")));
-        param.setIconType(Integer.parseInt(request.getParameter("icon_type")));
-        param.setRemarks(request.getParameter("remarks"));
-        param.setLabel(request.getParameter("label"));
-        param.setStar(request.getParameter("star"));
-        param.setOrientation(Integer.parseInt(request.getParameter("orientation")));
-        List<MultipartFile> uploadPhoto =multipart.getFiles("iamges");
-        MultipartFile uploadApp=multipart.getFile("app");
-        MultipartFile uploadIcon=multipart.getFile("icon");
 		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
 		return response;
     }
     
-    
-    @IgnoreAuth
+    /**
+     * 对于App的删除只做逻辑删除，不做物理删除。
+     */
    	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
    	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
    		Response response = new Response();
@@ -173,8 +153,6 @@ public class AppInformationController {
     /**
      * App审核接口，由管理员进行审核,也就是改变app的状态。
      */
-    
-    @IgnoreAuth
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
     public Response checkup(@RequestBody AppCheckUpParam param){
     	logger.info(param.toString());
@@ -189,28 +167,31 @@ public class AppInformationController {
      * @param param
      * @return
      */
-    @IgnoreAuth
 	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
-	public Response appModify(@RequestBody @Valid AppInformation param) {
-    	logger.info(param.toString());
-		Response response = new Response();
-		response = appInfoemationService.appModify(param);
+	public Response appModify(@ModelAttribute AppInformation param,
+                              @RequestParam("app_images") List<MultipartFile> uploadPhoto,
+                              @RequestParam("app") MultipartFile uploadApp,
+                              @RequestParam("app_icon") MultipartFile uploadIcon) {
+    	Response response = new Response();
+    	
+		response = appInfoemationService.appModify(param,uploadPhoto,uploadApp,uploadIcon);
 		return response;
 	}
     
-    @IgnoreAuth
    	@RequestMapping(value = "/appQuery", method = RequestMethod.POST)
    	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
        	logger.info(param.getParam().toString());
    		Response response = new Response();
    		Integer devId=param.getParam().getDevId();
-   		if(devId!=null){
-   			response=appInfoemationService.queryByDevId(param);	
+   		String appName=param.getParam().getAppName();
+   		Integer status=param.getParam().getStatus();
+   		
+   		if(devId==null&&StringUtil.isEmpty(appName)&&status==null){
+   			response=appInfoemationService.query(param);	
    			return response;
    		}
-   		response=appInfoemationService.query(param);
+   		response=appInfoemationService.queryByParam(param);	
    		
    		return response;
    	}
-    
 }

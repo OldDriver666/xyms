@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -25,8 +26,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.math.NumberUtils;
 
-
-
 /**
  * 字串工具类
  * 
@@ -36,8 +35,6 @@ public class StringUtil {
 
 	private StringUtil() {
 	}
-
-	
 
 	/**
 	 * 将一个Double转为int的String，将省略小数点后面的值
@@ -149,9 +146,9 @@ public class StringUtil {
 	 * @return String
 	 */
 	public static String md5(String str) {
-		return md5(str,true);
+		return md5(str, true);
 	}
-	
+
 	public static String md5(String str, boolean zero) {
 		MessageDigest messageDigest = null;
 		try {
@@ -164,13 +161,13 @@ public class StringUtil {
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < resultByte.length; ++i) {
 			int v = 0xFF & resultByte[i];
-			if(v<16 && zero)
+			if (v < 16 && zero)
 				result.append("0");
 			result.append(Integer.toHexString(v));
 		}
 		return result.toString();
 	}
-	
+
 	/**
 	 * 验证Email地址是否有效
 	 * 
@@ -232,13 +229,13 @@ public class StringUtil {
 		Matcher m = p.matcher(str);
 		return !m.find();
 	}
-	
+
 	/**
-     * 判断字符串是否非空
-     */
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
+	 * 判断字符串是否非空
+	 */
+	public static boolean isNotEmpty(String str) {
+		return !isEmpty(str);
+	}
 
 	/**
 	 * 验证两个字符串是否相等且不能为空
@@ -280,8 +277,11 @@ public class StringUtil {
 
 	/**
 	 * 将一个字串转为int，如果无空，则返回默认值
-	 * @param str 要转换的数字字串
-	 * @param defaultValue 默认值 
+	 * 
+	 * @param str
+	 *            要转换的数字字串
+	 * @param defaultValue
+	 *            默认值
 	 * @return
 	 */
 	public static Integer toInt(String str, Integer defaultValue) {
@@ -296,7 +296,7 @@ public class StringUtil {
 		}
 		return value;
 	}
-	
+
 	/**
 	 * 将字符型转为Int型
 	 * 
@@ -355,7 +355,7 @@ public class StringUtil {
 		}
 		return value;
 	}
-	
+
 	public static Double toDouble(String str, Double defaultValue) {
 		Double value = defaultValue;
 		if (str == null || str.equals("")) {
@@ -365,25 +365,23 @@ public class StringUtil {
 			value = Double.valueOf(str);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			value =defaultValue;
+			value = defaultValue;
 		}
 		return value;
 	}
-	
+
 	public static Double formatDouble(String value) {
 		Double d = 0.0D;
 		try {
-			 d = Double.parseDouble(value);
+			d = Double.parseDouble(value);
 		} catch (Exception e) {
 			e.printStackTrace();
 			d = 0.0D;
 		}
 		BigDecimal bd = new BigDecimal(d).setScale(2, RoundingMode.UP);
-		
+
 		return bd.doubleValue();
 	}
-	
-
 
 	/**
 	 * 把数组转换成String
@@ -432,8 +430,7 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String getWebInfPath() {
-		String filePath = Thread.currentThread().getContextClassLoader()
-				.getResource("").toString();
+		String filePath = Thread.currentThread().getContextClassLoader().getResource("").toString();
 		if (filePath.toLowerCase().indexOf("file:") > -1) {
 			filePath = filePath.substring(6, filePath.length());
 		}
@@ -454,34 +451,33 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String getRootPath() {
-		String filePath  = StringUtil.class.getResource("").toString();
- 
+		String filePath = StringUtil.class.getResource("").toString();
+
 		int index = filePath.indexOf("WEB-INF");
-		if(index == -1){
+		if (index == -1) {
 			index = filePath.indexOf("build");
 		}
-		
-		if(index == -1){
+
+		if (index == -1) {
 			index = filePath.indexOf("bin");
 		}
-		
-		filePath = filePath.substring(0,index);
-		if(filePath.startsWith("jar")){
-			// 当class文件在jar文件中时，返回”jar:file:/F:/ …”样的路径 
+
+		filePath = filePath.substring(0, index);
+		if (filePath.startsWith("jar")) {
+			// 当class文件在jar文件中时，返回”jar:file:/F:/ …”样的路径
 			filePath = filePath.substring(10);
-		}else if(filePath.startsWith("file")){
-			// 当class文件在jar文件中时，返回”file:/F:/ …”样的路径 
+		} else if (filePath.startsWith("file")) {
+			// 当class文件在jar文件中时，返回”file:/F:/ …”样的路径
 			filePath = filePath.substring(6);
 		}
-		
-		
+
 		if (System.getProperty("os.name").toLowerCase().indexOf("window") < 0) {
 			filePath = "/" + filePath;
 		}
 
 		if (filePath.endsWith("/"))
 			filePath = filePath.substring(0, filePath.length() - 1);
-//		//System.out.println("getRoot path is "+filePath );
+		// //System.out.println("getRoot path is "+filePath );
 		return filePath;
 	}
 
@@ -538,8 +534,7 @@ public class StringUtil {
 	public static String getEntry() {
 		Random random = new Random(100);
 		Date now = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat(new String(
-				"yyyyMMddHHmmssS"));
+		SimpleDateFormat formatter = new SimpleDateFormat(new String("yyyyMMddHHmmssS"));
 		return md5(formatter.format(now) + random.nextDouble());
 	}
 
@@ -560,7 +555,7 @@ public class StringUtil {
 			return "";
 		}
 	}
-	
+
 	public static String to(String str, String charset) {
 		if (str == null || str.equals("")) {
 			return "";
@@ -590,8 +585,7 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String getChineseNum(int num) {
-		String[] chineseNum = new String[] { "一", "二", "三", "四", "五", "六", "七",
-				"八", "九", "十" };
+		String[] chineseNum = new String[] { "一", "二", "三", "四", "五", "六", "七", "八", "九", "十" };
 		return chineseNum[num];
 	}
 
@@ -605,8 +599,7 @@ public class StringUtil {
 		StringBuffer buffer = new StringBuffer(source);
 		int start = buffer.indexOf(target);
 		if (start > 0) {
-			source = buffer.replace(start, start + target.length(), content)
-					.toString();
+			source = buffer.replace(start, start + target.length(), content).toString();
 		}
 		return source;
 	}
@@ -665,8 +658,7 @@ public class StringUtil {
 					if (str.indexOf('$', 0) > -1) {
 						sReturn += str.subSequence(0, str.indexOf('$', 0));
 						sReturn += "\\$";
-						str = str.substring(str.indexOf('$', 0) + 1,
-								str.length());
+						str = str.substring(str.indexOf('$', 0) + 1, str.length());
 					} else {
 						sReturn += str;
 						str = "";
@@ -815,8 +807,7 @@ public class StringUtil {
 		source = source.replaceAll("document.cookie", "documents&#46cookie");
 		source = source.replaceAll("vbscript:", "&#118bscript:");
 		source = source.replaceAll("vbs:", "&#118bs:");
-		source = doFilter("(on(mouse|exit|error|click|key))", "&#111n$2",
-				source);
+		source = doFilter("(on(mouse|exit|error|click|key))", "&#111n$2", source);
 		return source;
 	}
 
@@ -828,10 +819,8 @@ public class StringUtil {
 	 */
 	public static String htmlDecode(String htmlContent) {
 		htmlContent = formatScript(htmlContent);
-		htmlContent = htmlContent.replaceAll(" ", "&nbsp;")
-				.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-				.replaceAll("\n\r", "<br>").replaceAll("\r\n", "<br>")
-				.replaceAll("\r", "<br>");
+		htmlContent = htmlContent.replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+				.replaceAll("\n\r", "<br>").replaceAll("\r\n", "<br>").replaceAll("\r", "<br>");
 		return htmlContent;
 	}
 
@@ -845,8 +834,7 @@ public class StringUtil {
 	public static String addPrefix(String table, String prefix) {
 		String result = "";
 		if (table.length() > prefix.length()) {
-			if (table.substring(0, prefix.length()).toLowerCase()
-					.equals(prefix.toLowerCase()))
+			if (table.substring(0, prefix.length()).toLowerCase().equals(prefix.toLowerCase()))
 				result = table;
 			else
 				result = prefix + table;
@@ -861,8 +849,7 @@ public class StringUtil {
 		if (table.length() > suffix.length()) {
 			int start = table.length() - suffix.length();
 			int end = start + suffix.length();
-			if (table.substring(start, end).toLowerCase()
-					.equals(suffix.toLowerCase()))
+			if (table.substring(start, end).toLowerCase().equals(suffix.toLowerCase()))
 				result = table;
 			else
 				result = table + suffix;
@@ -871,57 +858,56 @@ public class StringUtil {
 
 		return result;
 	}
-	
-	
+
 	/**
 	 * 得到异常的字串
+	 * 
 	 * @param aThrowable
 	 * @return
 	 */
-	public static String getStackTrace(Throwable aThrowable) { 
-		final Writer result = new StringWriter(); 
-		final PrintWriter printWriter = new PrintWriter(result); 
-		aThrowable.printStackTrace(printWriter); return result.toString(); 
-	
+	public static String getStackTrace(Throwable aThrowable) {
+		final Writer result = new StringWriter();
+		final PrintWriter printWriter = new PrintWriter(result);
+		aThrowable.printStackTrace(printWriter);
+		return result.toString();
+
 	}
-	
+
 	/**
 	 * 根据要求生成随机码
-	 * @param  len 随机码长度
-	 * @param  digitOnly 是否只包含数字
+	 * 
+	 * @param len
+	 *            随机码长度
+	 * @param digitOnly
+	 *            是否只包含数字
 	 * @return 返回随机码字符串
-	 * */
-	public static String makeCode(int len,boolean digitOnly)
-	{
-		StringBuilder codeBuilder =new StringBuilder() ;
-        if(digitOnly)
-        {
-        	for (int i = 0; i < len; i++) {
-        		codeBuilder.append((int)(Math.random() * 9));
-        	}
-        }
-        else
-        {
-        	// 35是因为数组是从0开始的，26个字母+10个数字
-        	final int maxNum = 36;
-        	int i; // 生成的随机数
-        	char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-        	'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-        	'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        	Random r = new Random();
-        	int count=0;
+	 */
+	public static String makeCode(int len, boolean digitOnly) {
+		StringBuilder codeBuilder = new StringBuilder();
+		if (digitOnly) {
+			for (int i = 0; i < len; i++) {
+				codeBuilder.append((int) (Math.random() * 9));
+			}
+		} else {
+			// 35是因为数组是从0开始的，26个字母+10个数字
+			final int maxNum = 36;
+			int i; // 生成的随机数
+			char[] str = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+					's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+			Random r = new Random();
+			int count = 0;
 			while (count < len) {
-        	// 生成随机数，取绝对值，防止生成负数，
-        	i = Math.abs(r.nextInt(maxNum)); // 生成的数最大为36-1
-        	if (i >= 0 && i < str.length) {
-        		codeBuilder.append(str[i]);
-        	count++;
-        	}
-        	}
-        }
-        return codeBuilder.toString();
+				// 生成随机数，取绝对值，防止生成负数，
+				i = Math.abs(r.nextInt(maxNum)); // 生成的数最大为36-1
+				if (i >= 0 && i < str.length) {
+					codeBuilder.append(str[i]);
+					count++;
+				}
+			}
+		}
+		return codeBuilder.toString();
 	}
-	 
+
 	// 中文字符处理
 	// 根据Unicode编码完美的判断中文汉字和符号
 	public static boolean isChinese(char c) {
@@ -932,14 +918,13 @@ public class StringUtil {
 				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B
 				|| ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
 				|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
-				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
-				|| ub == Character.UnicodeBlock.BASIC_LATIN) {
+				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION || ub == Character.UnicodeBlock.BASIC_LATIN) {
 			return true;
 		}
 		return false;
 	}
-	 
-		// 完整的判断中文汉字和符号
+
+	// 完整的判断中文汉字和符号
 	public static boolean isChinese(String str) {
 		char[] ch = str.toCharArray();
 		for (int i = 0; i < ch.length; i++) {
@@ -950,16 +935,18 @@ public class StringUtil {
 		}
 		return false;
 	}
+
 	public static boolean isEnglish(String str) {
 		return str.matches("^[a-zA-Z]*");
 	}
-		
+
 	public static boolean isNumber(String str) {
 		return NumberUtils.isNumber(str);
-	}	
-	
+	}
+
 	/**
 	 * 校验商品名是否含特殊字符，返回null表示商品名是OK的
+	 * 
 	 * @param str
 	 * @return 返回特殊字符，英文标点符号或null
 	 */
@@ -977,67 +964,89 @@ public class StringUtil {
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public static String invitationCode() {
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10);
 		return uuid;
 	}
-	 
-	
-	/** 
-     * vernon 校验定时任务接口是否合法调用
-     * content 参与摘要的内容
-     * md5 摘要后的结果
-     */  
-    public static boolean verify(String content, String md5) {  
-        char[] cs1 = new char[32];  
-        char[] cs2 = new char[16];  
-        for (int i = 0; i < 48; i += 3) {  
-            cs1[i / 3 * 2] = md5.charAt(i);  
-            cs1[i / 3 * 2 + 1] = md5.charAt(i + 2);  
-            cs2[i / 3] = md5.charAt(i + 1);  
-        }  
-        String salt = new String(cs2);  
-        return md5Hex(content + salt).equals(new String(cs1));  
-    }
-    /** 
-     * 获取十六进制字符串形式的MD5摘要 
-     */  
-    public static String md5Hex(String src) {  
-        try {  
-            MessageDigest md5 = MessageDigest.getInstance("MD5");  
-            byte[] bs = md5.digest(src.getBytes());  
-            return new String(new Hex().encode(bs));  
-        } catch (Exception e) {  
-            return null;  
-        }  
-    }   	
-    
-    /**
-     * 手机号段合法性校验
-     * @param mobileNumber
-     * @return
-     */
-    public static boolean isMobileNumber(String mobileNumber){
-    	Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
+
+	/**
+	 * vernon 校验定时任务接口是否合法调用 content 参与摘要的内容 md5 摘要后的结果
+	 */
+	public static boolean verify(String content, String md5) {
+		char[] cs1 = new char[32];
+		char[] cs2 = new char[16];
+		for (int i = 0; i < 48; i += 3) {
+			cs1[i / 3 * 2] = md5.charAt(i);
+			cs1[i / 3 * 2 + 1] = md5.charAt(i + 2);
+			cs2[i / 3] = md5.charAt(i + 1);
+		}
+		String salt = new String(cs2);
+		return md5Hex(content + salt).equals(new String(cs1));
+	}
+
+	/**
+	 * 获取十六进制字符串形式的MD5摘要
+	 */
+	public static String md5Hex(String src) {
+		try {
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			byte[] bs = md5.digest(src.getBytes());
+			return new String(new Hex().encode(bs));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * 手机号段合法性校验
+	 * 
+	 * @param mobileNumber
+	 * @return
+	 */
+	public static boolean isMobileNumber(String mobileNumber) {
+		Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
 		return p.matcher(mobileNumber).matches();
-    }
-    
+	}
+
 	/**
 	 * 处理白字符
+	 * 
 	 * @param str
 	 * @return
 	 */
 	public static String replaceBlank(String str) {
 		String dest = "";
-		if (str!=null) {
+		if (str != null) {
 			Pattern p = Pattern.compile("\\s*|\t|\r|\n");
 			Matcher m = p.matcher(str);
 			dest = m.replaceAll("");
 		}
 		return dest;
+	}
+
+	// 用;劈开字符串,返回List
+	public static List<String> splitStr(String name) {
+		String[] arrStr = name.split(";");
+		List<String> listStr = new ArrayList<String>();
+		for (int i = 0; i < arrStr.length; i++) {
+			listStr.add(arrStr[i]);
+		}
+		return listStr;
+	}
+
+	// 将字符串的集合进行拼接，并用;分开，最后返回String
+	public static String combineStr(List<String> listStr) {
+		StringBuffer buff = new StringBuffer();
+		for (int i = 1; i < listStr.size(); i++) {
+			buff.append(listStr.get(i - 1) + ";");
+		}
+		buff.append(listStr.get(listStr.size() - 1));
+		String str = buff.toString();
+		return str;
+
 	}
 }

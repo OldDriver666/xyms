@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,9 +46,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, page);
 		page.setParam(null);
-		page.setResult(list);
-
-		return response.success(page);
+		page.setResult(list); 
+		response.success(page);
+		return response;
 	}
 
 	@Override
@@ -60,14 +62,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		example.setOrderByClause("prority desc");
 
 		if (!StringUtil.isEmpty(param.getParam().getAppName())) {
-			criteria.andAppNameEqualTo(param.getParam().getAppName());
 			criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
-
 		}
 
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
 		if (list.size() == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，没有更多应用咯~");
 			return response;
 		}
@@ -79,22 +79,14 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
-
-		page.setPageNo(param.getPageNo());
-		page.setPageSize(param.getPageSize());
+        Map<String ,Object> map=new HashMap<String ,Object>();
+		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
+		map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
-
 		page.setResult(appData);
-
 		response.success(page);
-
 		return response;
 	}
 
@@ -120,11 +112,14 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appDelete(Integer param) {
+	public Response appDelete(Integer id) {
 		Response response = new Response();
-		int result = appInformationDao.deleteByPrimaryKey(param);
+		AppInformation appInfo=new AppInformation();
+		appInfo.setId(id);
+		appInfo.setStatus(4);
+		int result = appInformationDao.updateByPrimaryKeySelective(appInfo);
 		if (result == 0) {
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("删除App失败");
 			return response;
 		}
@@ -148,7 +143,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		int result = data.size();
 		switch (result) {
 		case 0:
-			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("亲，找不到您要的APP~");
 			break;
 		case 1:
@@ -215,10 +210,8 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appInsert(AppInformation param, 
-		                      List<MultipartFile> uploadPhoto, 
-			                  MultipartFile uploadApp,
-			                  MultipartFile uploadIcon) {
+	public Response appInsert(AppInformation param, List<MultipartFile> uploadPhoto, MultipartFile uploadApp,
+			MultipartFile uploadIcon) {
 
 		Response response = new Response();
 
@@ -233,7 +226,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("请选择上传的图片");
 			return response;
 		}
-		
+
 		if (uploadIcon.isEmpty()) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图标");
@@ -255,9 +248,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setVersion(param.getVersion());
 		appInfo.setVersioncode(param.getVersioncode());
 		// 图标
-		String icon=null;
+		String icon = null;
 		try {
-		 icon=iconUpload(uploadIcon);
+			icon = iconUpload(uploadIcon);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图标失败");
@@ -266,25 +259,21 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setIcon(icon);
 
 		// images
-		List<String> images=null;
+		List<String> images = null;
 		try {
-			 images=photoUpload(uploadPhoto);
+			images = photoUpload(uploadPhoto);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图片失败");
 			return response;
 		}
-		StringBuffer image=new StringBuffer();
-		for(int i=1;i<images.size();i++){
-			image.append(images.get(i-1)+";");
-		}
-		image.append(images.get(images.size()-1));
-		appInfo.setImages(image.toString());
-		
+		String imageurl=StringUtil.combineStr(images);
+		appInfo.setImages(imageurl);
+
 		// download
-		String app=null;
+		String app = null;
 		try {
-			 app =appUpload(uploadApp);
+			app = appUpload(uploadApp);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传应用失败");
@@ -302,7 +291,16 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setLabel(param.getLabel());
 		appInfo.setStar(param.getStar());
 		appInfo.setOrientation(param.getOrientation());
-		return null;
+		
+	    int result=	appInformationDao.insertSelective(appInfo);
+		if (result == 0) {
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("新增应用失败");
+			return response;
+		}
+		response.setMsg("新增应用成功");
+		response.setCode(200);
+		return response;
 	}
 
 	private String getAppSize(long size) {
@@ -330,15 +328,14 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
 				File dir = new File(path, filename);
-				if (!dir.exists()) 
-				{
+				if (!dir.exists()) {
 					dir.mkdirs();
 				}
 
 				file.transferTo(dir);
 
 				pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
-				
+
 				result.add(pictureURL);
 			}
 		}
@@ -395,8 +392,73 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appModify(AppInformation param) {
+	public Response appModify(AppInformation param, 
+			                  List<MultipartFile> uploadPhoto, 
+			                  MultipartFile uploadApp,
+			                  MultipartFile uploadIcon) {
 		Response response = new Response();
+		AppInformation appinfo = appInformationDao.selectByPrimaryKey(param.getId());
+
+		// 说明App的截图有被修改过:先全部删除截图，然后再全部上传截图。
+		List<String> imageurl=null;
+		if (uploadPhoto.size() != 0&&!uploadPhoto.isEmpty()) {
+			String images=appinfo.getImages();
+			List<String> str= StringUtil.splitStr(images);
+			for (String string : str) {
+				boolean photoResult=deleteFile(string);
+				if (!photoResult) {
+					response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+					response.setMsg("截图删除失败");
+					return response;
+				}
+			}
+			try {
+				imageurl=photoUpload(uploadPhoto);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("截图修改失败");
+				return response;	
+			}
+			
+		}
+
+		// 说明app的下载地址有被修改:先删除原有的app;再上传新的app。
+		String appurl = null;
+		if (!uploadApp.isEmpty()) {
+			String downLoad = appinfo.getDownload();
+			boolean appResult = deleteFile(downLoad);
+			if (!appResult) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("应用删除失败");
+				return response;
+			}
+			try {
+				appurl = appUpload(uploadApp);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("应用修改失败");
+				return response;
+			}
+		}
+		// 说明图标的有被修改
+		String iconurl=null;
+		if (!uploadIcon.isEmpty()) {
+			String icon = appinfo.getIcon();
+			boolean appResult = deleteFile(icon);
+			if (!appResult) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("图标删除失败");
+				return response;
+			}
+			try {
+				iconurl = iconUpload(uploadIcon);
+			} catch (Exception e) {
+				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+				response.setMsg("图标修改失败");
+				return response;
+			}
+		}
+
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
 		con.andIdEqualTo(param.getId());
@@ -409,14 +471,25 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setDevId(param.getDevId());
 		appInfo.setDevName(param.getDevName());
 		appInfo.setTopCategory(param.getTopCategory());
+		if(imageurl.size()!=0||!imageurl.isEmpty()){
+			appInfo.setImages(StringUtil.combineStr(imageurl)); 
+		}
+		
 		appInfo.setCategory(param.getCategory());
+		if(appurl!=null){
+		      appInfo.setDownload(appurl);	
+		}
+
 		// 0-待审核 1-发布 2-拒绝 3-下架
 		appInfo.setStatus(param.getStatus());
+		appInfo.setIconType(param.getIconType());
+		if(iconurl!=null){
+			appInfo.setIcon(iconurl);
+		}
 		appInfo.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInfo.setDescription(param.getDescription());
 		appInfo.setVersion(param.getVersion());
 		appInfo.setVersioncode(param.getVersioncode());
-		// ......
 
 		int result = appInformationDao.updateByExampleSelective(appInfo, example);
 		if (result == 0) {
@@ -450,23 +523,43 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response queryByDevId(Page<AppInformation> param) {
+	public Response queryByParam(Page<AppInformation> param) {
 		Response response = new Response();
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
-		//先根据devdId查出对应得有哪些
-		criteria.andDevIdEqualTo(param.getParam().getDevId());
+		// 先根据devdId查出对应得有哪些
+		if(param.getParam().getDevId()!=null){
+			criteria.andDevIdEqualTo(param.getParam().getDevId());	
+		}
+		if(StringUtil.isNotEmpty(param.getParam().getAppName())){
+			criteria.andAppNameEqualTo(param.getParam().getAppName());
+		}
+		if(param.getParam().getStatus()!=null){
+			criteria.andStatusEqualTo(param.getParam().getStatus());
+		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, param);
-		if(list.size()==0){
-			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+		if (list.size() == 0) {
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("App资源不足");
 			return response;
 		}
 		param.setParam(null);
 		param.setResult(list);
 		response.success(param);
-
 		return response;
 	}
+
+	private boolean deleteFile(String filename) {
+
+		File file = new File(filename);
+		if (!file.exists()) {
+			// 表示要删除的原文件不存在
+			return true;
+		} else {
+			file.delete();
+		}
+		return true;
+	}
+	
 }

@@ -44,7 +44,7 @@ public class AppChannelController {
         
         if(param.getId()==null){
             resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-            resp.setMsg("参数   id  不能为空！！");
+            resp.setMsg("参数id不能为空！！！");
             return resp;
         }
         
