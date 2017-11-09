@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.param.DeveloperInsert;
 import com.fise.model.param.DeveloperQuery;
 import com.fise.model.param.DeveloperUpdate;
@@ -29,7 +30,7 @@ public class DeveloperController {
 
 	@Resource
 	IDeveloperService devservice;
-
+	@IgnoreAuth
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Response register(@ModelAttribute DeveloperInsert developer,
 			                 @RequestParam("images") List<MultipartFile> files) {
@@ -61,7 +62,7 @@ public class DeveloperController {
 		response=devservice.delete(id);
 		return response;
 	}	
-	
+	@IgnoreAuth
 	@RequestMapping(value = "/queryAccount", method = RequestMethod.POST)
 	public Response queryAccount(@RequestBody @Valid Map<String , Object> map){
 		Response response=new Response();
