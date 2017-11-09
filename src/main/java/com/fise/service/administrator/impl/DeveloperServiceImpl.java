@@ -39,7 +39,19 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	public Response insert(DeveloperInsert param,List< MultipartFile> uploadfile) {
 		Response response = new Response();
 		WiAdmin developer = new WiAdmin();
+		
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andAccountEqualTo(param.getAccount());
+		
+		List<WiAdmin> queryAccount =adminDao.selectByExample(example);
+		if(queryAccount.size()!=0){
+			response.failure(ErrorCode.ERROR_ACCOUNT_ALREADY_EXISTED);
+			response.setMsg("该账户已注册");
+			return response;
+		}
 		developer.setAccount(param.getAccount());
+		
 		developer.setPassword(param.getPassword());
 		developer.setNickName(param.getNickName());
 		developer.setPhone(param.getPhone());
