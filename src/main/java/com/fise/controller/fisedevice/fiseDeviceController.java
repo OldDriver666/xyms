@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
-import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.ExcelFiseDevice;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
@@ -124,7 +122,6 @@ public class fiseDeviceController {
 	}
 	
 	/*excel批量导入设备*/
-	@IgnoreAuth
 	@RequestMapping(value="/excel_import",method=RequestMethod.POST)
 	public Response excelImport(HttpServletRequest req) throws IOException,Exception{
 	    Response resp = new Response();

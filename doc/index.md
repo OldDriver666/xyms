@@ -4005,3 +4005,21 @@ device_id 和  master_id 都不填则查询所有
    }
 }
 ```
+
+####新增发送邮件接口 
+|   接口地址    |   xiaoyusvr/boss/admin/send_identity_code        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+	"emailaddress":"",          //必填-收件人邮箱地址
+	"code":""                   //必填-验证码
+}
+```
+####回复
+```
+无内容，直接查看返回码
+```

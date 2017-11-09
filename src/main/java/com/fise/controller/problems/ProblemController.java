@@ -57,7 +57,7 @@ public class ProblemController {
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        if(StringUtil.isEmpty(record.getContent()) && StringUtil.isEmpty(record.getPicture())){
+        if(StringUtil.isEmpty(record.getContent())){
             res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
             res.setMsg("内容不能为空");
             return res;
