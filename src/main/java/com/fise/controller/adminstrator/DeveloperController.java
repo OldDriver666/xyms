@@ -69,7 +69,7 @@ public class DeveloperController {
 		logger.info(map.toString());
 		String account=(String) map.get("account");
 		response=devservice.queryAccount(account);
-		return response;
+		return response; 
 	}
 
 }
