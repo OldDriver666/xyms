@@ -1,17 +1,10 @@
 package com.fise.model.param;
 
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.framework.annotation.MaxLength;
 import com.fise.framework.annotation.NotEmpty;
 import com.fise.utils.JsonUtil;
 
 public class DeveloperInsert {
-	@NotNull
-	@JsonProperty("admin_id")
-	private Integer adminId;
-
 	@NotEmpty
 	@MaxLength(value = 40)
 	private String account;
@@ -19,7 +12,7 @@ public class DeveloperInsert {
 	@NotEmpty
 	@MaxLength(value = 50)
 	private String password;
-
+	
 	private String nickName;
 
 	private String phone;
@@ -33,16 +26,8 @@ public class DeveloperInsert {
 	private String description;
 
 	private String remarks;
-
+	
 	private Integer userType;
-
-	public Integer getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
-	}
 
 	public String getAccount() {
 		return account;
