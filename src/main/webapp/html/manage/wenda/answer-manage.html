@@ -103,11 +103,11 @@
 				<tr>
 					<th>回答ID</th>
 					<th>回答内容</th>
-					<th>状态</th>
 					<th>用户ID</th>
 					<th>问题ID</th>
 					<th>点赞数</th>
 					<th>评论数</th>
+					<th>状态</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
 					<th class="table-manage">管理</th>
@@ -151,11 +151,11 @@
 <tr>
 	<td>${id}</td>
 	<td class="content">${content}</td>
-	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td>${user_id}</td>
 	<td>${problem_id}</td>
 	<td>${agree_num}</td>
 	<td>${comment_num}</td>
+	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">

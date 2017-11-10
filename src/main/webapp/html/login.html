@@ -90,6 +90,8 @@
                 Util.cookieStorage.setCookie("nickName",result.data.nickName);
 				Util.cookieStorage.setCookie("phone",result.data.phone);
                 Util.cookieStorage.setCookie("roleId",result.data.roleId);
+				Util.cookieStorage.setCookie("creatorId",result.data.creatorId);
+				Util.cookieStorage.setCookie("userType",result.data.userType);
                 window.location.href = "index.html";
             }  else {
                 alert(result.msg);

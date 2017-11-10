@@ -109,6 +109,69 @@ Util.ajaxLoadData = function(url,data,moduleId,type,async,callback,errorCallback
     });
 };
 
+
+Util.ajaxUpLoadData = function(url,data,moduleId,type,async,callback,errorCallback){
+    async = typeof(async)!="undefined" ? async : true;
+    type = typeof(type)!="undefined" ? type : "get";
+    var userid = Util.cookieStorage.getCookie("id");
+    var str =  "5|5|5|" + userid + "|" + moduleId;
+    /*var str =  "platform|system|udid|" + usr_id + "|version";*/
+    var access_Token = Util.cookieStorage.getCookie("accessToken");
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "FISE-UA": str,
+            "FISE-AccessToken": access_Token
+            /*"Content-Type":"application/json;charset=UTF-8"*/
+        },
+        url:url,
+        data:JSON.stringify(data),
+        type:type,
+        dataType:"json",
+        async:async,
+        cache:false,
+        processData:false,
+        contentType: false,
+        success:function(result){
+            result = result || "";
+            if(callback){
+                if(result != "") {
+                    // 未登录直接跳转至登录
+                    if(result.code == ReturnCode.EXPIRED_ACCESS_TOKEN) {
+                        alert("登录已失效或无此访问权限，请重新登录后尝试！");
+                        location.href = ctx + "/login.html";
+                    }
+                    if(result.code == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
+                        alert("您还未登录，请登录后访问！");
+                        location.href = ctx + "/login.html";
+                    }
+                }
+                callback(result);
+            }
+        },
+        error:function(errorMsg){
+            var msg = "连接服务器失败";
+            if(errorMsg.responseText){
+                if(typeof(errorMsg.responseText)=="string"){
+                    try{
+                        msg = eval('('+errorMsg.responseText+')');
+                        msg = msg.msg;
+                    }catch(e){
+
+                    }
+
+                }else{
+                    msg = errorMsg.responseText.msg;
+                }
+            }
+            if(errorCallback){
+                errorCallback(msg);
+            }
+        }
+    });
+};
+
+
 //日期转换
 Date.prototype.format = function(format){
     var date = {
@@ -728,15 +791,15 @@ Util.regionArgumentsDetail = function(regionlist){
             obj.children.push(chidObj);
         }
         regionList.push(obj);
-
     }
     return regionList;
 }
 
 //获取当前域名
 Util.pathName = function(){
-	ctx = "http://120.78.145.162:8787/";        //test version
-   /* ctx = "http://192.168.2.196:8585/";  */      //non-stop server version
+    ctx = "http://192.168.2.250:8787/";        //test version
+	//ctx = "http://120.78.145.162:8787/";        //test version
+   // ctx = "http://192.168.99.11:8080/";        //non-stop server version
      /*ctx = "http://192.168.2.196:8610/";*/
     /*ctx = "http://bossdev.wn517.com/";*/
     Util.localStorage.add("ctx",ctx);

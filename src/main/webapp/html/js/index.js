@@ -19,6 +19,8 @@ $(function(){
                 Util.cookieStorage.clearCookie("nickName");
                 Util.cookieStorage.clearCookie("phone");
                 Util.cookieStorage.clearCookie("roleId");
+                Util.cookieStorage.clearCookie("creatorId");
+                Util.cookieStorage.clearCookie("userType");
                 localStorage.removeItem("myDevTypeArray");
                 localStorage.removeItem("myUserRolesArray");
                 localStorage.removeItem("allDevTypeArray");
