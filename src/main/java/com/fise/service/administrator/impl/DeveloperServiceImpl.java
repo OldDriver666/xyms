@@ -70,24 +70,17 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			response.setMsg("上传图片失败");
 			return response;
 		}
-
-		StringBuilder imagesUrl = new StringBuilder();
-		for (int i = 1; i < images.size(); i++) {
-			imagesUrl.append(images.get(i-1) + ";");
-		}
-		imagesUrl.append(images.get(images.size()-1));
-	
+	    String imagesUrl=StringUtil.combineStr(images);
 		developer.setCardPhoto(param.getCardPhoto());
 		developer.setDescription(param.getDescription());
 		developer.setUserType(param.getUserType());
-		developer.setCardPhoto(imagesUrl.toString());
+		developer.setCardPhoto(imagesUrl);
 
 		adminDao.insert(developer);
 		response.success(developer);
 		return response;
 	}
 
-	// @RequestBody @RequestParam("image")
 	private List<String> photoUpload(List<MultipartFile> uploadfile) throws IllegalStateException, IOException {
 		MultipartFile file = null;
 		String pictureURL = "";
@@ -108,15 +101,12 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
-
 				file.transferTo(dir);
-
+				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 			    pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
-					
 				result.add(pictureURL);
 			}
 		}
-
 		return result;
 	}
 
