@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="javascript:;">
+							<span class="glyphicon glyphicon-user"></span>
+						</a>
+					</div>
+					<div class="navbar-form navbar-left">
+						<div class="form-group">
+							<input id="input-search-account" type="text" class="form-control" placeholder="请输入开发者账号">
+						</div>
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="search-status" id="input-search-status" class="form-control">
+									<option value="">请选择状态</option>
+									<option value="0">不可用</option>
+									<option value="1">可用</option>
+								</select>
+							</div>
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
+
+					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑开发者</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl" data-action="" class="form-horizontal">
+										<input type="hidden"  id="input-id">
+										<div class="form-group" id="input-account-txt-wrap">
+											<label class="col-sm-2 control-label">账号</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-account-txt" name="account-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-nickName" class="col-sm-2 control-label"><span class="necessary"></span>名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-nickName" name="nickName" placeholder="请输入昵称" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-phone" class="col-sm-2 control-label"><span class="necessary"></span>电话号码</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-phone" name="phone" placeholder="请输入电话号码" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-email" class="col-sm-2 control-label"><span class="necessary"></span>Email</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-email" name="email" placeholder="请输入Email" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-description" class="col-sm-2 control-label"><span class="necessary"></span>联系人</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-description" name="description" placeholder="请输入description" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-idCard" class="col-sm-2 control-label"><span class="necessary"></span>证件号码</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-idCard" name="idCard" placeholder="请输入idCard" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<!--<div class="form-group">
+											<label for="input-cardPhoto" class="col-sm-2 control-label"><span class="necessary"></span>证件照片</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-cardPhoto" name="cardPhoto" placeholder="请输入cardPhoto" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>-->
+										<div class="form-group">
+											<label  class="col-sm-2 control-label"><span class="necessary"></span>证件照片</label>
+											<div id="imgShow" class="col-sm-10">
+											</div>
+										</div>
+
+
+										<div class="form-group" id="edit-status-wrap">
+											<label class="col-sm-2 control-label">状态</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 可用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-disabled" value="0"> 不可用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-delete" value="2"> 删除
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-remarks" class="col-sm-2 control-label"><span class="necessary"></span>备注</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-remarks" name="remarks" placeholder="请输入备注信息">
+											</div>
+										</div>
+
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+
+
+					<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2000;width:100%;height:100%;display:none;">
+						<div id="innerdiv" style="position:absolute;">
+							<img id="bigimg" style="border:5px solid #fff;" src="" />
+						</div>
+					</div>
+
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>开发者账号</th>
+					<th>开发者名称</th>
+					<th>电话号码</th>
+					<th>Email</th>
+					<th>状态</th>
+					<th>备注</th>
+					<th>创建时间</th>
+					<th class="table-manage">管理</th>
+				</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="6">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script src="../../resource/lib/jquery.md5.js"></script>
+<script type ="text/javascript" src="js/audit-developer.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td >${account}</td>
+	<td>${nickName}</td>
+	<td>${phone}</td>
+	<td>${email}</td>
+	<td>{{if status == 1}}可用{{else status == 0}}不可用 {{else status == 2}}已删除{{/if}}</td>
+	<td>${remarks}</td>
+	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none">${developerId}</td>
+	<td style="display:none">${description}</td>
+	<td style="display:none">${idCard}</td>
+	<td style="display:none">${cardPhoto}</td>
+	<td class="table-update">
+	    <a href="javascript:void(0);" class="table-edit-btn">审核</a>
+	</td>
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="pageUserRoles">
+    <option value=${id}>${role_name}</option>
+</script>
+<script type="text/x-jquery-tmpl" id="pageCompanyInfo">
+    <option value=${id}>${name}</option>
+</script>
+<script type="text/javascript">
+	var myUserRolesArray = JSON.parse(localStorage.getItem("myUserRolesArray"));
+	var Lens1 = myUserRolesArray.length;
+	function roleNameQuery(id){
+		for(var i=0; i< Lens1; i++){
+			if(myUserRolesArray[i].id == id){
+				return myUserRolesArray[i].role_name;
+			}
+		}
+	}
+
+	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	var Lens2 = allCompanyArray.length;
+	function companyNameQuery(type){
+		for(var i=0; i< Lens2; i++){
+			if(allCompanyArray[i].id == type){
+				return allCompanyArray[i].name;
+			}
+		}
+	}
+
+	toastr.options={
+	    positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+</body>
+</html>
