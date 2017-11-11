@@ -36,7 +36,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	private WiAdminMapper adminDao;
 
 	@Override
-	public Response insert(DeveloperInsert param,List< MultipartFile> uploadfile) {
+	public Response insert(DeveloperInsert param,List<MultipartFile> uploadfile) {
 		Response response = new Response();
 		WiAdmin developer = new WiAdmin();
 		
@@ -121,6 +121,8 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		updWhere.andIdEqualTo(developer.getAdminId());
 		
 		wiadmin.setStatus(developer.getStatus());
+		wiadmin.setRoleId(31);
+		wiadmin.setCompanyId(1);
 		wiadmin.setUpdated(DateUtil.getLinuxTimeStamp());
 		wiadmin.setRemarks(developer.getRemarks());
 		int result=adminDao.updateByExampleSelective(wiadmin, example);
