@@ -45,16 +45,20 @@
 						<div class="form-group">
 							<input id="input-search-appname" type="text" class="form-control" placeholder="请输入应用名称">
 						</div>
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="search-status" id="input-search-status" class="form-control">
+									<option value="">请选择状态</option>
+									<option value="0">待审核</option>
+									<option value="1">发布</option>
+									<option value="2">拒绝</option>
+									<option value="3">下架</option>
+								</select>
+							</div>
+						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
-					</div>
-					<div class="navbar-form navbar-right">
-						<!--<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加应用信息</span>
-						</button>-->
-						<!--<button style="display:none" id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
-						</button>-->
 					</div>
 
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
@@ -68,56 +72,138 @@
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-id">
 										<div class="form-group" >
-											<label for="input-appindex" class="col-sm-2 control-label"><span class="necessary"></span>APP唯一标示</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-appindex" name="devIME" placeholder="请输入APP唯一标示"  >
+											<label for="input-appindex" class="col-sm-3 control-label"><span class="necessary"></span>APP唯一标示</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appindex" name="devIME" placeholder="请输入APP唯一标示"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-appname" class="col-sm-2 control-label"><span class="necessary"></span>应用名称</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-appname" name="devXW" placeholder="请输入应用名称"  >
+											<label for="input-appname" class="col-sm-3 control-label"><span class="necessary"></span>应用名称</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appname" name="devXW" placeholder="请输入应用名称"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-appspell" class="col-sm-2 control-label"><span class="necessary"></span>app_spell</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入app_spell"  >
+											<label for="input-appspell" class="col-sm-3 control-label"><span class="necessary"></span>app_spell</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入app_spell"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-packagename" class="col-sm-2 control-label"><span class="necessary"></span>package_name</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-packagename" name="devXW" placeholder="请输入package_name"  >
+											<label for="input-packagename" class="col-sm-3 control-label"><span class="necessary"></span>包名</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-packagename" name="devXW" placeholder="请输入包名"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-devid" class="col-sm-2 control-label"><span class="necessary"></span>开发者ID</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-devid" name="devXW" placeholder="请输入开发者ID"  >
+											<label for="input-devid" class="col-sm-3 control-label"><span class="necessary"></span>开发者ID</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-devid" name="devXW" placeholder="请输入开发者ID"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-devname" class="col-sm-2 control-label"><span class="necessary"></span>开发者名称</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-devname" name="devXW" placeholder="请输入开发者名称"  >
+											<label for="input-devname" class="col-sm-3 control-label"><span class="necessary"></span>开发者名称</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-devname" name="devXW" placeholder="请输入开发者名称"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-topcategory" class="col-sm-2 control-label"><span class="necessary"></span>应用大类型</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-topcategory" name="devXW" placeholder="请输入应用大类型"  >
+											<label for="input-topcategory" class="col-sm-3 control-label"><span class="necessary"></span>应用大类型</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-topcategory" name="devXW" placeholder="请输入应用大类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-category" class="col-sm-2 control-label"><span class="necessary"></span>应用小类型</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-category" name="devXW" placeholder="请输入应用小类型"  >
+											<label for="input-category" class="col-sm-3 control-label"><span class="necessary"></span>应用小类型</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-category" name="devXW" placeholder="请输入应用小类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-description" class="col-sm-3 control-label"><span class="necessary"></span>应用简介</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-version" class="col-sm-3 control-label"><span class="necessary"></span>版本号</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-version" name="devXW" placeholder="请输入版本号" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-versioncode" class="col-sm-3 control-label"><span class="necessary"></span>versioncode</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+
+										<div class="form-group" >
+											<label class="col-sm-3 control-label"><span class="necessary"></span>应用图标</label>
+											<!--<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-icon" name="devXW" placeholder="请输入应用图标"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>-->
+											<div id="iconShow" class="col-sm-9">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-icontype" class="col-sm-3 control-label"><span class="necessary"></span>图标类型</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-icontype" name="devXW" placeholder="请输入图标类型" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+											</div>
+										</div>
+										<div class="form-group" >
+											<label class="col-sm-3 control-label"><span class="necessary"></span>应用截图</label>
+											<!--<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-images" name="devXW" placeholder="请输入截图"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>-->
+											<div id="imgShow" class="col-sm-9">
+											</div>
+										</div>
+
+										<div class="form-group" >
+											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>安装包</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-download" name="devXW" placeholder="请输入下载地址" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-size" class="col-sm-3 control-label"><span class="necessary"></span>应用大小</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-size" name="devXW" placeholder="请输入应用大小"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-prority" class="col-sm-3 control-label"><span class="necessary"></span>prority</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入prority"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-label" class="col-sm-3 control-label"><span class="necessary"></span>标签</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-label" name="devXW" placeholder="请输入标签" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-star" class="col-sm-3 control-label"><span class="necessary"></span>star</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-star" name="devXW" placeholder="请输入star" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+											</div>
+										</div>
+										<div class="form-group">
+											<label  for="orientation" class="col-sm-3 control-label"><span class="necessary"></span>图片摆放方向</label>
+											<div class="col-sm-4" >
+												<select name="adduserRoles" id="orientation" class="form-control" >
+													<option value="" >请选择摆放方向</option>
+													<option value="0" >竖向</option>
+													<option value="1">横向</option>
+												</select>
 											</div>
 										</div>
 										<div class="form-group" id="input-status-wrap">
-											<label class="col-sm-2 control-label">状态</label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label">状态</label>
+											<div class="col-sm-9">
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 待审核
 												</label>
@@ -133,81 +219,9 @@
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-description" class="col-sm-2 control-label"><span class="necessary"></span>应用简介</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-version" class="col-sm-2 control-label"><span class="necessary"></span>版本号</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-version" name="devXW" placeholder="请输入版本号"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-versioncode" class="col-sm-2 control-label"><span class="necessary"></span>versioncode</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-icon" class="col-sm-2 control-label"><span class="necessary"></span>应用图标</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-icon" name="devXW" placeholder="请输入应用图标"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-icontype" class="col-sm-2 control-label"><span class="necessary"></span>icon_type</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-icontype" name="devXW" placeholder="请输入icon_type"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-images" class="col-sm-2 control-label"><span class="necessary"></span>截图</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-images" name="devXW" placeholder="请输入截图"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-download" class="col-sm-2 control-label"><span class="necessary"></span>下载地址</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-download" name="devXW" placeholder="请输入下载地址"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-size" class="col-sm-2 control-label"><span class="necessary"></span>应用大小</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-size" name="devXW" placeholder="请输入应用大小"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-prority" class="col-sm-2 control-label"><span class="necessary"></span>prority</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入prority"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-remarks" class="col-sm-2 control-label"><span class="necessary"></span>remarks</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-remarks" name="devXW" placeholder="请输入remarks"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-label" class="col-sm-2 control-label"><span class="necessary"></span>标签</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-label" name="devXW" placeholder="请输入标签"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-star" class="col-sm-2 control-label"><span class="necessary"></span>star</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-star" name="devXW" placeholder="请输入star"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-orientation" class="col-sm-2 control-label"><span class="necessary"></span>orientation</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-orientation" name="devXW" placeholder="请输入orientation"  >
+											<label for="input-remarks" class="col-sm-3 control-label"><span class="necessary"></span>备注信息</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-remarks" name="devXW" placeholder="请输入审核备注信息">
 											</div>
 										</div>
 									</form>
@@ -230,34 +244,34 @@
 								<div class="modal-body">
 									<form id="form-addTempl2" data-action="" class="form-horizontal">
 										<div class="form-group">
-											<label for="input-app-id" class="col-sm-2 control-label"><span class="necessary">*</span>AppID</label>
-											<div class="col-sm-10">
+											<label for="input-app-id" class="col-sm-3 control-label"><span class="necessary">*</span>AppID</label>
+											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-app-id" name="authLevel" placeholder="请输入AppID">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-app-name" class="col-sm-2 control-label"><span class="necessary">*</span>应用名称</label>
-											<div class="col-sm-10">
+											<label for="input-app-name" class="col-sm-3 control-label"><span class="necessary">*</span>应用名称</label>
+											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-app-name" name="authLevel" placeholder="请输入应用名称">
 											</div>
 										</div>
 										<div class="form-group" id="input-channels-wrap">
-											<label for="input-channels" class="col-sm-2 control-label"><span class="necessary"></span>频道</label>
-											<div class="col-sm-10">
+											<label for="input-channels" class="col-sm-3 control-label"><span class="necessary"></span>频道</label>
+											<div class="col-sm-9">
 												<select name="input-channels" id="input-channels" class="form-control">
 													<option value="">请选择频道</option>
 												</select>
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-prority-txt" class="col-sm-2 control-label"><span class="necessary"></span>权重值</label>
-											<div class="col-sm-10">
+											<label for="input-prority-txt" class="col-sm-3 control-label"><span class="necessary"></span>权重值</label>
+											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-prority-txt" name="devXW" placeholder="请输入权重值"  >
 											</div>
 										</div>
 										<div class="form-group" id="input-status-txt-wrap">
-											<label class="col-sm-2 control-label">状态</label>
-											<div class="col-sm-10">
+											<label class="col-sm-3 control-label">状态</label>
+											<div class="col-sm-9">
 												<label class="radio-inline">
 													<input type="radio" name="status-txt" id="radio-status-txt-enabled" value="0" checked> 不可用
 												</label>
@@ -276,6 +290,13 @@
 						</div><!-- /.modal -->
 					</div>
 
+
+					<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2000;width:100%;height:100%;display:none;">
+						<div id="innerdiv" style="position:absolute;">
+							<img id="bigimg" style="border:5px solid #fff;" src="" />
+						</div>
+					</div>
+
 				</div>
 			</nav>
 			<table id="table" class="table table-striped table-hover">
@@ -285,21 +306,21 @@
 					<th>应用名称</th>
 					<!--<th>APP唯一标示</th>
 					<th>app_spell</th>-->
-					<th>package_name</th>
+					<th>包名</th>
 					<!--<th>开发者ID</th>-->
 					<th>开发者名称</th>
 					<th>应用大类型</th>
 					<th>应用小类型</th>
-					<th>状态</th>
 					<th>应用简介</th>
 					<th>版本号</th>
 					<!--<th>versioncode</th>-->
-					<th>应用图标</th>
+					<!--<th>应用图标</th>-->
 					<!--<th>icon_type</th>-->
 					<!--<th>截图</th>-->
 					<!--<th>下载地址</th>-->
 					<th>应用大小</th>
 					<!--<th>prority</th>-->
+					<th>状态</th>
 					<th>备注信息</th>
 					<!--<th>标签</th>
 					<th>star</th>
@@ -355,16 +376,16 @@
 	<td><div class="showmore">${dev_name}</div></td>
 	<td><div class="showmore">${top_category}</div></td>
 	<td><div class="showmore">${category}</div></td>
-	<td><div class="showmore">{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</div></td>
 	<td><div class="showmore">${description}</div></td>
 	<td><div class="showmore">${version}</div></td>
 	<td style="display:none;">${versioncode}</td>
-	<td  class="showurl">${images}</td>
+	<td  class="showurl" style="display:none;">${icon}</td>
 	<td style="display:none;">${icon_type}</td>
 	<td class="showurl" style="display:none;">${images}</td>
 	<td class="showurl" style="display:none;">${download}</td>
 	<td><div class="showmore">${size}</div></td>
 	<td style="display:none;">${prority}</td>
+	<td><div class="showmore">{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</div></td>
 	<td><div class="showmore">${remarks}</div></td>
 	<td style="display:none;">${label}</td>
 	<td style="display:none;">${star}</td>

@@ -33,7 +33,7 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
 			var search_appname = $("#input-search-appname").val();
-
+            var search_status = parseInt($('#input-search-status option:selected').val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -43,7 +43,8 @@ $(function() {
             data.page_size = 20;
             data.param = {
                 "dev_id": null,
-                "app_name":search_appname
+                "app_name":search_appname,
+                "status":search_status
             };
 
             var opt = {
@@ -84,6 +85,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+                    $("#iconShow").empty();
+                    $("#imgShow").empty();
                 }else{
                     alert(result.msg);
                 }
@@ -157,7 +160,7 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent().parent();
-        var check_status = $.trim(that.find("td").eq(9).text());
+        var check_status = $.trim(that.find("td").eq(18).text());
         var status_val = null;
         if(check_status === "待审核"){
             status_val = 0;
@@ -169,6 +172,50 @@ $(function() {
             status_val = 3;
         }
 
+        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var myDiv1 = document.getElementById("iconShow");
+        for(var i=0; i < iconList.length; i++){
+            var img1 = document.createElement("img");
+            img1.setAttribute("class", "newIcon");
+            img1.width =120;
+            img1.src = iconList[i];
+            img1.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                 this.width+=200;
+                 } else {
+                 this.width = 420;
+                 }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv1.appendChild(img1);
+        }
+
+        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var myDiv2 = document.getElementById("imgShow");
+        for(var i=0; i < imgList.length; i++){
+            var img = document.createElement("img");
+            img.setAttribute("class", "newImg");
+            img.width =420;
+            img.src = imgList[i];
+            img.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                    this.width+=200;
+                } else {
+                    this.width = 420;
+                }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv2.appendChild(img);
+        }
+
+        var orientation_val = $.trim(that.find("td").eq(22).text());
+
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-appindex").val(that.find("td").eq(2).text());
         $("#input-appname").val(that.find("td").eq(1).text());
@@ -178,21 +225,25 @@ $(function() {
         $("#input-devname").val(that.find("td").eq(6).text());
         $("#input-topcategory").val(that.find("td").eq(7).text());
         $("#input-category").val(that.find("td").eq(8).text());
+
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-        $("#input-description").val(that.find("td").eq(10).text());
-        $("#input-version").val(that.find("td").eq(11).text());
-        $("#input-versioncode").val(that.find("td").eq(12).text());
-        $("#input-icon").val(that.find("td").eq(13).text());
-        $("#input-icontype").val(that.find("td").eq(14).text());
-        $("#input-images").val(that.find("td").eq(15).text());
-        $("#input-download").val(that.find("td").eq(16).text());
-        $("#input-size").val(that.find("td").eq(17).text());
-        $("#input-prority").val(that.find("td").eq(18).text());
+        $("#input-description").val(that.find("td").eq(9).text());
+        $("#input-version").val(that.find("td").eq(10).text());
+        $("#input-versioncode").val(that.find("td").eq(11).text());
+
+        $("#input-icontype").val(that.find("td").eq(13).text());
+
+        $("#input-download").val(that.find("td").eq(15).text());
+
+        $("#input-size").val(that.find("td").eq(16).text());
+        $("#input-prority").val(that.find("td").eq(17).text());
+
         $("#input-remarks").val(that.find("td").eq(19).text());
         $("#input-label").val(that.find("td").eq(20).text());
         $("#input-star").val(that.find("td").eq(21).text());
-        $("#input-orientation").val(that.find("td").eq(22).text());
+        $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
         $("#addTempl-modal").modal("show");
+        $("#orientation").attr("disabled", "disabled");
     });
 
     //编辑获取数据数据
@@ -209,7 +260,7 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑应用信息");
+			$("h4#addTempl-modal-label").text("审核应用信息");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
             $("h4#addTempl-modal-label").text("添加应用信息");
@@ -228,6 +279,18 @@ $(function() {
             $form.data("action", "add");
             $form[0].reset();
         }
+    });
+
+
+    //关闭或者hide弹出框清空插入的图片
+    $("#addTempl-modal .close").on('click', function() {
+        $("#iconShow").empty();
+        $("#imgShow").empty();
+    });
+
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $("#iconShow").empty();
+        $("#imgShow").empty();
     });
 
 	//验证表单
@@ -283,7 +346,7 @@ $(function() {
             }else {
                 window.action.add();
             }
-        }else */
+        }else*/
         if(action == "edit"){
             if (!$("#form-addTempl").valid()) {
                 return;
@@ -628,3 +691,42 @@ Util.Page = (function() {
     };
     return Page;
 })();
+
+function imgShow(outerdiv, innerdiv, bigimg, _this){
+    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+    $("<img/>").attr("src", src).load(function(){
+        var windowW = $(window).width();//获取当前窗口宽度
+        var windowH = $(window).height();//获取当前窗口高度
+        var realWidth = this.width;//获取图片真实宽度
+        var realHeight = this.height;//获取图片真实高度
+        var imgWidth, imgHeight;
+        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+        if(realHeight>windowH*scale) {//判断图片高度
+            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                imgWidth = windowW*scale;//再对宽度进行缩放
+            }
+        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+        } else {//如果图片真实高度和宽度都符合要求，高宽不变
+            imgWidth = realWidth;
+            imgHeight = realHeight;
+        }
+        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+    });
+
+    $(outerdiv).click(function(){//再次点击淡出消失弹出层
+        $(this).fadeOut("fast");
+    });
+}
