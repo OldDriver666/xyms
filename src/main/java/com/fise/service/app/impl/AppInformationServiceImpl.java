@@ -474,7 +474,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		// 0-待审核 1-发布 2-拒绝 3-下架
-		appInfo.setStatus(param.getStatus());
+		appInfo.setStatus(0);
 		appInfo.setIconType(param.getIconType());
 		if(iconurl!=null){
 			appInfo.setIcon(iconurl);
