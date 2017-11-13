@@ -13,6 +13,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AgreeMapper;
 import com.fise.dao.AnswerMapper;
+import com.fise.dao.CommentMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
@@ -55,6 +56,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     SensitiveWordsMapper sensitiveWordsDao;
+    
+    @Autowired
+    CommentMapper commentDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -273,6 +277,29 @@ public class AnswerServiceImpl implements IAnswerService{
         setResult(result,answer,user);
         result.setStatus(i);
         return res.success(result);
+    }
+    
+    @Override
+    public Response delMyAnswer(Integer answer_id){
+        Response resp = new Response();
+        //根据回答id，查询到该回答，修改回答的状态status为0
+        Answer answer = answerDao.selectByPrimaryKey(answer_id);
+        if(answer==null){
+            return resp.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+        }
+        answer.setStatus(0);
+        answer.setUpdated(DateUtil.getLinuxTimeStamp());
+        answerDao.updateByPrimaryKey(answer);
+        //回答的问题的回答数-1
+        Problems problem =problemDao.selectByPrimaryKey(answer.getProblemId());
+        problem.setAnswerNum(problem.getAnswerNum()-1);
+        problem.setUpdated(DateUtil.getLinuxTimeStamp());
+        problemDao.updateByPrimaryKey(problem);
+        
+        //根据回答的id，修改评论的状态status为0
+        commentDao.updateList1(answer_id);
+        
+        return resp.success();
     }
     
     private void setResult(AnswerResult result,Answer answer,IMUser user){

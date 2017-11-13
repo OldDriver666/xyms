@@ -17,6 +17,9 @@ public interface IAnswerService {
     /*根据回答id，查询更新信息*/
     public Response query(Integer answer_id,Integer user_id);
     
+    /*根据回答id，删除我的回答*/
+    public Response delMyAnswer(Integer answer_id);
+    
     /*后台管理  查询回答信息*/
     public Response queryBack(Page<Answer> page);
     
