@@ -35,7 +35,7 @@ public class FileController {
         
         MultipartFile file=null;
         String pictureURL = "";
-                
+        
         //上传图片文件
         if(uploadfile.length!=0){
             for(int i=0;i<uploadfile.length;i++){
@@ -58,14 +58,14 @@ public class FileController {
                 Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
                 if(i==0){
                     /*内网上传图片路径*/
-                    pictureURL=Constants.FILE_UPLOAD_URL+"/"+filename;
+                    pictureURL=Constants.IN_FILE_UPLOAD_URL+filename;
                     /*外网上传图片路径*/
-                    //pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
+                    //pictureURL=Constants.OUT_FILE_UPLOAD_URL+filename;
                 }else {
                     /*内网上传图片路径*/
-                    pictureURL=pictureURL+Constants.FILE_UPLOAD_URL+"/"+filename;
+                    pictureURL=pictureURL+Constants.IN_FILE_UPLOAD_URL+filename;
                     /*外网上传图片路径*/
-                    //pictureURL=pictureURL+"http://120.78.145.162:8080/upload/"+filename;
+                    //pictureURL=pictureURL+Constants.OUT_FILE_UPLOAD_URL+filename;
                 }
         
             }

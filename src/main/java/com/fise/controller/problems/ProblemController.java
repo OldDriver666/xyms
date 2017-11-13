@@ -191,11 +191,7 @@ public class ProblemController {
         Response res = new Response();
         logger.info(param.toString());
         
-        if(param.getParam().getSchoolId()==null){
-            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
-        if(StringUtil.isEmpty(param.getParam().getTitle())){
+        if(StringUtil.isEmpty(param.getParam().getTitle()) || param.getParam().getUserId()==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         

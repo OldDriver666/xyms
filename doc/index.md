@@ -135,7 +135,7 @@ null 没有数据返回 看code是否成功
 {
      "param":{
                   "title":"",            //必填-模糊查询话题
-                  "school_id":x          //必填-学校id
+                  "user_id":x            //必填-当前登录用户id
               },
      "page_no":x                          //选填-默认1              
 }
