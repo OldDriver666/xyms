@@ -328,10 +328,11 @@
   	select 
   	<include refid="Base_Column_List" />
   	from Problems 
-  	where 
-  	title like #{title,jdbcType=VARCHAR} 
+  	<if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if> 
+  	and title like #{title,jdbcType=VARCHAR} 
   	and status=1 
-  	and school_id=#{page.param.schoolId,jdbcType=INTEGER}
   	order by created desc 
   </select>
 </mapper>

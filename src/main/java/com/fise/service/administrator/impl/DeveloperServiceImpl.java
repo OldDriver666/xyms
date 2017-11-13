@@ -103,7 +103,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				}
 				file.transferTo(dir);
 				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
-			    pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+			    pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
 				result.add(pictureURL);
 			}
 		}

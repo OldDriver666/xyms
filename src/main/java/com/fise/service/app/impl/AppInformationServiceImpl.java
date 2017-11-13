@@ -330,7 +330,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				}
 				file.transferTo(dir);
 				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
-				pictureURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+				pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
 				result.add(pictureURL);
 			}
 		}
@@ -354,7 +354,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		uploadfile.transferTo(dir);
 		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
-		String downloadURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
 		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
 
@@ -378,7 +378,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		uploadfile.transferTo(dir);
 		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
-		String downloadURL = Constants.FILE_UPLOAD_URL + "/" + filename;
+		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
 		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
 		return downloadURL;

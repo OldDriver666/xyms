@@ -128,6 +128,7 @@ public class ProblemServiceImpl implements IProblemService{
             userlist=new ArrayList<Integer>();
         }
         userlist.add(param.getParam().getUserId());
+        //System.out.println("-----------"+userlist.toString());
         criteria.andUserIdIn(userlist);
         
         List<Problems> list=problemsDao.selectBypage(example, param);
@@ -141,9 +142,20 @@ public class ProblemServiceImpl implements IProblemService{
     public Response queryTitle(Page<Problems> param) {
         Response res = new Response();
         List<ProResult> list1=new ArrayList<>();
+        ProblemsExample example = new ProblemsExample();
+        Criteria criteria=example.createCriteria();
+        
+        //根据好友关系查询
+        List<Integer> userlist=relationShipDao.findrelation(param.getParam().getUserId());
+        //判断好友是否为空
+        if(userlist.size()==0){
+            userlist=new ArrayList<Integer>();
+        }
+        userlist.add(param.getParam().getUserId());
+        criteria.andUserIdIn(userlist);
         
         param.getParam().setTitle("%"+param.getParam().getTitle()+"%");
-        List<Problems> list=problemsDao.querytitle(param,param.getParam().getTitle());
+        List<Problems> list=problemsDao.querytitle(example,param.getParam().getTitle());
         
         if(list.size()==0){
             res.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
