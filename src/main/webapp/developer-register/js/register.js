@@ -291,10 +291,12 @@ $(function(){
     })
     $('a[_type="closeAgreement"]').on('click', function(){
         $("#agreementDialog").hide();
+        $("#agreementMain").empty();
     });
     $('a[_type="acceptAgreement"]').on('click', function(){
         $("#agreementDialog").hide();
         $(".agree-wp .ui-ico-chk").addClass("ui-ico-chked").attr("_value", 1);
+        $("#agreementMain").empty();
     });
     $(".agree-wp .ui-ico-chk").on('click', function(){
         if($(".agree-wp .ui-ico-chk").attr("_value") == 0){
