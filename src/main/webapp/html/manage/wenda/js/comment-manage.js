@@ -99,7 +99,7 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var check_status = $.trim(that.find("td").eq(2).text());
+        var check_status = $.trim(that.find("td").eq(7).text());
         var status_val = null;
         if(check_status === "不可用"){
             status_val = 0;
@@ -108,11 +108,11 @@ $(function() {
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-fromuserID").val(that.find("td").eq(3).text());
-        $("#input-touserID").val(that.find("td").eq(4).text());
-        $("#input-answerid").val(that.find("td").eq(5).text());
-        $("#input-commentid").val(that.find("td").eq(6).text());
-        $("#input-problemid").val(that.find("td").eq(7).text());
+        $("#input-fromuserID").val(that.find("td").eq(2).text());
+        $("#input-touserID").val(that.find("td").eq(3).text());
+        $("#input-answerid").val(that.find("td").eq(4).text());
+        $("#input-commentid").val(that.find("td").eq(5).text());
+        $("#input-problemid").val(that.find("td").eq(6).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });

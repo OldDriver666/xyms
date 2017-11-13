@@ -215,75 +215,92 @@ $(function() {
         },
         //批量添加设备信息
         addDevInfoFile : function () {
+            var url = ctx + "xiaoyusvr/boss/fisedevice/excel_import";
+            var data = new FormData();
+            data.append("file", $("#file")[0].files[0], $("#file")[0].files[0].name)  // 通过append向form对象添加数据
+
             var userid = Util.cookieStorage.getCookie("id");
             var str =  "5|5|5|" + userid + "|" + moduleId;
             var access_Token = Util.cookieStorage.getCookie("accessToken");
 
-            var form = document.getElementById('upload-form');
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', form.action);
-            /*xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("FISE-UA", str);
-            xhr.setRequestHeader("FISE-AccessToken", access_Token);
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");*/
-            /*xhr.onload = function () {
-                if (xhr.status === 200) {
+            $.ajax({
+                headers: {
+                    /*"Accept": "application/json",*/
+                    "FISE-UA": str,
+                    "FISE-AccessToken": access_Token
+                    /*"Content-Type":"application/json;charset=UTF-8"*/
+                },
+                url:url,
+                type:"post",
+                data:data,
+                /*dataType: 'json',*/
+                processData:false,
+                contentType: false,
+                success:function(result){
+                    if (result.code == ReturnCode.SUCCESS) {
+                        $("#modal-loading").modal('hide');
+                        toastr.success("添加完成!");
+                        action.loadPageData();
+                    }else{
+                        alert(result.msg);
+                    }
+                },
+                error:function(e){
                     $("#modal-loading").modal('hide');
-                    toastr.success("添加完成!");
-                    action.loadPageData();
-                } else {
-                    $("#modal-loading").modal('hide');
-                    toastr.success("出错了!");
+                    alert("错误！！");
                 }
-            };*/
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var resJson = JSON.parse(xhr.responseText)
-                    $("#modal-loading").modal('hide');
-                    toastr.success("添加完成!");
-                    action.loadPageData();
-                } else {
-                    $("#modal-loading").modal('hide');
-                    toastr.success("出错了!");
-                }
-            };
-            xhr.send(formData);
+            });
 
-            /*var getXmlHttpRequest = function() {
-                if (window.XMLHttpRequest) {
-                    return new XMLHttpRequest();
-                } else if (window.ActiveXObject) {
-                    return new ActiveXObject("Microsoft.XMLHttpRequest");
-                }
-            };
-            var xhr = getXmlHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var resJson = JSON.parse(xhr.responseText)
-                    //cb(resJson);
-                }
-            };
-            xhr.open("post", $(this).attr("http://192.168.2.250:8787/xiaoyusvr/boss/fisedevice/excel_import"), true);
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("FISE-UA", str);
-            xhr.setRequestHeader("FISE-AccessToken", access_Token);
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-           /!* var dataStr = '';
-            for (var i in data) {
-                if (dataStr) {
-                    dataStr += '&';
-                }
-                dataStr += i + '=' + data[i];
-            }*!/
-            xhr.send(formData);*/
         }
 	};
 	window.action = action;
     action.init();
 	action.loadPageData();
 	action.loadDevTypeData();
+
+    var userid = Util.cookieStorage.getCookie("id");
+    var str =  "5|5|5|" + userid + "|" + moduleId;
+    var access_Token = Util.cookieStorage.getCookie("accessToken");
+    var submitUrl = ctx + "xiaoyusvr/boss/fisedevice/excel_import";
+    var submitHeader = {
+        "Accept": "application/json",
+        "FISE-UA": str,
+        "FISE-AccessToken": access_Token,
+        "Content-Type": "multipart/form-data;charset=UTF-8"
+    }
+    var uploader = new plupload.Uploader({
+        browse_button : 'browse', //触发文件选择对话框的按钮，为那个元素id
+        url : submitUrl, //服务器端的上传页面地址
+        headers: submitHeader,
+        flash_swf_url : '../../resource/plugin/plupload-2.1.2/Moxie.swf', //swf文件，当需要使用swf方式进行上传时需要配置该参数
+        silverlight_xap_url : '../../resource/plugin/plupload-2.1.2/Moxie.xap' //silverlight文件，当需要使用silverlight方式进行上传时需要配置该参数
+    });
+
+    //在实例对象上调用init()方法进行初始化
+    uploader.init();
+    //绑定各种事件，并在事件监听函数中做你想做的事
+    uploader.bind('FilesAdded',function(uploader,files){
+        //每个事件监听函数都会传入一些很有用的参数，
+        //我们可以利用这些参数提供的信息来做比如更新UI，提示上传进度等操作
+    });
+    uploader.bind('UploadProgress',function(uploader,file){
+        //每个事件监听函数都会传入一些很有用的参数，
+        //我们可以利用这些参数提供的信息来做比如更新UI，提示上传进度等操作
+    });
+    $("#start_upload").click(function(){
+        if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
+            $("#addTempl-modal2").modal('hide');
+            $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
+            uploader.start();
+        }else if($("#filepath").val() == ''){
+            alert("请选择文件！");
+        }else if($("#input-devType2").val() == ''){
+            alert("请选择设备类型！");
+        }
+    });
+
+
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -391,6 +408,10 @@ $(function() {
         }
     });
 
+
+    $("#upload-form").submit(function(){
+        return false;
+    });
     $("#btn-add-submit2").click(function(){
         if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
             $("#addTempl-modal2").modal('hide');
@@ -402,6 +423,7 @@ $(function() {
             alert("请选择设备类型！");
         }
     });
+
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();

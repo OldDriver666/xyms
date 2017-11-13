@@ -3,6 +3,7 @@ $(function() {
     var companyId = Util.cookieStorage.getCookie("companyId");
     var roleId = Util.cookieStorage.getCookie("roleId");
     var id = Util.cookieStorage.getCookie("id");
+    var nickName = Util.cookieStorage.getCookie("nickName");
 
     var url=location.search;
     var Request = new Object();
@@ -32,53 +33,92 @@ $(function() {
         },
         //新增数据
         add : function() {
-            var url = ctx + "xiaoyusvr/appinformation/insert";
-            var data = new Object();
-            data.app_index = $("#input-appindex").val();
-            data.app_name = $("#input-appname").val();
-            data.app_spell = $("#input-appspell").val();
-            data.dev_id = parseInt($("#input-devid").val());
-            data.dev_name = $("#input-devname").val();
-            data.top_category = $("#input-topcategory").val();
-            data.category = $("#input-category").val();
-            data.status = parseInt($("input[name=status]:checked").val());
-            data.description = $("#input-description").val();
-            data.version = $("#input-version").val();
-            data.version_code = $("#input-versioncode").val();
-            data.icon = parseInt($("#input-icon").val());
-            data.icon_type = $("#input-icontype").val();
-            data.images = $("#input-images").val();
-            data.download = $("#input-download").val();
-            data.size = $("#input-size").val();
-            data.prority = $("#input-prority").val();
-            data.remarks = $("#input-remarks").val();
-            data.label = $("#input-label").val();
-            data.star = $("#input-star").val();
-            data.orientation = $("#input-orientation").val();
+            var topcategory_Val = parseInt($("input[name=topcategory]:checked").val());
+            if (topcategory_Val == 1) {
+                var topcategory_txt = "软件";
+                var category_txt = $('#category1 option:selected').text();
+            }else if (topcategory_Val == 2) {
+                var topcategory_txt = "游戏";
+                var category_txt = $('#category2 option:selected').text();
+            }else if (topcategory_Val == 3) {
+                var topcategory_txt = "电子书";
+                var category_txt = $('#category3 option:selected').text();
+            }
 
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl-modal").modal('hide');
-                    toastr.success("添加成功!");
-                    action.loadPageData();
-                }else{
-                    alert(result.msg);
+            var url = ctx + "xiaoyusvr/appinformation/appInsert";
+            var data = new FormData();
+            data.append("appIndex", $("#input-appindex").val());
+            data.append("appName",$("#input-appname").val());
+            data.append("appSpell", $("#input-appspell").val());
+            data.append("packageName", $("#input-packagename").val());
+
+            data.append("devId", parseInt(id));
+            data.append("devName", nickName);
+
+            data.append("topCategory", topcategory_txt);
+            data.append("category", category_txt);
+
+            data.append("description", $("#input-description").val());
+            data.append("version", $("#input-version").val());
+            data.append("versioncode", parseInt($("#input-versioncode").val()));
+
+            data.append("app_icon", $("#input-icon")[0].files[0], $("#input-icon")[0].files[0].name);
+            data.append("iconType", parseInt($("#input-icontype").val()));
+            for(var k=0; k <imgLen; k++){
+                data.append("app_images", $("#input-images")[0].files[k], $("#input-images")[0].files[k].name);
+            }
+            data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
+
+            data.append("size", $("#input-size").val());
+            data.append("prority", parseInt($("#input-prority").val()));
+            data.append("label", $("#input-label").val());
+            data.append("star", $("#input-star").val());
+            data.append("orientation", parseInt($('#orientation option:selected').val()));
+
+            var userid = Util.cookieStorage.getCookie("id");
+            var str =  "5|5|5|" + userid + "|" + moduleId;
+            var access_Token = Util.cookieStorage.getCookie("accessToken");
+
+            $.ajax({
+                headers: {
+                    /*"Accept": "application/json",*/
+                    "FISE-UA": str,
+                    "FISE-AccessToken": access_Token
+                    /*"Content-Type":"application/json;charset=UTF-8"*/
+                },
+                url:url,
+                type:"post",
+                data:data,
+                /*dataType: 'json',*/
+                processData:false,
+                contentType: false,
+                success:function(result){
+                    if (result.code == ReturnCode.SUCCESS) {
+
+                    }else{
+                        alert(result.msg);
+                    }
+                },
+                error:function(e){
+                    alert("错误！！");
                 }
             });
         },
 		//获取所有数据
 		loadPageData : function() {
 			var search_appname = $("#input-search-appname").val();
-
+            var search_status = parseInt($('#input-search-status option:selected').val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/appinformation/query";
+            var url = ctx + "xiaoyusvr/appinformation/appQuery";
             var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "app_name":search_appname
+                    "dev_id":parseInt(id),
+                    "app_name":search_appname,
+                    "status":search_status
                 };
 
             var opt = {
@@ -108,45 +148,105 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-            var url = ctx + "xiaoyusvr/appinformation/update";
-            var data = new Object();
-            data.id = $("#input-id").val();
-            data.app_index = $("#input-appindex").val();
-            data.app_name = $("#input-appname").val();
-            data.app_spell = $("#input-appspell").val();
-            data.dev_id = parseInt($("#input-devid").val());
-            data.dev_name = $("#input-devname").val();
-            data.top_category = $("#input-topcategory").val();
-            data.category = $("#input-category").val();
-            data.status = parseInt($("input[name=status]:checked").val());
-            data.description = $("#input-description").val();
-            data.version = $("#input-version").val();
-            data.version_code = $("#input-versioncode").val();
-            data.icon = parseInt($("#input-icon").val());
-            data.icon_type = $("#input-icontype").val();
-            data.images = $("#input-images").val();
-            data.download = $("#input-download").val();
-            data.size = $("#input-size").val();
-            data.prority = $("#input-prority").val();
-            data.remarks = $("#input-remarks").val();
-            data.label = $("#input-label").val();
-            data.star = $("#input-star").val();
-            data.orientation = $("#input-orientation").val();
+            var topcategory_val = $("input[name=topcategory]:checked").val();
+            var topcategory_txt = "";
+            var category_txt = "";
+            if(topcategory_val == "1"){
+                topcategory_txt = "软件";
+                category_txt = $('#category1 option:selected').text();
+            }else if(topcategory_val == "2"){
+                topcategory_txt = "游戏";
+                category_txt = $('#category2 option:selected').text();
+            }else if(topcategory_val == "3"){
+                topcategory_txt = "电子书";
+                category_txt = $('#category3 option:selected').text();
+            }
 
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl-modal").modal('hide');
-                    toastr.success("编辑成功!");
-                    action.loadPageData();
-                }else{
-                    alert(result.msg);
+            var iconLen = $("#input-icon")[0].files.length;
+            var imgLen = $("#input-images")[0].files.length;
+
+            var url = ctx + "xiaoyusvr/appinformation/appModify";
+            var data = new FormData();
+            data.append("id", parseInt($("#input-id").val()));
+            data.append("appIndex", $("#input-appindex").val());
+            data.append("appName",$("#input-appname").val());
+            data.append("appSpell", $("#input-appspell").val());
+            data.append("packageName", $("#input-packagename").val());
+            data.append("devId", parseInt($("#input-devid").val()));
+            data.append("devName", $("#input-devname").val());
+            data.append("topCategory", topcategory_txt);
+            data.append("category", category_txt);
+            data.append("description", $("#input-description").val());
+            data.append("version", $("#input-version").val());
+            data.append("versioncode", parseInt($("#input-versioncode").val()));
+
+            data.append("app_icon", $("#input-icon")[0].files[0], $("#input-icon")[0].files[0].name);
+            data.append("iconType", parseInt($("#input-icontype").val()));
+            for(var k=0; k <imgLen; k++){
+                data.append("app_images", $("#input-images")[0].files[k], $("#input-images")[0].files[k].name);
+            }
+            data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
+
+            data.append("size", $("#input-size").val());
+            data.append("prority", parseInt($("#input-prority").val()));
+            data.append("label", $("#input-label").val());
+            data.append("star", $("#input-star").val());
+            data.append("orientation", parseInt($('#orientation option:selected').val()));
+
+            var userid = Util.cookieStorage.getCookie("id");
+            var str =  "5|5|5|" + userid + "|" + moduleId;
+            var access_Token = Util.cookieStorage.getCookie("accessToken");
+
+            $.ajax({
+                headers: {
+                    /*"Accept": "application/json",*/
+                    "FISE-UA": str,
+                    "FISE-AccessToken": access_Token
+                    /*"Content-Type":"application/json;charset=UTF-8"*/
+                },
+                url:url,
+                type:"post",
+                data:data,
+                /*dataType: 'json',*/
+                processData:false,
+                contentType: false,
+                success:function(result){
+                    if (result.code == ReturnCode.SUCCESS) {
+                        $("#addTempl-modal").modal('hide');
+                        toastr.success("编辑成功!");
+                        action.loadPageData();
+                        $("#iconShow").empty();
+                        $("#imgShow").empty();
+                    }else{
+                        alert(result.msg);
+                    }
+                },
+                error:function(e){
+                    alert("错误！！");
                 }
             });
 		},
+        //删除数据
+        deleteConfig : function(deleteid) {
+            if (confirm("删除后不可恢复，确定删除" + name + "？")) {
+                var url = ctx + "xiaoyusvr/appinformation/appDelete";
+                var data = new Object();
+                data.app_id = parseInt(id);
+
+
+                Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                    if (result.code == ReturnCode.SUCCESS) {
+                        toastr.success("删除成功!");
+                        action.loadPageData();
+                    }else{
+                        alert(result.msg);
+                    }
+                });
+            }
+        },
         //获取所有数据
         loadChannelData : function() {
             var search_channelname = $("#input-search-channelname").val();
-
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -211,16 +311,87 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent().parent();
-        var check_status = $.trim(that.find("td").eq(9).text());
-        var status_val = null;
-        if(check_status === "待审核"){
-            status_val = 0;
-        }else if(check_status === "发布"){
-            status_val = 1;
-        }else if(check_status === "拒绝"){
-            status_val = 2;
-        }else if(check_status === "下架"){
-            status_val = 3;
+        var check_topcategory = $.trim(that.find("td").eq(7).text());
+        var check_category = $.trim(that.find("td").eq(8).text());
+        var topcategory_val = null;
+        if(check_topcategory === "软件"){
+            topcategory_val = 1;
+        }else if(check_topcategory === "游戏"){
+            topcategory_val = 2;
+        }else if(check_topcategory === "电子书"){
+            topcategory_val = 3;
+        }
+        if (topcategory_val =="1"){
+            $("#category1").show();
+            $("#category2").hide();
+            $("#category3").hide();
+            $("#category1 option").each(function(){
+                if($(this).text() == check_category) {
+                    $(this).attr("selected", true);
+                }
+            });
+        }else if (topcategory_val =="2"){
+            $("#category1").hide();
+            $("#category2").show();
+            $("#category3").hide();
+            $("#category2 option").each(function(){
+                if($(this).text() == check_category) {
+                    $(this).attr("selected", true);
+                }
+            });
+        }else if (topcategory_val =="3"){
+            $("#category1").hide();
+            $("#category2").hide();
+            $("#category3").show();
+            $("#category3 option").each(function(){
+                if($(this).text() == check_category) {
+                    $(this).attr("selected", true);
+                }
+            });
+        }
+
+        var orientation_val = $.trim(that.find("td").eq(22).text());
+
+        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var myDiv1 = document.getElementById("iconShow");
+        for(var i=0; i < iconList.length; i++){
+            var img1 = document.createElement("img");
+            img1.setAttribute("class", "newIcon");
+            img1.width =120;
+            img1.src = iconList[i];
+            img1.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                 this.width+=200;
+                 } else {
+                 this.width = 420;
+                 }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv1.appendChild(img1);
+        }
+
+        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var myDiv2 = document.getElementById("imgShow");
+        for(var i=0; i < imgList.length; i++){
+            var img = document.createElement("img");
+            img.setAttribute("class", "newImg");
+            img.width =420;
+            img.src = imgList[i];
+            img.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                 this.width+=200;
+                 } else {
+                 this.width = 420;
+                 }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv2.appendChild(img);
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
@@ -230,22 +401,26 @@ $(function() {
         $("#input-packagename").val(that.find("td").eq(4).text());
         $("#input-devid").val(that.find("td").eq(5).text());
         $("#input-devname").val(that.find("td").eq(6).text());
-        $("#input-topcategory").val(that.find("td").eq(7).text());
-        $("#input-category").val(that.find("td").eq(8).text());
-        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-        $("#input-description").val(that.find("td").eq(10).text());
-        $("#input-version").val(that.find("td").eq(11).text());
-        $("#input-versioncode").val(that.find("td").eq(12).text());
-        $("#input-icon").val(that.find("td").eq(13).text());
-        $("#input-icontype").val(that.find("td").eq(14).text());
-        $("#input-images").val(that.find("td").eq(15).text());
-        $("#input-download").val(that.find("td").eq(16).text());
-        $("#input-size").val(that.find("td").eq(17).text());
-        $("#input-prority").val(that.find("td").eq(18).text());
-        $("#input-remarks").val(that.find("td").eq(19).text());
+
+        $("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
+
+
+        $("#input-description").val(that.find("td").eq(9).text());
+        $("#input-version").val(that.find("td").eq(10).text());
+        $("#input-versioncode").val(that.find("td").eq(11).text());
+
+        //$("#input-icon").val(that.find("td").eq(12).text());
+        $("#input-icontype").val(that.find("td").eq(13).text());
+        //$("#input-images").val(that.find("td").eq(14).text());
+        //$("#input-download").val(that.find("td").eq(15).text());
+
+        $("#input-size").val(that.find("td").eq(16).text());
+        $("#input-prority").val(that.find("td").eq(17).text());
+
         $("#input-label").val(that.find("td").eq(20).text());
         $("#input-star").val(that.find("td").eq(21).text());
-        $("#input-orientation").val(that.find("td").eq(22).text());
+        $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
+
         $("#addTempl-modal").modal("show");
     });
 
@@ -264,9 +439,21 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑应用信息");
+            $("#add-developerid-wrap").hide();
+            $("#add-developername-wrap").hide();
+            $("#showIcon").show();
+            $("#showIconprompt").show();
+            $("#showImage").show();
+            $("#showImageprompt").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
             $("h4#addTempl-modal-label").text("添加应用信息");
+            $("#add-developerid-wrap").hide();
+            $("#add-developername-wrap").hide();
+            $("#showIcon").hide();
+            $("#showIconprompt").hide();
+            $("#showImage").hide();
+            $("#showImageprompt").hide();
             $form.data("action", "add");
             $form[0].reset();
 		}
@@ -282,6 +469,17 @@ $(function() {
             $form.data("action", "add");
             $form[0].reset();
         }
+    });
+
+    //关闭或者hide弹出框清空插入的图片
+    $("#addTempl-modal .close").on('click', function() {
+        $("#iconShow").empty();
+        $("#imgShow").empty();
+    });
+
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $("#iconShow").empty();
+        $("#imgShow").empty();
     });
 
 	//验证表单
@@ -324,6 +522,24 @@ $(function() {
             $(this).next().remove();
         }
     });
+
+    $("input:radio[name=topcategory]").change(function(){
+        var v = $(this).val();
+        if (v =="1"){
+            $("#category1").show();
+            $("#category2").hide();
+            $("#category3").hide();
+        }else if (v =="2"){
+            $("#category1").hide();
+            $("#category2").show();
+            $("#category3").hide();
+        }else if (v =="3"){
+            $("#category1").hide();
+            $("#category2").hide();
+            $("#category3").show();
+        }
+    });
+
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
@@ -681,3 +897,44 @@ Util.Page = (function() {
     };
     return Page;
 })();
+
+function imgShow(outerdiv, innerdiv, bigimg, _this){
+    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+    $("<img/>").attr("src", src).load(function(){
+        var windowW = $(window).width();//获取当前窗口宽度
+        var windowH = $(window).height();//获取当前窗口高度
+        var realWidth = this.width;//获取图片真实宽度
+        var realHeight = this.height;//获取图片真实高度
+        var imgWidth, imgHeight;
+        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+        if(realHeight>windowH*scale) {//判断图片高度
+            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                imgWidth = windowW*scale;//再对宽度进行缩放
+            }
+        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+        } else {//如果图片真实高度和宽度都符合要求，高宽不变
+            imgWidth = realWidth;
+            imgHeight = realHeight;
+        }
+        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+    });
+
+    $(outerdiv).click(function(){//再次点击淡出消失弹出层
+        $(this).fadeOut("fast");
+    });
+}
+
+

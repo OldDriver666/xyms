@@ -43,7 +43,7 @@
 <body class="beg-login-bg">
 <div class="beg-login-box">
 	<header>
-		<h1>小雨后台登录</h1>
+		<h1>小雨管理平台登录</h1>
 	</header>
 	<div class="beg-login-main">
 		<form id="form_login">
@@ -90,6 +90,8 @@
                 Util.cookieStorage.setCookie("nickName",result.data.nickName);
 				Util.cookieStorage.setCookie("phone",result.data.phone);
                 Util.cookieStorage.setCookie("roleId",result.data.roleId);
+				Util.cookieStorage.setCookie("creatorId",result.data.creatorId);
+				Util.cookieStorage.setCookie("userType",result.data.userType);
                 window.location.href = "index.html";
             }  else {
                 alert(result.msg);

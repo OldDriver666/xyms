@@ -185,13 +185,11 @@ public class AppInformationController {
    		Integer devId=param.getParam().getDevId();
    		String appName=param.getParam().getAppName();
    		Integer status=param.getParam().getStatus();
-   		
    		if(devId==null&&StringUtil.isEmpty(appName)&&status==null){
    			response=appInfoemationService.query(param);	
    			return response;
    		}
    		response=appInfoemationService.queryByParam(param);	
-   		
    		return response;
    	}
 }

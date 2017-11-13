@@ -36,10 +36,22 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	private WiAdminMapper adminDao;
 
 	@Override
-	public Response insert(DeveloperInsert param,List< MultipartFile> uploadfile) {
+	public Response insert(DeveloperInsert param,List<MultipartFile> uploadfile) {
 		Response response = new Response();
 		WiAdmin developer = new WiAdmin();
+		
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andAccountEqualTo(param.getAccount());
+		
+		List<WiAdmin> queryAccount =adminDao.selectByExample(example);
+		if(queryAccount.size()!=0){
+			response.failure(ErrorCode.ERROR_ACCOUNT_ALREADY_EXISTED);
+			response.setMsg("该账户已注册");
+			return response;
+		}
 		developer.setAccount(param.getAccount());
+		
 		developer.setPassword(param.getPassword());
 		developer.setNickName(param.getNickName());
 		developer.setPhone(param.getPhone());
@@ -47,6 +59,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		// 默认不可用
 		developer.setStatus(0);
 		developer.setCreated(DateUtil.getLinuxTimeStamp());
+		developer.setUpdated(DateUtil.getLinuxTimeStamp());
 		developer.setIdCard(param.getIdCard());
 		// 三张身份证的照片，上传到服务器中，获取它们的地址值，用;隔开
 		List<String> images = null;
@@ -57,24 +70,17 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			response.setMsg("上传图片失败");
 			return response;
 		}
-
-		StringBuilder imagesUrl = new StringBuilder();
-		for (int i = 1; i < images.size(); i++) {
-			imagesUrl.append(images.get(i-1) + ";");
-		}
-		imagesUrl.append(images.get(images.size()-1));
-	
+	    String imagesUrl=StringUtil.combineStr(images);
 		developer.setCardPhoto(param.getCardPhoto());
 		developer.setDescription(param.getDescription());
 		developer.setUserType(param.getUserType());
-		developer.setCardPhoto(imagesUrl.toString());
+		developer.setCardPhoto(imagesUrl);
 
 		adminDao.insert(developer);
 		response.success(developer);
 		return response;
 	}
 
-	// @RequestBody @RequestParam("image")
 	private List<String> photoUpload(List<MultipartFile> uploadfile) throws IllegalStateException, IOException {
 		MultipartFile file = null;
 		String pictureURL = "";
@@ -95,15 +101,12 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
-
 				file.transferTo(dir);
-
+				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 			    pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
-					
 				result.add(pictureURL);
 			}
 		}
-
 		return result;
 	}
 
@@ -118,6 +121,8 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		updWhere.andIdEqualTo(developer.getAdminId());
 		
 		wiadmin.setStatus(developer.getStatus());
+		wiadmin.setRoleId(31);
+		wiadmin.setCompanyId(1);
 		wiadmin.setUpdated(DateUtil.getLinuxTimeStamp());
 		wiadmin.setRemarks(developer.getRemarks());
 		int result=adminDao.updateByExampleSelective(wiadmin, example);

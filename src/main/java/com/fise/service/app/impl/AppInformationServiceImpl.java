@@ -193,7 +193,6 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		Response response = new Response();
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
-		// con.andAppIndexEqualTo(param);
 		con.andIdEqualTo(param);
 		List<AppInformation> data = appInformationDao.selectByExample(example);
 		if (data.size() == 0) {
@@ -202,8 +201,6 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			return response;
 		}
 		AppDetailResult result = new AppDetailResult();
-		// String creatorName=getCreatorName(data.get(0).getCreatorId());
-		// data.get(0).setCreatorName(creatorName);
 		result.init(data.get(0));
 		response.success(result);
 		return response;
@@ -331,15 +328,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
-
 				file.transferTo(dir);
-
+				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 				pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
-
 				result.add(pictureURL);
 			}
 		}
-
 		return result;
 	}
 
@@ -358,7 +352,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		uploadfile.transferTo(dir);
-
+		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
 		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
@@ -382,12 +376,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		uploadfile.transferTo(dir);
-
+		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
 		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
 		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
-
 		return downloadURL;
 	}
 
@@ -481,7 +474,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		// 0-待审核 1-发布 2-拒绝 3-下架
-		appInfo.setStatus(param.getStatus());
+		appInfo.setStatus(0);
 		appInfo.setIconType(param.getIconType());
 		if(iconurl!=null){
 			appInfo.setIcon(iconurl);

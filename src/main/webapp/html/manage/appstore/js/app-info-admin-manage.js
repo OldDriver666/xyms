@@ -32,18 +32,20 @@ $(function() {
         },
 		//获取所有数据
 		loadPageData : function() {
-			var search_IME = $("#input-search-userid").val();
-
+			var search_appname = $("#input-search-appname").val();
+            var search_status = parseInt($('#input-search-status option:selected').val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/problem/queryback";
+            var url = ctx + "xiaoyusvr/appinformation/appQuery";
             var data = new Object();
-                data.page_no = 1;
-                data.page_size = 20;
-                data.param = {
-                    "user_id":search_IME
-                };
+            data.page_no = 1;
+            data.page_size = 20;
+            data.param = {
+                "dev_id": null,
+                "app_name":search_appname,
+                "status":search_status
+            };
 
             var opt = {
                 "targetContentId" : "pageContent",
@@ -72,73 +74,232 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-            var url = ctx + "xiaoyusvr/problem/update";
+            var url = ctx + "xiaoyusvr/appinformation/checkup";
             var data = new Object();
-            data.id = $("#input-id").val();
+            data.app_id = $("#input-id").val();
             data.status = parseInt($("input[name=status]:checked").val());
+            data.remarks = $("#input-remarks").val();
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-                    $("#input-content").empty();
+                    $("#iconShow").empty();
+                    $("#imgShow").empty();
                 }else{
                     alert(result.msg);
                 }
             });
-		}
+		},
+        //获取所有数据
+        loadChannelData : function() {
+            var search_channelname = $("#input-search-channelname").val();
+
+
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/app/channel/query";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = 20;
+            data.param = {
+                "channel_name":search_channelname
+            };
+
+            var opt = {
+                "targetContentId" : "pageContent",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageTmpl",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
+                   /* //return result.data.result;*/
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
+        },
+        //新增数据
+        addToChannel : function() {
+            var url = ctx + "xiaoyusvr/app/channellist/insert";
+            var data = new Object();
+            data.channel_id = parseInt($('#input-channels option:selected').val());
+            data.app_id = parseInt($("#input-app-id").val());
+            data.status = parseInt($("input[name=status-txt]:checked").val());
+            data.prority = parseInt($("#input-prority-txt").val());
+
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $("#addTempl2-modal").modal('hide');
+                    toastr.success("添加成功!");
+                }else{
+                    alert(result.msg);
+                }
+            });
+        },
 	};
 	window.action = action;
     action.init();
 	action.loadPageData();
+    action.loadChannelData();
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent();
-        var check_status = $.trim(that.find("td").eq(5).text());
+        var that = $(this).parent().parent().parent();
+        var check_status = $.trim(that.find("td").eq(18).text());
         var status_val = null;
-        if(check_status === "不可用"){
+        if(check_status === "待审核"){
             status_val = 0;
-        }else if(check_status === "可用"){
+        }else if(check_status === "发布"){
             status_val = 1;
+        }else if(check_status === "拒绝"){
+            status_val = 2;
+        }else if(check_status === "下架"){
+            status_val = 3;
         }
 
-        $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-userID").val(that.find("td").eq(3).text());
-        $("#input-title").val(that.find("td").eq(1).text());
-        $("#input-content").append(that.find("td").eq(6).text());
-        //$("#input-content").val(that.find("td").eq(2).text());
-        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-        $("#addTempl-modal").modal("show");
+        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var myDiv1 = document.getElementById("iconShow");
+        for(var i=0; i < iconList.length; i++){
+            var img1 = document.createElement("img");
+            img1.setAttribute("class", "newIcon");
+            img1.width =120;
+            img1.src = iconList[i];
+            img1.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                 this.width+=200;
+                 } else {
+                 this.width = 420;
+                 }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv1.appendChild(img1);
+        }
 
-        //设置图片width，文字分行显示
-        $("#input-content img").css("width", "450");
-        $("#input-content").css("word-break", "break-all");
+        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var myDiv2 = document.getElementById("imgShow");
+        for(var i=0; i < imgList.length; i++){
+            var img = document.createElement("img");
+            img.setAttribute("class", "newImg");
+            img.width =420;
+            img.src = imgList[i];
+            img.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                    this.width+=200;
+                } else {
+                    this.width = 420;
+                }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
+            };
+            myDiv2.appendChild(img);
+        }
+
+        var orientation_val = $.trim(that.find("td").eq(22).text());
+
+        $("#input-id").val(that.find("td").eq(0).text());
+        $("#input-appindex").val(that.find("td").eq(2).text());
+        $("#input-appname").val(that.find("td").eq(1).text());
+        $("#input-appspell").val(that.find("td").eq(3).text());
+        $("#input-packagename").val(that.find("td").eq(4).text());
+        $("#input-devid").val(that.find("td").eq(5).text());
+        $("#input-devname").val(that.find("td").eq(6).text());
+        $("#input-topcategory").val(that.find("td").eq(7).text());
+        $("#input-category").val(that.find("td").eq(8).text());
+
+        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
+        $("#input-description").val(that.find("td").eq(9).text());
+        $("#input-version").val(that.find("td").eq(10).text());
+        $("#input-versioncode").val(that.find("td").eq(11).text());
+
+        $("#input-icontype").val(that.find("td").eq(13).text());
+
+        $("#input-download").val(that.find("td").eq(15).text());
+
+        $("#input-size").val(that.find("td").eq(16).text());
+        $("#input-prority").val(that.find("td").eq(17).text());
+
+        $("#input-remarks").val(that.find("td").eq(19).text());
+        $("#input-label").val(that.find("td").eq(20).text());
+        $("#input-star").val(that.find("td").eq(21).text());
+        $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
+        $("#addTempl-modal").modal("show");
+        $("#orientation").attr("disabled", "disabled");
+    });
+
+    //编辑获取数据数据
+    $("#pageContent").on("click",".table-add-btn",function(){
+        var that = $(this).parent().parent().parent();
+
+        $("#input-app-id").val(that.find("td").eq(0).text());
+        $("#input-app-name").val(that.find("td").eq(1).text());
+
+        $("#addTempl2-modal").modal("show");
     });
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑信息");
+			$("h4#addTempl-modal-label").text("审核应用信息");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
+            $("h4#addTempl-modal-label").text("添加应用信息");
+            $form.data("action", "add");
+            $form[0].reset();
 		}
 	});
+    $("#addTempl2-modal").on('show.bs.modal', function(e) {
+        // 处理modal label显示及表单重置
+        var $form = $("form#form-addTempl2");
+        if (!e.relatedTarget) {
+            $("h4#addTempl2-modal-label").text("添加频道应用");
+            $form.data("action", "edit");
+        } else if (e.relatedTarget.id = "btn-add-userRoles") {
+            $("h4#addTempl2-modal-label").text("添加频道应用");
+            $form.data("action", "add");
+            $form[0].reset();
+        }
+    });
+
 
     //关闭或者hide弹出框清空插入的图片
     $("#addTempl-modal .close").on('click', function() {
-        $("#input-content").empty();
+        $("#iconShow").empty();
+        $("#imgShow").empty();
     });
 
     $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
-        $("#input-content").empty();
+        $("#iconShow").empty();
+        $("#imgShow").empty();
     });
-
 
 	//验证表单
     $("#form-addTempl").validate({
+        rules : {
+        }
+    });
+    //验证表单
+    $("#form-addTempl2").validate({
         rules : {
         }
     });
@@ -166,20 +327,27 @@ $(function() {
             $(this).next().remove();
         }
     });
+    $("#input-channels").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
-        if(action == "add"){
+        /*if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
             }else if($('#input-devType option:selected').val() == "") {
                 $("#input-password").parent().parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").parent().append(err_html);
+                $("#input-password").append(err_html);
                 return;
             }else {
                 window.action.add();
             }
-        }else if(action == "edit"){
+        }else*/
+        if(action == "edit"){
             if (!$("#form-addTempl").valid()) {
                 return;
             }else{
@@ -188,14 +356,29 @@ $(function() {
         }
     });
 
+    $("#btn-add-submit2").on('click', function() {
+        var action = $("form#form-addTempl2").data("action");
+        if(action == "edit"){
+            if (!$("#form-addTempl2").valid()) {
+                return;
+            }else if($('#input-channels option:selected').val() == "") {
+                $("#input-channels").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-channels").append(err_html);
+                return;
+            }else {
+                window.action.addToChannel();
+            }
+        }
+    });
+
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-userid").on('keydown', function(e) {
+	$("#input-search-appname").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
-
 	});
 
 });
@@ -508,3 +691,42 @@ Util.Page = (function() {
     };
     return Page;
 })();
+
+function imgShow(outerdiv, innerdiv, bigimg, _this){
+    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+    $("<img/>").attr("src", src).load(function(){
+        var windowW = $(window).width();//获取当前窗口宽度
+        var windowH = $(window).height();//获取当前窗口高度
+        var realWidth = this.width;//获取图片真实宽度
+        var realHeight = this.height;//获取图片真实高度
+        var imgWidth, imgHeight;
+        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+        if(realHeight>windowH*scale) {//判断图片高度
+            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                imgWidth = windowW*scale;//再对宽度进行缩放
+            }
+        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+        } else {//如果图片真实高度和宽度都符合要求，高宽不变
+            imgWidth = realWidth;
+            imgHeight = realHeight;
+        }
+        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+    });
+
+    $(outerdiv).click(function(){//再次点击淡出消失弹出层
+        $(this).fadeOut("fast");
+    });
+}
