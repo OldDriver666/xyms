@@ -1,6 +1,7 @@
 package com.fise.service.administrator;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,4 +27,13 @@ public interface IDeveloperService {
 	
 	/*开发者注册时检查account是否唯一*/
 	public Response queryAccount(String account);
+	
+	/*开发者注册时做邮箱验证发送验证码*/
+	public Response sendCode(Map<String,String> map);
+	
+	/*开发者注册时做邮箱验证核对验证码*/
+	public Response checkCode(Map<String,String> map);
+	
+	/*开发者注册时检查邮箱是否已注册*/
+	public Response queryEmail(String email);
 }

@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
+import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiAdminExample.Criteria;
@@ -28,10 +31,13 @@ import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
+import redis.clients.jedis.Jedis;
+
 @Service
 public class DeveloperServiceImpl implements IDeveloperService {
 	Logger logger = Logger.getLogger(DeveloperServiceImpl.class);
-
+	
+    private int count=2;
 	@Autowired
 	private WiAdminMapper adminDao;
 
@@ -218,5 +224,80 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		}
 		return response;
 	}
+	@Override
+	public Response sendCode(Map<String, String> map) {
+		Response response = new Response();
+		try {  
+            HtmlEmail email = new HtmlEmail();//不用更改  
+            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com  
+            email.setCharset("UTF-8");  
+            email.setSSLOnConnect(true);
+            
+            email.addTo(map.get("emailaddress"));// 收件地址  
+  
+            email.setFrom("2839117863@qq.com", "天堂遗孤");//此处填邮箱地址和用户名,用户名可以任意填写  
+  
+            email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");//此处填写邮箱地址和客户端授权码  
+  
+            email.setSubject("孙大大通讯");//此处填写邮件名，邮件名可任意填写  
+            
+            String randomCode=StringUtil.makeCode(6, false);
+            //email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + map.get("code"));//此处填写邮件内容  
+            Jedis jedis=null;
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+            jedis.setex("randomCode", Constants.VALIDATION_CODE_EXPIRE_SECONDS, randomCode);
+            email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + randomCode);
+            // System.out.println("----------"+map.get("emailaddress"));
+            email.send();
+            response.success();
+            return response; 
+          }catch(Exception e){  
+            e.printStackTrace();  
+            return response.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);  
+        }
+	}
 
+	@Override
+	public Response checkCode(Map<String, String> map) {
+		Response response = new Response();
+		String code=map.get("checkCode");
+		Jedis jedis=null;
+        jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+        for(int i=2;i>=0;i--){
+        	if(code.equalsIgnoreCase(jedis.get("randomCode"))){
+        		 response.setMsg("邮箱验证通过");
+        	     response.success();
+        	     break;
+            }else{
+            	if(count==0){
+            		response.setMsg("对不起，您3次输入错误");
+            		response.setCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION.getCode());
+            	}else{
+            		response.setMsg("输入错误，您还有" + count+ "次机会");
+            		response.setCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION.getCode());
+            		count--;
+            		break;
+            	}
+            }
+		}
+		return response;
+	}
+
+	@Override
+	public Response queryEmail(String email) {
+		Response response = new Response();
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andEmailEqualTo(email);
+		
+		List<WiAdmin> queryAccount =adminDao.selectByExample(example);
+		if(queryAccount.size()!=0){
+			response.failure(ErrorCode.ERROR_ACCOUNT_ALREADY_EXISTED);
+			response.setMsg("该邮箱已注册");
+			return response;
+		}
+		response.setCode(200);
+		response.setMsg("该邮箱未注册");
+		return response;
+	}
 }
