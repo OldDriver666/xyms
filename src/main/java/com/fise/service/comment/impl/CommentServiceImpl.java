@@ -131,7 +131,7 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         criteria.andStatusEqualTo(1);
-        example.setOrderByClause("created desc");
+        example.setOrderByClause("created asc");
         //根据好友关系查询
         List<Integer> userlist = relationShipDao.findrelation(page.getParam().getId());
         //判断好友是否为空
