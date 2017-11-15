@@ -457,6 +457,11 @@ $(function(){
             $('#personal div[_errorTips="mailNone"]').hide();
         }
     });
+    $('#personal input[_key="emailcode"]').change(function () {
+        if ($(this).val() != "") {
+            $('div[_errorTips="emailcode"]').hide();
+        }
+    });
 
 
     $('#agency input[_key="account"]').change(function () {
@@ -537,8 +542,7 @@ $(function(){
         }
     });
 
-
-    $('input[_key="emailcode"]').change(function () {
+    $('#agency input[_key="emailcode"]').change(function () {
         if ($(this).val() != "") {
             $('div[_errorTips="emailcode"]').hide();
         }
