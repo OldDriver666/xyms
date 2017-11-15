@@ -8,7 +8,7 @@ import com.fise.utils.JsonUtil;
 public class DeveloperUpdate {
 	@NotNull
 	@JsonProperty("developer_id")
-	private Integer adminId;
+	private Integer Id;
 	
 	private Integer status;
 	
@@ -16,12 +16,12 @@ public class DeveloperUpdate {
 	
 	private String remarks;
 	
-	public Integer getAdminId() {
-		return adminId;
+	public Integer getId() {
+		return Id;
 	}
 
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
+	public void setId(Integer id) {
+		Id = id;
 	}
 
 	public Integer getStatus() {

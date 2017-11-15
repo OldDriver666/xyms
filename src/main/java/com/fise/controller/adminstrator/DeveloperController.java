@@ -48,14 +48,6 @@ public class DeveloperController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/checkResult", method = RequestMethod.POST)
-	public Response checkResult(@RequestBody @Valid Map<String , Object> developer){
-		Response response=new Response();
-		logger.info(developer.toString());
-		response=devservice.checkResult(developer);
-		return response;
-	}
-	
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Response query(@RequestBody @Valid Page<DeveloperQuery> developer){
 		Response response=new Response();

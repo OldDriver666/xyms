@@ -124,7 +124,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 
 		WiAdminExample example = new WiAdminExample();
 		Criteria updWhere = example.createCriteria();
-		updWhere.andIdEqualTo(developer.getAdminId());
+		updWhere.andIdEqualTo(developer.getId());
 
 		wiadmin.setStatus(developer.getStatus());
 		wiadmin.setRoleId(31);
@@ -137,6 +137,33 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			response.setMsg("开发者审核失败");
 			return response;
 		}
+		WiAdmin  dev= adminDao.selectByPrimaryKey(developer.getId());
+		try {
+			HtmlEmail email = new HtmlEmail();// 不用更改
+			email.setHostName("smtp.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+			email.setCharset("UTF-8");
+			email.setSSLOnConnect(true);
+
+			email.addTo(dev.getEmail());// 收件地址
+
+			email.setFrom("2839117863@qq.com", "天堂遗孤");// 此处填邮箱地址和用户名,用户名可以任意填写
+
+			email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");// 此处填写邮箱地址和客户端授权码
+
+			email.setSubject("孙大大通讯");// 此处填写邮件名，邮件名可任意填写
+			if (dev.getStatus() == 0) {
+				email.setMsg("亲，您好,您在沸石开发者平台注册的信息审核未通过，原因是:" + dev.getRemarks() + "。");// 此处填写邮件内容
+			}
+			if (dev.getStatus() == 1) {
+				email.setMsg("亲，恭喜您，你在沸石开发者平台注册的信息已审核通过，祝您生活愉快。");// 此处填写邮件内容
+			}
+			email.send();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return response.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);
+		}
+		response.setMsg("该开发者审核完成。");
+		response.success();
 		return response;
 	}
 
@@ -298,48 +325,5 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		response.setCode(200);
 		response.setMsg("该邮箱未注册");
 		return response;
-	}
-
-	@Override
-	public Response checkResult(Map<String, Object> param) {
-		Response resp = new Response();
-		Integer id = (Integer) param.get("developer_id");
-		if (id == null) {
-			resp.setMsg(ErrorCode.ERROR_PARAM_BIND_EXCEPTION.getMsg());
-			resp.setCode(400);
-			return resp;
-		}
-		WiAdmin result = adminDao.selectByPrimaryKey(id);
-		if (result == null) {
-			resp.setMsg(ErrorCode.ERROR_SEARCH_UNEXIST.getMsg());
-			resp.setCode(400);
-			return resp;
-		}
-
-		try {
-			HtmlEmail email = new HtmlEmail();// 不用更改
-			email.setHostName("smtp.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
-			email.setCharset("UTF-8");
-			email.setSSLOnConnect(true);
-
-			email.addTo(result.getEmail());// 收件地址
-
-			email.setFrom("2839117863@qq.com", "天堂遗孤");// 此处填邮箱地址和用户名,用户名可以任意填写
-
-			email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");// 此处填写邮箱地址和客户端授权码
-
-			email.setSubject("孙大大通讯");// 此处填写邮件名，邮件名可任意填写
-			if (result.getStatus() == 0) {
-				email.setMsg("亲，您好,您在沸石开发者平台注册的信息审核未通过，原因是:" + result.getRemarks() + "。");// 此处填写邮件内容
-			}
-			if (result.getStatus() == 1) {
-				email.setMsg("亲，恭喜您，你在沸石开发者平台注册的信息已审核通过，祝您生活愉快。");// 此处填写邮件内容
-			}
-			email.send();
-			return resp.success();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return resp.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);
-		}
 	}
 }
