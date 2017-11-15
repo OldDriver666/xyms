@@ -39,11 +39,20 @@ public class DeveloperController {
 		response=devservice.insert(developer,files);
 		return response;
 	}
+	
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
 	public Response checkup(@RequestBody @Valid DeveloperUpdate developer){
 		Response response=new Response();
 		logger.info(developer.toString());
 		response=devservice.update(developer);
+		return response;
+	}
+	
+	@RequestMapping(value = "/checkResult", method = RequestMethod.POST)
+	public Response checkResult(@RequestBody @Valid Map<String , Object> developer){
+		Response response=new Response();
+		logger.info(developer.toString());
+		response=devservice.checkResult(developer);
 		return response;
 	}
 	
@@ -101,4 +110,4 @@ public class DeveloperController {
 		return response; 
 	}
 
-}
+} 

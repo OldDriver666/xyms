@@ -36,4 +36,7 @@ public interface IDeveloperService {
 	
 	/*开发者注册时检查邮箱是否已注册*/
 	public Response queryEmail(String email);
+	
+	/*开发者审核后的结果通知(以邮件的形式)*/
+	public Response checkResult(Map<String,Object> map);
 }
