@@ -37,7 +37,6 @@ import redis.clients.jedis.Jedis;
 public class DeveloperServiceImpl implements IDeveloperService {
 	Logger logger = Logger.getLogger(DeveloperServiceImpl.class);
 
-	private int count = 2;
 	@Autowired
 	private WiAdminMapper adminDao;
 
@@ -137,7 +136,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			response.setMsg("开发者审核失败");
 			return response;
 		}
-		WiAdmin  dev= adminDao.selectByPrimaryKey(developer.getId());
+		WiAdmin dev = adminDao.selectByPrimaryKey(developer.getId());
 		try {
 			HtmlEmail email = new HtmlEmail();// 不用更改
 			email.setHostName("smtp.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
@@ -289,23 +288,13 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		String code = map.get("checkCode");
 		Jedis jedis = null;
 		jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-		for (int i = 2; i >= 0; i--) {
-			if (code.equalsIgnoreCase(jedis.get("randomCode"))) {
-				response.setMsg("邮箱验证通过");
-				response.success();
-				break;
-			} else {
-				if (count == 0) {
-					response.setMsg("对不起，您3次输入错误");
-					response.setCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION.getCode());
-				} else {
-					response.setMsg("输入错误，您还有" + count + "次机会");
-					response.setCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION.getCode());
-					count--;
-					break;
-				}
-			}
+
+		if (!code.equalsIgnoreCase(jedis.get("randomCode"))) {
+			response.setMsg("验证码有误，请重新输入！");
+			response.setErrorCode(ErrorCode.ERROR_PARAM_NOT_VALID_EXCEPTION);
 		}
+		response.setMsg("邮箱验证通过");
+		response.success();
 		return response;
 	}
 
