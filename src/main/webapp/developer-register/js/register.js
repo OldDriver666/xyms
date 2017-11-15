@@ -69,6 +69,11 @@ $(function(){
                 return;
             }else if(mailFlag == false){
                 $('#personal div[_errorTips="mail"]').show();
+                $('#personal div[_errorTips="mailAlready"]').hide();
+                $('#personal div[_errorTips="mailNone"]').hide();
+                return;
+            }else if($('#personal input[_key="emailcode"]').val() == ""){
+                $('#personal div[_errorTips="emailcode"]').show();
                 return;
             }else if($(".agree-wp .ui-ico-chk").attr("_value") == 0){
                 $('div[_errorTips="agree-wp"]').show();
@@ -115,26 +120,39 @@ $(function(){
                     $('#personal div[_errorTips="accountAlready"]').show();
                     $('#personal div[_errorTips="accountNone"]').hide();
                 }else if(result.msg == "该账户未注册"){
-                    $.ajax({
-                        url:ctx + "xiaoyusvr/boss/developer/register",
-                        type:"post",
-                        data:form,
-                        dataType: 'json',
-                        processData:false,
-                        contentType: false,
-                        success:function(result){
-                            if (result.code == ReturnCode.SUCCESS) {
-                                $(".register-entrance").hide();
-                                $(".register-wrap").hide();
-                                $("#personal").hide();
-                                $("#agency").hide();
-                                $(".finish-entrance").show();
-                            }else{
-                                alert(result.msg);
-                            }
-                        },
-                        error:function(e){
-                            alert("错误！！");
+                    var url1 = ctx + "xiaoyusvr/boss/developer/checkcode";
+                    var data1 = new Object();
+                    data1.checkCode = $('#personal input[_key="emailcode"]').val();
+
+                    Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
+                        if (result1.code == ReturnCode.SUCCESS) {
+                            $.ajax({
+                                url:ctx + "xiaoyusvr/boss/developer/register",
+                                type:"post",
+                                data:form,
+                                dataType: 'json',
+                                processData:false,
+                                contentType: false,
+                                success:function(result){
+                                    if (result.code == ReturnCode.SUCCESS) {
+                                        $(".register-entrance").hide();
+                                        $(".register-wrap").hide();
+                                        $(".finish-entrance").show();
+                                    }else{
+                                        alert(result.msg);
+                                    }
+                                },
+                                error:function(e){
+                                    alert("错误！！");
+                                }
+                            });
+                        }else if(result1.msg == "对不起，您3次输入错误"){
+                            alert("对不起，您3次输入错误，请重新输入注册信息");
+                            $(".register-entrance").show();
+                            $(".register-wrap").hide();
+                            $(".finish-entrance").hide();
+                        }else{
+                            alert(result1.msg);
                         }
                     });
                 }
@@ -182,6 +200,11 @@ $(function(){
                 return;
             }else if(mailFlag == false){
                 $('#agency div[_errorTips="mail"]').show();
+                $('#agency div[_errorTips="mailAlready"]').hide();
+                $('#agency div[_errorTips="mailNone"]').hide();
+                return;
+            }else if($('#agency input[_key="emailcode"]').val() == ""){
+                $('#agency div[_errorTips="emailcode"]').show();
                 return;
             }else if($(".agree-wp .ui-ico-chk").attr("_value") == 0){
                 $('div[_errorTips="agree-wp"]').show();
@@ -228,32 +251,85 @@ $(function(){
                     $('#agency div[_errorTips="accountAlready"]').show();
                     $('#agency div[_errorTips="accountNone"]').hide();
                 }else if(result.msg == "该账户未注册"){
-                    $.ajax({
-                        url:ctx + "xiaoyusvr/boss/developer/register",
-                        type:"post",
-                        data:form,
-                        dataType: 'json',
-                        processData:false,
-                        contentType: false,
-                        success:function(result){
-                            if (result.code == ReturnCode.SUCCESS) {
-                                $(".register-entrance").hide();
-                                $(".register-wrap").hide();
-                                $("#personal").hide();
-                                $("#agency").hide();
-                                $(".finish-entrance").show();
-                            }else{
-                                alert(result.msg);
-                            }
-                        },
-                        error:function(e){
-                            alert("错误！！");
+                    var url1 = ctx + "xiaoyusvr/boss/developer/checkcode";
+                    var data1 = new Object();
+                    data1.checkCode = $('#agency input[_key="emailcode"]').val();
+
+                    Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
+                        if (result1.code == ReturnCode.SUCCESS) {
+                            $.ajax({
+                                url:ctx + "xiaoyusvr/boss/developer/register",
+                                type:"post",
+                                data:form,
+                                dataType: 'json',
+                                processData:false,
+                                contentType: false,
+                                success:function(result){
+                                    if (result.code == ReturnCode.SUCCESS) {
+                                        $(".register-entrance").hide();
+                                        $(".register-wrap").hide();
+                                        $(".finish-entrance").show();
+                                    }else{
+                                        alert(result.msg);
+                                    }
+                                },
+                                error:function(e){
+                                    alert("错误！！");
+                                }
+                            });
+                        }else if(result1.msg == "对不起，您3次输入错误"){
+                            alert("对不起，您3次输入错误，请重新输入注册信息");
+                            $(".register-entrance").show();
+                            $(".register-wrap").hide();
+                            $(".finish-entrance").hide();
+                        }else{
+                            alert(result1.msg);
                         }
                     });
                 }
             });
         }
     });
+
+    //发送验证码到邮箱
+    $('#personal div[_type="sendmailcode"]').on('click', function(){
+        var emailAddr = $('#personal input[_key="mail"]').val();
+
+        var url = ctx + "xiaoyusvr/boss/developer/sendcode";
+        var data = new Object();
+        data.emailaddress = emailAddr;
+
+        Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            if (result.code == ReturnCode.SUCCESS) {
+                $('#personal div[_errorTips="emailcodeAlready"]').hide();
+                $('#personal div[_errorTips="emailcodeNone"]').show();
+            }else{
+                alert(result.msg);
+                $('#personal div[_errorTips="emailcodeAlready"]').show();
+                $('#personal div[_errorTips="emailcodeNone"]').hide();
+            }
+        });
+    });
+
+    $('#agency div[_type="sendmailcode"]').on('click', function(){
+        var emailAddr = $('#agency input[_key="mail"]').val();
+
+        var url = ctx + "xiaoyusvr/boss/developer/sendcode";
+        var data = new Object();
+        data.emailaddress = emailAddr;
+
+        Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            if (result.code == ReturnCode.SUCCESS) {
+                $('#agency div[_errorTips="emailcodeAlready"]').hide();
+                $('#agency div[_errorTips="emailcodeNone"]').show();
+            }else{
+                alert(result.msg);
+                $('#agency div[_errorTips="emailcodeAlready"]').show();
+                $('#agency div[_errorTips="emailcodeNone"]').hide();
+            }
+        });
+    });
+
 
 
     //选择证件类型
@@ -362,6 +438,23 @@ $(function(){
     $('#personal input[_key="mail"]').change(function () {
         if ($(this).val() != "") {
             $('#personal div[_errorTips="mail"]').hide();
+            var url = ctx + "xiaoyusvr/boss/developer/queryEmail";
+            var data = new Object();
+            data.email = $('#personal input[_key="mail"]').val();
+
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.msg == "该邮箱已注册"){
+                    $('#personal div[_errorTips="mailAlready"]').show();
+                    $('#personal div[_errorTips="mailNone"]').hide();
+                }else if(result.msg == "该邮箱未注册"){
+                    $('#personal div[_errorTips="mailAlready"]').hide();
+                    $('#personal div[_errorTips="mailNone"]').show();
+                }
+            });
+        } else{
+            $('#personal div[_errorTips="mail"]').hide();
+            $('#personal div[_errorTips="mailAlready"]').hide();
+            $('#personal div[_errorTips="mailNone"]').hide();
         }
     });
 
@@ -420,9 +513,34 @@ $(function(){
             $('#agency div[_errorTips="tel"]').hide();
         }
     });
+
     $('#agency input[_key="mail"]').change(function () {
         if ($(this).val() != "") {
             $('#agency div[_errorTips="mail"]').hide();
+            var url = ctx + "xiaoyusvr/boss/developer/queryEmail";
+            var data = new Object();
+            data.email = $('#agency input[_key="mail"]').val();
+
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.msg == "该邮箱已注册"){
+                    $('#agency div[_errorTips="mailAlready"]').show();
+                    $('#agency div[_errorTips="mailNone"]').hide();
+                }else if(result.msg == "该邮箱未注册"){
+                    $('#agency div[_errorTips="mailAlready"]').hide();
+                    $('#agency div[_errorTips="mailNone"]').show();
+                }
+            });
+        } else{
+            $('#agency div[_errorTips="mail"]').hide();
+            $('#agency div[_errorTips="mailAlready"]').hide();
+            $('#agency div[_errorTips="mailNone"]').hide();
+        }
+    });
+
+
+    $('input[_key="emailcode"]').change(function () {
+        if ($(this).val() != "") {
+            $('div[_errorTips="emailcode"]').hide();
         }
     });
 
