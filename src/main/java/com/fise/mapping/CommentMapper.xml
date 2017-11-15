@@ -308,4 +308,18 @@
       order by ${example.orderByClause}
     </if>
   </select>
+  
+  <update id="updateList" parameterType="int">
+  	UPDATE Comment 
+  	SET status=0 
+  	where 
+  	problem_id=#{problem_id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateList1" parameterType="int">
+  	UPDATE Comment 
+  	SET status=0 
+  	where 
+  	answer_id=#{problem_id,jdbcType=INTEGER}
+  </update>
 </mapper>

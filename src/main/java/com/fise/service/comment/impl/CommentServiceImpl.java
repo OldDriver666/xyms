@@ -21,6 +21,7 @@ import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.Problems;
 import com.fise.model.entity.SensitiveWords;
 import com.fise.model.entity.SensitiveWordsExample;
 import com.fise.model.entity.CommentExample.Criteria;
@@ -130,7 +131,7 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         criteria.andStatusEqualTo(1);
-        example.setOrderByClause("created desc");
+        example.setOrderByClause("created asc");
         //根据好友关系查询
         List<Integer> userlist = relationShipDao.findrelation(page.getParam().getId());
         //判断好友是否为空
@@ -352,6 +353,26 @@ public class CommentServiceImpl implements ICommentService{
         
         param.setUpdated(DateUtil.getLinuxTimeStamp());
         commentDao.updateByPrimaryKeySelective(param);
+        
+        return resp.success();
+    }
+
+    @Override
+    public Response delMyCom(Integer comment_id) {
+        Response resp = new Response();
+        //根据评论id，查询到该评论，修改评论的状态status为0
+        Comment comment = commentDao.selectByPrimaryKey(comment_id);
+        if(comment==null){
+            return resp.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+        }
+        comment.setStatus(0);
+        comment.setUpdated(DateUtil.getLinuxTimeStamp());
+        commentDao.updateByPrimaryKey(comment);
+        //评论的回答的评论数-1
+        Answer answer = answerDao.selectByPrimaryKey(comment.getAnswerId());
+        answer.setCommentNum(answer.getCommentNum()-1);
+        answer.setUpdated(DateUtil.getLinuxTimeStamp());
+        answerDao.updateByPrimaryKey(answer);
         
         return resp.success();
     }

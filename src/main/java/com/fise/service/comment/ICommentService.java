@@ -20,6 +20,9 @@ public interface ICommentService {
     /*根据评论id查询评论*/
     public Response queryById(Integer comment_id);
     
+    /*根据评论id，删除评论*/
+    public Response delMyCom(Integer comment_id);
+    
     /*后台管理  评论查询*/
     public Response queryBack(Page<Comment> page);
     

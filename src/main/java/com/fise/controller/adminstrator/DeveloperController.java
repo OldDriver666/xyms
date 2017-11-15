@@ -71,5 +71,34 @@ public class DeveloperController {
 		response=devservice.queryAccount(account);
 		return response; 
 	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/sendcode", method = RequestMethod.POST)
+	public Response sendCode(@RequestBody @Valid Map<String , String> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		
+		response=devservice.sendCode(map);
+		return response; 
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/checkcode", method = RequestMethod.POST)
+	public Response checkCode(@RequestBody @Valid Map<String , String> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		response=devservice.checkCode(map);
+		return response; 
+	}
+
+	@IgnoreAuth
+	@RequestMapping(value = "/queryEmail", method = RequestMethod.POST)
+	public Response queryEmail(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		String email=(String) map.get("email");
+		response=devservice.queryEmail(email);
+		return response; 
+	}
 
 }

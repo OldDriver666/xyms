@@ -229,6 +229,20 @@ public class ProblemController {
         return res;
     }
     
+    /*根据问题id，删除我的问题    */
+    @IgnoreAuth
+    @RequestMapping(value="/delmyproblem",method=RequestMethod.POST)
+    public Response delMyProblem(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("problem_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        res = problemService.delMyPro(map.get("problem_id"));
+        return res;
+    }
+    
     /*后台管理 查询问题*/
     @RequestMapping(value="/queryback",method=RequestMethod.POST)
     public Response queryBack(@RequestBody @Valid Page<Problems> param){
@@ -252,5 +266,6 @@ public class ProblemController {
         resp=problemService.update(param);
         return resp;
     }
+    
     
 }

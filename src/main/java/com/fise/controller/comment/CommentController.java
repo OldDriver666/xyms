@@ -107,6 +107,21 @@ public class CommentController {
         return res;
     }
     
+    /*根据评论id，删除评论*/
+    @IgnoreAuth
+    @RequestMapping(value="/delmycom",method=RequestMethod.POST)
+    public Response delMyCom(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("comment_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        res=commentService.delMyCom(map.get("comment_id"));
+        return res;
+    }
+    
     /*后台管理  评论查询*/
     @RequestMapping(value="/queryback",method=RequestMethod.POST)
     public Response queryBack(@RequestBody @Valid Page<Comment> param){

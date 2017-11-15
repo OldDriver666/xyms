@@ -178,6 +178,23 @@ null 没有数据返回 看code是否成功
 }
 ```
 
+####删除我的问题
+|   接口地址    |   xiaoyusvr/problem/delmyproblem    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{ 
+	"problem_id":x            //必填-问题id
+}
+```
+####回复
+```
+无回复数据，看回复码
+```
+
 ####查询我的问题     获取更新的回答数量信息
 |   接口地址    |   xiaoyusvr/problem/myproblem    |
 |   ---         |   ---          |
@@ -410,7 +427,24 @@ null 没有数据返回 看code是否成功
       "comment_num": 2
    }
 }
-```     
+```
+
+####删除我的回答
+|   接口地址    |   xiaoyusvr/answer/delmyanswer    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+	"answer_id":x            //必填-回答的id
+}
+```
+####回复
+```
+无回复内容，看恢复码
+``` 
 
 ####回答点赞
 |   接口地址    |   xiaoyusvr/agree    |
@@ -805,6 +839,23 @@ msg 为已关注或未关注
       "problem_id": 20
    }
 }
+```
+
+####根据评论id删除我的评论
+|   接口地址    |   xiaoyusvr/comment/delmycom    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+	"comment_id":x             //必填-评论ID
+}
+```
+####回复
+```
+无回复内容，查询回复码
 ```
 
 ####用户信息查询

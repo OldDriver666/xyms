@@ -30,4 +30,8 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+    
+    int updateList(Integer problem_id);
+    
+    int updateList1(Integer answer_id);
 }

@@ -12,12 +12,17 @@ import org.springframework.stereotype.Service;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.dao.AnswerMapper;
+import com.fise.dao.CommentMapper;
+import com.fise.dao.ConcernMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
+import com.fise.model.entity.Answer;
+import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
@@ -51,6 +56,12 @@ public class ProblemServiceImpl implements IProblemService{
     
     @Autowired
     SensitiveWordsMapper sensitiveWordsDao;
+    
+    @Autowired
+    AnswerMapper answerDao;
+    
+    @Autowired
+    CommentMapper commentDao;
     
     @Override
     public Response insert(Problems record) {
@@ -289,9 +300,20 @@ public class ProblemServiceImpl implements IProblemService{
     @Override
     public Response delMyPro(Integer problem_id) {
         Response res = new Response();
+        //根据问题id查询问题,更改问题状态status为0
+        Problems problem = problemsDao.selectByPrimaryKey(problem_id);
+        if(problem==null){
+            return res.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+        }
+        problem.setStatus(0);
+        problem.setUpdated(DateUtil.getLinuxTimeStamp());
+        problemsDao.updateByPrimaryKey(problem);
         
-        
-        return null;
+        //根据问题id，更改问题下的回答状态status为0
+        answerDao.updateList(problem_id);
+        //根据问题id，更改问题下的评论状态status为0
+        commentDao.updateList(problem_id);
+        return res.success();
     }
     
     private Page<ProResult> getResult(List<ProResult> list1,List<Problems> list,Page<Problems> param){

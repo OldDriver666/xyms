@@ -186,6 +186,7 @@ public class ConcernServiceImpl implements IConcernService{
         ProblemsExample proExample = new ProblemsExample();
         ProblemsExample.Criteria cri=proExample.createCriteria();
         cri.andIdIn(listint);
+        cri.andStatusEqualTo(1);
         proExample.setOrderByClause("created desc");
         
         Page<Problems> param = new Page<Problems>();

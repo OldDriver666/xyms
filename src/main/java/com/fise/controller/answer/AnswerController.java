@@ -100,6 +100,20 @@ public class AnswerController {
         return res;
     }
     
+    /*根据回答ID，删除我的回答*/
+    @IgnoreAuth
+    @RequestMapping(value="/delmyanswer",method=RequestMethod.POST)
+    public Response delMyAnswer(@RequestBody @Valid Map<String, Integer> map){
+        Response res = new Response();
+        logger.info(map.toString());
+        
+        if(map.get("answer_id")==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        res=answerService.delMyAnswer(map.get("answer_id"));
+        return res;
+    }
+    
     /*后台管理  查询回答信息*/
     @RequestMapping(value="/queryback",method=RequestMethod.POST)
     public Response queryBack(@RequestBody @Valid Page<Answer> param){

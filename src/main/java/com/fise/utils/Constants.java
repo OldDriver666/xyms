@@ -7,6 +7,9 @@ public interface Constants {
 	// access token失效时间  15天
 	public Integer ACCESS_TOKEN_EXPIRE_SECONDS = 1296000;
 	
+	//开发者注册时邮箱验证时间2分钟
+	public Integer VALIDATION_CODE_EXPIRE_SECONDS=120;
+	
 	// oss上传文件url失效时长 10分钟
 	public Integer ALIYUN_OSS_UPLOAD_URL_EXPIRE_MILLISECONDS = 600000;
 	

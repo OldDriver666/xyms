@@ -30,4 +30,6 @@ public interface AnswerMapper {
     int updateByPrimaryKeySelective(Answer record);
 
     int updateByPrimaryKey(Answer record);
+    
+    int updateList(Integer problem_id);
 }
