@@ -1,5 +1,6 @@
 $(function(){
     var userType = null;
+    var errorCount = 0;
 
     //选择开发者用户注册类型 1个人 2公司
     $('div[_type="person"]').on('click', function(){
@@ -146,11 +147,19 @@ $(function(){
                                     alert("错误！！");
                                 }
                             });
-                        }else if(result1.msg == "对不起，您3次输入错误"){
-                            alert("对不起，您3次输入错误，请重新输入注册信息");
-                            $(".register-entrance").show();
-                            $(".register-wrap").hide();
-                            $(".finish-entrance").hide();
+                        }else if(result1.msg == "验证码有误，请重新输入！"){
+                            errorCount++;
+                            if(errorCount == 1){
+                                alert("对不起，您输入错误1次，还有2次输入机会");
+                            }else if(errorCount == 2){
+                                alert("对不起，您输入错误2次，还有1次输入机会");
+                            }else if(errorCount == 3){
+                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                $(".register-entrance").show();
+                                $(".register-wrap").hide();
+                                $(".finish-entrance").hide();
+                                errorCount = 0;
+                            }
                         }else{
                             alert(result1.msg);
                         }
@@ -277,11 +286,19 @@ $(function(){
                                     alert("错误！！");
                                 }
                             });
-                        }else if(result1.msg == "对不起，您3次输入错误"){
-                            alert("对不起，您3次输入错误，请重新输入注册信息");
-                            $(".register-entrance").show();
-                            $(".register-wrap").hide();
-                            $(".finish-entrance").hide();
+                        }else if(result1.msg == "验证码有误，请重新输入！"){
+                            errorCount++;
+                            if(errorCount == 1){
+                                alert("对不起，您输入错误1次，还有2次输入机会");
+                            }else if(errorCount == 2){
+                                alert("对不起，您输入错误2次，还有1次输入机会");
+                            }else if(errorCount == 3){
+                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                $(".register-entrance").show();
+                                $(".register-wrap").hide();
+                                $(".finish-entrance").hide();
+                                errorCount = 0;
+                            }
                         }else{
                             alert(result1.msg);
                         }
@@ -292,15 +309,16 @@ $(function(){
     });
 
     //发送验证码到邮箱
-    $('#personal div[_type="sendmailcode"]').on('click', function(){
+    $('#personal input[_type="sendmailcode"]').on('click', function(){
         var emailAddr = $('#personal input[_key="mail"]').val();
-
+        settime($(this));
         var url = ctx + "xiaoyusvr/boss/developer/sendcode";
         var data = new Object();
         data.emailaddress = emailAddr;
 
         Util.ajaxLoadData(url,data,"POST",true,function(result) {
             if (result.code == ReturnCode.SUCCESS) {
+
                 $('#personal div[_errorTips="emailcodeAlready"]').hide();
                 $('#personal div[_errorTips="emailcodeNone"]').show();
             }else{
@@ -311,9 +329,9 @@ $(function(){
         });
     });
 
-    $('#agency div[_type="sendmailcode"]').on('click', function(){
+    $('#agency input[_type="sendmailcode"]').on('click', function(){
         var emailAddr = $('#agency input[_key="mail"]').val();
-
+        settime($(this));
         var url = ctx + "xiaoyusvr/boss/developer/sendcode";
         var data = new Object();
         data.emailaddress = emailAddr;
@@ -775,6 +793,25 @@ function dataURItoBlob(base64Data) {
     }
     return new Blob([ia], {type:mimeString});
 }
+
+var countdown=120;
+
+function settime(val) {
+    if (countdown == 0) {
+        val.removeAttr("disabled");
+        val.val("发送验证码到邮箱");
+        clearTimeout(timer);
+        countdown = 120;
+    } else {
+        val.attr("disabled", "disabled");
+        val.val("重新发送(" + countdown + ")");
+        countdown--;
+        timer = setTimeout(function() {
+            settime(val)
+        },1000)
+    }
+}
+
 
 
 
