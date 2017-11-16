@@ -311,16 +311,16 @@ $(function(){
     //发送验证码到邮箱
     $('#personal input[_type="sendmailcode"]').on('click', function(){
         var emailAddr = $('#personal input[_key="mail"]').val();
-        settime($(this));
         var url = ctx + "xiaoyusvr/boss/developer/sendcode";
         var data = new Object();
         data.emailaddress = emailAddr;
 
         Util.ajaxLoadData(url,data,"POST",true,function(result) {
             if (result.code == ReturnCode.SUCCESS) {
-
                 $('#personal div[_errorTips="emailcodeAlready"]').hide();
                 $('#personal div[_errorTips="emailcodeNone"]').show();
+                var tt =$('#personal input[_type="sendmailcode"]');
+                settime(tt);
             }else{
                 alert(result.msg);
                 $('#personal div[_errorTips="emailcodeAlready"]').show();
@@ -331,7 +331,6 @@ $(function(){
 
     $('#agency input[_type="sendmailcode"]').on('click', function(){
         var emailAddr = $('#agency input[_key="mail"]').val();
-        settime($(this));
         var url = ctx + "xiaoyusvr/boss/developer/sendcode";
         var data = new Object();
         data.emailaddress = emailAddr;
@@ -340,6 +339,8 @@ $(function(){
             if (result.code == ReturnCode.SUCCESS) {
                 $('#agency div[_errorTips="emailcodeAlready"]').hide();
                 $('#agency div[_errorTips="emailcodeNone"]').show();
+                var tt =$('#agency input[_type="sendmailcode"]');
+                settime(tt);
             }else{
                 alert(result.msg);
                 $('#agency div[_errorTips="emailcodeAlready"]').show();
