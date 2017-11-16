@@ -75,6 +75,26 @@ public class DeveloperController {
 	}
 	
 	@IgnoreAuth
+	@RequestMapping(value = "/getAccountByEmail", method = RequestMethod.POST)
+	public Response getAccountByEmail(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		String email=(String) map.get("emailaddress");
+		response=devservice.getAccountByEmail(email);
+		return response; 
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
+	public Response modifyPassword(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		response=devservice.modifyPassword(map);
+		return response; 
+	}
+	
+	
+	@IgnoreAuth
 	@RequestMapping(value = "/sendcode", method = RequestMethod.POST)
 	public Response sendCode(@RequestBody @Valid Map<String , String> map){
 		Response response=new Response();
