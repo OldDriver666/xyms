@@ -288,13 +288,13 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		String code = map.get("checkCode");
 		Jedis jedis = null;
 		jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
-
-		if (!code.equalsIgnoreCase(jedis.get("randomCode"))) {
-			response.setMsg("验证码有误，请重新输入！");
-			response.setErrorCode(ErrorCode.ERROR_PARAM_NOT_VALID_EXCEPTION);
+		if (code.equalsIgnoreCase(jedis.get("randomCode"))) {
+			response.setMsg("邮箱验证通过");
+			response.success();
+			return response;
 		}
-		response.setMsg("邮箱验证通过");
-		response.success();
+		response.setMsg("验证码有误，请重新输入！");
+		response.setCode(ErrorCode.ERROR_PARAM_NOT_VALID_EXCEPTION.getCode());
 		return response;
 	}
 
