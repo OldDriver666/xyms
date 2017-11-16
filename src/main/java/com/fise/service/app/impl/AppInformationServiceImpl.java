@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +19,12 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AppInformationMapper;
+import com.fise.dao.WiAdminMapper;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
+import com.fise.model.entity.WiAdminExample.Criteria;
 import com.fise.model.param.AppCheckUpParam;
 import com.fise.model.result.AppBaseResult;
 import com.fise.model.result.AppDetailResult;
@@ -32,7 +37,10 @@ import com.fise.utils.StringUtil;
 public class AppInformationServiceImpl implements IAppInfoemationService {
 
 	@Autowired
-	AppInformationMapper appInformationDao;
+	private AppInformationMapper appInformationDao;
+	
+	@Autowired
+	private WiAdminMapper adminDao;
 
 	@Override
 	public Response query(Page<AppInformation> page) {
@@ -512,6 +520,39 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("APP审核失败");
 			return response;
 		}
+		AppInformation appResult=appInformationDao.selectByPrimaryKey(developer.getAppId());
+		try {
+			HtmlEmail email = new HtmlEmail();// 不用更改
+			email.setHostName("smtp.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+			email.setCharset("UTF-8");
+			email.setSSLOnConnect(true);
+			
+            //根据开发者的dev_id查出他的email
+			WiAdminExample wiexample = new WiAdminExample();
+			Criteria crit = wiexample.createCriteria();
+			crit.andIdEqualTo(appResult.getDevId());
+			List<WiAdmin> list=adminDao.selectByExample(wiexample);
+			WiAdmin admin=null;
+			for(int i=0;i<list.size();i++){
+				admin=list.get(0);
+			}
+			email.addTo(admin.getEmail());// 收件地址
+			email.setFrom("2839117863@qq.com", "天堂遗孤");// 此处填邮箱地址和用户名,用户名可以任意填写
+			email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");// 此处填写邮箱地址和客户端授权码
+			email.setSubject("孙大大通讯");// 此处填写邮件名，邮件名可任意填写
+			if (appResult.getStatus() == 2) {
+				email.setMsg("亲，您好,您在沸石应用宝平台申请的应用审核未通过，原因是:" + appResult.getRemarks() + "。");// 此处填写邮件内容
+			}
+			if (appResult.getStatus() == 1) {
+				email.setMsg("亲，恭喜您，你在沸石应用宝平台申请的应用已审核通过，祝您生活愉快。");// 此处填写邮件内容
+			}
+			email.send();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return response.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);
+		}
+		response.setMsg("该应用审核完成。");
+		response.success();
 		return response;
 	}
 

@@ -30,6 +30,7 @@ public class DeveloperController {
 
 	@Resource
 	IDeveloperService devservice;
+	
 	@IgnoreAuth
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Response register(@ModelAttribute DeveloperInsert developer,
