@@ -39,6 +39,7 @@ public class DeveloperController {
 		response=devservice.insert(developer,files);
 		return response;
 	}
+	
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
 	public Response checkup(@RequestBody @Valid DeveloperUpdate developer){
 		Response response=new Response();
@@ -101,4 +102,4 @@ public class DeveloperController {
 		return response; 
 	}
 
-}
+} 
