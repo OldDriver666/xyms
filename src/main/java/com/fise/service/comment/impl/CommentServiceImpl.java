@@ -14,6 +14,7 @@ import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyCommentMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -21,6 +22,10 @@ import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyComment;
+import com.fise.model.entity.MyCommentExample;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.SensitiveWords;
 import com.fise.model.entity.SensitiveWordsExample;
@@ -31,6 +36,7 @@ import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 import com.fise.utils.sensitiveword.SensitivewordFilter;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import redis.clients.jedis.Jedis;
 
@@ -54,6 +60,9 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired
     SensitiveWordsMapper sensitiveWordsDao;
+    
+    @Autowired
+    MyCommentMapper myCommentDao;
     
     @Override
     public Response addComment(Comment record) {
@@ -109,6 +118,16 @@ public class CommentServiceImpl implements ICommentService{
             jedis.set(key, value);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //存入数据库
+            MyComment myComment = new MyComment();
+            myComment.setCommentId(comment.getId());
+            myComment.setUserId(comment.getFromUserid());
+            myComment.setCommentNum(Integer.valueOf(value));
+            myComment.setUpdated(DateUtil.getLinuxTimeStamp());
+            myComment.setCreated(DateUtil.getLinuxTimeStamp());
+            myCommentDao.insert(myComment);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -200,11 +219,20 @@ public class CommentServiceImpl implements ICommentService{
                 long count=commentDao.countByExample(example);
                 result.setCount((int)count);
                 
+                MyCommentExample example2=new MyCommentExample();
+                MyCommentExample.Criteria criteria2=example2.createCriteria();
+                criteria2.andCommentIdEqualTo(c.getId());
+                criteria2.andStatusEqualTo(1);
+                MyComment myComment=myCommentDao.selectByExample(example2).get(0);
+                
                 String key =c.getId()+"reply";
                 String value=jedis.get(key);
-                
-                result.setAddreply((int)count-Integer.valueOf(value));
-                
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddreply((int)count-Integer.valueOf(value));
+                }else {
+                    result.setAddreply((int)count-myComment.getCommentNum());
+                }
+                               
                 setNick(c,result);
                 listresult.add(result);
             } catch (NumberFormatException e) {
@@ -266,6 +294,16 @@ public class CommentServiceImpl implements ICommentService{
             jedis.set(key, value);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据库信息
+            MyCommentExample example2 = new MyCommentExample();
+            MyCommentExample.Criteria criteria2 = example2.createCriteria();
+            criteria.andProblemIdEqualTo(comment_id);
+            MyComment myComment=myCommentDao.selectByExample(example2).get(0);
+            
+            myComment.setCommentNum(Integer.valueOf(value));            
+            myComment.setUpdated(DateUtil.getLinuxTimeStamp());
+            myCommentDao.updateByPrimaryKeySelective(myComment);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

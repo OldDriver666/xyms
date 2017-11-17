@@ -1,5 +1,6 @@
 package com.fise.service.concern.impl;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,16 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.ConcernMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyConcernMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.ConcernExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyConcern;
+import com.fise.model.entity.MyConcernExample;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.ConcernExample.Criteria;
 import com.fise.model.result.ProResult;
 import com.fise.model.entity.Problems;
@@ -23,6 +29,7 @@ import com.fise.model.entity.ProblemsExample;
 import com.fise.service.concern.IConcernService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 import redis.clients.jedis.Jedis;
 
@@ -37,6 +44,9 @@ public class ConcernServiceImpl implements IConcernService{
     
     @Autowired
     IMUserMapper userDao;
+    
+    @Autowired
+    MyConcernMapper myConcernDao;
     
     @Override
     public Response addConcern(Concern record) {
@@ -131,10 +141,35 @@ public class ConcernServiceImpl implements IConcernService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key = problem.getId()+"answer"+user_id;
-            value=problem.getAnswerNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getAnswerNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            
+            //判断数据库数据是否存在
+            MyConcernExample example = new MyConcernExample();
+            MyConcernExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(user_id);
+            List<MyConcern> list=myConcernDao.selectByExample(example);
+            if(list.size()==0){
+                //存入数据库
+                MyConcern myConcern = new MyConcern();
+                myConcern.setProblemId(problem.getId());
+                myConcern.setUserId(user_id);
+                myConcern.setBrowserNum(Integer.valueOf(value));
+                myConcern.setAnswerNum(Integer.valueOf(value1));
+                myConcern.setCreated(DateUtil.getLinuxTimeStamp());
+                myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
+                myConcernDao.insert(myConcern);
+            }else {
+                //修改数据
+                MyConcern myConcern=list.get(0);
+                myConcern.setStatus(1);
+                myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
+                myConcernDao.updateByPrimaryKey(myConcern);
+            }
         } catch (Exception e) {               
             e.printStackTrace();
         }finally {
@@ -152,6 +187,16 @@ public class ConcernServiceImpl implements IConcernService{
             
             key = problem.getId()+"answer"+user_id;
             jedis.del(key);
+            
+            //删除数据库关注信息
+            MyConcernExample example = new MyConcernExample();
+            MyConcernExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(user_id);
+            MyConcern myConcern=myConcernDao.selectByExample(example).get(0);
+            myConcern.setStatus(0);
+            myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
+            myConcernDao.updateByPrimaryKey(myConcern);
         } catch (Exception e) {           
             e.printStackTrace();
         }finally {
@@ -209,16 +254,29 @@ public class ConcernServiceImpl implements IConcernService{
                 jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 ProResult pResult=new ProResult();
                 
+                MyConcernExample example2 = new MyConcernExample();
+                MyConcernExample.Criteria criteria2 = example2.createCriteria();
+                criteria2.andProblemIdEqualTo(problem.getId());
+                criteria2.andUserIdEqualTo(user_id);
+                criteria2.andStatusEqualTo(1);
+                MyConcern myConcern=myConcernDao.selectByExample(example2).get(0);
+                
                 String key=problem.getId()+"answer"+user_id;
                 String value=jedis.get(key);
-                
-                pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
-                                
+                if(!StringUtil.isEmpty(value)){
+                    pResult.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
+                }else {
+                    pResult.setAddAnswerCount(problem.getAnswerNum()-myConcern.getAnswerNum());
+                }
+                                                
                 key=problem.getId()+"browser"+user_id;
                 value=jedis.get(key);
-                
-                pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
-                
+                if(!StringUtil.isEmpty(value)){
+                    pResult.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
+                }else {
+                    pResult.setAddBrowseCount(problem.getBrowseNum()-myConcern.getBrowserNum());
+                }
+                                
                 setResult(pResult,problem);
                 
                 listResult.add(pResult);
@@ -256,10 +314,22 @@ public class ConcernServiceImpl implements IConcernService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=problem.getId()+"browser"+user_id;
-            value=problem.getBrowseNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getBrowseNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据存入数据库
+            MyConcernExample example = new MyConcernExample();
+            MyConcernExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(user_id);
+            MyConcern myConcern=myConcernDao.selectByExample(example).get(0);
+            
+            myConcern.setBrowserNum(Integer.valueOf(value1));
+            myConcern.setAnswerNum(Integer.valueOf(value));
+            myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
+            myConcernDao.updateByPrimaryKeySelective(myConcern);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

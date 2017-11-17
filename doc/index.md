@@ -4066,8 +4066,7 @@ device_id 和  master_id 都不填则查询所有
 ####请求
 ```
 {
-	"emailaddress":"",          //必填-收件人邮箱地址
-	"code":""                   //必填-验证码
+	"emailaddress":""          //必填-收件人邮箱地址
 }
 ```
 ####回复

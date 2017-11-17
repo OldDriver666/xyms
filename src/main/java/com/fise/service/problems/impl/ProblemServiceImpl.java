@@ -18,6 +18,7 @@ import com.fise.dao.ConcernMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyProblemMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -26,6 +27,8 @@ import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.ProblemsExample;
 import com.fise.model.entity.ProblemsExample.Criteria;
@@ -35,6 +38,7 @@ import com.fise.model.result.ProResult;
 import com.fise.service.problems.IProblemService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 import com.fise.utils.sensitiveword.SensitivewordFilter;
 
 import redis.clients.jedis.Jedis;
@@ -62,6 +66,9 @@ public class ProblemServiceImpl implements IProblemService{
     
     @Autowired
     CommentMapper commentDao;
+    
+    @Autowired
+    MyProblemMapper MyProblemDao;
     
     @Override
     public Response insert(Problems record) {
@@ -104,15 +111,26 @@ public class ProblemServiceImpl implements IProblemService{
             String key = problem.getId()+"browsermy";
             String value = problem.getBrowseNum()+"";
             jedis.set(key, value);
-            
+                                   
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             //在redis里存入该问题的回答量
             key = problem.getId()+"answermy";
-            value=problem.getAnswerNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getAnswerNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //存入数据库
+            MyProblem myProblem = new MyProblem();
+            myProblem.setProblemId(problem.getId());
+            myProblem.setUserId(problem.getUserId());
+            myProblem.setBrowserNum(Integer.valueOf(value));
+            myProblem.setAnswerNum(Integer.valueOf(value1));
+            myProblem.setCreated(DateUtil.getLinuxTimeStamp());
+            myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyProblemDao.insert(myProblem);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -203,16 +221,31 @@ public class ProblemServiceImpl implements IProblemService{
                 jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 ProResult result=new ProResult();
                 
+                MyProblemExample example2 = new MyProblemExample();
+                MyProblemExample.Criteria criteria2 = example2.createCriteria();
+                criteria2.andProblemIdEqualTo(problem.getId());
+                criteria.andUserIdEqualTo(problem.getUserId());
+                criteria2.andStatusEqualTo(1);
+                List<MyProblem> list2=MyProblemDao.selectByExample(example2);
+                MyProblem myProblem=list2.get(0);
+                
                 String key=problem.getId()+"answermy";
                 String value=jedis.get(key);
-                
-                result.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
-                
-                
+                //先从redis里拿数据，如果没有就从数据库拿数据
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
+                }else {
+                    result.setAddAnswerCount(problem.getAnswerNum()-myProblem.getAnswerNum());
+                }
+                                
                 key=problem.getId()+"browsermy";
                 value=jedis.get(key);
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
+                }else {
+                    result.setAddBrowseCount(problem.getBrowseNum()-myProblem.getBrowserNum());
+                }
                 
-                result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
                 
                 //查询用户昵称和头像
                 IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
@@ -271,7 +304,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         Jedis jedis = null;
         try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);           
             String key=problem.getId()+"answermy";
             String value=problem.getAnswerNum()+"";
             jedis.set(key, value);
@@ -279,10 +312,22 @@ public class ProblemServiceImpl implements IProblemService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=problem.getId()+"browsermy";
-            value=problem.getBrowseNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getBrowseNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据存入数据库
+            MyProblemExample example = new MyProblemExample();
+            MyProblemExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(problem.getUserId());
+            MyProblem myProblem=MyProblemDao.selectByExample(example).get(0);
+            
+            myProblem.setBrowserNum(Integer.valueOf(value));
+            myProblem.setAnswerNum(Integer.valueOf(value1));
+            myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
