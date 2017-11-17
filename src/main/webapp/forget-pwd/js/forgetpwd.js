@@ -1,5 +1,6 @@
 $(function(){
     var errorCount = 0;
+    var verifyCode = 0;
 
     //提交注册信息
     $('a[_type="submit"]').on('click', function(){
@@ -32,6 +33,9 @@ $(function(){
                 $('#personal div[_errorTips="passwordAgain"]').hide();
                 $('#personal div[_errorTips="passworderror"]').show();
                 return;
+            }else if(verifyCode != 1){
+                alert("请重新进行邮箱验证");
+                return;
             }
 
             var url = ctx + "xiaoyusvr/boss/developer/modifyPwd";
@@ -44,6 +48,10 @@ $(function(){
                     $(".register-wrap").hide();
                     $(".finish-entrance").show();
                     window.location.href = "http://192.168.2.250:8888/xiaoyu/index.html";
+                    $('#personal input[_key="mail"]').val("");
+                    $('#personal input[_key="account"]').val("");
+                    $('#personal input[_key="emailcode"]').val("");
+                    verifyCode = 0;
                 }else{
                     alert(result.msg);
                     $(".register-wrap").show();
@@ -110,6 +118,7 @@ $(function(){
                 Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
                     if (result1.msg == "ok") {
                         $('#personal input[_key="account"]').val(result1.data);
+                        verifyCode = 1;
                     }else{
                         alert(result1.msg);
                     }
