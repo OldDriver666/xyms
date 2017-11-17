@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<title>沸石开放平台 WWW.FISE.COM.CN</title>
+	<link href="css/global.css" type="text/css" rel="stylesheet"/>
+	<link href="css/register.css" type="text/css" rel="stylesheet"/>
+	<link href="css/zc-recommend.css" rel="stylesheet" />
+</head>
+<body>
+<!--头部-->
+<div class="layout-header">
+    <div class="logo-wrapper">
+        <!--<h1 class="tit-main">
+            <a href="http://www.fise.com.cn">
+                <span class="logo">FISE</span>
+                沸石开放平台FISE
+            </a>
+        </h1>-->
+		<h1 class="tit-sub" style="border-left:none">
+			<a href="http://192.168.2.250:8888/xiaoyu/index.html" target="_blank">沸石开放平台</a>
+		</h1>
+        <h2 class="tit-sub">
+            <a href="http://192.168.2.250:8888/xiaoyu/index.html" target="_blank">管理中心</a>
+        </h2>
+    </div>
+    <!--<div class="user-wrapper">
+        
+        <div class="menu-btn user-data">
+            <a title="资料库" href="http://www.fise.com.cn" class="menu-btn-in" target="_blank">
+                <span class="ico-file">
+                </span>
+                <div class="header-hover-tips">
+                    <span class="arrow">
+                    </span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="menu-btn user-service">
+            <a title="联系我们" href="http://www.fise.com.cn" class="menu-btn-in" target="_blank">
+                <span class="ico-service">
+                </span>
+            </a>
+        </div>
+		
+        <div title="消息" class="menu-btn user-msg">&lt;!&ndash;站内信息&ndash;&gt;
+            <a href="http://www.fise.com.cn" class="menu-btn-in" target="_blank">
+                <span class="ico-letter">
+                    
+                </span>
+            </a>
+        </div>
+
+        
+        <div id="navigationUserInfo" class="menu-btn user-info">
+            <a  href="http://www.fise.com.cn" target="_blank" class="menu-btn-in">
+                <i class="hd">
+                </i>
+                <span id="navigationUserName" class="u-name"></span>
+                
+            </a>
+            <p class="u-select">
+                <i class="arr-top"></i>
+                <a href="http://www.fise.com.cn" target="_blank" class="u-s-item">账号资料</a>
+                <a href="http://www.fise.com.cn" target="_blank" class="u-s-item">星级权益</a>
+                <a href="http://www.fise.com.cn" class="u-s-item">权限管理</a>
+                <a id="navigationUserLogOut" href="javascript:void(0);" onclick="return false;" class="u-s-item">退出</a>
+            </p>
+        </div>
+
+    </div>-->
+</div>
+<!--/头部-->
+
+<div class="layout-main">
+
+
+	<div  _box="1" class="register-wrap" >
+		<div class="layout">
+
+			<div class="step">
+				<ul>
+					<li class="step1 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>修改密码</h2>
+						<span class="arrow"></span>
+					</li>
+					<li class="step2 ">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-2">2</span>完成修改</h2>
+					</li>
+				</ul>
+			</div>
+			<!--step1 个人注册填写资料开始-->
+			<div id="personal" >
+				<div class="formbox">
+					<div class="formbox-hd">
+						<h3 class="formbox-tit">邮箱验证</h3>
+					</div>
+					<div class="formbox-bd">
+						<div class="form-row">
+							<div class="form-tit">
+								<label for="">电子邮箱</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="mail" _max="50" _regex="email" type="text" class="ui-intxt" placeholder="请填写有效邮箱，用于接收平台审核通知等重要消息">
+								</div>
+								<div style="display:none;" _errorTips="mail" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>请填写有效的电子邮箱</em>
+								</div>
+
+								<div style="display:none;" _errorTips="mailAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>该邮箱未被注册使用，不能用于接收验证信息</em>
+								</div>
+								<div style="display:none;" _errorTips="mailNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>该邮箱已被注册使用，可用于接收验证信息</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label></label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input  type="button" _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff" value="发送验证码到邮箱" />
+									<!--<div  _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff">发送验证码到邮箱</div>-->
+								</div>
+
+								<div style="display:none;" _errorTips="emailcodeAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>发送验证码失败，请重新发送验证码到邮箱</em>
+								</div>
+								<div style="display:none;" _errorTips="emailcodeNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>发送验证码成功，请查收邮箱并填写验证码</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label>邮箱验证码</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="emailcode" _max="50" _regex="emailcode" type="text" class="ui-intxt" placeholder="请查收邮箱并填写验证码">
+								</div>
+								<div style="display:none;" _errorTips="emailcode" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的邮箱验证码不符合规范</em>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-tit">
+								<label></label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input  type="button" _type="verifycode" style="border:5px solid #0fadff; background-color: #0fadff" value="提交验证码" />
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="formbox">
+					<div class="formbox-hd">
+						<h3 class="formbox-tit">修改密码</h3>
+					</div>
+					<div class="formbox-bd">
+
+						<div class="form-row">
+							<div class="form-tit">
+								<label>用户名</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="account" _max="50" _regex="human_name" type="text" class="ui-intxt" placeholder="请填写用户名" readonly>
+								</div>
+								<div style="display:none;" _errorTips="account" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的开发者用户名不符合规范</em>
+								</div>
+
+								<div style="display:none;" _errorTips="accountAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>该用户名已被注册，请换一个用户名注册</em>
+								</div>
+								<div style="display:none;" _errorTips="accountNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>该用户名未被注册，可用于注册</em>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-row">
+							<div class="form-tit">
+								<label>输入新密码</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="password" _max="50" _regex="password" type="password" class="ui-intxt" placeholder="请填写密码">
+								</div>
+								<div style="display:none;" _errorTips="password" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的密码不符合规范</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label>再次输入新密码</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="passwordAgain" _max="50" _regex="passwordAgain" type="password" class="ui-intxt" placeholder="请再次填写密码">
+								</div>
+								<div style="display:none;" _errorTips="passwordAgain" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的密码不符合规范</em>
+								</div>
+								<div style="display:none;" _errorTips="passworderror" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>两次填写的密码不一致</em>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-tit">
+								<label></label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<!--<div  _type="submit" style="border:5px solid #0fadff; background-color: #0fadff">提交</div>-->
+									<a _type="submit" href="javascript:void(0);" onclick="return false;" class="ui-btn-blue">提交</a>
+								</div>
+
+								<div style="display:none;" _errorTips="submitAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>发送验证码失败，请重新发送验证码到邮箱</em>
+								</div>
+								<div style="display:none;" _errorTips="submitNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>发送验证码成功，请查收邮箱并填写验证码</em>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div  _box="1" class="finish-entrance"  style="display:none; margin-left:0;">
+		<div class="layout">
+			<div class="step">
+				<ul>
+					<li class="step1 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>修改密码</h2>
+						<span class="arrow"></span>
+					</li>
+					<li class="step2 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-2">2</span>完成修改</h2>
+					</li>
+				</ul>
+			</div>
+			<p class="re-tit">修改密码成功！正在跳转到管理中心页面......</p>
+		</div>
+	</div>
+<!--footer-->
+	<div class="foot">
+	<div class="inner">
+		<p class="footer_menu">
+			<a target="_blank" _hot_tag="OPEN.CONTRACTUS" href="http://www.fise.com.cn">联系我们</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN" href="http://www.fise.com.cn">投诉举报</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN.EN" href="http://www.fise.com.cn">Complaint Guidelines</a> | <a target="_blank" href="http://192.168.2.250:8888/xiaoyu/index.html">沸石开放平台</a>
+		</p>
+		<p class="copyrighten">Copyright &copy; 2007 - 2017 Fise. All Rights Reserved.</p>
+		<p class="copyrightzh">沸石公司 版权所有</p>
+	</div>
+</div>
+<!--/footer-->
+
+<!-- body 结束 -->
+
+<script type ="text/javascript" src="js/jquery.min.js"></script>
+<script type ="text/javascript" src="js/forgetpwd.js"></script>
+<script type ="text/javascript" src="js/agreement.js" ></script>
+<script type ="text/javascript" src="js/Util.js"></script>
+<script type ="text/javascript" src="js/jquery.md5.js"></script>
+
+</body>
+</html>

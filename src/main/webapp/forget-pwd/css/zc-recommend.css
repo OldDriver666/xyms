@@ -1,0 +1,67 @@
+.mod-col-left {
+  width: 920px;
+  float: left;
+}
+.formbox .mod-col-left {
+  width: 870px;
+}
+.mod-zc-recom {
+  padding: 0 30px 56px;
+  float: left;
+  border-left: 1px solid #dfdfdf;
+}
+.mod-zc-recom-tit {
+  text-align: left;
+  font-size: 16px;
+  color: #838383;
+  margin-bottom: 70px;
+}
+.mod-zc-recom-tit .icon-bao {display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: 5px;
+  width: 19px;
+  height: 20px;background-repeat: no-repeat;}
+.mod-zc-recom-tit .more {
+  font-size: 14px;
+  float: right;
+}
+.mod-zc-recom-list {
+  width: 210px;
+  overflow: hidden;
+}
+.mod-zc-recom-serv {
+  width: 50%;
+  height: 105px;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  color: #323232;
+  margin-bottom: 20px;
+}
+.mod-zc-recom-serv .img-wrap {
+  width: 100%;
+  height: 80px;
+}
+.mod-zc-recom-serv .img-wrap img {
+  vertical-align: middle;
+}
+.mod-zc-recom-serv .img-wrap:after {
+  display: inline-block;
+  content: '';
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+.mod-zc-recom-serv .weak {
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
+}
+
+.mod-zc-recom-tit .icon-bao{
+    background-position:0px 0px;
+}
+.mod-zc-recom-tit .icon-bao{
+    background-size: 24px 20px;
+    background-image: url(../sprite/zcRec.png)
+}/*  |xGv00|4327c1266cb80622987fea8dbe6257e9 */
