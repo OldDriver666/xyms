@@ -272,7 +272,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			Jedis jedis = null;
 			jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
 			jedis.setex("randomCode", Constants.VALIDATION_CODE_EXPIRE_SECONDS, randomCode);
-			email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + randomCode);
+			email.setMsg("尊敬的用户:您好,您本次的验证码是:" + randomCode);
 			email.send();
 			response.success();
 			return response;
@@ -290,7 +290,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
 		if (code.equalsIgnoreCase(jedis.get("randomCode"))) {
 			response.setMsg("邮箱验证通过");
-			response.success();
+			response.setCode(200);
 			return response;
 		}
 		response.setMsg("验证码有误，请重新输入！");
@@ -313,6 +313,64 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		}
 		response.setCode(200);
 		response.setMsg("该邮箱未注册");
+		return response;
+	}
+
+	@Override
+	public Response getAccountByEmail(String email) {
+		Response response = new Response();
+		WiAdminExample example = new WiAdminExample();
+		Criteria con = example.createCriteria();
+		con.andEmailEqualTo(email);
+
+		List<WiAdmin> account = adminDao.selectByExample(example);
+		if (account.size() == 0) {
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
+			response.setMsg("该账户不存在");
+			return response;
+		}
+		WiAdmin admin = null;
+		for (int i = 0; i < account.size(); i++) {
+			admin = account.get(0);
+		}
+		
+		if(admin.getStatus()==0){
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
+			response.setMsg("该账户不可用，请联系管理员。");
+			return response;	
+		}
+		
+		if(admin.getStatus()==2){
+			response.failure(ErrorCode.ERROR_SEARCH_UNEXIST);
+			response.setMsg("该账户已删除");
+			return response;	
+		}
+		response.setCode(200);
+		response.setData(admin.getAccount());
+		return response;
+	}
+
+	@Override
+	public Response modifyPassword(Map<String, Object> map) {
+		Response response = new Response();
+		String account = (String) map.get("account");
+		String password = (String) map.get("password");
+		WiAdmin wiadmin = new WiAdmin();
+		WiAdminExample example = new WiAdminExample();
+		Criteria updWhere = example.createCriteria();
+		updWhere.andAccountEqualTo(account);
+		updWhere.andStatusEqualTo((byte) 1);
+
+		wiadmin.setPassword(password);
+		wiadmin.setUpdated(DateUtil.getLinuxTimeStamp());
+		int result = adminDao.updateByExampleSelective(wiadmin, example);
+		if (result == 0) {
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("修改密码失败");
+			return response;
+		}
+		response.setCode(200);
+		response.setMsg("修改密码成功");
 		return response;
 	}
 }
