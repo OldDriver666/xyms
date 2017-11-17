@@ -126,7 +126,7 @@ public class AnswerServiceImpl implements IAnswerService{
             myAnswer.setCommentNum(Integer.valueOf(value1));
             myAnswer.setUpdated(DateUtil.getLinuxTimeStamp());
             myAnswer.setCreated(DateUtil.getLinuxTimeStamp());
-            MyAnswerDao.insert(myAnswer);
+            MyAnswerDao.insertSelective(myAnswer);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,7 +194,7 @@ public class AnswerServiceImpl implements IAnswerService{
                 setResult(aResult,answer,user);
                 
                 listResult.add(aResult);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);

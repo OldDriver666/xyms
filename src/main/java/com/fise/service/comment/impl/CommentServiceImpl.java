@@ -126,7 +126,7 @@ public class CommentServiceImpl implements ICommentService{
             myComment.setCommentNum(Integer.valueOf(value));
             myComment.setUpdated(DateUtil.getLinuxTimeStamp());
             myComment.setCreated(DateUtil.getLinuxTimeStamp());
-            myCommentDao.insert(myComment);
+            myCommentDao.insertSelective(myComment);
             
         } catch (Exception e) {
             e.printStackTrace();
