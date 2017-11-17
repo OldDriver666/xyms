@@ -235,7 +235,7 @@ public class CommentServiceImpl implements ICommentService{
                                
                 setNick(c,result);
                 listresult.add(result);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
