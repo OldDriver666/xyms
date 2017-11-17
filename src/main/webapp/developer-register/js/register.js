@@ -52,6 +52,11 @@ $(function(){
                 return;
             }else if($('#personal input[_key="passwordAgain"]').val() == ""){
                 $('#personal div[_errorTips="passwordAgain"]').show();
+                $('#personal div[_errorTips="passworderror"]').hide();
+                return;
+            }else if($('#personal input[_key="password"]').val() != $('#personal input[_key="passwordAgain"]').val()){
+                $('#personal div[_errorTips="passwordAgain"]').hide();
+                $('#personal div[_errorTips="passworderror"]').show();
                 return;
             }else if($('#personal input[_key="name"]').val() == ""){
                 $('#personal div[_errorTips="name"]').show();
@@ -126,7 +131,7 @@ $(function(){
                     data1.checkCode = $('#personal input[_key="emailcode"]').val();
 
                     Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
-                        if (result1.code == ReturnCode.SUCCESS) {
+                        if (result1.msg == "邮箱验证通过") {
                             $.ajax({
                                 url:ctx + "xiaoyusvr/boss/developer/register",
                                 type:"post",
@@ -188,6 +193,11 @@ $(function(){
                 return;
             }else if($('#agency input[_key="passwordAgain"]').val() == ""){
                 $('#agency div[_errorTips="passwordAgain"]').show();
+                $('#agency div[_errorTips="passworderror"]').hide();
+                return;
+            }else if($('#agency input[_key="password"]').val() != $('#agency input[_key="passwordAgain"]').val()){
+                $('#agency div[_errorTips="passwordAgain"]').hide();
+                $('#agency div[_errorTips="passworderror"]').show();
                 return;
             }else if($('#agency input[_key="nickname"]').val() == ""){
                 $('#agency div[_errorTips="nickname"]').show();
@@ -265,7 +275,7 @@ $(function(){
                     data1.checkCode = $('#agency input[_key="emailcode"]').val();
 
                     Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
-                        if (result1.code == ReturnCode.SUCCESS) {
+                        if (result1.msg == "邮箱验证通过") {
                             $.ajax({
                                 url:ctx + "xiaoyusvr/boss/developer/register",
                                 type:"post",
@@ -435,6 +445,11 @@ $(function(){
     $('#personal input[_key="passwordAgain"]').change(function () {
         if ($(this).val() != "") {
             $('#personal div[_errorTips="passwordAgain"]').hide();
+            $('#personal div[_errorTips="passworderror"]').hide();
+            if($('#personal input[_key="password"]').val() != $('#personal input[_key="passwordAgain"]').val()){
+                $('#personal div[_errorTips="passwordAgain"]').hide();
+                $('#personal div[_errorTips="passworderror"]').show();
+            }
         }
     });
 
@@ -514,6 +529,11 @@ $(function(){
     $('#agency input[_key="passwordAgain"]').change(function () {
         if ($(this).val() != "") {
             $('#agency div[_errorTips="passwordAgain"]').hide();
+            $('#agency div[_errorTips="passworderror"]').hide();
+            if($('#agency input[_key="password"]').val() != $('#agency input[_key="passwordAgain"]').val()){
+                $('#agency div[_errorTips="passwordAgain"]').hide();
+                $('#agency div[_errorTips="passworderror"]').show();
+            }
         }
     });
 
