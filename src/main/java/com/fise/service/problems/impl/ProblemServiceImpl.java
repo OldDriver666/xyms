@@ -258,8 +258,10 @@ public class ProblemServiceImpl implements IProblemService{
                 criteria1.andMarkTypeEqualTo(0);
                 criteria1.andStatusEqualTo(1);
                 List<IMMark> list1=imMarkDao.selectByExample(example1);
-                if(list1.size()!=0 || !StringUtil.isEmpty(list1.get(0).getMarkName())){
-                    user.setNick(list1.get(0).getMarkName());
+                if(list1.size()!=0){
+                    if(!StringUtil.isEmpty(list1.get(0).getMarkName())){
+                        user.setNick(list1.get(0).getMarkName());
+                    }
                 }
                 
                 setResult(result, problem, user);
@@ -388,8 +390,10 @@ public class ProblemServiceImpl implements IProblemService{
             criteria.andMarkTypeEqualTo(0);
             criteria.andStatusEqualTo(1);
             List<IMMark> list2=imMarkDao.selectByExample(example);
-            if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
-                user.setNick(list2.get(0).getMarkName());
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }                
             }
             
             //查询学校名字

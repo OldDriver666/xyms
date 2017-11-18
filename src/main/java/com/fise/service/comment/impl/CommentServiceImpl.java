@@ -349,8 +349,10 @@ public class CommentServiceImpl implements ICommentService{
         criteria1.andMarkTypeEqualTo(0);
         criteria1.andStatusEqualTo(1);
         List<IMMark> list2=imMarkDao.selectByExample(example1);
-        if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
-            user.setNick(list2.get(0).getMarkName());
+        if(list2.size()!=0){
+            if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                user.setNick(list2.get(0).getMarkName());
+            }
         }
         result.setFromNick(user.getNick());
         result.setFromAvatar(user.getAvatar());
@@ -365,8 +367,10 @@ public class CommentServiceImpl implements ICommentService{
         criteria2.andMarkTypeEqualTo(0);
         criteria1.andStatusEqualTo(1);
         List<IMMark> list3=imMarkDao.selectByExample(example1);
-        if(list3.size()!=0 || !StringUtil.isEmpty(list3.get(0).getMarkName())){
-            user1.setNick(list3.get(0).getMarkName());
+        if(list3.size()!=0){
+            if(!StringUtil.isEmpty(list3.get(0).getMarkName())){
+                user1.setNick(list3.get(0).getMarkName());
+            }            
         }
         
         //判断是否有回复对象

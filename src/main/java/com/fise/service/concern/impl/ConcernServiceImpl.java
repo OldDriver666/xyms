@@ -358,8 +358,10 @@ public class ConcernServiceImpl implements IConcernService{
         criteria1.andMarkTypeEqualTo(0);
         criteria1.andStatusEqualTo(1);
         List<IMMark> list2=imMarkDao.selectByExample(example1);
-        if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
-            user.setNick(list2.get(0).getMarkName());
+        if(list2.size()!=0){
+            if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                user.setNick(list2.get(0).getMarkName());
+            }
         }
         
         pResult.setNick(user.getNick());

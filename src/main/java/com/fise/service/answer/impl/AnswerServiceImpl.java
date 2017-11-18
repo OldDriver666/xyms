@@ -254,8 +254,10 @@ public class AnswerServiceImpl implements IAnswerService{
             criteria1.andMarkTypeEqualTo(0);
             criteria1.andStatusEqualTo(1);
             List<IMMark> list2=imMarkDao.selectByExample(example1);
-            if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
-                user.setNick(list2.get(0).getMarkName());
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }
             }
             setResult(result,answer,user);
             
@@ -306,8 +308,10 @@ public class AnswerServiceImpl implements IAnswerService{
             criteria1.andMarkTypeEqualTo(0);
             criteria1.andStatusEqualTo(1);
             List<IMMark> list2=imMarkDao.selectByExample(example1);
-            if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
-                user.setNick(list2.get(0).getMarkName());
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }
             }
             
             setResult(result,answer,user);
