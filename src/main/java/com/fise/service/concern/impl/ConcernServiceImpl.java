@@ -11,12 +11,15 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.ConcernMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.MyConcernMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.ConcernExample;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.MyConcern;
 import com.fise.model.entity.MyConcernExample;
@@ -47,6 +50,9 @@ public class ConcernServiceImpl implements IConcernService{
     
     @Autowired
     MyConcernMapper myConcernDao;
+    
+    @Autowired
+    IMMarkMapper imMarkDao;
     
     @Override
     public Response addConcern(Concern record) {
@@ -277,7 +283,7 @@ public class ConcernServiceImpl implements IConcernService{
                     pResult.setAddBrowseCount(problem.getBrowseNum()-myConcern.getBrowserNum());
                 }
                                 
-                setResult(pResult,problem);
+                setResult(pResult,problem,user_id);
                 
                 listResult.add(pResult);
                                     
@@ -302,7 +308,7 @@ public class ConcernServiceImpl implements IConcernService{
         
         ProResult pResult=new ProResult();
         
-        setResult(pResult,problem);
+        setResult(pResult,problem,user_id);
         
         Jedis jedis = null;
         try {
@@ -340,9 +346,21 @@ public class ConcernServiceImpl implements IConcernService{
         return res;
     }
     
-    private void setResult(ProResult pResult,Problems problem){
+    private void setResult(ProResult pResult,Problems problem,Integer user_id){
         //查询用户昵称和头像
         IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
+        
+        //先在备注昵称表里查询备注信息
+        IMMarkExample example1 = new IMMarkExample();
+        IMMarkExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andFromUserEqualTo(user_id);
+        criteria1.andDestUserEqualTo(problem.getUserId());
+        criteria1.andMarkTypeEqualTo(0);
+        criteria1.andStatusEqualTo(1);
+        List<IMMark> list2=imMarkDao.selectByExample(example1);
+        if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
+            user.setNick(list2.get(0).getMarkName());
+        }
         
         pResult.setNick(user.getNick());
         pResult.setAvatar(user.getAvatar());

@@ -15,6 +15,7 @@ import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
 import com.fise.dao.ConcernMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
@@ -25,6 +26,8 @@ import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Concern;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.MyProblem;
@@ -55,20 +58,17 @@ public class ProblemServiceImpl implements IProblemService{
     @Autowired
     IMSchoolMapper schoolDao;
     
-    @Autowired
-    IMRelationShipMapper relationShipDao;
+    @Autowired IMRelationShipMapper relationShipDao;
+        
+    @Autowired SensitiveWordsMapper sensitiveWordsDao;    
     
-    @Autowired
-    SensitiveWordsMapper sensitiveWordsDao;
+    @Autowired AnswerMapper answerDao;
     
-    @Autowired
-    AnswerMapper answerDao;
+    @Autowired CommentMapper commentDao;    
     
-    @Autowired
-    CommentMapper commentDao;
+    @Autowired MyProblemMapper MyProblemDao;
     
-    @Autowired
-    MyProblemMapper MyProblemDao;
+    @Autowired IMMarkMapper imMarkDao;
     
     @Override
     public Response insert(Problems record) {
@@ -250,6 +250,18 @@ public class ProblemServiceImpl implements IProblemService{
                 //查询用户昵称和头像
                 IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
                 
+                //先在备注昵称表里查询备注信息
+                IMMarkExample example1 = new IMMarkExample();
+                IMMarkExample.Criteria criteria1 = example1.createCriteria();
+                criteria1.andFromUserEqualTo(param.getParam().getUserId());
+                criteria1.andDestUserEqualTo(problem.getUserId());
+                criteria1.andMarkTypeEqualTo(0);
+                criteria1.andStatusEqualTo(1);
+                List<IMMark> list1=imMarkDao.selectByExample(example1);
+                if(list1.size()!=0 || !StringUtil.isEmpty(list1.get(0).getMarkName())){
+                    user.setNick(list1.get(0).getMarkName());
+                }
+                
                 setResult(result, problem, user);
 
                 listResult.add(result);
@@ -367,6 +379,18 @@ public class ProblemServiceImpl implements IProblemService{
             
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
+            
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example = new IMMarkExample();
+            IMMarkExample.Criteria criteria = example.createCriteria();
+            criteria.andFromUserEqualTo(param.getParam().getUserId());
+            criteria.andDestUserEqualTo(problem.getUserId());
+            criteria.andMarkTypeEqualTo(0);
+            criteria.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example);
+            if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
+                user.setNick(list2.get(0).getMarkName());
+            }
             
             //查询学校名字
             //IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());

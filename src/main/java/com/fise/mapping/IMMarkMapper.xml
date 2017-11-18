@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.IMMarkMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMMark">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_user" jdbcType="INTEGER" property="fromUser" />
+    <result column="dest_user" jdbcType="INTEGER" property="destUser" />
+    <result column="mark_type" jdbcType="BIT" property="markType" />
+    <result column="mark_name" jdbcType="VARCHAR" property="markName" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, from_user, dest_user, mark_type, mark_name, status, updated, created
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.IMMarkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from IMMark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from IMMark
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from IMMark
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMMarkExample">
+    delete from IMMark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.IMMark">
+    insert into IMMark (id, from_user, dest_user, 
+      mark_type, mark_name, status, 
+      updated, created)
+    values (#{id,jdbcType=INTEGER}, #{fromUser,jdbcType=INTEGER}, #{destUser,jdbcType=INTEGER}, 
+      #{markType,jdbcType=BIT}, #{markName,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMMark">
+    insert into IMMark
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fromUser != null">
+        from_user,
+      </if>
+      <if test="destUser != null">
+        dest_user,
+      </if>
+      <if test="markType != null">
+        mark_type,
+      </if>
+      <if test="markName != null">
+        mark_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fromUser != null">
+        #{fromUser,jdbcType=INTEGER},
+      </if>
+      <if test="destUser != null">
+        #{destUser,jdbcType=INTEGER},
+      </if>
+      <if test="markType != null">
+        #{markType,jdbcType=BIT},
+      </if>
+      <if test="markName != null">
+        #{markName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.IMMarkExample" resultType="java.lang.Long">
+    select count(*) from IMMark
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update IMMark
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromUser != null">
+        from_user = #{record.fromUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.destUser != null">
+        dest_user = #{record.destUser,jdbcType=INTEGER},
+      </if>
+      <if test="record.markType != null">
+        mark_type = #{record.markType,jdbcType=BIT},
+      </if>
+      <if test="record.markName != null">
+        mark_name = #{record.markName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update IMMark
+    set id = #{record.id,jdbcType=INTEGER},
+      from_user = #{record.fromUser,jdbcType=INTEGER},
+      dest_user = #{record.destUser,jdbcType=INTEGER},
+      mark_type = #{record.markType,jdbcType=BIT},
+      mark_name = #{record.markName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMMark">
+    update IMMark
+    <set>
+      <if test="fromUser != null">
+        from_user = #{fromUser,jdbcType=INTEGER},
+      </if>
+      <if test="destUser != null">
+        dest_user = #{destUser,jdbcType=INTEGER},
+      </if>
+      <if test="markType != null">
+        mark_type = #{markType,jdbcType=BIT},
+      </if>
+      <if test="markName != null">
+        mark_name = #{markName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMMark">
+    update IMMark
+    set from_user = #{fromUser,jdbcType=INTEGER},
+      dest_user = #{destUser,jdbcType=INTEGER},
+      mark_type = #{markType,jdbcType=BIT},
+      mark_name = #{markName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

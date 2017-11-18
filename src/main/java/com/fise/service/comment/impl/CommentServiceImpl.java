@@ -12,6 +12,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.MyCommentMapper;
@@ -21,6 +22,8 @@ import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.MyComment;
 import com.fise.model.entity.MyCommentExample;
@@ -63,6 +66,8 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired
     MyCommentMapper myCommentDao;
+    
+    @Autowired IMMarkMapper imMarkDao;
     
     @Override
     public Response addComment(Comment record) {
@@ -173,7 +178,7 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(comment,result);
+            setNick(comment,result,page.getParam().getId());
             list1.add(result);
         }
         
@@ -233,7 +238,7 @@ public class CommentServiceImpl implements ICommentService{
                     result.setAddreply((int)count-myComment.getCommentNum());
                 }
                                
-                setNick(c,result);
+                setNick(c,result,page.getParam().getFromUserid());
                 listresult.add(result);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -274,7 +279,7 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(comment,result);
+            setNick(comment,result,from_userid);
             list1.add(result);
         }
         
@@ -315,7 +320,7 @@ public class CommentServiceImpl implements ICommentService{
     }
 
     @Override
-    public Response queryById(Integer comment_id) {
+    public Response queryById(Integer comment_id,Integer user_id) {
         Response res = new Response();
         
         Comment comment=commentDao.selectByPrimaryKey(comment_id);
@@ -327,19 +332,42 @@ public class CommentServiceImpl implements ICommentService{
         
         CommentResult result=new CommentResult();
         
-        setNick(comment,result);
+        setNick(comment,result,user_id);
         
         return res.success(result);        
     }
 
-    private void setNick(Comment comment,CommentResult result){
+    private void setNick(Comment comment,CommentResult result,Integer id){
         //查询用户昵称和头像
         IMUser user=userDao.selectByPrimaryKey(comment.getFromUserid());
         
+        //先在备注昵称表里查询备注信息
+        IMMarkExample example1 = new IMMarkExample();
+        IMMarkExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andFromUserEqualTo(id);
+        criteria1.andDestUserEqualTo(comment.getFromUserid());
+        criteria1.andMarkTypeEqualTo(0);
+        criteria1.andStatusEqualTo(1);
+        List<IMMark> list2=imMarkDao.selectByExample(example1);
+        if(list2.size()!=0 || !StringUtil.isEmpty(list2.get(0).getMarkName())){
+            user.setNick(list2.get(0).getMarkName());
+        }
         result.setFromNick(user.getNick());
         result.setFromAvatar(user.getAvatar());
         
         IMUser user1=userDao.selectByPrimaryKey(comment.getToUserid());
+        
+        //先在备注昵称表里查询备注信息
+        example1.clear();
+        IMMarkExample.Criteria criteria2 = example1.createCriteria();
+        criteria2.andFromUserEqualTo(id);
+        criteria2.andDestUserEqualTo(comment.getToUserid());
+        criteria2.andMarkTypeEqualTo(0);
+        criteria1.andStatusEqualTo(1);
+        List<IMMark> list3=imMarkDao.selectByExample(example1);
+        if(list3.size()!=0 || !StringUtil.isEmpty(list3.get(0).getMarkName())){
+            user1.setNick(list3.get(0).getMarkName());
+        }
         
         //判断是否有回复对象
         if(user1!=null){
