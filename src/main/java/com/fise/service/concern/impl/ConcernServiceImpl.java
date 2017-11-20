@@ -168,7 +168,7 @@ public class ConcernServiceImpl implements IConcernService{
                 myConcern.setAnswerNum(Integer.valueOf(value1));
                 myConcern.setCreated(DateUtil.getLinuxTimeStamp());
                 myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
-                myConcernDao.insert(myConcern);
+                myConcernDao.insertSelective(myConcern);
             }else {
                 //修改数据
                 MyConcern myConcern=list.get(0);

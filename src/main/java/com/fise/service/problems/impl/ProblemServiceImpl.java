@@ -129,7 +129,7 @@ public class ProblemServiceImpl implements IProblemService{
             myProblem.setAnswerNum(Integer.valueOf(value1));
             myProblem.setCreated(DateUtil.getLinuxTimeStamp());
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
-            MyProblemDao.insert(myProblem);
+            MyProblemDao.insertSelective(myProblem);
             
         } catch (Exception e) {
             e.printStackTrace();
