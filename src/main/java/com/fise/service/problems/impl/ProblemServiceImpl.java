@@ -310,6 +310,20 @@ public class ProblemServiceImpl implements IProblemService{
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example = new IMMarkExample();
+            IMMarkExample.Criteria criteria = example.createCriteria();
+            criteria.andFromUserEqualTo(user_id);
+            criteria.andDestUserEqualTo(problem.getUserId());
+            criteria.andMarkTypeEqualTo(0);
+            criteria.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example);
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }                
+            }
+            
             setResult(result, problem, user);
             
             res.success(result);
