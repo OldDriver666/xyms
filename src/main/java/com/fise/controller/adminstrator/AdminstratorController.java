@@ -23,6 +23,7 @@ import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
 import com.fise.service.administrator.IAdministratorService;
 import com.fise.service.auth.IAuthService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/admin")
@@ -128,12 +129,12 @@ public class AdminstratorController {
             
             email.addTo(map.get("emailaddress"));// 收件地址  
   
-            email.setFrom("2839117863@qq.com", "天堂遗孤");//此处填邮箱地址和用户名,用户名可以任意填写  
+            email.setFrom("2839117863@qq.com", "fise智能");//此处填邮箱地址和用户名,用户名可以任意填写  
   
             email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");//此处填写邮箱地址和客户端授权码  
   
-            email.setSubject("孙大大通讯");//此处填写邮件名，邮件名可任意填写  
-            email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + map.get("code"));//此处填写邮件内容  
+            email.setSubject("验证码");//此处填写邮件名，邮件名可任意填写  
+            email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + StringUtil.makeCode(6,false));//此处填写邮件内容  
             System.out.println("----------"+map.get("emailaddress"));
             email.send();  
             return resp.success();  

@@ -30,6 +30,7 @@ public class DeveloperController {
 
 	@Resource
 	IDeveloperService devservice;
+	
 	@IgnoreAuth
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Response register(@ModelAttribute DeveloperInsert developer,
@@ -39,6 +40,7 @@ public class DeveloperController {
 		response=devservice.insert(developer,files);
 		return response;
 	}
+	
 	@RequestMapping(value = "/checkup", method = RequestMethod.POST)
 	public Response checkup(@RequestBody @Valid DeveloperUpdate developer){
 		Response response=new Response();
@@ -71,5 +73,54 @@ public class DeveloperController {
 		response=devservice.queryAccount(account);
 		return response; 
 	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/getAccountByEmail", method = RequestMethod.POST)
+	public Response getAccountByEmail(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		String email=(String) map.get("emailaddress");
+		response=devservice.getAccountByEmail(email);
+		return response; 
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/modifyPwd", method = RequestMethod.POST)
+	public Response modifyPassword(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		response=devservice.modifyPassword(map);
+		return response; 
+	}
+	
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/sendcode", method = RequestMethod.POST)
+	public Response sendCode(@RequestBody @Valid Map<String , String> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		
+		response=devservice.sendCode(map);
+		return response; 
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/checkcode", method = RequestMethod.POST)
+	public Response checkCode(@RequestBody @Valid Map<String , String> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		response=devservice.checkCode(map);
+		return response; 
+	}
 
-}
+	@IgnoreAuth
+	@RequestMapping(value = "/queryEmail", method = RequestMethod.POST)
+	public Response queryEmail(@RequestBody @Valid Map<String , Object> map){
+		Response response=new Response();
+		logger.info(map.toString());
+		String email=(String) map.get("email");
+		response=devservice.queryEmail(email);
+		return response; 
+	}
+
+} 

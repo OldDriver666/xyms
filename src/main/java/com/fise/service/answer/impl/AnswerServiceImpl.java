@@ -14,8 +14,10 @@ import com.fise.base.Response;
 import com.fise.dao.AgreeMapper;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyAnswerMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -23,7 +25,13 @@ import com.fise.model.entity.Agree;
 import com.fise.model.entity.AgreeExample;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyAnswer;
+import com.fise.model.entity.MyAnswerExample;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.AnswerExample.Criteria;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.SensitiveWords;
@@ -32,6 +40,7 @@ import com.fise.model.result.AnswerResult;
 import com.fise.service.answer.IAnswerService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 import com.fise.utils.sensitiveword.SensitivewordFilter;
 
 import redis.clients.jedis.Jedis;
@@ -59,6 +68,12 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     CommentMapper commentDao;
+    
+    @Autowired
+    MyAnswerMapper MyAnswerDao;
+    
+    @Autowired
+    IMMarkMapper imMarkDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -104,10 +119,21 @@ public class AnswerServiceImpl implements IAnswerService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=answer.getId()+"comment";
-            value=answer.getCommentNum()+"";
-            jedis.set(key, value);
+            String value1=answer.getCommentNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //存入数据库
+            MyAnswer myAnswer = new MyAnswer();
+            myAnswer.setAnswerId(answer.getId());
+            myAnswer.setUserId(answer.getUserId());
+            myAnswer.setAgreeNum(Integer.valueOf(value));
+            myAnswer.setCommentNum(Integer.valueOf(value1));
+            myAnswer.setUpdated(DateUtil.getLinuxTimeStamp());
+            myAnswer.setCreated(DateUtil.getLinuxTimeStamp());
+            MyAnswerDao.insertSelective(myAnswer);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -147,18 +173,34 @@ public class AnswerServiceImpl implements IAnswerService{
                 jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 AnswerResult aResult = new AnswerResult();
                 
+                MyAnswerExample example2 = new MyAnswerExample();
+                MyAnswerExample.Criteria criteria2 = example2.createCriteria();
+                criteria2.andAnswerIdEqualTo(answer.getId());
+                criteria2.andUserIdEqualTo(answer.getUserId());
+                criteria2.andStatusEqualTo(1);
+                MyAnswer myAnswer=MyAnswerDao.selectByExample(example2).get(0);
+                
+                //先在redis中查找，如果没有再从数据库找
                 String key=answer.getId()+"agree";
-                String value=jedis.get(key);            
-                aResult.setAddAgreeCount(answer.getAgreeNum()-Integer.valueOf(value));
+                String value=jedis.get(key);
+                if(!StringUtil.isEmpty(value)){
+                    aResult.setAddAgreeCount(answer.getAgreeNum()-Integer.valueOf(value));
+                }else {
+                    aResult.setAddAgreeCount(answer.getAgreeNum()-myAnswer.getAgreeNum());
+                }
                 
                 key=answer.getId()+"comment";
                 value=jedis.get(key);
-                aResult.setAddCommentCount(answer.getCommentNum()-Integer.valueOf(value));
-                
+                if(!StringUtil.isEmpty(value)){
+                    aResult.setAddCommentCount(answer.getCommentNum()-Integer.valueOf(value));
+                }else {
+                    aResult.setAddCommentCount(answer.getCommentNum()-myAnswer.getCommentNum());
+                }
+                               
                 setResult(aResult,answer,user);
                 
                 listResult.add(aResult);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
@@ -204,6 +246,19 @@ public class AnswerServiceImpl implements IAnswerService{
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example1 = new IMMarkExample();
+            IMMarkExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andFromUserEqualTo(page.getParam().getUserId());
+            criteria1.andDestUserEqualTo(answer.getUserId());
+            criteria1.andMarkTypeEqualTo(0);
+            criteria1.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example1);
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }
+            }
             setResult(result,answer,user);
             
             list1.add(result);
@@ -245,6 +300,20 @@ public class AnswerServiceImpl implements IAnswerService{
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example1 = new IMMarkExample();
+            IMMarkExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andFromUserEqualTo(user_id);
+            criteria1.andDestUserEqualTo(answer.getUserId());
+            criteria1.andMarkTypeEqualTo(0);
+            criteria1.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example1);
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }
+            }
+            
             setResult(result,answer,user);
             result.setStatus(i);
             return res.success(result);
@@ -261,10 +330,22 @@ public class AnswerServiceImpl implements IAnswerService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=answer.getId()+"comment";
-            value=answer.getCommentNum()+"";
-            jedis.set(key, value);
+            String value1=answer.getCommentNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据存入数据库
+            MyAnswerExample example2 = new MyAnswerExample();
+            MyAnswerExample.Criteria criteria2 = example2.createCriteria();
+            criteria.andAnswerIdEqualTo(answer.getId());
+            criteria.andUserIdEqualTo(answer.getUserId());
+            MyAnswer myAnswer=MyAnswerDao.selectByExample(example2).get(0);
+            
+            myAnswer.setAgreeNum(Integer.valueOf(value));
+            myAnswer.setCommentNum(Integer.valueOf(value1));
+            myAnswer.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyAnswerDao.updateByPrimaryKeySelective(myAnswer);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

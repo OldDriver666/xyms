@@ -12,15 +12,23 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyCommentMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.Comment;
 import com.fise.model.entity.CommentExample;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyComment;
+import com.fise.model.entity.MyCommentExample;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.SensitiveWords;
 import com.fise.model.entity.SensitiveWordsExample;
@@ -31,6 +39,7 @@ import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 import com.fise.utils.sensitiveword.SensitivewordFilter;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import redis.clients.jedis.Jedis;
 
@@ -54,6 +63,11 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired
     SensitiveWordsMapper sensitiveWordsDao;
+    
+    @Autowired
+    MyCommentMapper myCommentDao;
+    
+    @Autowired IMMarkMapper imMarkDao;
     
     @Override
     public Response addComment(Comment record) {
@@ -109,6 +123,16 @@ public class CommentServiceImpl implements ICommentService{
             jedis.set(key, value);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //存入数据库
+            MyComment myComment = new MyComment();
+            myComment.setCommentId(comment.getId());
+            myComment.setUserId(comment.getFromUserid());
+            myComment.setCommentNum(Integer.valueOf(value));
+            myComment.setUpdated(DateUtil.getLinuxTimeStamp());
+            myComment.setCreated(DateUtil.getLinuxTimeStamp());
+            myCommentDao.insertSelective(myComment);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -131,7 +155,7 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         criteria.andStatusEqualTo(1);
-        example.setOrderByClause("created desc");
+        example.setOrderByClause("created asc");
         //根据好友关系查询
         List<Integer> userlist = relationShipDao.findrelation(page.getParam().getId());
         //判断好友是否为空
@@ -154,7 +178,7 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(comment,result);
+            setNick(comment,result,page.getParam().getId());
             list1.add(result);
         }
         
@@ -200,14 +224,23 @@ public class CommentServiceImpl implements ICommentService{
                 long count=commentDao.countByExample(example);
                 result.setCount((int)count);
                 
+                MyCommentExample example2=new MyCommentExample();
+                MyCommentExample.Criteria criteria2=example2.createCriteria();
+                criteria2.andCommentIdEqualTo(c.getId());
+                criteria2.andStatusEqualTo(1);
+                MyComment myComment=myCommentDao.selectByExample(example2).get(0);
+                
                 String key =c.getId()+"reply";
                 String value=jedis.get(key);
-                
-                result.setAddreply((int)count-Integer.valueOf(value));
-                
-                setNick(c,result);
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddreply((int)count-Integer.valueOf(value));
+                }else {
+                    result.setAddreply((int)count-myComment.getCommentNum());
+                }
+                               
+                setNick(c,result,page.getParam().getFromUserid());
                 listresult.add(result);
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
@@ -246,7 +279,7 @@ public class CommentServiceImpl implements ICommentService{
         for(Comment comment:list){
             CommentResult result=new CommentResult();
             
-            setNick(comment,result);
+            setNick(comment,result,from_userid);
             list1.add(result);
         }
         
@@ -266,6 +299,16 @@ public class CommentServiceImpl implements ICommentService{
             jedis.set(key, value);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据库信息
+            MyCommentExample example2 = new MyCommentExample();
+            MyCommentExample.Criteria criteria2 = example2.createCriteria();
+            criteria.andProblemIdEqualTo(comment_id);
+            MyComment myComment=myCommentDao.selectByExample(example2).get(0);
+            
+            myComment.setCommentNum(Integer.valueOf(value));            
+            myComment.setUpdated(DateUtil.getLinuxTimeStamp());
+            myCommentDao.updateByPrimaryKeySelective(myComment);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -277,7 +320,7 @@ public class CommentServiceImpl implements ICommentService{
     }
 
     @Override
-    public Response queryById(Integer comment_id) {
+    public Response queryById(Integer comment_id,Integer user_id) {
         Response res = new Response();
         
         Comment comment=commentDao.selectByPrimaryKey(comment_id);
@@ -289,19 +332,46 @@ public class CommentServiceImpl implements ICommentService{
         
         CommentResult result=new CommentResult();
         
-        setNick(comment,result);
+        setNick(comment,result,user_id);
         
         return res.success(result);        
     }
 
-    private void setNick(Comment comment,CommentResult result){
+    private void setNick(Comment comment,CommentResult result,Integer id){
         //查询用户昵称和头像
         IMUser user=userDao.selectByPrimaryKey(comment.getFromUserid());
         
+        //先在备注昵称表里查询备注信息
+        IMMarkExample example1 = new IMMarkExample();
+        IMMarkExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andFromUserEqualTo(id);
+        criteria1.andDestUserEqualTo(comment.getFromUserid());
+        criteria1.andMarkTypeEqualTo(0);
+        criteria1.andStatusEqualTo(1);
+        List<IMMark> list2=imMarkDao.selectByExample(example1);
+        if(list2.size()!=0){
+            if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                user.setNick(list2.get(0).getMarkName());
+            }
+        }
         result.setFromNick(user.getNick());
         result.setFromAvatar(user.getAvatar());
         
         IMUser user1=userDao.selectByPrimaryKey(comment.getToUserid());
+        
+        //先在备注昵称表里查询备注信息
+        example1.clear();
+        IMMarkExample.Criteria criteria2 = example1.createCriteria();
+        criteria2.andFromUserEqualTo(id);
+        criteria2.andDestUserEqualTo(comment.getToUserid());
+        criteria2.andMarkTypeEqualTo(0);
+        criteria1.andStatusEqualTo(1);
+        List<IMMark> list3=imMarkDao.selectByExample(example1);
+        if(list3.size()!=0){
+            if(!StringUtil.isEmpty(list3.get(0).getMarkName())){
+                user1.setNick(list3.get(0).getMarkName());
+            }            
+        }
         
         //判断是否有回复对象
         if(user1!=null){

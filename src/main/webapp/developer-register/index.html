@@ -20,13 +20,13 @@
             </a>
         </h1>-->
 		<h1 class="tit-sub" style="border-left:none">
-			<a href="http://www.fise.com.cn">沸石开放平台</a>
+			<a href="http://192.168.2.250:8888/xiaoyu/index.html" target="_blank">沸石开放平台</a>
 		</h1>
         <h2 class="tit-sub">
-            <a href="http://www.fise.com.cn">管理中心</a>
+            <a href="http://192.168.2.250:8888/xiaoyu/index.html" target="_blank">管理中心</a>
         </h2>
     </div>
-    <div class="user-wrapper">
+    <!--<div class="user-wrapper">
         
         <div class="menu-btn user-data">
             <a title="资料库" href="http://www.fise.com.cn" class="menu-btn-in" target="_blank">
@@ -46,7 +46,7 @@
             </a>
         </div>
 		
-        <div title="消息" class="menu-btn user-msg"><!--站内信息-->
+        <div title="消息" class="menu-btn user-msg">&lt;!&ndash;站内信息&ndash;&gt;
             <a href="http://www.fise.com.cn" class="menu-btn-in" target="_blank">
                 <span class="ico-letter">
                     
@@ -71,7 +71,7 @@
             </p>
         </div>
 
-    </div>
+    </div>-->
 </div>
 <!--/头部-->
 
@@ -100,11 +100,11 @@
 			<div class="step">
 				<ul>
 					<li class="step1 step-cur">
-						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>填写资料</h2>
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>开发者注册信息</h2>
 						<span class="arrow"></span>
 					</li>
-					<li class="step3">
-						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-3">2</span>完成注册</h2>
+					<li class="step2">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-2">2</span>完成注册</h2>
 					</li>
 				</ul>
 			</div>
@@ -138,6 +138,8 @@
 								</div>
 							</div>
 						</div>
+
+
 						<div class="form-row">
 							<div class="form-tit">
 								<label>密码</label>
@@ -161,6 +163,9 @@
 								</div>
 								<div style="display:none;" _errorTips="passwordAgain" class="form-col form-col2">
 									<em class="txt-err"><b class="ico-msg"></b>填写的密码不符合规范</em>
+								</div>
+								<div style="display:none;" _errorTips="passworderror" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>两次填写的密码不一致</em>
 								</div>
 							</div>
 						</div>
@@ -371,6 +376,44 @@
 								<div style="display:none;" _errorTips="mail" class="form-col form-col2">
 									<em class="txt-err"><b class="ico-msg"></b>请填写有效的电子邮箱</em>
 								</div>
+
+								<div style="display:none;" _errorTips="mailAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>该邮箱已被注册使用，请换一个邮箱注册</em>
+								</div>
+								<div style="display:none;" _errorTips="mailNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>该邮箱未被注册使用，可用于注册</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label></label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input  type="button" _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff" value="发送验证码到邮箱" />
+									<!--<div  _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff">发送验证码到邮箱</div>-->
+								</div>
+
+								<div style="display:none;" _errorTips="emailcodeAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>发送验证码失败，请重新发送验证码到邮箱</em>
+								</div>
+								<div style="display:none;" _errorTips="emailcodeNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>发送验证码成功，请查收邮箱并填写验证码</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label>邮箱验证码</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="emailcode" _max="50" _regex="emailcode" type="text" class="ui-intxt" placeholder="请查收邮箱并填写验证码">
+								</div>
+								<div style="display:none;" _errorTips="emailcode" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的邮箱验证码不符合规范</em>
+								</div>
 							</div>
 						</div>
 
@@ -432,6 +475,9 @@
 								</div>
 								<div style="display:none;" _errorTips="passwordAgain" class="form-col form-col2">
 									<em class="txt-err"><b class="ico-msg"></b>填写的密码不符合规范</em>
+								</div>
+								<div style="display:none;" _errorTips="passworderror" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>两次填写的密码不一致</em>
 								</div>
 							</div>
 						</div>
@@ -614,6 +660,44 @@
 								<div style="display:none;" _errorTips="mail" class="form-col form-col2">
 									<em class="txt-err"><b class="ico-msg"></b>请填写有效的电子邮箱</em>
 								</div>
+
+								<div style="display:none;" _errorTips="mailAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>该邮箱已被注册使用，请换一个邮箱注册</em>
+								</div>
+								<div style="display:none;" _errorTips="mailNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>该邮箱未被注册使用，可用于注册</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label></label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input  type="button" _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff" value="发送验证码到邮箱" />
+									<!--<div  _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff">发送验证码到邮箱</div>-->
+								</div>
+
+								<div style="display:none;" _errorTips="emailcodeAlready" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>发送验证码失败，请重新发送验证码到邮箱</em>
+								</div>
+								<div style="display:none;" _errorTips="emailcodeNone" class="form-col form-col2">
+									<em class="txt-suc"><b class="ico-msg"></b>发送验证码成功，请查收邮箱并填写验证码</em>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-tit">
+								<label>邮箱验证码</label>
+							</div>
+							<div class="form-cont">
+								<div class="form-col form-col1">
+									<input _key="emailcode" _max="50" _regex="emailcode" type="text" class="ui-intxt" placeholder="请查收邮箱并填写验证码">
+								</div>
+								<div style="display:none;" _errorTips="emailcode" class="form-col form-col2">
+									<em class="txt-err"><b class="ico-msg"></b>填写的邮箱验证码不符合规范</em>
+								</div>
 							</div>
 						</div>
 
@@ -644,12 +728,108 @@
 	</div>
 
 
-	<div  _box="1" class="finish-entrance"  style="display:none;">
-		<p class="re-tit">注册信息已经提交成功！</p>
+
+	<!--<div  _box="1" class="emailCheck-entrance"  style="display:none">
+		<div class="layout">
+			<div class="step">
+				<ul>
+					<li class="step1 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>填写资料</h2>
+						<span class="arrow"></span>
+					</li>
+					<li class="step2 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-2">2</span>邮箱验证</h2>
+						<span class="arrow"></span>
+					</li>
+					<li class="step3">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-3">3</span>完成注册</h2>
+					</li>
+				</ul>
+			</div>
+
+
+			<div class="formbox">
+				<div class="formbox-hd">
+					<h3 class="formbox-tit">电子邮箱验证</h3>
+				</div>
+				<div class="formbox-bd">
+					<div class="form-row">
+						<div class="form-tit">
+							<label>邮箱验证码</label>
+						</div>
+						<div class="form-cont">
+							<div class="form-col form-col1">
+								<input _key="emailcode" _max="50" _regex="emailcode" type="text" class="ui-intxt" placeholder="请查收邮箱并填写验证码">
+							</div>
+							<div style="display:none;" _errorTips="emailcode" class="form-col form-col2">
+								<em class="txt-err"><b class="ico-msg"></b>填写的邮箱验证码不符合规范</em>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-tit">
+							<label></label>
+						</div>
+						<div class="form-cont">
+							<div class="form-col form-col1">
+								<div  _type="sendmailcode" style="border:5px solid #0fadff; background-color: #0fadff">发送验证码到邮箱</div>
+							</div>
+
+							<div style="display:none;" _errorTips="emailcodeAlready" class="form-col form-col2">
+								<em class="txt-err"><b class="ico-msg"></b>发送验证码失败，请重新发送验证码到邮箱</em>
+							</div>
+							<div style="display:none;" _errorTips="emailcodeNone" class="form-col form-col2">
+								<em class="txt-suc"><b class="ico-msg"></b>发送验证码成功，请查收邮箱并填写验证码</em>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-tit">
+							<label>邮箱验证码</label>
+						</div>
+						<div class="form-cont">
+							<div class="form-col form-col1">
+								<input _key="emailcode" _max="50" _regex="emailcode" type="text" class="ui-intxt" placeholder="请查收邮箱并填写验证码">
+							</div>
+							<div style="display:none;" _errorTips="emailcode" class="form-col form-col2">
+								<em class="txt-err"><b class="ico-msg"></b>填写的邮箱验证码不符合规范</em>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="btm-btn-wrap">
+			<div class="bg"></div>
+			<div class="layout">
+				&lt;!&ndash;<a _type="step0" href="javascript:void(0);" onclick="return false;" class="ui-btn-gray">返回上一步</a>&ndash;&gt;
+				<a _type="emailCheck" href="javascript:void(0);" onclick="return false;" class="ui-btn-blue">提交验证码</a>
+			</div>
+		</div>
+	</div>-->
+
+
+	<div  _box="1" class="finish-entrance"  style="display:none; margin-left:0;">
+		<div class="layout">
+			<div class="step">
+				<ul>
+					<li class="step1 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-1">1</span>开发者注册信息</h2>
+						<span class="arrow"></span>
+					</li>
+					<li class="step2 step-cur">
+						<h2 class="step-tit"><span class="ico-cir-num ico-cir-num-2">2</span>完成注册</h2>
+					</li>
+				</ul>
+			</div>
+			<p class="re-tit">注册信息提交成功！后续我们会通过电子邮箱将审核结果通知到您！</p>
+		</div>
 	</div>
 
-	
-</div>
+
 
 
 <div id="agreementDialog" class="popup popup-agreement" style="display:none;z-index:4000;">
@@ -671,7 +851,7 @@
 	<div class="foot">
 	<div class="inner">
 		<p class="footer_menu">
-			<a target="_blank" _hot_tag="OPEN.CONTRACTUS" href="http://www.fise.com.cn">联系我们</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN" href="http://www.fise.com.cn">投诉举报</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN.EN" href="http://www.fise.com.cn">Complaint Guidelines</a> | <a target="_blank" href="http://www.fise.com.cn">沸石开放平台</a>
+			<a target="_blank" _hot_tag="OPEN.CONTRACTUS" href="http://www.fise.com.cn">联系我们</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN" href="http://www.fise.com.cn">投诉举报</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN.EN" href="http://www.fise.com.cn">Complaint Guidelines</a> | <a target="_blank" href="http://192.168.2.250:8888/xiaoyu/index.html">沸石开放平台</a>
 		</p>
 		<p class="copyrighten">Copyright &copy; 2007 - 2017 Fise. All Rights Reserved.</p>
 		<p class="copyrightzh">沸石公司 版权所有</p>

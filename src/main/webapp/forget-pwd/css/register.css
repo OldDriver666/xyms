@@ -1,0 +1,73 @@
+.clearfix{zoom:1}
+.clearfix:after{content:" ";display:block;font-size:0;height:0;clear:both;visibility:hidden}
+.register-entrance{width:670px;margin:0 auto;padding-top:154px}
+.register-entrance .re-tit{color:#636363;font-size:24px;line-height:26px;margin-bottom:50px}
+.register-entrance .re-types{width:670px;height:300px;margin-bottom:40px;text-align:center}
+.register-entrance .re-types .re-type{height:253px;padding-top:45px;width:298px;border:1px solid #D5D5D5;float:left;background:#fff;cursor:pointer}
+.register-entrance .re-types .re-type:hover{border:1px solid #2d8ed8}
+.register-entrance .re-types .re-type.person{float:left;margin-right:70px}
+.register-entrance .re-types .re-type .re-type-name{color:#636363;font-size:24px;line-height:26px;margin-bottom:10px}
+.register-entrance .re-types .re-type .re-type-des{color:#909090;line-height:24px;width:160px;margin:0 auto}
+.register-entrance .re-types .company{padding-top:50px}
+.register-entrance .re-tip{font-size:14px;color:#b2b2b2;text-align:left}
+.re-type-img{display:inline-block;margin-bottom:12px}
+.re-type-img-person{width:128px;height:126px;background-image: url("../img/register.png");
+  background-position: -2px -121px;}
+.re-type-img-company{width:141px;height:117px;background-image: url("../img/register.png");
+  background-position: -2px -2px;margin-bottom:16px}
+.register-wrap{padding-bottom:85px;padding-top:29px;position:relative}
+.mailbox{background:#fff;border:1px solid #ECECEC;text-align:center;line-height:1.5;margin-bottom:67px}
+.mailbox .mail-inner{padding:74px 0 59px}
+.mailbox .btn-wrap{padding:34px 0 12px}
+.mailbox .status{color:#a8a8a8;font-size:14px}
+.mailbox .status-dis{color:#a8a8a8;cursor:default}
+.mailbox .txt-result{color:#595959}
+.mailbox .txt-big{font-size:24px;font-weight:700}
+.ico-smile{display:inline-block;width:60px;height:61px;background-image: url("../img/register.png");
+  background-position: -145px -2px;}
+.mailbox-result .mail-inner{padding:74px 0 69px}
+.sub-nav{background:#FAFAFA;border-bottom:1px solid #E3E3E3;box-shadow:0 1px 0 1px #E8E8E8;min-width:1180px}
+.sub-nav .layout{position:relative}
+.sub-nav .link{position:absolute;right:0;top:12px;font-size:14px}
+.sub-nav-list{font-size:18px}
+.sub-nav-list li,.sub-nav-list li a{display:inline-block;*display:inline;*zoom:1;vertical-align:top}
+.sub-nav-list li a{line-height:40px;margin:0 25px;color:#909090}
+.sub-nav-list .cur a{color:#2d8ed8;border-bottom:3px solid #2d8ed8}
+.userinfo-wrap{padding:16px 0 0}
+.userinfo-wrap .user-type{margin:0 1em 0 0}
+.userinfo-wrap .ico-user-type{display:inline-block;vertical-align:top;overflow:hidden}
+.userinfo-wrap .ico-user-type-company{width:22px;height:19px;background-image: url("../img/register.png");
+  background-position: -180px -65px;margin:3px 11px 0 0}
+.userinfo-wrap .ico-user-type-person{width:19px;height:17px;background-image: url("../img/register.png");
+  background-position: -177px -97px;margin:5px 11px 0 0}
+.userinfo-wrap .user-pic{display:inline-block;vertical-align:top;width:198px;height:138px;overflow:hidden;border:1px solid #EDEDED}
+.userinfo-wrap .user-pic img{width:100%}
+.userinfo-wrap .addr{margin:0 1em 0 0}
+.userinfo-wrap .btn-wrap{text-align:center;padding:18px 0 0}
+.ability .formbox-hd{padding-bottom:18px}
+.ability .ability-item{float:left;width:548px;overflow:hidden}
+.ability .ability-item-hd{height:30px;position:relative;padding-left:45px;font-size:24px;color:#323232;padding-bottom:15px}
+.ability .ability-item-hd .ability-plat-ico{position:absolute;top:0;left:0;height:30px}
+.ability .ability-item-hd .android{width:33px;background-image: url("../img/register.png");
+  background-position: -145px -65px;}
+.ability .ability-item-hd .ios{width:30px;background-image: url("../img/register.png");
+  background-position: -145px -97px;}
+.ability .line{float:left;height:146px;border-right:1px solid #ddd;margin:17px 30px 0}
+.ability .ability-list{width:580px}
+.ability .ability-list li{float:left;font-size:14px;color:#909090;width:158px;line-height:1.57;height:110px;margin-right:35px}
+.ability .ability-list a{color:#909090;display:block}
+.ability .ability-list .list-tit{position:relative;padding-left:16px;font-size:16px;color:#323232;padding-bottom:12px}
+.ability .ability-list .dot{position:absolute;width:7px;height:7px;background-image: url("../img/register.png");
+  background-position: -180px -86px;left:0;top:10px}
+.formbox-bankinfo{position:relative}
+.bank-info-tips-popup{position:absolute;top:0;right:0;bottom:0;left:0}
+.bank-info-tips-popup .bg{position:absolute;top:0;right:0;bottom:0;left:0;background:#fff;opacity:.8;filter:alpha(opacity=80)}
+.bank-info-tips-popup .bank-info-tips-popup-contain{position:absolute;top:0;left:0;width:100%;color:#636363}
+.bank-info-tips-popup .bank-info-tips-popup-contain .content{text-align:center;padding:85px 0 15px}
+.bank-info-tips-popup .btn-bank-info-pop{width:142px;height:46px;padding:0;text-align:center;font-size:16px;line-height:46px}
+.input-subbranch{width:158px}
+.formbox .subbranch-focus-tips{color:#323232;font-weight:700}/*  |xGv00|ac1e7c060b0e733b28dce478248a79fd */
+
+.finish-entrance{width:670px;margin:0 auto;padding-top:154px}
+.finish-entrance .re-tit{color:#636363;font-size:24px;line-height:26px;margin-bottom:50px;text-align:center}
+

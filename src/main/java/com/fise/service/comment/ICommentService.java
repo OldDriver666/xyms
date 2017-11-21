@@ -18,7 +18,7 @@ public interface ICommentService {
     public Response query(Integer comment_id,Integer page_no,Integer from_userid);
     
     /*根据评论id查询评论*/
-    public Response queryById(Integer comment_id);
+    public Response queryById(Integer comment_id,Integer user_id);
     
     /*根据评论id，删除评论*/
     public Response delMyCom(Integer comment_id);
