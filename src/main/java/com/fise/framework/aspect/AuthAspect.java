@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import com.fise.base.HttpContext;
+import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.framework.exception.AuthException;
 import com.fise.framework.exception.RequestHeaderException;
@@ -32,6 +33,7 @@ public class AuthAspect {
         if (method.isAnnotationPresent(IgnoreAuth.class)) {
             return pjp.proceed();
         }
+        
         // 从 request header 中获取当前 token
         String uri = HttpContext.getRequest().getRequestURI();
         StringBuffer url = HttpContext.getRequest().getRequestURL();
@@ -55,6 +57,27 @@ public class AuthAspect {
         String udid = uaField[2];
         String id = uaField[3];
         String versionName = uaField[4];
+        
+        // 判断问答圈是否要access token验证
+        if (method.isAnnotationPresent(AuthValid.class)) {
+            Jedis jedis=null;
+            try {
+                jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+                String access_token = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
+                String key=Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN+access_token;
+                String idInRedis=jedis.get(key);
+                if (StringUtil.isEmpty(idInRedis) || !idInRedis.equals(id)) {
+                    throw new AuthException("Auth failed!");
+                }else {
+                    return pjp.proceed();
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
+            }
+        }
         
         logger.debug("UA=" + fitUA + " URI=" + uri);
         if (StringUtil.isEmpty(id)) {

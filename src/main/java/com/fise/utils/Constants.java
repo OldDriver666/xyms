@@ -7,6 +7,9 @@ public interface Constants {
 	// access token失效时间  15天
 	public Integer ACCESS_TOKEN_EXPIRE_SECONDS = 1296000;
 	
+	//小雨问答圈access token 失效时间 30分钟
+	public Integer XIAOYU_ACCESS_TOKEN_EXPIRE_SECONDS=1800;
+	
 	//开发者注册时邮箱验证时间2分钟
 	public Integer VALIDATION_CODE_EXPIRE_SECONDS=120;
 	
