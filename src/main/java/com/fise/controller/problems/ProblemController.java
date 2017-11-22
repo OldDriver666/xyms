@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.annotation.Resource;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +40,7 @@ import redis.clients.jedis.Jedis;
 @RestController
 @RequestMapping("/problem")
 public class ProblemController {
+
     private Logger logger=Logger.getLogger(getClass());
     
     @Resource
@@ -302,6 +302,5 @@ public class ProblemController {
         return resp;
     }
     
-    
-    
+  
 }
