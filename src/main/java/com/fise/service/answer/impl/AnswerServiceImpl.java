@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.aspectj.asm.internal.Relationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,7 @@ import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.MyAnswerMapper;
+import com.fise.dao.MyProblemMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
@@ -74,6 +74,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     IMMarkMapper imMarkDao;
+    
+    @Autowired
+    MyProblemMapper MyProblemDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -379,6 +382,39 @@ public class AnswerServiceImpl implements IAnswerService{
         
         //根据回答的id，修改评论的状态status为0
         commentDao.updateList1(answer_id);
+        
+        //redis和数据库里myproblem的回答数-1
+        Jedis jedis = null;
+        try {
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);           
+            String key=problem.getId()+"answermy";
+            String value=problem.getAnswerNum()+"";
+            jedis.set(key, value);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            key=problem.getId()+"browsermy";
+            String value1=problem.getBrowseNum()+"";
+            jedis.set(key, value1);
+            
+            /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据存入数据库
+            MyProblemExample example = new MyProblemExample();
+            MyProblemExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(problem.getUserId());
+            MyProblem myProblem=MyProblemDao.selectByExample(example).get(0);
+            
+            myProblem.setAnswerNum(Integer.valueOf(value));
+            myProblem.setBrowserNum(Integer.valueOf(value1));
+            myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyProblemDao.updateByPrimaryKeySelective(myProblem);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
+        }
         
         return resp.success();
     }

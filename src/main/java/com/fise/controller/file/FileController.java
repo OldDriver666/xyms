@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.utils.Constants;
 
@@ -32,7 +33,7 @@ public class FileController {
 	private Logger logger = Logger.getLogger(this.getClass());
     
     //上传图片 
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/fileupload",method=RequestMethod.POST)
     public Response fileupload(@RequestBody @RequestParam("file") MultipartFile[] uploadfile,HttpServletRequest req) throws IOException{
         Response response=new Response();
@@ -46,9 +47,9 @@ public class FileController {
                 file=uploadfile[i];
                 
                 /*内网上传图片路径*/
-                String path="/home/fise/bin/www/upload";
+                //String path="/home/fise/bin/www/upload";
                 /*外网上传图片路径*/
-                //String path="/home/fise/www/upload";
+                String path="/home/fise/www/upload";
                 
                 String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
                 File dir=new File(path,filename);
@@ -62,14 +63,14 @@ public class FileController {
                 Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
                 if(i==0){
                     /*内网上传图片路径*/
-                    pictureURL=Constants.IN_FILE_UPLOAD_URL+filename;
+                    //pictureURL=Constants.IN_FILE_UPLOAD_URL+filename;
                     /*外网上传图片路径*/
-                    //pictureURL=Constants.OUT_FILE_UPLOAD_URL+filename;
+                    pictureURL=Constants.OUT_FILE_UPLOAD_URL+filename;
                 }else {
                     /*内网上传图片路径*/
-                    pictureURL=pictureURL+Constants.IN_FILE_UPLOAD_URL+filename;
+                    //pictureURL=pictureURL+Constants.IN_FILE_UPLOAD_URL+filename;
                     /*外网上传图片路径*/
-                    //pictureURL=pictureURL+Constants.OUT_FILE_UPLOAD_URL+filename;
+                    pictureURL=pictureURL+Constants.OUT_FILE_UPLOAD_URL+filename;
                 }
         
             }

@@ -139,29 +139,41 @@ public class ProblemController {
     public void filedown(@RequestBody Map<String, String> map,HttpServletResponse resp) throws IOException{
         
         logger.info(map.toString());
-        if(map.get("picture")==null || "".equals(map.get("picture"))){
-            resp.getWriter().write("参数不能为空");
+        BufferedOutputStream os = null;
+        BufferedInputStream bis = null;
+        try {
+            if (map.get("picture") == null || "".equals(map.get("picture"))) {
+                resp.getWriter().write("参数不能为空");
+            }
+            String fileName = map.get("picture");
+            bis = new BufferedInputStream(new FileInputStream(new File(fileName)));
+            String filename = URLEncoder.encode(fileName, "utf-8");
+            resp.addHeader("Content-Disposition", "attachment;filename=" + filename);
+            // resp.setContentType("multipart/form-data");
+            os = new BufferedOutputStream(resp.getOutputStream());
+            int len = 0;
+            while ((len = bis.read()) != -1) {
+                os.write(len);
+                os.flush();
+            }
+        } catch (Exception e) {
+            logger.info(e);
+        } finally {
+            try {
+                if (null != os) {
+                    os.close();
+                }
+            } catch (Exception e) {
+                logger.info(e);
+            }
+            try {
+                if (null != bis) {
+                    bis.close();
+                }
+            } catch (Exception e) {
+                logger.info(e);
+            }
         }
-        
-        String fileName=map.get("picture");     
-        BufferedInputStream bis=new BufferedInputStream(new FileInputStream(new File(fileName)));
-        
-        String filename=URLEncoder.encode(fileName,"utf-8");
-        resp.addHeader("Content-Disposition", "attachment;filename="+filename);
-        
-        //resp.setContentType("multipart/form-data");
-        
-        BufferedOutputStream os=new BufferedOutputStream(resp.getOutputStream());
-        
-        int len=0;
-        while((len=bis.read())!=-1){
-            os.write(len);
-            os.flush();
-        }
-        
-        os.close();
-        bis.close();
-        
     }
     
     @AuthValid
@@ -269,6 +281,9 @@ public class ProblemController {
             jedis.setex(key, Constants.XIAOYU_ACCESS_TOKEN_EXPIRE_SECONDS, value);
         } catch (Exception e) {
             e.printStackTrace();
+            resp.failure(ErrorCode.ERROR_WECHAT_LOGIN_QUEST_TOKEN_ERROR);
+            resp.setMsg("获取token失败");
+            return resp;
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }

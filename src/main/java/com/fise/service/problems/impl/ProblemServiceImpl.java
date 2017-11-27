@@ -157,11 +157,14 @@ public class ProblemServiceImpl implements IProblemService{
             userlist=new ArrayList<Integer>();
         }
         userlist.add(param.getParam().getUserId());
+        //添加官方账号ID，用于发送广告
+        userlist.add(Constants.FISE_AD_ID);
+        
         //System.out.println("-----------"+userlist.toString());
         criteria.andUserIdIn(userlist);
         
         List<Problems> list=problemsDao.selectBypage(example, param);
-                       
+                               
         Page<ProResult> page = getResult(list1, list, param);       
         return res.success(page);
         
@@ -352,8 +355,8 @@ public class ProblemServiceImpl implements IProblemService{
             criteria.andUserIdEqualTo(problem.getUserId());
             MyProblem myProblem=MyProblemDao.selectByExample(example).get(0);
             
-            myProblem.setBrowserNum(Integer.valueOf(value));
-            myProblem.setAnswerNum(Integer.valueOf(value1));
+            myProblem.setAnswerNum(Integer.valueOf(value));
+            myProblem.setBrowserNum(Integer.valueOf(value1));
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
             MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {

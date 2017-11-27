@@ -96,9 +96,9 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				file = uploadfile.get(i);
 
 				/* 内网上传图片路径 */
-				String path = "/home/fise/bin/www/upload";
+				//String path = "/home/fise/bin/www/upload";
 				/* 外网上传图片路径 */
-				// String path="D:/logs";
+				String path="/home/fise/www/upload";
 
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -108,7 +108,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 				}
 				file.transferTo(dir);
 				Runtime.getRuntime().exec("chown fise:fise " + path + "/" + filename);
-				pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
+				pictureURL = Constants.OUT_FILE_UPLOAD_URL + filename;
 				result.add(pictureURL);
 			}
 		}
