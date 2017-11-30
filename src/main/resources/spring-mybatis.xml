@@ -79,7 +79,7 @@
 			<tx:method name="init*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
 			<tx:method name="upload*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
 			<tx:method name="gernate*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
-    		<tx:method name="*" read-only="true"/>
+    		<tx:method name="*" propagation="REQUIRED"/>
 		</tx:attributes>
     </tx:advice>
     
