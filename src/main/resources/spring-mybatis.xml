@@ -84,7 +84,7 @@
     </tx:advice>
     
     <aop:config proxy-target-class="true">
-    	<aop:pointcut expression="execution(* com.fise.server..*.*(..))" id="interceptorPointCuts"/>
+    	<aop:pointcut expression="execution(* com.fise.service..*.*(..))" id="interceptorPointCuts"/>
     	<aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts"/>
     </aop:config>
 </beans>    
