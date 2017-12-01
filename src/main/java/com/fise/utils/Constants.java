@@ -141,6 +141,6 @@ public interface Constants {
 	//内网图片上传文件目录
 	public static final String IN_FILE_UPLOAD_URL="http://192.168.2.250:8888/upload/";
 	//外网图片上传文件目录
-	public static final String OUT_FILE_UPLOAD_URL="http://120.78.145.162:8080/upload/";
+	public static final String OUT_FILE_UPLOAD_URL="http://xiaoyu.fise-wi.com:8080/upload/";
 	
 }
