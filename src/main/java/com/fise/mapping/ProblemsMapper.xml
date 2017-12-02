@@ -325,14 +325,14 @@
   </select>
   
   <select id="querytitle" parameterType="map" resultMap="BaseResultMap">
-  	select 
-  	<include refid="Base_Column_List" />
-  	from Problems 
-  	<if test="_parameter != null">
+      select 
+      <include refid="Base_Column_List" />
+      from Problems 
+      <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if> 
-  	and title like #{title,jdbcType=VARCHAR} 
-  	and status=1 
-  	order by created desc 
+      and title like #{title,jdbcType=VARCHAR} 
+      and status=1 
+      order by created desc 
   </select>
 </mapper>

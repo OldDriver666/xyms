@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.annotation.Resource;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,21 +18,29 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.ProResult;
 import com.fise.service.concern.IConcernService;
 import com.fise.service.problems.IProblemService;
+import com.fise.utils.Constants;
+import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
+
+import redis.clients.jedis.Jedis;
 
 @RestController
 @RequestMapping("/problem")
 public class ProblemController {
+
     private Logger logger=Logger.getLogger(getClass());
     
     @Resource
@@ -43,7 +50,7 @@ public class ProblemController {
     IConcernService concernService;
     
     /*提交问题*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/insert",method=RequestMethod.POST)
     public Response insertProblem(@RequestBody @Valid Problems record) throws IOException{
         Response res = new Response();
@@ -127,37 +134,49 @@ public class ProblemController {
     }*/
     
     /*查询图片*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/picture",method=RequestMethod.POST)
     public void filedown(@RequestBody Map<String, String> map,HttpServletResponse resp) throws IOException{
         
         logger.info(map.toString());
-        if(map.get("picture")==null || "".equals(map.get("picture"))){
-            resp.getWriter().write("参数不能为空");
+        BufferedOutputStream os = null;
+        BufferedInputStream bis = null;
+        try {
+            if (map.get("picture") == null || "".equals(map.get("picture"))) {
+                resp.getWriter().write("参数不能为空");
+            }
+            String fileName = map.get("picture");
+            bis = new BufferedInputStream(new FileInputStream(new File(fileName)));
+            String filename = URLEncoder.encode(fileName, "utf-8");
+            resp.addHeader("Content-Disposition", "attachment;filename=" + filename);
+            // resp.setContentType("multipart/form-data");
+            os = new BufferedOutputStream(resp.getOutputStream());
+            int len = 0;
+            while ((len = bis.read()) != -1) {
+                os.write(len);
+                os.flush();
+            }
+        } catch (Exception e) {
+            logger.info(e);
+        } finally {
+            try {
+                if (null != os) {
+                    os.close();
+                }
+            } catch (Exception e) {
+                logger.info(e);
+            }
+            try {
+                if (null != bis) {
+                    bis.close();
+                }
+            } catch (Exception e) {
+                logger.info(e);
+            }
         }
-        
-        String fileName=map.get("picture");     
-        BufferedInputStream bis=new BufferedInputStream(new FileInputStream(new File(fileName)));
-        
-        String filename=URLEncoder.encode(fileName,"utf-8");
-        resp.addHeader("Content-Disposition", "attachment;filename="+filename);
-        
-        //resp.setContentType("multipart/form-data");
-        
-        BufferedOutputStream os=new BufferedOutputStream(resp.getOutputStream());
-        
-        int len=0;
-        while((len=bis.read())!=-1){
-            os.write(len);
-            os.flush();
-        }
-        
-        os.close();
-        bis.close();
-        
     }
     
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/queryall",method=RequestMethod.POST)
     public Response queryProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -185,7 +204,7 @@ public class ProblemController {
     }
     
     /*根据话题  模糊查询  分页展示*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/titlequery",method=RequestMethod.POST)
     public Response titlequery(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -200,7 +219,7 @@ public class ProblemController {
     }
     
     /*查询我的问题     获取更新的回答数量信息*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/myproblem",method=RequestMethod.POST)
     public Response myProblem(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
@@ -215,7 +234,7 @@ public class ProblemController {
     }
     
     /*根据问题id，查询问题详情    */
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
@@ -230,7 +249,7 @@ public class ProblemController {
     }
     
     /*根据问题id，删除我的问题    */
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/delmyproblem",method=RequestMethod.POST)
     public Response delMyProblem(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
@@ -242,6 +261,37 @@ public class ProblemController {
         res = problemService.delMyPro(map.get("problem_id"));
         return res;
     }
+    
+    /*生成随机access_token*/
+    @IgnoreAuth
+    @RequestMapping(value="/get_token",method=RequestMethod.POST)
+    public Response getToken(@RequestBody @Valid Map<String, Integer> map){
+        Response resp = new Response();
+        logger.info(map.toString());
+        
+        long now_time=DateUtil.getLinuxTimeStamp();
+        String access_token = now_time+""+map.get("user_id");
+        
+        Jedis jedis=null;
+        try {
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+            
+            String key=Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN+access_token;
+            String value=map.get("user_id")+"";
+            jedis.setex(key, Constants.XIAOYU_ACCESS_TOKEN_EXPIRE_SECONDS, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.failure(ErrorCode.ERROR_WECHAT_LOGIN_QUEST_TOKEN_ERROR);
+            resp.setMsg("获取token失败");
+            return resp;
+        }finally {
+            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
+        }
+        
+        resp.success(access_token);
+        return resp;
+    }
+    
     
     /*后台管理 查询问题*/
     @RequestMapping(value="/queryback",method=RequestMethod.POST)
@@ -267,5 +317,5 @@ public class ProblemController {
         return resp;
     }
     
-    
+  
 }

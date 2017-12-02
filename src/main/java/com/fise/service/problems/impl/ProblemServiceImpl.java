@@ -15,17 +15,23 @@ import com.fise.base.Response;
 import com.fise.dao.AnswerMapper;
 import com.fise.dao.CommentMapper;
 import com.fise.dao.ConcernMapper;
+import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMSchoolMapper;
 import com.fise.dao.IMUserMapper;
+import com.fise.dao.MyProblemMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Answer;
 import com.fise.model.entity.AnswerExample;
 import com.fise.model.entity.Concern;
+import com.fise.model.entity.IMMark;
+import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.MyProblem;
+import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.Problems;
 import com.fise.model.entity.ProblemsExample;
 import com.fise.model.entity.ProblemsExample.Criteria;
@@ -35,6 +41,7 @@ import com.fise.model.result.ProResult;
 import com.fise.service.problems.IProblemService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 import com.fise.utils.sensitiveword.SensitivewordFilter;
 
 import redis.clients.jedis.Jedis;
@@ -51,17 +58,17 @@ public class ProblemServiceImpl implements IProblemService{
     @Autowired
     IMSchoolMapper schoolDao;
     
-    @Autowired
-    IMRelationShipMapper relationShipDao;
+    @Autowired IMRelationShipMapper relationShipDao;
+        
+    @Autowired SensitiveWordsMapper sensitiveWordsDao;    
     
-    @Autowired
-    SensitiveWordsMapper sensitiveWordsDao;
+    @Autowired AnswerMapper answerDao;
     
-    @Autowired
-    AnswerMapper answerDao;
+    @Autowired CommentMapper commentDao;    
     
-    @Autowired
-    CommentMapper commentDao;
+    @Autowired MyProblemMapper MyProblemDao;
+    
+    @Autowired IMMarkMapper imMarkDao;
     
     @Override
     public Response insert(Problems record) {
@@ -104,15 +111,26 @@ public class ProblemServiceImpl implements IProblemService{
             String key = problem.getId()+"browsermy";
             String value = problem.getBrowseNum()+"";
             jedis.set(key, value);
-            
+                                   
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             //在redis里存入该问题的回答量
             key = problem.getId()+"answermy";
-            value=problem.getAnswerNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getAnswerNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //存入数据库
+            MyProblem myProblem = new MyProblem();
+            myProblem.setProblemId(problem.getId());
+            myProblem.setUserId(problem.getUserId());
+            myProblem.setBrowserNum(Integer.valueOf(value));
+            myProblem.setAnswerNum(Integer.valueOf(value1));
+            myProblem.setCreated(DateUtil.getLinuxTimeStamp());
+            myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyProblemDao.insertSelective(myProblem);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }finally{
@@ -139,11 +157,14 @@ public class ProblemServiceImpl implements IProblemService{
             userlist=new ArrayList<Integer>();
         }
         userlist.add(param.getParam().getUserId());
+        //添加官方账号ID，用于发送广告
+        //userlist.add(Constants.FISE_AD_ID);
+        
         //System.out.println("-----------"+userlist.toString());
         criteria.andUserIdIn(userlist);
         
         List<Problems> list=problemsDao.selectBypage(example, param);
-                       
+                               
         Page<ProResult> page = getResult(list1, list, param);       
         return res.success(page);
         
@@ -203,19 +224,48 @@ public class ProblemServiceImpl implements IProblemService{
                 jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
                 ProResult result=new ProResult();
                 
+                MyProblemExample example2 = new MyProblemExample();
+                MyProblemExample.Criteria criteria2 = example2.createCriteria();
+                criteria2.andProblemIdEqualTo(problem.getId());
+                criteria.andUserIdEqualTo(problem.getUserId());
+                criteria2.andStatusEqualTo(1);
+                List<MyProblem> list2=MyProblemDao.selectByExample(example2);
+                MyProblem myProblem=list2.get(0);
+                
                 String key=problem.getId()+"answermy";
                 String value=jedis.get(key);
-                
-                result.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
-                
-                
+                //先从redis里拿数据，如果没有就从数据库拿数据
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddAnswerCount(problem.getAnswerNum()-Integer.valueOf(value));
+                }else {
+                    result.setAddAnswerCount(problem.getAnswerNum()-myProblem.getAnswerNum());
+                }
+                                
                 key=problem.getId()+"browsermy";
                 value=jedis.get(key);
+                if(!StringUtil.isEmpty(value)){
+                    result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
+                }else {
+                    result.setAddBrowseCount(problem.getBrowseNum()-myProblem.getBrowserNum());
+                }
                 
-                result.setAddBrowseCount(problem.getBrowseNum()-Integer.valueOf(value));
                 
                 //查询用户昵称和头像
                 IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
+                
+                //先在备注昵称表里查询备注信息
+                IMMarkExample example1 = new IMMarkExample();
+                IMMarkExample.Criteria criteria1 = example1.createCriteria();
+                criteria1.andFromUserEqualTo(param.getParam().getUserId());
+                criteria1.andDestUserEqualTo(problem.getUserId());
+                criteria1.andMarkTypeEqualTo(0);
+                criteria1.andStatusEqualTo(1);
+                List<IMMark> list1=imMarkDao.selectByExample(example1);
+                if(list1.size()!=0){
+                    if(!StringUtil.isEmpty(list1.get(0).getMarkName())){
+                        user.setNick(list1.get(0).getMarkName());
+                    }
+                }
                 
                 setResult(result, problem, user);
 
@@ -235,7 +285,7 @@ public class ProblemServiceImpl implements IProblemService{
                     }
                     
                 });*/
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
@@ -263,6 +313,20 @@ public class ProblemServiceImpl implements IProblemService{
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example = new IMMarkExample();
+            IMMarkExample.Criteria criteria = example.createCriteria();
+            criteria.andFromUserEqualTo(user_id);
+            criteria.andDestUserEqualTo(problem.getUserId());
+            criteria.andMarkTypeEqualTo(0);
+            criteria.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example);
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }                
+            }
+            
             setResult(result, problem, user);
             
             res.success(result);
@@ -271,7 +335,7 @@ public class ProblemServiceImpl implements IProblemService{
         
         Jedis jedis = null;
         try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);           
             String key=problem.getId()+"answermy";
             String value=problem.getAnswerNum()+"";
             jedis.set(key, value);
@@ -279,10 +343,22 @@ public class ProblemServiceImpl implements IProblemService{
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
             key=problem.getId()+"browsermy";
-            value=problem.getBrowseNum()+"";
-            jedis.set(key, value);
+            String value1=problem.getBrowseNum()+"";
+            jedis.set(key, value1);
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
+            
+            //修改数据存入数据库
+            MyProblemExample example = new MyProblemExample();
+            MyProblemExample.Criteria criteria = example.createCriteria();
+            criteria.andProblemIdEqualTo(problem.getId());
+            criteria.andUserIdEqualTo(problem.getUserId());
+            MyProblem myProblem=MyProblemDao.selectByExample(example).get(0);
+            
+            myProblem.setAnswerNum(Integer.valueOf(value));
+            myProblem.setBrowserNum(Integer.valueOf(value1));
+            myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
+            MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -322,6 +398,20 @@ public class ProblemServiceImpl implements IProblemService{
             
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
+            
+            //先在备注昵称表里查询备注信息
+            IMMarkExample example = new IMMarkExample();
+            IMMarkExample.Criteria criteria = example.createCriteria();
+            criteria.andFromUserEqualTo(param.getParam().getUserId());
+            criteria.andDestUserEqualTo(problem.getUserId());
+            criteria.andMarkTypeEqualTo(0);
+            criteria.andStatusEqualTo(1);
+            List<IMMark> list2=imMarkDao.selectByExample(example);
+            if(list2.size()!=0){
+                if(!StringUtil.isEmpty(list2.get(0).getMarkName())){
+                    user.setNick(list2.get(0).getMarkName());
+                }                
+            }
             
             //查询学校名字
             //IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());

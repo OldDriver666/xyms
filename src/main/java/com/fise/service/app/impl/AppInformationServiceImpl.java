@@ -326,9 +326,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				file = uploadfile.get(i);
 
 				/* 内网上传图片路径 */
-				String path = "/home/fise/bin/www/upload";
+				//String path = "/home/fise/bin/www/upload";
 				/* 外网上传图片路径 */
-				// String path="/home/fise/www/upload";
+				String path="/home/fise/www/upload";
 
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -338,7 +338,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				}
 				file.transferTo(dir);
 				Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
-				pictureURL = Constants.IN_FILE_UPLOAD_URL + filename;
+				pictureURL = Constants.OUT_FILE_UPLOAD_URL + filename;
 				result.add(pictureURL);
 			}
 		}
@@ -348,9 +348,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	private String appUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
 
 		/* 内网上传图片路径 */
-		String path = "/home/fise/bin/www/upload";
+		//String path = "/home/fise/bin/www/upload";
 		/* 外网上传图片路径 */
-		// String path="/home/fise/www/upload";
+		String path="/home/fise/www/upload";
 
 		String filename = uploadfile.getOriginalFilename().replace(".",
 				new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -362,9 +362,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		uploadfile.transferTo(dir);
 		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
-		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
+		//String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
-		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
+		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
 
 		return downloadURL;
 	}
@@ -372,9 +372,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	private String iconUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
 
 		/* 内网上传图片路径 */
-		String path = "/home/fise/bin/www/upload";
+		//String path = "/home/fise/bin/www/upload";
 		/* 外网上传图片路径 */
-		// String path="/home/fise/www/upload";
+		String path="/home/fise/www/upload";
 
 		String filename = uploadfile.getOriginalFilename().replace(".",
 				new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -386,9 +386,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		uploadfile.transferTo(dir);
 		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
-		String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
+		//String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
-		// pictureURL="http://120.78.145.162:8080/upload"+"/"+filename;
+		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
 		return downloadURL;
 	}
 

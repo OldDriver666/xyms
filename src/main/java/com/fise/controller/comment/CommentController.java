@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Comment;
 import com.fise.service.comment.ICommentService;
@@ -27,7 +28,7 @@ public class CommentController {
     ICommentService commentService;
     
     /*发布评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response addComment(@RequestBody @Valid Comment record){
         Response res = new Response();
@@ -48,7 +49,7 @@ public class CommentController {
     }
     
     /*查询评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/querycomment",method=RequestMethod.POST)
     public Response queryComment(@RequestBody @Valid Page<Comment> page){
         Response res = new Response();
@@ -63,7 +64,7 @@ public class CommentController {
     }
     
     /*查询我的评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/querymy",method=RequestMethod.POST)
     public Response querymy(@RequestBody @Valid Page<Comment> page){
         Response res = new Response();
@@ -78,7 +79,7 @@ public class CommentController {
     }
     
     /*查询评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
@@ -93,22 +94,22 @@ public class CommentController {
     }
     
     /*根据评论id查询评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/querybyid",method=RequestMethod.POST)
     public Response queryById(@RequestBody @Valid Map<String , Integer> map){
         Response res = new Response();
         logger.info(map.toString());
         
-        if(map.get("id")==null){
+        if(map.get("id")==null || map.get("user_id")==null){
             return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        res=commentService.queryById(map.get("id"));
+        res=commentService.queryById(map.get("id"),map.get("user_id"));
         return res;
     }
     
     /*根据评论id，删除评论*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/delmycom",method=RequestMethod.POST)
     public Response delMyCom(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();

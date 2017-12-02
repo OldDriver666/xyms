@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Concern;
 import com.fise.service.concern.IConcernService;
@@ -27,7 +28,7 @@ public class ConcernController {
     IConcernService concernService;
     
     /*用户点击关注*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/change",method=RequestMethod.POST)
     public Response changeConcern(@RequestBody @Valid Concern record){
         Response res = new Response();
@@ -42,7 +43,7 @@ public class ConcernController {
     }
     
     /*查询用户是否关注*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/isconcern",method=RequestMethod.POST)
     public Response queryisConcern(@RequestBody @Valid Concern record){
         Response res = new Response();
@@ -57,7 +58,7 @@ public class ConcernController {
     }
     
     /*查询用户关注的问题*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/queryconcerns",method=RequestMethod.POST)
     public Response queryConcerns(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();
@@ -72,7 +73,7 @@ public class ConcernController {
     }
     
     /*根据问题ID，查询关注问题详情*/
-    @IgnoreAuth
+    @AuthValid
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Map<String, Integer> map){
         Response res = new Response();

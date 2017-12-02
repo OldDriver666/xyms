@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fise.dao.AnswerMapper">
-  <resultMap id="BaseResultMap" type="com.fise.model.entity.Answer">
+<mapper namespace="com.fise.dao.IMMarkMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMMark">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="problem_id" jdbcType="INTEGER" property="problemId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="agree_num" jdbcType="INTEGER" property="agreeNum" />
-    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="from_user" jdbcType="INTEGER" property="fromUser" />
+    <result column="dest_user" jdbcType="INTEGER" property="destUser" />
+    <result column="mark_type" jdbcType="BIT" property="markType" />
+    <result column="mark_name" jdbcType="VARCHAR" property="markName" />
+    <result column="status" jdbcType="BIT" property="status" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
@@ -71,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, problem_id, content, agree_num, comment_num, status, updated, created
+    id, from_user, dest_user, mark_type, mark_name, status, updated, created
   </sql>
-  <select id="selectByExample" parameterType="com.fise.model.entity.AnswerExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.fise.model.entity.IMMarkExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from Answer
+    from IMMark
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,49 +97,44 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from Answer
+    from IMMark
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from Answer
+    delete from IMMark
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fise.model.entity.AnswerExample">
-    delete from Answer
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMMarkExample">
+    delete from IMMark
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fise.model.entity.Answer">
-    insert into Answer (id, user_id, problem_id, 
-      content, agree_num, comment_num, 
-      status, updated, created
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{agreeNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.fise.model.entity.IMMark">
+    insert into IMMark (id, from_user, dest_user, 
+      mark_type, mark_name, status, 
+      updated, created)
+    values (#{id,jdbcType=INTEGER}, #{fromUser,jdbcType=INTEGER}, #{destUser,jdbcType=INTEGER}, 
+      #{markType,jdbcType=BIT}, #{markName,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fise.model.entity.Answer">
-    insert into Answer
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMMark">
+    insert into IMMark
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="fromUser != null">
+        from_user,
       </if>
-      <if test="problemId != null">
-        problem_id,
+      <if test="destUser != null">
+        dest_user,
       </if>
-      <if test="content != null">
-        content,
+      <if test="markType != null">
+        mark_type,
       </if>
-      <if test="agreeNum != null">
-        agree_num,
-      </if>
-      <if test="commentNum != null">
-        comment_num,
+      <if test="markName != null">
+        mark_name,
       </if>
       <if test="status != null">
         status,
@@ -156,23 +150,20 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="fromUser != null">
+        #{fromUser,jdbcType=INTEGER},
       </if>
-      <if test="problemId != null">
-        #{problemId,jdbcType=INTEGER},
+      <if test="destUser != null">
+        #{destUser,jdbcType=INTEGER},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
+      <if test="markType != null">
+        #{markType,jdbcType=BIT},
       </if>
-      <if test="agreeNum != null">
-        #{agreeNum,jdbcType=INTEGER},
-      </if>
-      <if test="commentNum != null">
-        #{commentNum,jdbcType=INTEGER},
+      <if test="markName != null">
+        #{markName,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=BIT},
       </if>
       <if test="updated != null">
         #{updated,jdbcType=INTEGER},
@@ -182,35 +173,32 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fise.model.entity.AnswerExample" resultType="java.lang.Long">
-    select count(*) from Answer
+  <select id="countByExample" parameterType="com.fise.model.entity.IMMarkExample" resultType="java.lang.Long">
+    select count(*) from IMMark
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update Answer
+    update IMMark
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.fromUser != null">
+        from_user = #{record.fromUser,jdbcType=INTEGER},
       </if>
-      <if test="record.problemId != null">
-        problem_id = #{record.problemId,jdbcType=INTEGER},
+      <if test="record.destUser != null">
+        dest_user = #{record.destUser,jdbcType=INTEGER},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
+      <if test="record.markType != null">
+        mark_type = #{record.markType,jdbcType=BIT},
       </if>
-      <if test="record.agreeNum != null">
-        agree_num = #{record.agreeNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.commentNum != null">
-        comment_num = #{record.commentNum,jdbcType=INTEGER},
+      <if test="record.markName != null">
+        mark_name = #{record.markName,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=TINYINT},
+        status = #{record.status,jdbcType=BIT},
       </if>
       <if test="record.updated != null">
         updated = #{record.updated,jdbcType=INTEGER},
@@ -224,40 +212,36 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update Answer
+    update IMMark
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      problem_id = #{record.problemId,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=VARCHAR},
-      agree_num = #{record.agreeNum,jdbcType=INTEGER},
-      comment_num = #{record.commentNum,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=TINYINT},
+      from_user = #{record.fromUser,jdbcType=INTEGER},
+      dest_user = #{record.destUser,jdbcType=INTEGER},
+      mark_type = #{record.markType,jdbcType=BIT},
+      mark_name = #{record.markName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT},
       updated = #{record.updated,jdbcType=INTEGER},
       created = #{record.created,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.Answer">
-    update Answer
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMMark">
+    update IMMark
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="fromUser != null">
+        from_user = #{fromUser,jdbcType=INTEGER},
       </if>
-      <if test="problemId != null">
-        problem_id = #{problemId,jdbcType=INTEGER},
+      <if test="destUser != null">
+        dest_user = #{destUser,jdbcType=INTEGER},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
+      <if test="markType != null">
+        mark_type = #{markType,jdbcType=BIT},
       </if>
-      <if test="agreeNum != null">
-        agree_num = #{agreeNum,jdbcType=INTEGER},
-      </if>
-      <if test="commentNum != null">
-        comment_num = #{commentNum,jdbcType=INTEGER},
+      <if test="markName != null">
+        mark_name = #{markName,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
+        status = #{status,jdbcType=BIT},
       </if>
       <if test="updated != null">
         updated = #{updated,jdbcType=INTEGER},
@@ -268,35 +252,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.Answer">
-    update Answer
-    set user_id = #{userId,jdbcType=INTEGER},
-      problem_id = #{problemId,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      agree_num = #{agreeNum,jdbcType=INTEGER},
-      comment_num = #{commentNum,jdbcType=INTEGER},
-      status = #{status,jdbcType=TINYINT},
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMMark">
+    update IMMark
+    set from_user = #{fromUser,jdbcType=INTEGER},
+      dest_user = #{destUser,jdbcType=INTEGER},
+      mark_type = #{markType,jdbcType=BIT},
+      mark_name = #{markName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
       updated = #{updated,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
-  </update>
-  
-  <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from Answer
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-    <if test="example.orderByClause != null">
-      order by ${example.orderByClause}
-    </if>
-  </select>
-  
-  <update id="updateList" parameterType="int">
-      UPDATE Answer 
-      SET status=0 
-      where 
-      problem_id=#{problem_id,jdbcType=INTEGER}   
   </update>
 </mapper>

@@ -40,6 +40,26 @@ http://192.168.2.250:8787/
 null 没有数据返回 看code是否成功
 ```
 
+####获取token
+|   接口地址    |   xiaoyusvr/problem/get_token    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |
+
+####请求
+```
+{
+	"user_id":x            //必填-用户id
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": "15113316213"          //返回的token值
+}
+
 ####查询问题
 |   接口地址    |   xiaoyusvr/problem/queryall    |
 |   ---         |   ---          |
@@ -717,7 +737,7 @@ msg 为已关注或未关注
 ```
 {
      "param":{
-                  "from_userid":""       //必填-用户id
+                  "from_userid":x       //必填-用户id
              },
      "page_no":x                       //选填-当前页
 }
@@ -814,7 +834,8 @@ msg 为已关注或未关注
 ####请求
 ```
 {
-     "id":x          //必填-评论id
+     "id":x,          //必填-评论id
+     "user_id":x      //必填-登录用户id
 }
 ```
 ####回复
@@ -4066,8 +4087,7 @@ device_id 和  master_id 都不填则查询所有
 ####请求
 ```
 {
-	"emailaddress":"",          //必填-收件人邮箱地址
-	"code":""                   //必填-验证码
+	"emailaddress":""          //必填-收件人邮箱地址
 }
 ```
 ####回复

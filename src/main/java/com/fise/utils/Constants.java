@@ -1,11 +1,16 @@
 package com.fise.utils;
 
 public interface Constants {
+    //官方账号id
+    //public Integer FISE_AD_ID=250039;
 	// url长度限制
 	public Integer MAX_URL_LENGTH = 1024;
 
 	// access token失效时间  15天
 	public Integer ACCESS_TOKEN_EXPIRE_SECONDS = 1296000;
+	
+	//小雨问答圈access token 失效时间 30分钟
+	public Integer XIAOYU_ACCESS_TOKEN_EXPIRE_SECONDS=1800;
 	
 	//开发者注册时邮箱验证时间2分钟
 	public Integer VALIDATION_CODE_EXPIRE_SECONDS=120;
