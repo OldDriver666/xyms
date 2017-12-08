@@ -266,9 +266,9 @@
   
   <select id="findrelation" parameterType="java.lang.Integer" resultType="java.lang.Integer">
   	SELECT bigId as user_id FROM 
-  	((SELECT bigId FROM IMRelationShip where smallId=#{id,jdbcType=INTEGER} AND status &lt;> 0) 
+  	((SELECT bigId FROM IMRelationShip where smallId=#{id,jdbcType=INTEGER} AND status &lt;> 0 AND smallPriority &lt;> 3 AND bigPriority &lt;> 3) 
   	union 
-  	(SELECT smallId FROM `IMRelationShip` where bigId=#{id,jdbcType=INTEGER} AND status &lt;> 0)) 
+  	(SELECT smallId FROM `IMRelationShip` where bigId=#{id,jdbcType=INTEGER} AND status &lt;> 0 AND smallPriority &lt;> 3 AND bigPriority &lt;> 3)) 
   	relationship  	
   </select>
 </mapper>
