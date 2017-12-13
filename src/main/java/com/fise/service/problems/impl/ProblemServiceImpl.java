@@ -327,6 +327,29 @@ public class ProblemServiceImpl implements IProblemService{
                 }                
             }
             
+            //查询用户可以看到的回答数（非好友或拉黑用户的回答无法看到）
+            AnswerExample example1 = new AnswerExample();
+            AnswerExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andStatusEqualTo(1);
+            
+            if(problem.getId()!=null){
+                criteria1.andProblemIdEqualTo(problem.getId());
+            }
+            
+            //查询好友回答
+            List<Integer> userlist=relationShipDao.findrelation(user_id);
+            //判断好友是否为空
+            if(userlist.size()==0){
+                userlist=new ArrayList<Integer>();
+            }
+            userlist.add(user_id);
+            criteria1.andUserIdIn(userlist);
+            
+            
+            List<Answer> list3=answerDao.selectByExample(example1);
+            
+            problem.setAnswerNum(list3.size());
+            
             setResult(result, problem, user);
             
             res.success(result);
@@ -415,6 +438,29 @@ public class ProblemServiceImpl implements IProblemService{
             
             //查询学校名字
             //IMSchool school=schoolDao.selectByPrimaryKey(param.getParam().getSchoolId());
+            
+            //查询用户可以看到的回答数（非好友或拉黑用户的回答无法看到）
+            AnswerExample example1 = new AnswerExample();
+            AnswerExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andStatusEqualTo(1);
+            
+            if(problem.getId()!=null){
+                criteria1.andProblemIdEqualTo(problem.getId());
+            }
+            
+            //查询好友回答
+            List<Integer> userlist=relationShipDao.findrelation(param.getParam().getUserId());
+            //判断好友是否为空
+            if(userlist.size()==0){
+                userlist=new ArrayList<Integer>();
+            }
+            userlist.add(param.getParam().getUserId());
+            criteria1.andUserIdIn(userlist);
+            
+            
+            List<Answer> list3=answerDao.selectByExample(example1);
+            
+            problem.setAnswerNum(list3.size());
             
             setResult(result, problem, user);
             result.setSchoolname(null);
