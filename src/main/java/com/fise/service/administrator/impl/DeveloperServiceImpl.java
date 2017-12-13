@@ -62,9 +62,13 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		developer.setPhone(param.getPhone());
 		developer.setEmail(param.getEmail());
 		// 默认不可用
+		 Integer nNow = DateUtil.getLinuxTimeStamp();
+		
 		developer.setStatus(0);
-		developer.setCreated(DateUtil.getLinuxTimeStamp());
-		developer.setUpdated(DateUtil.getLinuxTimeStamp());
+		developer.setCreated(nNow);
+		developer.setUpdated(nNow);
+		developer.setSalt(nNow.toString().substring(5, 9));
+		
 		developer.setIdCard(param.getIdCard());
 		// 三张身份证的照片，上传到服务器中，获取它们的地址值，用;隔开
 		List<String> images = null;
