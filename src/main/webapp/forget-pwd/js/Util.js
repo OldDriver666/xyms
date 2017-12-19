@@ -678,11 +678,7 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-    ctx = "http://120.78.145.162:8787/";        //test version
-	//ctx = "http://192.168.99.11:8080/";        //test version
-   /* ctx = "http://192.168.2.196:8585/";  */      //non-stop server version
-     /*ctx = "http://192.168.2.196:8610/";*/
-    /*ctx = "http://bossdev.wn517.com/";*/
+    ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
     Util.localStorage.add("ctx",ctx);
 };
 

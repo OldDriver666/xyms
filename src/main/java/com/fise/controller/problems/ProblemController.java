@@ -208,6 +208,8 @@ public class ProblemController {
     @RequestMapping(value="/titlequery",method=RequestMethod.POST)
     public Response titlequery(@RequestBody @Valid Page<Problems> param){
         Response res = new Response();
+        Response res1 = new Response();
+        Concern record=new Concern();
         logger.info(param.toString());
         
         if(StringUtil.isEmpty(param.getParam().getTitle()) || param.getParam().getUserId()==null){
@@ -215,6 +217,16 @@ public class ProblemController {
         }
         
         res=problemService.queryTitle(param);
+        
+        //添加判断用户是否关注该问题
+        Page<ProResult> page=(Page<ProResult>)res.getData();
+        List<ProResult> list=page.getResult();
+        for(int i=0;i<list.size();i++){
+            record.setProblemId(list.get(i).getId());
+            record.setUserId(param.getParam().getUserId());
+            res1=concernService.queryisConcern(record);
+            list.get(i).setIsConcern(res1.getMsg());
+        }
         return res;
     }
     
