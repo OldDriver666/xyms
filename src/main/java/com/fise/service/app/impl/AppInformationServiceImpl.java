@@ -90,6 +90,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
         Map<String ,Object> map=new HashMap<String ,Object>();
 		boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
 		map.put("hasMore", hasMore);
+		page.setPageNo(param.getPageNo());
 		page.setExtraParam(map);
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
