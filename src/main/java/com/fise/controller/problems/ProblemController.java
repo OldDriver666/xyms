@@ -192,6 +192,9 @@ public class ProblemController {
         
         //添加判断用户是否关注该问题
         Page<ProResult> page=(Page<ProResult>)res.getData();
+        if(page==null){
+            return res;
+        }
         List<ProResult> list=page.getResult();
         for(int i=0;i<list.size();i++){
             record.setProblemId(list.get(i).getId());
@@ -220,6 +223,9 @@ public class ProblemController {
         
         //添加判断用户是否关注该问题
         Page<ProResult> page=(Page<ProResult>)res.getData();
+        if(page==null){
+            return res;
+        }
         List<ProResult> list=page.getResult();
         for(int i=0;i<list.size();i++){
             record.setProblemId(list.get(i).getId());
