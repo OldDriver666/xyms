@@ -47,7 +47,7 @@ $(function(){
                 if(result.msg == "修改密码成功"){
                     $(".register-wrap").hide();
                     $(".finish-entrance").show();
-                    window.location.href = "http://192.168.2.250:8787/xiaoyusvr/html/index.html";
+                    window.location.href = "http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html";
                     $('#personal input[_key="mail"]').val("");
                     $('#personal input[_key="account"]').val("");
                     $('#personal input[_key="emailcode"]').val("");
