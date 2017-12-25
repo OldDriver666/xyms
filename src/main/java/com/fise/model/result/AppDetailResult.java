@@ -226,6 +226,8 @@ public class AppDetailResult {
     public void init(AppInformation data){
         this.id = data.getId();
         this.appName = data.getAppName();
+        this.devId=data.getDevId();
+        this.devName=data.getDevName();
         this.topCategory = data.getTopCategory();
         this.category = data.getCategory();
         this.description = data.getDescription();
