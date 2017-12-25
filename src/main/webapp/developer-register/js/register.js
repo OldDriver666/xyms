@@ -1,6 +1,8 @@
 $(function(){
     var userType = null;
     var errorCount = 0;
+    $('#personal input[_type="sendmailcode"]').attr("disabled", "disabled");
+    $('#agency input[_type="sendmailcode"]').attr("disabled", "disabled");
 
     //选择开发者用户注册类型 1个人 2公司
     $('div[_type="person"]').on('click', function(){
@@ -471,6 +473,15 @@ $(function(){
 
     $('#personal input[_key="mail"]').change(function () {
         if ($(this).val() != "") {
+            var szReg= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var szMail = $('#personal input[_key="mail"]').val();
+            var mailFlag = szReg.test(szMail);
+            if(mailFlag == false){
+                $('#personal div[_errorTips="mail"]').show();
+                $('#personal div[_errorTips="mailAlready"]').hide();
+                $('#personal div[_errorTips="mailNone"]').hide();
+                return;
+            }
             $('#personal div[_errorTips="mail"]').hide();
             var url = ctx + "xiaoyusvr/boss/developer/queryEmail";
             var data = new Object();
@@ -478,9 +489,11 @@ $(function(){
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.msg == "该邮箱已注册"){
+                    $('#personal input[_type="sendmailcode"]').attr("disabled", "disabled");
                     $('#personal div[_errorTips="mailAlready"]').show();
                     $('#personal div[_errorTips="mailNone"]').hide();
                 }else if(result.msg == "该邮箱未注册"){
+                    $('#personal input[_type="sendmailcode"]').removeAttr("disabled");
                     $('#personal div[_errorTips="mailAlready"]').hide();
                     $('#personal div[_errorTips="mailNone"]').show();
                 }
@@ -560,6 +573,15 @@ $(function(){
 
     $('#agency input[_key="mail"]').change(function () {
         if ($(this).val() != "") {
+            var szReg= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var szMail = $('#agency input[_key="mail"]').val();
+            var mailFlag = szReg.test(szMail);
+            if(mailFlag == false){
+                $('#agency div[_errorTips="mail"]').show();
+                $('#agency div[_errorTips="mailAlready"]').hide();
+                $('#agency div[_errorTips="mailNone"]').hide();
+                return;
+            }
             $('#agency div[_errorTips="mail"]').hide();
             var url = ctx + "xiaoyusvr/boss/developer/queryEmail";
             var data = new Object();
@@ -567,9 +589,11 @@ $(function(){
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.msg == "该邮箱已注册"){
+                    $('#agency input[_type="sendmailcode"]').attr("disabled", "disabled");
                     $('#agency div[_errorTips="mailAlready"]').show();
                     $('#agency div[_errorTips="mailNone"]').hide();
                 }else if(result.msg == "该邮箱未注册"){
+                    $('#agency input[_type="sendmailcode"]').removeAttr("disabled");
                     $('#agency div[_errorTips="mailAlready"]').hide();
                     $('#agency div[_errorTips="mailNone"]').show();
                 }
