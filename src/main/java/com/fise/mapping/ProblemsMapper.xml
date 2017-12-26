@@ -335,4 +335,16 @@
       and status=1 
       order by created desc 
   </select>
+  
+  <select id="querytitlebypage" parameterType="map" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+      from Problems 
+      <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+      <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if> 
+  </select>
 </mapper>

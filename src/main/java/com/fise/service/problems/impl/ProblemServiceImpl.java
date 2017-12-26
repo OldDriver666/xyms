@@ -30,6 +30,7 @@ import com.fise.model.entity.IMMark;
 import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMSchool;
 import com.fise.model.entity.IMUser;
+import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.MyProblem;
 import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.Problems;
@@ -506,12 +507,31 @@ public class ProblemServiceImpl implements IProblemService{
         ProblemsExample example = new ProblemsExample();
         ProblemsExample.Criteria criteria=example.createCriteria();
         
-        if(param.getParam().getUserId()!=null){
+        /*if(param.getParam().getUserId()!=null){
             criteria.andUserIdEqualTo(param.getParam().getUserId());
+        }*/
+        
+        //话题查询
+        if(!StringUtil.isEmpty(param.getParam().getTitle())){
+            param.getParam().setTitle("%"+param.getParam().getTitle()+"%");
+            criteria.andTitleLike(param.getParam().getTitle());
+        }
+        
+        //根据用户昵称查询
+        if(!StringUtil.isEmpty((String)param.getExtraParam().get("nick"))){
+            IMUserExample example2 = new IMUserExample();
+            IMUserExample.Criteria criteria2 = example2.createCriteria();
+            criteria2.andNickEqualTo((String)param.getExtraParam().get("nick"));
+            List<IMUser> list = userDao.selectByExample(example2);
+            List<Integer> list2 = new ArrayList<Integer>();
+            for(IMUser user:list){
+                list2.add(user.getId());
+            }
+            criteria.andUserIdIn(list2);
         }
         
         example.setOrderByClause("created desc");
-        List<Problems> list=problemsDao.selectBypage(example, param);
+        List<Problems> list=problemsDao.querytitlebypage(example, param);
         
         param.setResult(list);
         param.setParam(null);

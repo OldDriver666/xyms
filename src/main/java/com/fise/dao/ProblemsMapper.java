@@ -22,6 +22,8 @@ public interface ProblemsMapper {
     List<Problems> selectBypage(@Param("example") ProblemsExample example,@Param("page") Page<Problems> page);
     
     List<Problems> querytitle(@Param("example") ProblemsExample example,@Param("title") String title);
+    
+    List<Problems> querytitlebypage(@Param("example") ProblemsExample example,@Param("page") Page<Problems> page);
  
     Problems selectByPrimaryKey(Integer id);
  
