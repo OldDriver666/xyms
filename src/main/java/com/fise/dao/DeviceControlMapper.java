@@ -10,21 +10,13 @@ public interface DeviceControlMapper {
 
     int deleteByExample(DeviceControlExample example);
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(DeviceControl record);
 
     int insertSelective(DeviceControl record);
 
     List<DeviceControl> selectByExample(DeviceControlExample example);
 
-    DeviceControl selectByPrimaryKey(Integer id);
-
     int updateByExampleSelective(@Param("record") DeviceControl record, @Param("example") DeviceControlExample example);
 
     int updateByExample(@Param("record") DeviceControl record, @Param("example") DeviceControlExample example);
-
-    int updateByPrimaryKeySelective(DeviceControl record);
-
-    int updateByPrimaryKey(DeviceControl record);
 }

@@ -49,15 +49,12 @@ public class DeviceControlController {
         return response;
     }
     
-    @RequestMapping(value="/update",method=RequestMethod.POST)
+    /*@RequestMapping(value="/update",method=RequestMethod.POST)
     public Response updateDeviceControl(@RequestBody @Valid DeviceControl record){
         
         Response response=new Response();
         logger.info(record.toString());
         
-        if(record.getId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
         if(record.getDeviceId()==null || record.getAuthType()==null || StringUtil.isEmpty(record.getMobile())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
@@ -77,6 +74,6 @@ public class DeviceControlController {
         }
         response=deviceControlService.delDeviceControl(param);
         return response;
-    }
+    }*/
      
 }
