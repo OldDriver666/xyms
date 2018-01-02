@@ -310,7 +310,7 @@ public class ProblemServiceImpl implements IProblemService{
         problem.setUpdated(DateUtil.getLinuxTimeStamp());
         problemsDao.updateByPrimaryKeySelective(problem);
         
-        if(problem.getUserId()!=user_id){
+        if(problem.getUserId().intValue()!=user_id.intValue()){
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(problem.getUserId());
             

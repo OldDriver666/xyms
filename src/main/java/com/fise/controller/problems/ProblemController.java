@@ -61,7 +61,9 @@ public class ProblemController {
         }*/
         
         if(record.getUserId()==null || StringUtil.isEmpty(record.getTitle())){
-            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("话题不能为空");
+            return res;
         }
         
         if(StringUtil.isEmpty(record.getContent())){
