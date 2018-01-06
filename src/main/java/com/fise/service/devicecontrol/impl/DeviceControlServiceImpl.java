@@ -87,7 +87,7 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         return response;
     }
 
-    @Override
+    /*@Override
     public Response updateDeviceControl(DeviceControl record) {
         
         Response response=new Response();
@@ -106,12 +106,12 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         }
         List<DeviceControl> list=deviceControlDao.selectByExample(example);
         if(list.size()!=0){
-            if(list.get(0).getId().intValue()!=record.getId().intValue()){
+            if(list.get(0).getDeviceId().intValue()!=record.getDeviceId().intValue()){
                 return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
             }
         }
         record.setUpdated(DateUtil.getLinuxTimeStamp());
-        deviceControlDao.updateByPrimaryKeySelective(record);
+        deviceControlDao.updateByExample(record, example);
         return response.success();
     }
 
@@ -122,6 +122,6 @@ public class DeviceControlServiceImpl implements IDeviceControlService{
         
         deviceControlDao.deleteByPrimaryKey(param.getId());
         return response.success();
-    }
+    }*/
 
 }

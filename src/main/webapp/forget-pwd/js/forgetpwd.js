@@ -47,7 +47,7 @@ $(function(){
                 if(result.msg == "修改密码成功"){
                     $(".register-wrap").hide();
                     $(".finish-entrance").show();
-                    window.location.href = "http://192.168.2.250:8888/xiaoyu/index.html";
+                    window.location.href = "http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html";
                     $('#personal input[_key="mail"]').val("");
                     $('#personal input[_key="account"]').val("");
                     $('#personal input[_key="emailcode"]').val("");
@@ -189,6 +189,17 @@ $(function(){
 
     $('#personal input[_key="mail"]').change(function () {
         if ($(this).val() != "") {
+            var szReg= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var szMail = $('#personal input[_key="mail"]').val();
+            var mailFlag = szReg.test(szMail);
+
+
+            if(mailFlag == false){
+                $('#personal div[_errorTips="mail"]').show();
+                $('#personal div[_errorTips="mailAlready"]').hide();
+                $('#personal div[_errorTips="mailNone"]').hide();
+                return;
+            }
             $('#personal div[_errorTips="mail"]').hide();
             var url = ctx + "xiaoyusvr/boss/developer/queryEmail";
             var data = new Object();
@@ -196,9 +207,11 @@ $(function(){
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.msg == "该邮箱已注册"){
+                    $('#personal input[_type="sendmailcode"]').removeAttr("disabled");
                     $('#personal div[_errorTips="mailAlready"]').hide();
                     $('#personal div[_errorTips="mailNone"]').show();
                 }else if(result.msg == "该邮箱未注册"){
+                    $('#personal input[_type="sendmailcode"]').attr("disabled", "disabled");
                     $('#personal div[_errorTips="mailAlready"]').show();
                     $('#personal div[_errorTips="mailNone"]').hide();
                 }

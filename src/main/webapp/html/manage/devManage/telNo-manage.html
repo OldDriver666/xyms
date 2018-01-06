@@ -231,7 +231,7 @@
 					<th>称呼</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
-					<th class="table-manage">管理</th>
+					<!--<th class="table-manage">管理</th>-->
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -262,17 +262,17 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none">${id}</td>
-	<td >${device_id}</td>
-	<td>{{if auth_type == 0}}管理员 {{else auth_type == 1}}亲情 {{else auth_type == 2}}白名单 {{else auth_type == 3}}紧急号码 {{/if}}</td>
+	<td >${deviceId}</td>
+	<td>{{if authType == 0}}管理员 {{else authType == 1}}亲情 {{else authType == 2}}白名单 {{else authType == 3}}紧急号码 {{/if}}</td>
 	<td >${mobile}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用 {{/if}}</td>
 	<td>${name}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
-	<td class="table-update">
+	<!--<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
-	</td>
+	</td>-->
 </tr>
 </script>
 <script type="text/x-jquery-tmpl" id="pageUserRoles">

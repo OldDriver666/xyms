@@ -316,15 +316,17 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         // 检测发起请求的用户是否有权限更改目标用户信息
         WiAdmin loginAdmin = new WiAdmin();
-        example.clear();
-        Criteria loginWhere = example.createCriteria();
-        loginWhere.andIdEqualTo(param.getLoginId());
-        adminList.clear();
-        adminList = adminDao.selectByExample(example);
-        if (adminList.size() == 0) {
-            resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
-            return resp;
-        }
+        if(param.getAdminId()!=param.getLoginId()){
+            example.clear();
+            Criteria loginWhere = example.createCriteria();
+            loginWhere.andIdEqualTo(param.getLoginId());
+            adminList.clear();
+            adminList = adminDao.selectByExample(example);
+            if (adminList.size() == 0) {
+                resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
+                return resp;
+            }
+        }        
         loginAdmin = adminList.get(0);
         if (!loginAdmin.getCompanyId().equals(updAdmin.getCompanyId())
                 && !loginAdmin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME)) {

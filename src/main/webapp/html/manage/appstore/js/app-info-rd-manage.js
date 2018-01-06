@@ -44,6 +44,8 @@ $(function() {
                 var topcategory_txt = "电子书";
                 var category_txt = $('#category3 option:selected').text();
             }
+            var iconLen = $("#input-icon")[0].files.length;
+            var imgLen = $("#input-images")[0].files.length;
 
             var url = ctx + "xiaoyusvr/appinformation/appInsert";
             var data = new FormData();
@@ -93,8 +95,12 @@ $(function() {
                 processData:false,
                 contentType: false,
                 success:function(result){
-                    if (result.code == ReturnCode.SUCCESS) {
-
+                    if (result.msg == "新增应用成功") {
+                        $("#addTempl-modal").modal('hide');
+                        toastr.success("新增应用成功!");
+                        action.loadPageData();
+                        $("#iconShow").empty();
+                        $("#imgShow").empty();
                     }else{
                         alert(result.msg);
                     }

@@ -799,9 +799,6 @@ Util.regionArgumentsDetail = function(regionlist){
 Util.pathName = function(){
     //ctx = "http://192.168.2.250:8787/";        //test version
 	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
-   // ctx = "http://192.168.99.11:8080/";        //non-stop server version
-     /*ctx = "http://192.168.2.196:8610/";*/
-    /*ctx = "http://bossdev.wn517.com/";*/
     Util.localStorage.add("ctx",ctx);
 };
 

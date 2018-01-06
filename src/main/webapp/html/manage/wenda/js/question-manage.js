@@ -32,7 +32,8 @@ $(function() {
         },
 		//获取所有数据
 		loadPageData : function() {
-			var search_IME = $("#input-search-userid").val();
+			var search_Title = $("#input-search-title").val();
+            var search_Nick = $("#input-search-nick").val();
 
 
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -42,7 +43,10 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "user_id":search_IME
+                    "title":search_Title
+                };
+                data.extra_param = {
+                    "nick":search_Nick
                 };
 
             var opt = {
@@ -191,12 +195,18 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-userid").on('keydown', function(e) {
+	$("#input-search-title").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
 
 	});
+    $("#input-search-nick").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+
+    });
 
 });
 

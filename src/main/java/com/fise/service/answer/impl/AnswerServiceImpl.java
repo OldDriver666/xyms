@@ -299,7 +299,7 @@ public class AnswerServiceImpl implements IAnswerService{
             i=0;
         }
                 
-        if(answer.getUserId()!=user_id){
+        if(answer.getUserId().intValue()!=user_id.intValue()){
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             

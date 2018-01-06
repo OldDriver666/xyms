@@ -285,7 +285,7 @@ public class CommentServiceImpl implements ICommentService{
         
         param.setResult(list1);
         
-        if(c.getFromUserid()!=from_userid){
+        if(c.getFromUserid().intValue()!=from_userid.intValue()){
             return res.success(param);
         }
         
