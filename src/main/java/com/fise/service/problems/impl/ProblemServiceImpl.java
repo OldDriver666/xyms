@@ -482,11 +482,10 @@ public class ProblemServiceImpl implements IProblemService{
         result.setUserId(problem.getUserId());
         result.setTitle(problem.getTitle());
         result.setContent(problem.getContent());
-        result.setPicture(problem.getPicture());
+        result.setAddress(problem.getAddress());
         result.setAnswerNum(problem.getAnswerNum());
         result.setBrowseNum(problem.getBrowseNum());
         result.setStatus(problem.getStatus());
-        result.setSchoolId(problem.getSchoolId());
         result.setUpdated(problem.getUpdated());
         result.setCreated(problem.getCreated());
         result.setNick(user.getNick());

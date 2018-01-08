@@ -371,7 +371,7 @@ public class ConcernServiceImpl implements IConcernService{
         pResult.setUserId(problem.getUserId());
         pResult.setTitle(problem.getTitle());
         pResult.setContent(problem.getContent());
-        pResult.setPicture(problem.getPicture());
+        pResult.setAddress(problem.getAddress());
         pResult.setStatus(problem.getStatus());
         pResult.setAnswerNum(problem.getAnswerNum());
         pResult.setBrowseNum(problem.getBrowseNum());

@@ -43,9 +43,9 @@ public class ProResult implements Serializable{
     private String content;
 
     /**
-     * 图片
+     * 地址
      */
-    private String picture;
+    private String address;
 
     /**
      * 回答数量
@@ -63,9 +63,6 @@ public class ProResult implements Serializable{
      * 1-可用   0-删除
      */
     private Integer status;
-    
-    @JsonProperty("school_id")
-    private Integer schoolId;
 
     /**
      * 更新时间
@@ -119,12 +116,12 @@ public class ProResult implements Serializable{
         this.content = content;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getAnswerNum() {
@@ -149,14 +146,6 @@ public class ProResult implements Serializable{
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Integer getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
     }
 
     public Integer getUpdated() {
