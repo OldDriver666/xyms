@@ -797,7 +797,7 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-    //ctx = "http://192.168.252.250:8787/";        //test version
+    //ctx = "http://10.252.252.250:8787/";        //test version
 	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
     Util.localStorage.add("ctx",ctx);
 };
