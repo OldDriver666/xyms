@@ -324,11 +324,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
         String md5=null;
         String path="/home/fise/www/upload/";
         try {
-            FileInputStream fis= new FileInputStream(param.getDownload());  
+            FileInputStream fis= new FileInputStream(path+app);
             md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
             IOUtils.closeQuietly(fis);  
             System.out.println("MD5:"+md5); 
-            //md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+            //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
         } catch (IOException e) {
             e.printStackTrace();
         }
