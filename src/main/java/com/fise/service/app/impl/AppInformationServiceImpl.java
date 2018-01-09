@@ -1,6 +1,7 @@
 package com.fise.service.app.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,7 +117,16 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		param.setCreated(DateUtil.getLinuxTimeStamp());
 		param.setUpdated(DateUtil.getLinuxTimeStamp());
-
+		
+		//获取文件的MD5值
+		String md5=null;
+		try {
+            md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		System.out.println("============="+md5);
+		param.setMd5(md5);
 		appInformationDao.insertSelective(param);
 		return resp.success();
 	}
@@ -297,6 +308,16 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setLabel(param.getLabel());
 		appInfo.setStar(param.getStar());
 		appInfo.setOrientation(param.getOrientation());
+		
+		//获取文件的MD5值
+        String md5=null;
+        try {
+            md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("============="+md5);
+        param.setMd5(md5);
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
 		if (result == 0) {
