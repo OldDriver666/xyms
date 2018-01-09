@@ -2,6 +2,7 @@ package com.fise.service.app.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,10 +123,19 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		//获取文件的MD5值
 		String md5=null;
 		try {
-            md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+		    FileInputStream fis= new FileInputStream(param.getDownload());  
+            md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
+            IOUtils.closeQuietly(fis);  
+            System.out.println("MD5:"+md5); 
+            //md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+		/*try {
+            md5=StringUtil.getMd5ByFile(new File(param.getDownload()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
 		System.out.println("============="+md5);
 		param.setMd5(md5);
 		appInformationDao.insertSelective(param);
@@ -313,11 +324,15 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
         String md5=null;
         String path="/home/fise/www/upload/";
         try {
-            md5=DigestUtils.md5Hex(new FileInputStream(path+app));
+            FileInputStream fis= new FileInputStream(param.getDownload());  
+            md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
+            IOUtils.closeQuietly(fis);  
+            System.out.println("MD5:"+md5); 
+            //md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        param.setMd5(md5);
+        appInfo.setMd5(md5);
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
 		if (result == 0) {
