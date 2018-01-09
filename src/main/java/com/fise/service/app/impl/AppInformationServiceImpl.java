@@ -296,7 +296,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("上传应用失败");
 			return response;
 		}
-		appInfo.setDownload(app);
+		appInfo.setDownload(Constants.OUT_FILE_UPLOAD_URL+app);
 
 		appInfo.setIconType(param.getIconType());
 		appInfo.setSize(getAppSize(uploadApp.getSize()));
@@ -311,12 +311,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		
 		//获取文件的MD5值
         String md5=null;
+        String path="/home/fise/www/upload/";
         try {
-            md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+            md5=DigestUtils.md5Hex(new FileInputStream(path+app));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("============="+md5);
         param.setMd5(md5);
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
@@ -388,7 +388,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		/* 外网上传图片路径 */
 		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
 
-		return downloadURL;
+		return filename;
 	}
 
 	private String iconUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
@@ -456,7 +456,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				return response;
 			}
 			try {
-				appurl = appUpload(uploadApp);
+				appurl = Constants.OUT_FILE_UPLOAD_URL+appUpload(uploadApp);
 			} catch (Exception e) {
 				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 				response.setMsg("应用修改失败");
