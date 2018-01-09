@@ -25,6 +25,7 @@
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
     <result column="star" jdbcType="VARCHAR" property="star" />
     <result column="orientation" jdbcType="INTEGER" property="orientation" />
   </resultMap>
@@ -89,7 +90,7 @@
   <sql id="Base_Column_List">
     id, app_index, app_name, app_spell, package_name, dev_id, dev_name, top_category, 
     category, status, description, version, versioncode, icon, icon_type, images, download, 
-    size, updated, created, prority, remarks, label, star, orientation
+    size, updated, created, prority, remarks, label, md5, star, orientation
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppInformationExample" resultMap="BaseResultMap">
     select
@@ -137,8 +138,8 @@
       versioncode, icon, icon_type, 
       images, download, size, 
       updated, created, prority, 
-      remarks, label, star, 
-      orientation)
+      remarks, label, md5, 
+      star, orientation)
     values (#{id,jdbcType=INTEGER}, #{appIndex,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
       #{appSpell,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, 
       #{devName,jdbcType=VARCHAR}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
@@ -146,8 +147,8 @@
       #{versioncode,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
       #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
       #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
-      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, 
-      #{orientation,jdbcType=INTEGER})
+      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, 
+      #{star,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information
@@ -220,6 +221,9 @@
       </if>
       <if test="label != null">
         label,
+      </if>
+      <if test="md5 != null">
+        md5,
       </if>
       <if test="star != null">
         star,
@@ -297,6 +301,9 @@
       </if>
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
       </if>
       <if test="star != null">
         #{star,jdbcType=VARCHAR},
@@ -384,6 +391,9 @@
       <if test="record.label != null">
         label = #{record.label,jdbcType=VARCHAR},
       </if>
+      <if test="record.md5 != null">
+        md5 = #{record.md5,jdbcType=VARCHAR},
+      </if>
       <if test="record.star != null">
         star = #{record.star,jdbcType=VARCHAR},
       </if>
@@ -420,6 +430,7 @@
       prority = #{record.prority,jdbcType=INTEGER},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       label = #{record.label,jdbcType=VARCHAR},
+      md5 = #{record.md5,jdbcType=VARCHAR},
       star = #{record.star,jdbcType=VARCHAR},
       orientation = #{record.orientation,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -495,6 +506,9 @@
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
       </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
       <if test="star != null">
         star = #{star,jdbcType=VARCHAR},
       </if>
@@ -528,10 +542,12 @@
       prority = #{prority,jdbcType=INTEGER},
       remarks = #{remarks,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
       star = #{star,jdbcType=VARCHAR},
       orientation = #{orientation,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
