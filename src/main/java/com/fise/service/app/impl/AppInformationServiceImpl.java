@@ -20,10 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AppInformationMapper;
 import com.fise.dao.WiAdminMapper;
+import com.fise.model.dto.appmarket.ApkInfo;
+import com.fise.model.dto.appmarket.ApkUtil;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
 import com.fise.model.entity.WiAdmin;
@@ -136,6 +139,20 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }*/
+		
+		//获取上传的apk的信息
+		//String aaptPath = "/WEB-INF/resource/exe/aapt.exe";            
+		//ApkUtil.setAaptPath(aaptPath);
+		try {
+		    String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
+		    ApkUtil.setAaptPath(aaptPath);
+            ApkInfo apkInfo = ApkUtil.getApkInfo(param.getDownload());
+            System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
 		System.out.println("============="+md5);
 		param.setMd5(md5);
 		appInformationDao.insertSelective(param);
