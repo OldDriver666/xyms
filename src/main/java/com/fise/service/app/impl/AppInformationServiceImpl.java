@@ -133,6 +133,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             //md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
         } catch (IOException e) {
             e.printStackTrace();
+            resp.setCode(400);
+            resp.setMsg("MD5值获取失败");
+            return resp;
         }
 		/*try {
             md5=StringUtil.getMd5ByFile(new File(param.getDownload()));
@@ -149,8 +152,10 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             ApkInfo apkInfo = ApkUtil.getApkInfo(param.getDownload());
             System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            resp.setCode(400);
+            resp.setMsg("获取apk信息失败");
+            return resp;
         }
 		
 		System.out.println("============="+md5);
@@ -348,6 +353,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
         } catch (IOException e) {
             e.printStackTrace();
+            response.setCode(400);
+            response.setMsg("md5值获取失败");
+            return response;
         }
         appInfo.setMd5(md5);
 		

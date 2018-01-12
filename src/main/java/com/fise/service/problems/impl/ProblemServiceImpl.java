@@ -133,7 +133,8 @@ public class ProblemServiceImpl implements IProblemService{
             MyProblemDao.insertSelective(myProblem);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -287,7 +288,8 @@ public class ProblemServiceImpl implements IProblemService{
                     
                 });*/
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
@@ -407,7 +409,8 @@ public class ProblemServiceImpl implements IProblemService{
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
             MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }

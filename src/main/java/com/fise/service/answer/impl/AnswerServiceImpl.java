@@ -138,7 +138,8 @@ public class AnswerServiceImpl implements IAnswerService{
             MyAnswerDao.insertSelective(myAnswer);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -204,7 +205,8 @@ public class AnswerServiceImpl implements IAnswerService{
                 
                 listResult.add(aResult);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             } 
@@ -350,7 +352,8 @@ public class AnswerServiceImpl implements IAnswerService{
             myAnswer.setUpdated(DateUtil.getLinuxTimeStamp());
             MyAnswerDao.updateByPrimaryKeySelective(myAnswer);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -411,7 +414,8 @@ public class AnswerServiceImpl implements IAnswerService{
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
             MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }

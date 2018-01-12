@@ -160,6 +160,7 @@ public class ProblemController {
             }
         } catch (Exception e) {
             logger.info(e);
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (null != os) {
@@ -167,6 +168,7 @@ public class ProblemController {
                 }
             } catch (Exception e) {
                 logger.info(e);
+                throw new RuntimeException(e);
             }
             try {
                 if (null != bis) {
@@ -174,6 +176,7 @@ public class ProblemController {
                 }
             } catch (Exception e) {
                 logger.info(e);
+                throw new RuntimeException(e);
             }
         }
     }
