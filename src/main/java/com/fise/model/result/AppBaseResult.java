@@ -19,6 +19,7 @@ public class AppBaseResult {
 	private Integer iconType;
 	private String size;
 	private String packageName;
+	private String md5;
 	
 	public String getPackageName() {
 		return packageName;
@@ -116,7 +117,15 @@ public class AppBaseResult {
 		this.size = size;
 	}
 
-	public void init(AppInformation data) {
+	public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public void init(AppInformation data) {
 		this.id = data.getId();
 		this.appName = data.getAppName();
 		this.download = data.getDownload();
@@ -129,6 +138,7 @@ public class AppBaseResult {
 		this.iconType = data.getIconType();
 		this.size = data.getSize();
 		this.packageName=data.getPackageName();
+		this.md5=data.getMd5();
 	}
 
 	@Override
