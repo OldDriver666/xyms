@@ -27,6 +27,7 @@ import com.fise.dao.AppInformationMapper;
 import com.fise.dao.WiAdminMapper;
 import com.fise.model.dto.appmarket.ApkInfo;
 import com.fise.model.dto.appmarket.ApkUtil;
+import com.fise.model.dto.utils.IconUtil;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
 import com.fise.model.entity.WiAdmin;
@@ -287,7 +288,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setAppIndex(param.getAppIndex());
 		appInfo.setAppName(param.getAppName());
 		appInfo.setAppSpell(param.getAppSpell());
-		appInfo.setPackageName(param.getPackageName());
+		//appInfo.setPackageName(param.getPackageName());
 		appInfo.setDevId(param.getDevId());
 		appInfo.setDevName(param.getDevName());
 		appInfo.setTopCategory(param.getTopCategory());
@@ -295,18 +296,18 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		// 0-待审核 1-发布 2-拒绝 3-下架
 		appInfo.setStatus(0);
 		appInfo.setDescription(param.getDescription());
-		appInfo.setVersion(param.getVersion());
-		appInfo.setVersioncode(param.getVersioncode());
+		//appInfo.setVersion(param.getVersion());
+		//appInfo.setVersioncode(param.getVersioncode());
 		// 图标
-		String icon = null;
+		/*String icon = null;
 		try {
 			icon = iconUpload(uploadIcon);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图标失败");
 			return response;
-		}
-		appInfo.setIcon(icon);
+		}*/
+		//appInfo.setIcon(icon);
 
 		// images
 		List<String> images = null;
@@ -329,6 +330,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("上传应用失败");
 			return response;
 		}
+		
 		appInfo.setDownload(Constants.OUT_FILE_UPLOAD_URL+app);
 
 		appInfo.setIconType(param.getIconType());
@@ -345,19 +347,31 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		//获取文件的MD5值
         String md5=null;
         String path="/home/fise/www/upload/";
+        ApkInfo apkInfo=null;
         try {
             FileInputStream fis= new FileInputStream(path+app);
             md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
             IOUtils.closeQuietly(fis);  
             System.out.println("MD5:"+md5); 
             //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
-        } catch (IOException e) {
+            
+            //获取apk信息
+            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
+            ApkUtil.setAaptPath(aaptPath);
+            apkInfo = ApkUtil.getApkInfo(path+app);
+            System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
+            IconUtil.extractFileFromApk(path+app, apkInfo.getApplicationIcon(), path);
+        } catch (Exception e) {
             e.printStackTrace();
             response.setCode(400);
-            response.setMsg("md5值获取失败");
+            response.setMsg("获取apk信息失败");
             return response;
         }
         appInfo.setMd5(md5);
+        appInfo.setPackageName(apkInfo.getPackageName());
+        appInfo.setVersion(apkInfo.getVersionName());
+        appInfo.setVersioncode(Integer.valueOf(apkInfo.getVersionCode()));
+        appInfo.setIcon(path+apkInfo.getApplicationIcon());
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
 		if (result == 0) {
