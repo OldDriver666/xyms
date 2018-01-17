@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
+	<link rel="stylesheet" href="../../css/uploadImg.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 	<style>
 		#modal-loading{
@@ -25,18 +26,23 @@
 			width:200px;
 			margin:180px auto;
 		}
-		.showurl{
-			/*width:120px;*/
-			word-break: break-all;
+		#parent {
+			width: 300px;
+			height: 20px;
+			background-color: #fff;
+			border: 1px solid #000;}
+		#son{
+			height: 18px;
+			background-color: #2cc120;
+			text-align:center;
 		}
-		.showmore{
-			width:50px;
+		#input-download{
+			height:100%;
 		}
-		.showsmall{
-			width:30px;
-		}
-		.showwide{
-			width:70px;
+		td{
+			width:25px;
+			word-wrap:break-word;
+			word-break:break-all;
 		}
 
 	</style>
@@ -69,7 +75,7 @@
 					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加应用信息</span>
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加应用</span>
 						</button>
 						<!--<button style="display:none" id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
 						</button>-->
@@ -80,17 +86,17 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑应用信息</h4>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑应用</h4>
 								</div>
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-id">
-										<div class="form-group" >
+										<!--<div class="form-group" >
 											<label for="input-appindex" class="col-sm-3 control-label"><span class="necessary"></span>APP唯一标示</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-appindex" name="devIME" placeholder="请输入APP唯一标示"  >
 											</div>
-										</div>
+										</div>-->
 										<div class="form-group" >
 											<label for="input-appname" class="col-sm-3 control-label"><span class="necessary"></span>应用名称</label>
 											<div class="col-sm-9">
@@ -98,17 +104,17 @@
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-appspell" class="col-sm-3 control-label"><span class="necessary"></span>app_spell</label>
+											<label for="input-appspell" class="col-sm-3 control-label"><span class="necessary"></span>应用名称拼音</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入app_spell"  >
+												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入应用名称的拼音"  >
 											</div>
 										</div>
-										<div class="form-group" >
+										<!--<div class="form-group" >
 											<label for="input-packagename" class="col-sm-3 control-label"><span class="necessary"></span>包名</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-packagename" name="devXW" placeholder="请输入包名"  >
 											</div>
-										</div>
+										</div>-->
 										<div class="form-group" id="add-developerid-wrap">
 											<label for="input-devid" class="col-sm-3 control-label"><span class="necessary"></span>开发者ID</label>
 											<div class="col-sm-9">
@@ -168,7 +174,7 @@
 												<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  >
 											</div>
 										</div>
-										<div class="form-group" >
+										<!--<div class="form-group" >
 											<label for="input-version" class="col-sm-3 control-label"><span class="necessary"></span>版本号</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-version" name="devXW" placeholder="请输入版本号"  >
@@ -179,7 +185,7 @@
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  >
 											</div>
-										</div>
+										</div>-->
 										<div id="showIcon" class="form-group" >
 											<label class="col-sm-3 control-label"><span class="necessary"></span>当前应用图标</label>
 											<div id="iconShow" class="col-sm-9">
@@ -187,13 +193,13 @@
 										</div>
 										<div id="showIconprompt" class="form-group" >
 											<label class="col-sm-3 control-label"><span class="necessary"></span></label>
-											<div  class="col-sm-9" style="color: #15B">如需修改应用图标，请点击下面按钮重新上传</div>
+											<div  class="col-sm-9" style="color: #15B">如需修改应用图标，请点击下面按钮重新上传安装包</div>
 										</div>
-										<div class="form-group" >
+										<!--<div class="form-group" >
 											<label for="input-icon" class="col-sm-3 control-label"><span class="necessary"></span>上传应用图标</label>
 											<div class="col-sm-9">
 												<input type="file"  class="form-control" id="input-icon" name="icon" placeholder="请上传应用图标"  >
-												<!--<input type="text" class="form-control" id="input-icon" name="devXW" placeholder="请输入应用图标"  >-->
+												&lt;!&ndash;<input type="text" class="form-control" id="input-icon" name="devXW" placeholder="请输入应用图标"  >&ndash;&gt;
 											</div>
 										</div>
 										<div class="form-group" >
@@ -201,7 +207,7 @@
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-icontype" name="devXW" placeholder="请输入图标类型"  >
 											</div>
-										</div>
+										</div>-->
 
 										<div id="showImage" class="form-group" >
 											<label class="col-sm-3 control-label"><span class="necessary"></span>当前应用截图</label>
@@ -210,56 +216,58 @@
 										</div>
 										<div id="showImageprompt" class="form-group" >
 											<label class="col-sm-3 control-label"><span class="necessary"></span></label>
-											<div  class="col-sm-9" style="color: #15B">如需修改应用截图，请点击下面按钮重新上传</div>
+											<div  class="col-sm-9" style="color: #15B">如需修改应用截图，请点击下面按钮重新上传截图</div>
 										</div>
-										<div class="form-group" >
+										<!--<div class="form-group" >
 											<label for="input-images" class="col-sm-3 control-label"><span class="necessary"></span>上传应用截图</label>
 											<div class="col-sm-9">
 												<input type="file" multiple class="form-control" id="input-images" name="images" placeholder="请上传应用截图"  >
-												<!--<input type="text" class="form-control" id="input-images" name="devXW" placeholder="请输入截图"  >-->
+												&lt;!&ndash;<input type="text" class="form-control" id="input-images" name="devXW" placeholder="请输入截图"  >&ndash;&gt;
 											</div>
+										</div>-->
+
+										<div class="form-group" >
+											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>上传App截图图片</label>
+										<div class="img-box full">
+											<section class=" img-section">
+												<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+												<div class="z_photo upimg-div clear" >
+													<!--<section class="up-section fl">
+                                                         <span class="up-span"></span>
+                                                         <img src="img/buyerCenter/a7.png" class="close-upimg">
+                                                         <img src="img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
+                                                         <img src="img/test2.jpg" class="up-img">
+                                                         <p class="img-namep"></p>
+                                                         <input id="taglocation" name="taglocation" value="" type="hidden">
+                                                         <input id="tags" name="tags" value="" type="hidden">
+                                                     </section>-->
+													<section class="z_file fl">
+														<img src="../../images/a11.png" class="add-img">
+														<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+													</section>
+												</div>
+											</section>
+										</div>
+										<aside class="mask works-mask">
+											<div class="mask-content">
+												<p class="del-p ">您确定要删除作品图片吗？</p>
+												<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+											</div>
+										</aside>
 										</div>
 
 										<div class="form-group" >
-											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>上传安装包</label>
+											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>上传APP安装包</label>
 											<div class="col-sm-9">
 												<input type="file" class="form-control" id="input-download" name="app" placeholder="请上传应用安装包"  >
-												<!--<input type="text" class="form-control" id="input-download" name="devXW" placeholder="请输入下载地址"  >-->
-											</div>
-										</div>
-
-										<div class="form-group" >
-											<label for="input-size" class="col-sm-3 control-label"><span class="necessary"></span>应用大小</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-size" name="devXW" placeholder="请输入应用大小"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-prority" class="col-sm-3 control-label"><span class="necessary"></span>prority</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入prority"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-label" class="col-sm-3 control-label"><span class="necessary"></span>标签</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-label" name="devXW" placeholder="请输入标签"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-star" class="col-sm-3 control-label"><span class="necessary"></span>star</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-star" name="devXW" placeholder="请输入star"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label  for="orientation" class="col-sm-3 control-label"><span class="necessary"></span>图片摆放方向</label>
-											<div class="col-sm-4" >
-												<select id="orientation" class="form-control" >
-													<option value="" >请选择摆放方向</option>
-													<option value="0" >竖向</option>
-													<option value="1">横向</option>
-												</select>
+											<label for="upprogress" class="col-sm-3 control-label"><span class="necessary"></span>安装包上传进度:</label>
+											<div class="col-sm-9" id="upprogress">
+												<div id="parent">
+													<div id="son"></div>
+												</div>
 											</div>
 										</div>
 									</form>
@@ -398,6 +406,7 @@
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
 <script type ="text/javascript" src="js/app-info-rd-manage.js"></script>
+<script type ="text/javascript" src="../../js/uploadImg.js"></script>
 <!-- jQuery Validate -->
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
@@ -405,35 +414,32 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none;">${id}</td>
-	<td><div class="showwide">${app_name}</div></td>
+	<td>${app_name}</td>
 	<td style="display:none;">${app_index}</td>
 	<td style="display:none;">${app_spell}</td>
 	<td>${package_name}</td>
 	<td style="display:none;">${dev_id}</td>
-	<td ><div class="showwide">${dev_name}</div></td>
-	<td><div class="showwide">${top_category}</div></td>
-	<td><div class="showwide">${category}</div></td>
-	<td><div class="showwide">${description}</div></td>
-	<td><div class="showsmall">${version}</div></td>
+	<td >${dev_name}</td>
+	<td>${top_category}</td>
+	<td>${category}</td>
+	<td>${description}</td>
+	<td>${version}</td>
 	<td style="display:none;">${versioncode}</td>
 	<td style="display:none;">${icon}</td>
 	<td style="display:none;">${icon_type}</td>
 	<td style="display:none;">${images}</td>
 	<td style="display:none;">${download}</td>
-	<td ><div class="showsmall">${size}</div></td>
+	<td>${size}</td>
 	<td style="display:none;">${prority}</td>
-	<td><div class="showsmall">{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</div></td>
-	<td><div class="showsmall">${remarks}</div></td>
+	<td>{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</td>
+	<td>${remarks}</td>
 	<td style="display:none;">${label}</td>
 	<td style="display:none;">${star}</td>
 	<td style="display:none;">${orientation}</td>
-	<td><div class="showwide">${Util.formatDateTime(updated)}</div></td>
-	<td><div class="showwide">${Util.formatDateTime(created)}</div></td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
-	    <div class="showwide">
-	       <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	       <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
-	    </div>
 	</td>
 	<!--<td class="table-update">
 	    <div class="showmore">

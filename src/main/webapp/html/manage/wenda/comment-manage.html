@@ -27,11 +27,19 @@
 		}
 		.content{
 			width:40%;
-			word-break: break-all;
+			word-break:break-all;
 		}
 		.content img{
 			max-width: 100%;
 			max-height: 200px;
+		}
+		.showMore{
+			width:60px;
+		}
+		td{
+			width:50px;
+			word-wrap:break-word;
+			word-break:break-all;
 		}
 
 	</style>
@@ -174,10 +182,10 @@
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
-	<td>${id}</td>
+	<td><div class="showMore">${id}</div></td>
 	<td class="content">${content}</td>
 	<td>${from_userid}</td>
-	<td>${to_userid}</td>
+	<td><div class="showMore">${to_userid}</div></td>
 	<td>${answer_id}</td>
 	<td>${comment_id}</td>
 	<td>${problem_id}</td>

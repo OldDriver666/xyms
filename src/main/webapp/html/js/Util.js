@@ -800,6 +800,8 @@ Util.pathName = function(){
     //ctx = "http://192.168.2.250:8787/";        //test version
 	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
     Util.localStorage.add("ctx",ctx);
+    uploadUrl = "http://xiaoyu.fise-wi.com:4869/";        //test version
+    Util.localStorage.add("uploadUrl",uploadUrl);
 };
 
 //获取资源文件
@@ -845,6 +847,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
+uploadUrl = Util.localStorage.get("uploadUrl");
 
 // cdn url
 /*cdnImg = Util.localStorage.get("cdnImg");
