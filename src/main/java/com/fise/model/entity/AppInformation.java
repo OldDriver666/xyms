@@ -11,12 +11,6 @@ public class AppInformation implements Serializable {
     private Integer id;
 
     /**
-     * APP唯一标示
-     */
-    @JsonProperty("app_index")
-    private String appIndex;
-
-    /**
      * 应用名称
      */
     @JsonProperty("app_name")
@@ -133,14 +127,6 @@ public class AppInformation implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAppIndex() {
-        return appIndex;
-    }
-
-    public void setAppIndex(String appIndex) {
-        this.appIndex = appIndex;
     }
 
     public String getAppName() {

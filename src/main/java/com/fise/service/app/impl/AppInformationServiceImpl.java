@@ -285,7 +285,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}*/
 
 		AppInformation appInfo = new AppInformation();
-		appInfo.setAppIndex(param.getAppIndex());
+		//appInfo.setAppIndex(param.getAppIndex());
 		appInfo.setAppName(param.getAppName());
 		appInfo.setAppSpell(param.getAppSpell());
 		//appInfo.setPackageName(param.getPackageName());
@@ -544,7 +544,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		con.andIdEqualTo(param.getId());
 
 		AppInformation appInfo = new AppInformation();
-		appInfo.setAppIndex(param.getAppIndex());
+		//appInfo.setAppIndex(param.getAppIndex());
 		appInfo.setAppName(param.getAppName());
 		appInfo.setAppSpell(param.getAppSpell());
 		appInfo.setPackageName(param.getPackageName());

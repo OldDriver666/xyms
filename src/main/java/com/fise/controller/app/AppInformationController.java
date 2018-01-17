@@ -63,7 +63,7 @@ public class AppInformationController {
         Response resp = new Response();
         logger.info(param.toString());
         
-        if(StringUtil.isEmpty(param.getAppIndex()) || StringUtil.isEmpty(param.getAppName()) || StringUtil.isEmpty(param.getAppSpell())){
+        if(StringUtil.isEmpty(param.getAppName()) || StringUtil.isEmpty(param.getAppSpell())){
             return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
