@@ -132,11 +132,9 @@ public class AppInformationController {
      */
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
 	public Response appInsert(@ModelAttribute AppInformation param,
-			                  @RequestParam("app_images") List<MultipartFile> uploadPhoto,
-			                  @RequestParam("app") MultipartFile uploadApp,
-			                  @RequestParam("app_icon") MultipartFile uploadIcon) {
+                              @RequestParam("app") MultipartFile uploadApp) {
         Response response = new Response();
-		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
+		response = appInfoemationService.appInsert(param,uploadApp);
 		return response;
     }
     

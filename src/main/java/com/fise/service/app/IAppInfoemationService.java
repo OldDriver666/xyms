@@ -35,7 +35,7 @@ public interface IAppInfoemationService {
     /*根据索引查询单个App*/
     public Response queryByAppId(Integer param);
     
-    public Response appInsert(AppInformation param,List<MultipartFile> uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
+    public Response appInsert(AppInformation param,MultipartFile uploadApp);
     
     public Response appModify(AppInformation param,List<MultipartFile> uploadPhoto,MultipartFile uploadApp,MultipartFile uploadIcon);
     

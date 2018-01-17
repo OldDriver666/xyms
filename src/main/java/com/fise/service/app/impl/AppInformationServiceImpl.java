@@ -151,6 +151,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		    String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
 		    ApkUtil.setAaptPath(aaptPath);
             ApkInfo apkInfo = ApkUtil.getApkInfo(param.getDownload());
+            
             System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,8 +262,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appInsert(AppInformation param, List<MultipartFile> uploadPhoto, MultipartFile uploadApp,
-			MultipartFile uploadIcon) {
+	public Response appInsert(AppInformation param, MultipartFile uploadApp) {
 
 		Response response = new Response();
 
@@ -272,17 +272,17 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			return response;
 		}
 
-		if (uploadPhoto == null || uploadPhoto.size() == 0) {
+		if (StringUtil.isEmpty(param.getImages())) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图片");
 			return response;
 		}
 
-		if (uploadIcon.isEmpty()) {
+		/*if (uploadIcon.isEmpty()) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图标");
 			return response;
-		}
+		}*/
 
 		AppInformation appInfo = new AppInformation();
 		appInfo.setAppIndex(param.getAppIndex());
@@ -310,16 +310,16 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		//appInfo.setIcon(icon);
 
 		// images
-		List<String> images = null;
-		try {
+		//List<String> images = null;
+		/*try {
 			images = photoUpload(uploadPhoto);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图片失败");
 			return response;
-		}
-		String imageurl=StringUtil.combineStr(images);
-		appInfo.setImages(imageurl);
+		}*/
+		//String imageurl=StringUtil.combineStr(images);
+		appInfo.setImages(param.getImages());
 
 		// download
 		String app = null;
@@ -337,12 +337,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setSize(getAppSize(uploadApp.getSize()));
 		appInfo.setUpdated(0);
 		appInfo.setCreated(DateUtil.getLinuxTimeStamp());
-		appInfo.setPrority(param.getPrority());
+		//appInfo.setPrority(param.getPrority());
 
-		appInfo.setRemarks(param.getRemarks());
-		appInfo.setLabel(param.getLabel());
-		appInfo.setStar(param.getStar());
-		appInfo.setOrientation(param.getOrientation());
+		//appInfo.setRemarks(param.getRemarks());
+		//appInfo.setLabel(param.getLabel());
+		//appInfo.setStar(param.getStar());
+		//appInfo.setOrientation(param.getOrientation());
 		
 		//获取文件的MD5值
         String md5=null;
@@ -357,12 +357,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
             
             //获取apk信息
-            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
+            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt");
             ApkUtil.setAaptPath(aaptPath);
             apkInfo = ApkUtil.getApkInfo(path+app);
             System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
-            iconpath = apkInfo.getApplicationIcon().replace(".",
-                    new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
+            iconpath = apkInfo.getApplicationIcon().substring(apkInfo.getApplicationIcon().lastIndexOf("/")+1);
+            System.out.println(">>>>>>>>>>>>>"+iconpath);
             IconUtil.extractFileFromApk(path+app, apkInfo.getApplicationIcon(), path+iconpath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,7 +374,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
         appInfo.setPackageName(apkInfo.getPackageName());
         appInfo.setVersion(apkInfo.getVersionName());
         appInfo.setVersioncode(Integer.valueOf(apkInfo.getVersionCode()));
-        appInfo.setIcon(path+iconpath);
+        appInfo.setIcon(Constants.OUT_FILE_UPLOAD_URL+iconpath);
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
 		if (result == 0) {

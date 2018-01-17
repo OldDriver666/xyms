@@ -37,7 +37,7 @@ public class ApkUtil {
     /**     
     * aapt所在的目录。(这个值必须是绝对路径，否则报系统找不到异常)     
     */    
-    private String mAaptPath = "/WEB-INF/resource/exe/aapt.exe";
+    private String mAaptPath = "/WEB-INF/resource/exe/aapt";
 
     public ApkUtil() {       
         mBuilder = new ProcessBuilder();        
