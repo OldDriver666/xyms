@@ -182,113 +182,6 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-            /*var topcategory_val = $("input[name=topcategory]:checked").val();
-            var topcategory_txt = "";
-            var category_txt = "";
-            if(topcategory_val == "1"){
-                topcategory_txt = "软件";
-                category_txt = $('#category1 option:selected').text();
-            }else if(topcategory_val == "2"){
-                topcategory_txt = "游戏";
-                category_txt = $('#category2 option:selected').text();
-            }else if(topcategory_val == "3"){
-                topcategory_txt = "电子书";
-                category_txt = $('#category3 option:selected').text();
-            }
-
-            var imgLen = $("img[class=up-img]").size();
-            var imgurl = uploadUrl + "upload";
-            var imgArray = [];
-            var imgCount = 0;
-            for(var k=0; k <imgLen; k++){
-                var ff = $("img[class=up-img]")[k]
-                var base64Data = getBase64Image(ff)
-                var blobs = dataURItoBlob(base64Data)
-                var ffName = $("p[class=img-name-p]")[k].innerHTML
-                var imgdata = new FormData();
-                imgdata.append('file', blobs, ffName)
-                $.ajax({
-                    headers: {
-                    },
-                    url:imgurl,
-                    type:"post",
-                    data:imgdata,
-                    processData:false,
-                    contentType: false,
-                    success:function(result){
-                        if (result.ret == true) {
-                            imgArray.push(uploadUrl + result.info.md5);
-                            if (++imgCount == imgLen){
-                                var imgStr = ''
-                                var arrLen = imgArray.length
-                                if(1 == arrLen){
-                                    imgStr = imgArray[0]
-                                } else if(arrLen > 1){
-                                    for (var n=0; n < arrLen - 1; n++){
-                                        imgStr = imgStr + imgArray[n] + ';'
-                                    }
-                                    imgStr = imgStr + imgArray[arrLen - 1]
-                                }
-                                var url = ctx + "xiaoyusvr/appinformation/appModify";
-                                var data = new FormData();
-                                data.append("id", parseInt($("#input-id").val()));
-                                data.append("appName",$("#input-appname").val());
-                                data.append("appSpell", $("#input-appspell").val());
-                                data.append("devId", parseInt($("#input-devid").val()));
-                                data.append("devName", $("#input-devname").val());
-                                data.append("topCategory", topcategory_txt);
-                                data.append("category", category_txt);
-                                data.append("description", $("#input-description").val());
-                                data.append("images", imgStr);
-                                data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
-                                var userid = Util.cookieStorage.getCookie("id");
-                                var str =  "5|5|5|" + userid + "|" + moduleId;
-                                var access_Token = Util.cookieStorage.getCookie("accessToken");
-                                $.ajax({
-                                    headers: {
-                                        "FISE-UA": str,
-                                        "FISE-AccessToken": access_Token
-                                    },
-                                    url:url,
-                                    type:"post",
-                                    data:data,
-                                    processData:false,
-                                    contentType: false,
-                                    xhr: function(){
-                                        var xhr = $.ajaxSettings.xhr();
-                                        if(onprogress && xhr.upload) {
-                                            xhr.upload.addEventListener("progress" , onprogress, false);
-                                            return xhr;
-                                        }
-                                    },
-                                    success:function(result){
-                                        if (result.msg == "新增应用成功") {
-                                            $("#addTempl-modal").modal('hide');
-                                            toastr.success("新增应用成功!");
-                                            action.loadPageData();
-                                            $("#iconShow").empty();
-                                            $("#imgShow").empty();
-                                            $(".up-section").remove();
-                                            $("#son").html( 0 +"%" );
-                                            $("#son").css("width" , 0 +"%");
-                                        }else{
-                                            alert(result.msg);
-                                        }
-                                    },
-                                    error:function(e){
-                                        alert("错误！！");
-                                    }
-                                });
-                            }
-                        }else{
-                            alert(result.ret);
-                        }
-                    },
-                    error:function(e){
-                        alert("错误！！");
-                    }
-                });
-            }*/
 		},
         //删除数据
         deleteConfig : function(deleteid) {
@@ -502,13 +395,17 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑应用");
+			$("h4#addTempl-modal-label").text("查看应用");
             $("#add-developerid-wrap").hide();
             $("#add-developername-wrap").hide();
             $("#showIcon").show();
             $("#showIconprompt").show();
             $("#showImage").show();
             $("#showImageprompt").show();
+            $("#addImgUrl").hide();
+            $("#addApk").hide();
+            $("#showProgress").hide();
+            $("#btn-add-submit").hide();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
 			$form.data("action", "edit");
@@ -520,6 +417,10 @@ $(function() {
             $("#showIconprompt").hide();
             $("#showImage").hide();
             $("#showImageprompt").hide();
+            $("#addImgUrl").show();
+            $("#addApk").show();
+            $("#showProgress").show();
+            $("#btn-add-submit").show();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
             $form.data("action", "add");
