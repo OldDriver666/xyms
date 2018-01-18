@@ -177,7 +177,8 @@ public class ConcernServiceImpl implements IConcernService{
                 myConcernDao.updateByPrimaryKey(myConcern);
             }
         } catch (Exception e) {               
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -204,7 +205,8 @@ public class ConcernServiceImpl implements IConcernService{
             myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
             myConcernDao.updateByPrimaryKey(myConcern);
         } catch (Exception e) {           
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -288,7 +290,8 @@ public class ConcernServiceImpl implements IConcernService{
                 listResult.add(pResult);
                                     
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
@@ -337,7 +340,8 @@ public class ConcernServiceImpl implements IConcernService{
             myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
             myConcernDao.updateByPrimaryKeySelective(myConcern);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -371,7 +375,7 @@ public class ConcernServiceImpl implements IConcernService{
         pResult.setUserId(problem.getUserId());
         pResult.setTitle(problem.getTitle());
         pResult.setContent(problem.getContent());
-        pResult.setPicture(problem.getPicture());
+        pResult.setAddress(problem.getAddress());
         pResult.setStatus(problem.getStatus());
         pResult.setAnswerNum(problem.getAnswerNum());
         pResult.setBrowseNum(problem.getBrowseNum());

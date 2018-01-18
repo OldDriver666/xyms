@@ -17,6 +17,7 @@ import com.fise.dao.IMMarkMapper;
 import com.fise.dao.IMRelationShipMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.MyAnswerMapper;
+import com.fise.dao.MyConcernMapper;
 import com.fise.dao.MyProblemMapper;
 import com.fise.dao.ProblemsMapper;
 import com.fise.dao.SensitiveWordsMapper;
@@ -30,6 +31,8 @@ import com.fise.model.entity.IMMarkExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.MyAnswer;
 import com.fise.model.entity.MyAnswerExample;
+import com.fise.model.entity.MyConcern;
+import com.fise.model.entity.MyConcernExample;
 import com.fise.model.entity.MyProblem;
 import com.fise.model.entity.MyProblemExample;
 import com.fise.model.entity.AnswerExample.Criteria;
@@ -77,6 +80,9 @@ public class AnswerServiceImpl implements IAnswerService{
     
     @Autowired
     MyProblemMapper MyProblemDao;
+    
+    @Autowired
+    MyConcernMapper myConcernDao;
     
     @Override
     public Response insertAnswer(Answer record) {
@@ -138,7 +144,8 @@ public class AnswerServiceImpl implements IAnswerService{
             MyAnswerDao.insertSelective(myAnswer);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -204,7 +211,8 @@ public class AnswerServiceImpl implements IAnswerService{
                 
                 listResult.add(aResult);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             } 
@@ -299,7 +307,7 @@ public class AnswerServiceImpl implements IAnswerService{
             i=0;
         }
                 
-        if(answer.getUserId()!=user_id){
+        if(answer.getUserId().intValue()!=user_id.intValue()){
             //查询用户昵称和头像
             IMUser user=userDao.selectByPrimaryKey(answer.getUserId());
             
@@ -350,7 +358,8 @@ public class AnswerServiceImpl implements IAnswerService{
             myAnswer.setUpdated(DateUtil.getLinuxTimeStamp());
             MyAnswerDao.updateByPrimaryKeySelective(myAnswer);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -386,7 +395,8 @@ public class AnswerServiceImpl implements IAnswerService{
         //redis和数据库里myproblem的回答数-1
         Jedis jedis = null;
         try {
-            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);           
+            jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER); 
+            //修改myproblem的redis
             String key=problem.getId()+"answermy";
             String value=problem.getAnswerNum()+"";
             jedis.set(key, value);
@@ -399,7 +409,29 @@ public class AnswerServiceImpl implements IAnswerService{
             
             /*jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);*/
             
-            //修改数据存入数据库
+            //修改myconcern的redis
+            key=problem.getId()+"answer"+problem.getUserId();
+            String value3=problem.getAnswerNum()+"";
+            jedis.set(key, value3);
+            
+            //修改myconcern的redis
+            key=problem.getId()+"browser"+problem.getUserId();
+            String value4=problem.getBrowseNum()+"";
+            jedis.set(key, value4);
+            
+            //修改myconcern数据存入数据库
+            MyConcernExample example1 = new MyConcernExample();
+            MyConcernExample.Criteria criteria1 = example1.createCriteria();
+            criteria1.andProblemIdEqualTo(problem.getId());
+            criteria1.andUserIdEqualTo(problem.getUserId());
+            MyConcern myConcern = myConcernDao.selectByExample(example1).get(0);
+            
+            myConcern.setAnswerNum(Integer.valueOf(value3));
+            myConcern.setBrowserNum(Integer.valueOf(value4));
+            myConcern.setUpdated(DateUtil.getLinuxTimeStamp());
+            myConcernDao.updateByPrimaryKeySelective(myConcern);
+            
+            //修改myproblem数据存入数据库
             MyProblemExample example = new MyProblemExample();
             MyProblemExample.Criteria criteria = example.createCriteria();
             criteria.andProblemIdEqualTo(problem.getId());
@@ -411,7 +443,8 @@ public class AnswerServiceImpl implements IAnswerService{
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
             MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }

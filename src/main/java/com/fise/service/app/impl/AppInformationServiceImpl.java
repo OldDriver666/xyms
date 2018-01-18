@@ -1,6 +1,8 @@
 package com.fise.service.app.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -10,16 +12,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.AppInformationMapper;
 import com.fise.dao.WiAdminMapper;
+import com.fise.model.dto.appmarket.ApkInfo;
+import com.fise.model.dto.appmarket.ApkUtil;
+import com.fise.model.dto.utils.IconUtil;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
 import com.fise.model.entity.WiAdmin;
@@ -115,7 +123,45 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		param.setCreated(DateUtil.getLinuxTimeStamp());
 		param.setUpdated(DateUtil.getLinuxTimeStamp());
-
+		
+		//获取文件的MD5值
+		String md5=null;
+		try {
+		    FileInputStream fis= new FileInputStream(param.getDownload());  
+            md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
+            IOUtils.closeQuietly(fis);  
+            System.out.println("MD5:"+md5); 
+            //md5=DigestUtils.md5Hex(new FileInputStream(param.getDownload()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            resp.setCode(400);
+            resp.setMsg("MD5值获取失败");
+            return resp;
+        }
+		/*try {
+            md5=StringUtil.getMd5ByFile(new File(param.getDownload()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
+		
+		//获取上传的apk的信息
+		//String aaptPath = "/WEB-INF/resource/exe/aapt.exe";            
+		//ApkUtil.setAaptPath(aaptPath);
+		try {
+		    String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
+		    ApkUtil.setAaptPath(aaptPath);
+            ApkInfo apkInfo = ApkUtil.getApkInfo(param.getDownload());
+            
+            System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.setCode(400);
+            resp.setMsg("获取apk信息失败");
+            return resp;
+        }
+		
+		System.out.println("============="+md5);
+		param.setMd5(md5);
 		appInformationDao.insertSelective(param);
 		return resp.success();
 	}
@@ -216,8 +262,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response appInsert(AppInformation param, List<MultipartFile> uploadPhoto, MultipartFile uploadApp,
-			MultipartFile uploadIcon) {
+	public Response appInsert(AppInformation param, MultipartFile uploadApp) {
 
 		Response response = new Response();
 
@@ -227,23 +272,23 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			return response;
 		}
 
-		if (uploadPhoto == null || uploadPhoto.size() == 0) {
+		if (StringUtil.isEmpty(param.getImages())) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图片");
 			return response;
 		}
 
-		if (uploadIcon.isEmpty()) {
+		/*if (uploadIcon.isEmpty()) {
 			response.setCode(400);
 			response.setMsg("请选择上传的图标");
 			return response;
-		}
+		}*/
 
 		AppInformation appInfo = new AppInformation();
-		appInfo.setAppIndex(param.getAppIndex());
+		//appInfo.setAppIndex(param.getAppIndex());
 		appInfo.setAppName(param.getAppName());
 		appInfo.setAppSpell(param.getAppSpell());
-		appInfo.setPackageName(param.getPackageName());
+		//appInfo.setPackageName(param.getPackageName());
 		appInfo.setDevId(param.getDevId());
 		appInfo.setDevName(param.getDevName());
 		appInfo.setTopCategory(param.getTopCategory());
@@ -251,30 +296,30 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		// 0-待审核 1-发布 2-拒绝 3-下架
 		appInfo.setStatus(0);
 		appInfo.setDescription(param.getDescription());
-		appInfo.setVersion(param.getVersion());
-		appInfo.setVersioncode(param.getVersioncode());
+		//appInfo.setVersion(param.getVersion());
+		//appInfo.setVersioncode(param.getVersioncode());
 		// 图标
-		String icon = null;
+		/*String icon = null;
 		try {
 			icon = iconUpload(uploadIcon);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图标失败");
 			return response;
-		}
-		appInfo.setIcon(icon);
+		}*/
+		//appInfo.setIcon(icon);
 
 		// images
-		List<String> images = null;
-		try {
+		//List<String> images = null;
+		/*try {
 			images = photoUpload(uploadPhoto);
 		} catch (Exception e) {
 			response.setCode(400);
 			response.setMsg("上传图片失败");
 			return response;
-		}
-		String imageurl=StringUtil.combineStr(images);
-		appInfo.setImages(imageurl);
+		}*/
+		//String imageurl=StringUtil.combineStr(images);
+		appInfo.setImages(param.getImages());
 
 		// download
 		String app = null;
@@ -285,18 +330,51 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("上传应用失败");
 			return response;
 		}
-		appInfo.setDownload(app);
+		
+		appInfo.setDownload(Constants.OUT_FILE_UPLOAD_URL+app);
 
-		appInfo.setIconType(param.getIconType());
+		//appInfo.setIconType(param.getIconType());
 		appInfo.setSize(getAppSize(uploadApp.getSize()));
 		appInfo.setUpdated(0);
 		appInfo.setCreated(DateUtil.getLinuxTimeStamp());
-		appInfo.setPrority(param.getPrority());
+		//appInfo.setPrority(param.getPrority());
 
-		appInfo.setRemarks(param.getRemarks());
-		appInfo.setLabel(param.getLabel());
-		appInfo.setStar(param.getStar());
-		appInfo.setOrientation(param.getOrientation());
+		//appInfo.setRemarks(param.getRemarks());
+		//appInfo.setLabel(param.getLabel());
+		//appInfo.setStar(param.getStar());
+		//appInfo.setOrientation(param.getOrientation());
+		
+		//获取文件的MD5值
+        String md5=null;
+        String path="/home/fise/www/upload/";
+        ApkInfo apkInfo=null;
+        String iconpath=null;
+        try {
+            FileInputStream fis= new FileInputStream(path+app);
+            md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
+            IOUtils.closeQuietly(fis);  
+            System.out.println("MD5:"+md5); 
+            //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
+            
+            //获取apk信息
+            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt");
+            ApkUtil.setAaptPath(aaptPath);
+            apkInfo = ApkUtil.getApkInfo(path+app);
+            System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
+            iconpath = apkInfo.getApplicationIcon().substring(apkInfo.getApplicationIcon().lastIndexOf("/")+1);
+            System.out.println(">>>>>>>>>>>>>"+iconpath);
+            IconUtil.extractFileFromApk(path+app, apkInfo.getApplicationIcon(), path+iconpath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setCode(400);
+            response.setMsg("获取apk信息失败");
+            return response;
+        }
+        appInfo.setMd5(md5);
+        appInfo.setPackageName(apkInfo.getPackageName());
+        appInfo.setVersion(apkInfo.getVersionName());
+        appInfo.setVersioncode(Integer.valueOf(apkInfo.getVersionCode()));
+        appInfo.setIcon(Constants.OUT_FILE_UPLOAD_URL+iconpath);
 		
 	    int result=	appInformationDao.insertSelective(appInfo);
 		if (result == 0) {
@@ -367,7 +445,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		/* 外网上传图片路径 */
 		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
 
-		return downloadURL;
+		return filename;
 	}
 
 	private String iconUpload(MultipartFile uploadfile) throws IllegalStateException, IOException {
@@ -435,7 +513,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				return response;
 			}
 			try {
-				appurl = appUpload(uploadApp);
+				appurl = Constants.OUT_FILE_UPLOAD_URL+appUpload(uploadApp);
 			} catch (Exception e) {
 				response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 				response.setMsg("应用修改失败");
@@ -466,7 +544,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		con.andIdEqualTo(param.getId());
 
 		AppInformation appInfo = new AppInformation();
-		appInfo.setAppIndex(param.getAppIndex());
+		//appInfo.setAppIndex(param.getAppIndex());
 		appInfo.setAppName(param.getAppName());
 		appInfo.setAppSpell(param.getAppSpell());
 		appInfo.setPackageName(param.getPackageName());

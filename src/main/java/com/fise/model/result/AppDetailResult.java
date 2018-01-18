@@ -52,6 +52,8 @@ public class AppDetailResult {
     private String packageName;
     
     private List<String> images;
+    
+    private String md5;
    
 	public Integer getDevId() {
 		return devId;
@@ -73,7 +75,15 @@ public class AppDetailResult {
 		return packageName;
 	}
 
-	public void setPackageName(String packageName) {
+	public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
 
@@ -245,6 +255,7 @@ public class AppDetailResult {
         this.orientation=data.getOrientation();
         this.packageName=data.getPackageName();
         this.images= StringUtil.splitStr(data.getImages());
+        this.md5=data.getMd5();
     }
     
     @Override
