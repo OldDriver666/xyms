@@ -203,13 +203,6 @@ $(function() {
             img.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数
                 imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
-                /*if(this.width == 420){
-                    this.width+=200;
-                } else {
-                    this.width = 420;
-                }*/
-                /*this.style.zoom= 2;
-                 window.open(this.src);*/
             };
             myDiv2.appendChild(img);
         }
