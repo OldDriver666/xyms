@@ -270,6 +270,7 @@ $(function() {
 			$("h4#addTempl-modal-label").text("添加管理员");
 			$("#input-account-wrap").show();
 			$("#input-account-txt-wrap").hide();
+			$("#add-companyId-wrap").show();
 			$("#input-password-txt").show();
 			$("#input-password-txt-wrap").hide();
 			$("#input-roleId-wrap").hide();
