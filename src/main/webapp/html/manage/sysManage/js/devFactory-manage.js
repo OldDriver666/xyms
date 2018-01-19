@@ -50,6 +50,12 @@ $(function() {
 		loadPageData : function() {
             var search_id = parseInt($('#input-search-name option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
+			if($("#input-search-name").val() == "") {
+				$("#input-search-name").parent().addClass("has-error");
+				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+				$("#input-search-name").append(err_html);
+				return;
+			}
 
             var url = ctx + "xiaoyusvr/boss/accountmanage/query";
             var data = new Object();
@@ -81,9 +87,24 @@ $(function() {
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+			var allCompanyArray = [];
+			var url = ctx + "xiaoyusvr/boss/organization/query";
+			var moduleId = 0;
+			var data = new Object();
+			data.name = "";
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					allCompanyArray = result.data;
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+				} else {
+				}
+			},function() {
+			});
+
+			/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');*/
 		},
 		//编辑数据
 		edit : function() {
@@ -126,7 +147,7 @@ $(function() {
 	window.action = action;
 	action.init();
 	action.loadCompanyInfoData();
-	action.loadPageData();
+	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置

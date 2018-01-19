@@ -25,6 +25,8 @@ $(function(){
                 localStorage.removeItem("myUserRolesArray");
                 localStorage.removeItem("allDevTypeArray");
                 localStorage.removeItem("allCompanyArray");
+                localStorage.removeItem("myCompanyName");
+                localStorage.clear();
                 window.location.href = "login.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");

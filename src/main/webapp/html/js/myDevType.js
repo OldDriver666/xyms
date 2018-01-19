@@ -40,17 +40,13 @@ $(function(){
                             localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
-                            alert(result_query.msg);
                         }
                     },function() {
-                        alert("服务器开个小差，请稍后重试！")
                     });
 
                 } else {
-                   /* alert(result.msg);*/
                 }
             },function() {
-               /* alert("服务器开个小差，请稍后重试！")*/
             });
 
         }

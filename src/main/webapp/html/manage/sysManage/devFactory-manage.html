@@ -150,7 +150,8 @@
 	<td>${description}</td>
 	<td>{{if status == 0}}登记 {{else status == 1}}出厂{{/if}}</td>
 	<td> ${Util.formatDateTime(created)}</td>
-	<td >${companyNameQuery(depart_id)}</td>
+	<td>${$('#input-search-name option:selected').text()}</td>
+	<!--<td >${companyNameQuery(depart_id)}</td>-->
 	<td >${begin_account}</td>
 	<td >${end_account}</td>
 	<td style="display:none;">${depart_id}</td>
@@ -164,7 +165,7 @@
     <option value=${id}>${name}</option>
 </script>
 <script type="text/javascript">
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens = allCompanyArray.length;
 	function companyNameQuery(type){
 		for(var i=0; i< Lens; i++){
@@ -172,7 +173,7 @@
 				return allCompanyArray[i].name;
 			}
 		}
-	}
+	}*/
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",

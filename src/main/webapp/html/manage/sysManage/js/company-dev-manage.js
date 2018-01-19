@@ -117,7 +117,13 @@ $(function() {
             var search_depart_id = parseInt($('#input-search-name option:selected').val());
             var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
-
+            console.log($('#input-search-name').val())
+            if($('#input-search-name option:selected').val() == "") {
+                $("#input-search-name").parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-search-name").append(err_html);
+                return;
+            }
             var url = ctx + "xiaoyusvr/boss/departconf/queryimdepartconfig";
             var data = new Object();
             data.depart_id = search_depart_id;
@@ -145,9 +151,26 @@ $(function() {
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
+            var dataArray1 = [];
+            var allDevTypeArray = [];
+            var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
+            var moduleId = 0;
+            var data = new Object();
+            data.client_type = null;
+            data.client_name = "";
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    allDevTypeArray = result.data;
+                    $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
+                    $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+                } else {
+                }
+            },function() {
+            });
+
+           /* var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
             $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
-            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');*/
         },
         //获取设备类型列表数据
         myDevTypeQuery: function(){
@@ -201,9 +224,23 @@ $(function() {
         },
         //获取全部公司团体数据
         loadCompanyInfoData: function(){
-            var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+            var allCompanyArray = [];
+            var url = ctx + "xiaoyusvr/boss/organization/query";
+            var moduleId = 0;
+            var data = new Object();
+            data.name = "";
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    allCompanyArray = result.data;
+                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
+                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+                } else {
+                }
+            },function() {
+            });
+            /*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
             $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
-            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');*/
         },
 		//编辑数据
 		edit : function() {
@@ -249,7 +286,7 @@ $(function() {
 	};
 	window.action = action;
     action.init();
-	action.loadPageData();
+	//action.loadPageData();
     action.loadDevTypeData();
     action.loadCompanyInfoData();
 

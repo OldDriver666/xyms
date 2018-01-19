@@ -29,12 +29,29 @@ $(function() {
 			if(0 == updateAuth){
 
 			}
+			if(1 == parseInt(roleId)){
+				$("#input-search-company_id-wrap").show();
+				$("#input-search-company_id-txt-wrap").hide();
+				$("#add-companyId-wrap").show();
+				$("#role-companyId-wrap").show();
+			}else{
+				$("#input-search-company_id-wrap").hide();
+				$("#input-search-company_id-txt-wrap").show();
+				$("#add-companyId-wrap").hide();
+				$("#role-companyId-wrap").hide();
+			}
 		},
 		//新增数据
 		add : function() {
 			var add_company_id = null;
 			if(1 == parseInt(roleId)){
 				add_company_id = parseInt($('#add-companyId option:selected').val());
+				if($('#add-companyId option:selected').val() == ""){
+					$("#add-companyId").parent().addClass("has-error");
+					var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+					$("#add-companyId").append(err_html);
+					return;
+				}
 			}else{
 				add_company_id = parseInt(companyId);
 			}
@@ -71,6 +88,12 @@ $(function() {
 				$("#input-search-company_id-txt-wrap").hide();
 				$("#add-companyId-wrap").show();
 				$("#role-companyId-wrap").show();
+				if($("#input-search-company_id").val() == "") {
+					$("#input-search-company_id").parent().addClass("has-error");
+					var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+					$("#input-search-company_id").append(err_html);
+					return;
+				}
 				search_company_id = parseInt($('#input-search-company_id option:selected').val());
 			}else{
 				$("#input-search-company_id-wrap").hide();
@@ -78,8 +101,8 @@ $(function() {
 				$("#add-companyId-wrap").hide();
 				$("#role-companyId-wrap").hide();
 				search_company_id = parseInt(companyId);
-				var my_companyName = companyNameQuery(search_company_id);
-				$("#input-search-company_id-txt").val(my_companyName);
+				/*var my_companyName = companyNameQuery(search_company_id);
+				$("#input-search-company_id-txt").val(my_companyName);*/
 			}
 
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -137,10 +160,30 @@ $(function() {
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
+			var allCompanyArray = [];
+			var url = ctx + "xiaoyusvr/boss/organization/query";
+			var moduleId = 0;
+			var data = new Object();
+			data.name = "";
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					allCompanyArray = result.data;
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
+					if(1 !== parseInt(roleId)){
+						var Lens2 = allCompanyArray.length;
+						for(var i=0; i< Lens2; i++){
+							if(allCompanyArray[i].id == parseInt(companyId)){
+								var my_companyName = allCompanyArray[i].name;
+								$("#input-search-company_id-txt").val(my_companyName);
+							}
+						}
+					}
+				} else {
+				}
+			},function() {
+			});
 		},
 		//编辑数据
 		edit : function() {
@@ -203,7 +246,7 @@ $(function() {
 	action.init();
 	action.loadUserRolesData();
 	action.loadCompanyInfoData();
-	action.loadPageData();
+	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -261,10 +304,16 @@ $(function() {
 		$("#input-roleId").val(that.find("td").eq(8).text());
 		$("#input-phone").val(that.find("td").eq(5).text());
 		$("#input-email").val(that.find("td").eq(6).text());
-		$("#add-companyId-txt").val(that.find("td").eq(7).text());
+		//$("#add-companyId-txt").val(that.find("td").eq(7).text());
+
 		$("#input-companyId").val(that.find("td").eq(9).text());
 		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 		/*$("#input-status").val(that.find("td").eq(8).text());*/
+		if(1 == parseInt(roleId)){
+			$("#add-companyId-txt").val($('#input-search-company_id option:selected').text());
+		}else{
+			$("#add-companyId-txt").val($('#input-search-company_id-txt').val());
+		}
 
 
         $("#addTempl-modal").modal("show");
@@ -318,21 +367,45 @@ $(function() {
 	});
 
 	$("#btn-search").on('click', function() {
+		if($("#input-search-company_id").val() == "") {
+			$("#input-search-company_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-company_id").append(err_html);
+			return;
+		}
         action.loadPageData();
 	});
 	$("#input-search-account").on('keydown', function(e) {
+		if($("#input-search-company_id").val() == "") {
+			$("#input-search-company_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-company_id").append(err_html);
+			return;
+		}
         if (e.keyCode == 13) {
             action.loadPageData();
         }
 
 	});
 	$("#input-search-role_id").on('keydown', function(e) {
+		if($("#input-search-company_id").val() == "") {
+			$("#input-search-company_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-company_id").append(err_html);
+			return;
+		}
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}
 
 	});
 	$("#input-search-company_id").on('keydown', function(e) {
+		if($("#input-search-company_id").val() == "") {
+			$("#input-search-company_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-company_id").append(err_html);
+			return;
+		}
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}

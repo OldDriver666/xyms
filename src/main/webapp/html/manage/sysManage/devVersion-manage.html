@@ -176,7 +176,8 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none;">${version_id}</td>
-	<td>${companyNameQuery(depart_id)}</td>
+	<td>${$('#input-search-depart_id option:selected').text()}</td>
+	<!--<td>${companyNameQuery(depart_id)}</td>-->
 	<td>${typeNameQuery(dev_type)}</td>
 	<td>${dev_version}</td>
 	<td>{{if status == 0}}不可用{{else status == 1}}可用{{/if}}</td>
@@ -206,7 +207,7 @@
 			}
 		}
 	}
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(type){
 		for(var i=0; i< Lens2; i++){
@@ -214,7 +215,7 @@
 				return allCompanyArray[i].name;
 			}
 		}
-	}
+	}*/
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",

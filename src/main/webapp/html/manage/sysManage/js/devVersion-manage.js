@@ -82,15 +82,47 @@ $(function() {
 		},
 		//获取设备类型列表数据
 		loadDevTypeData : function() {
-			var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
+			var dataArray1 = [];
+			var allDevTypeArray = [];
+			var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
+			var moduleId = 0;
+			var data = new Object();
+			data.client_type = null;
+			data.client_name = "";
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					allDevTypeArray = result.data;
+					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
+					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+				} else {
+				}
+			},function() {
+			});
+
+			/*var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
 			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
-			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');*/
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+			var allCompanyArray = [];
+			var url = ctx + "xiaoyusvr/boss/organization/query";
+			var moduleId = 0;
+			var data = new Object();
+			data.name = "";
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					allCompanyArray = result.data;
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
+					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
+				} else {
+				}
+			},function() {
+			});
+
+			/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');*/
 		},
 		//编辑数据
 		edit : function() {

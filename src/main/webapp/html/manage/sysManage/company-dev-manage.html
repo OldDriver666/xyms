@@ -174,9 +174,10 @@
 <tr>
 	<td style="display:none;">${config_id}</td>
 	<td style="display:none;">${depart_id}</td>
-	<td>${companyNameQuery(depart_id)}</td>
+	<td>${$('#input-search-name option:selected').text()}</td>
+	<!--<td>${companyNameQuery(depart_id)}</td>-->
 	<td>${typeNameQuery(client_type)}</td>
-	<td> <img src= ${"http://10.252.252.250:8700/" + avatar} ></td>
+	<td> <img src= ${headPicUrl + avatar} ></td>
 	<td style="display:none;">${client_type}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
@@ -200,7 +201,7 @@
 			}
 		}
 	}
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(id){
 		for(var i=0; i< Lens2; i++){
@@ -208,7 +209,7 @@
 				return allCompanyArray[i].name;
 			}
 		}
-	}
+	}*/
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",
