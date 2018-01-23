@@ -39,10 +39,10 @@ $(function() {
                     $("#pageUserOnline").tmpl(result).appendTo('#xwUserOnlineInfo');
 
                 } else {
-                    alert("请求出错！");
+                    toastr.error("请求出错！");
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！");
+                toastr.error("服务器开个小差，请稍后重试！");
             });
 		},
 
@@ -55,10 +55,10 @@ $(function() {
                     //客户端类型信息
                     action.myMsgTypeQuery(JSON.stringify(result.data));
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
         },
         myMsgTypeQuery: function(nameParamArray){
@@ -131,10 +131,10 @@ $(function() {
                     userClientChart.setOption(option);
 
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
         }
 	};

@@ -85,16 +85,16 @@ $(function() {
                                         $(".up-section").remove();
                                         action.loadPageData();
                                     }else{
-                                        alert(result.msg);
+                                        toastr.error(result.msg);
                                     }
                                 });
                             }
                         }else{
-                            alert(result.ret);
+                            toastr.error(result.ret);
                         }
                     },
                     error:function(e){
-                        alert("错误！！");
+                        toastr.error("错误！！");
                     }
                 });
             }
@@ -163,7 +163,7 @@ $(function() {
                     $("#imgShow").empty();
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		}
@@ -542,7 +542,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;

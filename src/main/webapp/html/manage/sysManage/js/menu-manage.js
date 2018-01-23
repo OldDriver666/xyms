@@ -51,7 +51,7 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             });
 		},
@@ -74,10 +74,10 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else {
-					alert(result.msg);
+					toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+				toastr.error(errorMsg)
             });
 		},
 		//编辑数据
@@ -101,7 +101,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -116,7 +116,7 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

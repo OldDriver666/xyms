@@ -74,7 +74,7 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             });
 		},
@@ -127,12 +127,12 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
+					toastr.info("记录不存在");
                 }else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             },function(errorMsg) {
-				alert(errorMsg);
+				toastr.error(errorMsg);
             });
 		},
 		//获取当前用户角色列表数据
@@ -152,10 +152,10 @@ $(function() {
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			},function(errorMsg) {
-				alert(errorMsg);
+				toastr.error(errorMsg);
 			});
 		},
 		//获取全部公司团体数据
@@ -216,7 +216,7 @@ $(function() {
 					$("#modify-password-wrap").val("");
 				}else{
 					$("#modify-password-wrap").val("");
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -236,7 +236,7 @@ $(function() {
 						$("#input-search-client_name").val("");*/
                         action.loadPageData();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

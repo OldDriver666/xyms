@@ -88,7 +88,7 @@ $(function() {
                     $("#iconShow").empty();
                     $("#imgShow").empty();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		},
@@ -147,7 +147,7 @@ $(function() {
                     $("#addTempl2-modal").modal('hide');
                     toastr.success("添加成功!");
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
         },
@@ -618,7 +618,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;

@@ -147,28 +147,28 @@ $(function(){
                                         $(".register-wrap").hide();
                                         $(".finish-entrance").show();
                                     }else{
-                                        alert(result.msg);
+                                        toastr.error(result.msg);
                                     }
                                 },
                                 error:function(e){
-                                    alert("错误！！");
+                                    toastr.error("错误！！");
                                 }
                             });
                         }else if(result1.msg == "验证码有误，请重新输入！"){
                             errorCount++;
                             if(errorCount == 1){
-                                alert("对不起，您输入错误1次，还有2次输入机会");
+                                toastr.error("对不起，您输入错误1次，还有2次输入机会");
                             }else if(errorCount == 2){
-                                alert("对不起，您输入错误2次，还有1次输入机会");
+                                toastr.error("对不起，您输入错误2次，还有1次输入机会");
                             }else if(errorCount == 3){
-                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                toastr.error("对不起，您输入错误3次，请重新核实输入注册信息");
                                 $(".register-entrance").show();
                                 $(".register-wrap").hide();
                                 $(".finish-entrance").hide();
                                 errorCount = 0;
                             }
                         }else{
-                            alert(result1.msg);
+                            toastr.error(result1.msg);
                         }
                     });
                 }
@@ -291,28 +291,28 @@ $(function(){
                                         $(".register-wrap").hide();
                                         $(".finish-entrance").show();
                                     }else{
-                                        alert(result.msg);
+                                        toastr.error(result.msg);
                                     }
                                 },
                                 error:function(e){
-                                    alert("错误！！");
+                                    toastr.error("错误！！");
                                 }
                             });
                         }else if(result1.msg == "验证码有误，请重新输入！"){
                             errorCount++;
                             if(errorCount == 1){
-                                alert("对不起，您输入错误1次，还有2次输入机会");
+                                toastr.error("对不起，您输入错误1次，还有2次输入机会");
                             }else if(errorCount == 2){
-                                alert("对不起，您输入错误2次，还有1次输入机会");
+                                toastr.error("对不起，您输入错误2次，还有1次输入机会");
                             }else if(errorCount == 3){
-                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                toastr.error("对不起，您输入错误3次，请重新核实输入注册信息");
                                 $(".register-entrance").show();
                                 $(".register-wrap").hide();
                                 $(".finish-entrance").hide();
                                 errorCount = 0;
                             }
                         }else{
-                            alert(result1.msg);
+                            toastr.error(result1.msg);
                         }
                     });
                 }
@@ -334,7 +334,7 @@ $(function(){
                 var tt =$('#personal input[_type="sendmailcode"]');
                 settime(tt);
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
                 $('#personal div[_errorTips="emailcodeAlready"]').show();
                 $('#personal div[_errorTips="emailcodeNone"]').hide();
             }
@@ -354,7 +354,7 @@ $(function(){
                 var tt =$('#agency input[_type="sendmailcode"]');
                 settime(tt);
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
                 $('#agency div[_errorTips="emailcodeAlready"]').show();
                 $('#agency div[_errorTips="emailcodeNone"]').hide();
             }
@@ -778,7 +778,7 @@ function imgPreview(fileDom){
     if (window.FileReader) {
         var reader = new FileReader();
     } else {
-        alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        toastr.error("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
     }
 
     //获取文件
@@ -786,7 +786,7 @@ function imgPreview(fileDom){
     var imageType = /^image\//;
     //是否是图片
     if (!imageType.test(file.type)) {
-        alert("请选择图片！");
+        toastr.error("请选择图片！");
         return;
     }
     //读取完成

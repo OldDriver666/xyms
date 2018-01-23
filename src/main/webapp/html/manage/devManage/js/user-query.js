@@ -36,7 +36,7 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-                	alert(result.msg);
+                    toastr.error(result.msg);
 				}
             });
 		},
@@ -151,7 +151,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		},
@@ -166,7 +166,7 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-                        alert(result.msg);
+                        toastr.error(result.msg);
                     }
 				});
 			}
@@ -287,9 +287,9 @@ $(function() {
             $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
             action.getDevTxtInfo();
         }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
+            toastr.info("请选择文件！");
         }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
+            toastr.info("请选择设备类型！");
         }
     });
 
@@ -555,7 +555,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert(result.msg);
+                toastr.error(result.msg);
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
@@ -620,7 +620,7 @@ Util.Page = (function() {
         };
 
         var errorCallback = function(errorMsg){
-            alert(errorMsg);
+            toastr.error(errorMsg);
         };
 
         Util.ajaxLoadData(url,data,moduleId,"POST",true,callback, errorCallback);

@@ -45,7 +45,7 @@ $(function() {
                     }
                 }
                 else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 
@@ -142,10 +142,10 @@ $(function() {
                         $(".table-manage").hide();
                     }
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg);
+                toastr.error(errorMsg);
             });
 
 		},
@@ -208,17 +208,17 @@ $(function() {
                             localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
-                            alert(result_query.msg);
+                            toastr.error(result_query.msg);
                         }
                     },function() {
-                        alert("服务器开个小差，请稍后重试！")
+                        toastr.error("服务器开个小差，请稍后重试！")
                     });
 
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
 
         },
