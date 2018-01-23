@@ -13,11 +13,22 @@ public class AppCheckUpParam {
 	
 	private Integer status;
 	
+	@JsonProperty("channel_id")
+	private Integer channelId;
+	
 	private Integer updated;
 	
 	private String remarks;
 
-	public Integer getAppId() {
+	public Integer getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Integer channelId) {
+        this.channelId = channelId;
+    }
+
+    public Integer getAppId() {
 		return appId;
 	}
 

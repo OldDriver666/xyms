@@ -39,6 +39,10 @@ public class AppChannelServiceImpl implements IAppChannelService{
             criteria.andChannelNameEqualTo(page.getParam().getChannelName());
         }
         
+        if(page.getParam().getStatus()!=null){
+            criteria.andStatusEqualTo(page.getParam().getStatus());
+        }
+        
         List<AppChannel> list = appChannelDao.selectByPage(example, page);
         
         page.setParam(null);
