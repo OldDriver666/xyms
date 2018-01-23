@@ -42,7 +42,7 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             });
 		},
@@ -75,13 +75,13 @@ $(function() {
 					}
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
 					$('#pageContent').find("tr").remove();
-					alert("记录不存在");
+					toastr.info("记录不存在");
                 }else {
 					$('#pageContent').find("tr").remove();
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             },function(errorMsg) {
-                alert(errorMsg)
+				toastr.error(errorMsg)
             });
 
 		},
@@ -123,7 +123,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -138,7 +138,7 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

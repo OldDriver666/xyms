@@ -44,7 +44,7 @@ $(function() {
                     action.loadPageData();
 					action.allCompanyQuery();
                 }else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             });
 		},
@@ -70,12 +70,12 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
+					toastr.info("记录不存在");
                 }else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             },function(errorMsg) {
-                alert(errorMsg);
+				toastr.error(errorMsg);
             });
 		},
 		//获取全部公司团体数据
@@ -89,10 +89,10 @@ $(function() {
 					allCompanyArray = result.data;
 					//localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			},function() {
-				alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 		},
 		//编辑数据
@@ -114,7 +114,7 @@ $(function() {
                     action.loadPageData();
 					action.allCompanyQuery();
 				}else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -131,7 +131,7 @@ $(function() {
                         action.loadPageData();
 						action.allCompanyQuery();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

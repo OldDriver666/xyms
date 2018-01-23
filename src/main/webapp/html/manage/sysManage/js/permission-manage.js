@@ -51,7 +51,7 @@ $(function() {
                         action.loadPageData();
                     }
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		},
@@ -60,7 +60,7 @@ $(function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             if ($("#search-input-userRoles option:selected").val() == "") {
-                alert("请选择角色类型");
+                toastr.info("请选择角色类型");
                 return false;
             }
 
@@ -82,15 +82,15 @@ $(function() {
                         }
                     } else if(result.code == ReturnCode.SUCCESS && result.data == "") {
                         $('#pageContent').empty();
-                        alert(result.msg);
+                        toastr.error(result.msg);
                     } else {
-                        alert(result.msg);
+                        toastr.error(result.msg);
                     }
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg);
+                toastr.error(errorMsg);
             });
 		},
         //获取设备类型列表数据
@@ -105,10 +105,10 @@ $(function() {
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-devType2');
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
         },
         //获取所有菜单数据
@@ -121,10 +121,10 @@ $(function() {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
         },
 		//编辑数据
@@ -143,7 +143,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		},
@@ -160,7 +160,7 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-                        alert(result.msg);
+                        toastr.error(result.msg);
                     }
 				});
 			}
@@ -303,9 +303,9 @@ $(function() {
             $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
             action.getDevTxtInfo();
         }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
+            toastr.info("请选择文件！");
         }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
+            toastr.info("请选择设备类型！");
         }
     });
 

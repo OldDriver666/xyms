@@ -210,6 +210,14 @@
     <option value=${id}>${name}</option>
 </script>
 <script type="text/javascript">
+	toastr.options={
+		positionClass : 'toast-center-center',
+		showDuration: "300",
+		hideDuration: "300",
+		timeOut: "1000"
+	};
+</script>
+<script type="text/javascript">
 	var myUserRolesArray = JSON.parse(localStorage.getItem("myUserRolesArray"));
 	var Lens1 = myUserRolesArray.length;
 	function roleNameQuery(id){
@@ -229,13 +237,6 @@
 			}
 		}
 	}
-
-	toastr.options={
-	    positionClass : 'toast-center-center',
-        showDuration: "300",
-        hideDuration: "300",
-        timeOut: "1000"
-    };
 </script>
 </body>
 </html>

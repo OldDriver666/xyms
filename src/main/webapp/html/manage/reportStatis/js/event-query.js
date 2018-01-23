@@ -334,11 +334,11 @@ Util.Page = (function () {
              }*/
             if (!result.data) {
                 result.data = null;
-                alert(result.msg);
+                toastr.error(result.msg);
             }
 
             if (result.code == ReturnCode.SUCCESS && result.data.result.length == 0) {
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
 
             that.allPageSize = Math.ceil(result.data.total_count / that.pageSize);
@@ -404,7 +404,7 @@ Util.Page = (function () {
         };
 
         var errorCallback = function(errorMsg){
-            alert(errorMsg);
+            toastr.error(errorMsg);
         };
 
         Util.ajaxLoadData(url, data,moduleId, "POST", true, callback, errorCallback);
