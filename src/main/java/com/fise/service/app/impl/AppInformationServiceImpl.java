@@ -335,7 +335,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		//appInfo.setIconType(param.getIconType());
 		appInfo.setSize(getAppSize(uploadApp.getSize()));
-		appInfo.setUpdated(0);
+		appInfo.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInfo.setCreated(DateUtil.getLinuxTimeStamp());
 		//appInfo.setPrority(param.getPrority());
 
