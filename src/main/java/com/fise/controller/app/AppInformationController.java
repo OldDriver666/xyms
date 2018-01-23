@@ -167,9 +167,9 @@ public class AppInformationController {
      */
 	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
 	public Response appModify(@ModelAttribute AppInformation param,
-                              @RequestParam("app_images") List<MultipartFile> uploadPhoto,
-                              @RequestParam("app") MultipartFile uploadApp,
-                              @RequestParam("app_icon") MultipartFile uploadIcon) {
+	                          @RequestParam("app_images") List<MultipartFile> uploadPhoto,
+	                          @RequestParam("app") MultipartFile uploadApp,
+	                          @RequestParam("app_icon") MultipartFile uploadIcon) {
     	Response response = new Response();
     	
 		response = appInfoemationService.appModify(param,uploadPhoto,uploadApp,uploadIcon);
