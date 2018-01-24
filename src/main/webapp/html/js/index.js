@@ -21,11 +21,6 @@ $(function(){
                 Util.cookieStorage.clearCookie("roleId");
                 Util.cookieStorage.clearCookie("creatorId");
                 Util.cookieStorage.clearCookie("userType");
-                localStorage.removeItem("myDevTypeArray");
-                localStorage.removeItem("myUserRolesArray");
-                localStorage.removeItem("allDevTypeArray");
-                localStorage.removeItem("allCompanyArray");
-                localStorage.removeItem("myCompanyName");
                 localStorage.clear();
                 window.location.href = "login.html";
             } else if(result.Status == 1){

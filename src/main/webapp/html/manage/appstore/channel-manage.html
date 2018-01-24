@@ -218,7 +218,7 @@
 	<td class="advurl">${image}</td>
 	<td>${back_ground}</td>
 	<td>${text_color}</td>
-	<td>{{if status == 0}}关闭 {{else status == 1}}正常 {{/if}}</td>
+	<td>{{if status == 0}}关闭 {{else status == 1}}正常 {{else status == 2}}正常{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">

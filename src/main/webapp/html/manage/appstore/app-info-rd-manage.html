@@ -101,15 +101,15 @@
 											</div>
 										</div>-->
 										<div class="form-group" >
-											<label for="input-appname" class="col-sm-3 control-label"><span class="necessary"></span>应用名称</label>
+											<label for="input-appname" class="col-sm-3 control-label"><span class="necessary">*</span>应用名称</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-appname" name="devXW" placeholder="请输入应用名称"  >
+												<input type="text" class="form-control" id="input-appname" name="devappName" placeholder="请输入应用名称"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-appspell" class="col-sm-3 control-label"><span class="necessary"></span>应用名称拼音</label>
+											<label for="input-appspell" class="col-sm-3 control-label"><span class="necessary">*</span>应用名称拼音</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入应用名称的拼音"  >
+												<input type="text" class="form-control" id="input-appspell" name="devappSpell" placeholder="请输入应用名称的拼音"  >
 											</div>
 										</div>
 										<!--<div class="form-group" >
@@ -121,17 +121,17 @@
 										<div class="form-group" id="add-developerid-wrap">
 											<label for="input-devid" class="col-sm-3 control-label"><span class="necessary"></span>开发者ID</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-devid" name="devXW" placeholder="请输入开发者ID"  >
+												<input type="text" class="form-control" id="input-devid" name="devappdvpid" placeholder="请输入开发者ID"  >
 											</div>
 										</div>
 										<div class="form-group" id="add-developername-wrap">
-											<label for="input-devname" class="col-sm-3 control-label"><span class="necessary"></span>开发者名称</label>
+											<label for="input-devname" class="col-sm-3 control-label"><span class="necessary">*</span>开发者名称</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-devname" name="devXW" placeholder="请输入开发者名称"  >
+												<input type="text" class="form-control" id="input-devname" name="devappdvper" placeholder="请输入开发者名称"  >
 											</div>
 										</div>
-										<div class="form-group" >
-											<label class="col-sm-3 control-label"><span class="necessary"></span>应用大类型</label>
+										<div class="form-group" id="topcategorySelect">
+											<label class="col-sm-3 control-label"><span class="necessary">*</span>应用大类型</label>
 											<div class="col-sm-9">
 												<label class="radio-inline">
 													<input type="radio" name="topcategory" id="radio-topcategory-1" value="1" checked > 软件
@@ -144,15 +144,21 @@
 												</label>
 											</div>
 										</div>
-										<div class="form-group" >
-											<label class="col-sm-3 control-label"><span class="necessary"></span>应用小类型</label>
-											<div class="col-sm-9" >
+										<div class="form-group" id="topcategoryName">
+											<label for="input-topcategory" class="col-sm-3 control-label"><span class="necessary"></span>应用大类型</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-topcategory" name="devXW" placeholder="请输入应用大类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="categorySelect">
+											<label class="col-sm-3 control-label"><span class="necessary">*</span>应用小类型</label>
+											<div class="col-sm-9" id="categorySelectItem">
 												<select id="category1" class="form-control" >
 													<option value="" >请选择应用小类型</option>
 													<option value="1" >常用工具</option>
 													<option value="2">育儿母婴</option>
 													<option value="3" >运动健康</option>
-													<option value="4">教育学习</option>
+													<option value="4" >教育学习</option>
 													<option value="5" >系统</option>
 													<option value="6">社交</option>
 													<option value="7" >视频</option>
@@ -171,10 +177,36 @@
 												</select>
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-description" class="col-sm-3 control-label"><span class="necessary"></span>应用简介</label>
+										<div class="form-group" id="categoryName">
+											<label for="input-category" class="col-sm-3 control-label"><span class="necessary"></span>应用小类型</label>
 											<div class="col-sm-9">
-												<textarea type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  ></textarea>
+												<input type="text" class="form-control" id="input-category" name="devXW" placeholder="请输入应用小类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="appchannelSelect">
+											<label class="col-sm-3 control-label"><span class="necessary">*</span>应用频道</label>
+											<div class="col-sm-9">
+												<select name="searchchannels" id="searchchannels" class="form-control">
+													<option value="">请选择频道</option>
+												</select>
+												<!--<select name="search-channels" id="channels" class="form-control">
+													<option value="0">请选择状态</option>
+													<option value="1">男生频道</option>
+													<option value="2">女生频道</option>
+													<option value="3">学习教育</option>
+												</select>-->
+											</div>
+										</div>
+										<div class="form-group" id="appchannelName">
+											<label for="input-appchannel" class="col-sm-3 control-label"><span class="necessary"></span>应用频道</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appchannel" name="devChannel" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-description" class="col-sm-3 control-label"><span class="necessary">*</span>应用简介</label>
+											<div class="col-sm-9">
+												<textarea type="text" class="form-control" id="input-description" name="devappdesp" placeholder="请输入应用简介"  ></textarea>
 												<!--<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  >-->
 											</div>
 										</div>
@@ -231,7 +263,7 @@
 										</div>-->
 
 										<div id="addImgUrl" class="form-group" >
-											<label for="" class="col-sm-3 control-label"><span class="necessary"></span>上传App截图图片</label>
+											<label for="" class="col-sm-3 control-label"><span class="necessary">*</span>上传App截图图片</label>
 											<div class="img-box full">
 												<section class=" img-section">
 													<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
@@ -261,7 +293,7 @@
 										</div>
 
 										<div id="addApk" class="form-group" >
-											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>上传APP安装包</label>
+											<label for="input-download" class="col-sm-3 control-label"><span class="necessary">*</span>上传APP安装包</label>
 											<div class="col-sm-9">
 												<input type="file" class="form-control" id="input-download" name="app" placeholder="请上传应用安装包"  >
 											</div>
@@ -284,7 +316,7 @@
 						</div><!-- /.modal -->
 					</div>
 
-					<div class="modal fade" id="addTempl2-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl2-modal-label" aria-hidden="true">
+					<!--<div class="modal fade" id="addTempl2-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl2-modal-label" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -336,9 +368,9 @@
 									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 									<button id="btn-add-submit2" type="button" class="btn btn-primary">提交</button>
 								</div>
-							</div><!-- /.modal-content -->
-						</div><!-- /.modal -->
-					</div>
+							</div>&lt;!&ndash; /.modal-content &ndash;&gt;
+						</div>&lt;!&ndash; /.modal &ndash;&gt;
+					</div>-->
 
 					<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2000;width:100%;height:100%;display:none;">
 						<div id="innerdiv" style="position:absolute;">
@@ -360,7 +392,8 @@
 					<th>开发者名称</th>
 					<th>应用大类型</th>
 					<th>应用小类型</th>
-					<th>简介</th>
+					<th>应用频道</th>
+					<!--<th>简介</th>-->
 					<th>版本</th>
 					<!--<th>versioncode</th>-->
 					<!--<th>应用图标</th>-->
@@ -426,7 +459,8 @@
 	<td >${dev_name}</td>
 	<td>${top_category}</td>
 	<td>${category}</td>
-	<td class="description">${description}</td>
+	<td>${channelNameQuery(channel_id)}</td>
+ 	<td style="display:none;">${description}</td>
 	<td>${version}</td>
 	<td style="display:none;">${versioncode}</td>
 	<td style="display:none;">${icon}</td>
@@ -435,23 +469,18 @@
 	<td style="display:none;">${download}</td>
 	<td>${size}</td>
 	<td style="display:none;">${prority}</td>
-	<td>{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</td>
+	<td>{{if status == 0}}待审核{{else status == 1}}发布{{else status == 2}}拒绝{{else status == 3}}下架{{/if}}</td>
 	<td>${remarks}</td>
 	<td style="display:none;">${label}</td>
 	<td style="display:none;">${star}</td>
 	<td style="display:none;">${orientation}</td>
+	<td style="display:none;">${channel_id}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 	       <a href="javascript:void(0);" class="table-edit-btn">查看</a>
 	       <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
 	</td>
-	<!--<td class="table-update">
-	    <div class="showmore">
-	       <a href="javascript:void(0);" class="table-add-btn">添加到频道</a>
-	       &lt;!&ndash;<a href="javascript:void(0);" onclick="action.addToChannel(${id})">添加到频道</a>&ndash;&gt;
-	    </div>
-	</td>-->
 </tr>
 </script>
 
@@ -460,6 +489,16 @@
 </script>
 
 <script type="text/javascript">
+	var myAppChannels = JSON.parse(localStorage.getItem("myAppChannels"));
+	var Lens1 = myAppChannels.length;
+	function channelNameQuery(id){
+		for(var i=0; i< Lens1; i++){
+			if(myAppChannels[i].id == id){
+				return myAppChannels[i].channel_name;
+			}
+		}
+	}
+
     toastr.options={
         positionClass : 'toast-center-center',
         showDuration: "300",

@@ -124,9 +124,21 @@
 											</div>
 										</div>
 										<div class="form-group" >
+											<label for="input-appchannel" class="col-sm-3 control-label"><span class="necessary"></span>应用频道</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appchannel" name="devChannel" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="appdevChannelid">
+											<label for="input-appchannelid" class="col-sm-3 control-label"><span class="necessary"></span>应用频道</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-appchannelid" name="devChannelid" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
 											<label for="input-description" class="col-sm-3 control-label"><span class="necessary"></span>应用简介</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+												<textarea type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;"></textarea>
 											</div>
 										</div>
 										<div class="form-group" >
@@ -315,7 +327,8 @@
 					<th>开发者名称</th>
 					<th>应用大类型</th>
 					<th>应用小类型</th>
-					<th>应用简介</th>
+					<th>应用频道</th>
+					<!--<th>应用简介</th>-->
 					<th>版本号</th>
 					<!--<th>versioncode</th>-->
 					<!--<th>应用图标</th>-->
@@ -380,7 +393,8 @@
 	<td><div class="showmore">${dev_name}</div></td>
 	<td><div class="showmore">${top_category}</div></td>
 	<td><div class="showmore">${category}</div></td>
-	<td><div class="showmore">${description}</div></td>
+	<td><div class="showmore">${channelNameQuery(channel_id)}</div></td>
+ 	<td style="display:none;">${description}</td>
 	<td><div class="showmore">${version}</div></td>
 	<td style="display:none;">${versioncode}</td>
 	<td  class="showurl" style="display:none;">${icon}</td>
@@ -389,11 +403,12 @@
 	<td class="showurl" style="display:none;">${download}</td>
 	<td><div class="showmore">${size}</div></td>
 	<td style="display:none;">${prority}</td>
-	<td><div class="showmore">{{if status == 0}}待审核 {{else status == 1}}发布 {{else status == 2}}拒绝 {{else status == 3}}下架 {{/if}}</div></td>
+	<td><div class="showmore">{{if status == 0}}待审核{{else status == 1}}发布{{else status == 2}}拒绝{{else status == 3}}下架{{/if}}</div></td>
 	<td><div class="showmore">${remarks}</div></td>
 	<td style="display:none;">${label}</td>
 	<td style="display:none;">${star}</td>
 	<td style="display:none;">${orientation}</td>
+	<td style="display:none;">${channel_id}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
@@ -415,6 +430,16 @@
 </script>
 
 <script type="text/javascript">
+	var myAppChannels = JSON.parse(localStorage.getItem("myAppChannels"));
+	var Lens1 = myAppChannels.length;
+	function channelNameQuery(id){
+		for(var i=0; i< Lens1; i++){
+			if(myAppChannels[i].id == id){
+				return myAppChannels[i].channel_name;
+			}
+		}
+	}
+
     toastr.options={
         positionClass : 'toast-center-center',
         showDuration: "300",

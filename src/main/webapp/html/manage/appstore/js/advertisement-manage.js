@@ -278,11 +278,6 @@ $(function() {
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($('#input-devType option:selected').val() == "") {
-                $("#input-password").parent().parent().addClass("has-error");
-                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").parent().append(err_html);
-                return;
             }else {
                 window.action.add();
             }

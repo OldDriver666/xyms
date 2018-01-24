@@ -74,9 +74,15 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
+            if(parseInt($("input[name=status]:checked").val()) == 0){
+                toastr.info("当前为待审核状态，请选择其他审核状态!");
+                return
+            }
+
             var url = ctx + "xiaoyusvr/appinformation/checkup";
             var data = new Object();
             data.app_id = $("#input-id").val();
+            data.channel_id = parseInt($("#input-appchannelid").val());
             data.status = parseInt($("input[name=status]:checked").val());
             data.remarks = $("#input-remarks").val();
 
@@ -104,7 +110,8 @@ $(function() {
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname
+                "channel_name":search_channelname,
+                "status": 2
             };
 
             var opt = {
@@ -160,7 +167,8 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent().parent();
-        var check_status = $.trim(that.find("td").eq(18).text());
+
+        var check_status = $.trim(that.find("td").eq(19).text());
         var status_val = null;
         if(check_status === "待审核"){
             status_val = 0;
@@ -172,7 +180,7 @@ $(function() {
             status_val = 3;
         }
 
-        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var iconList = $.trim(that.find("td").eq(13).text()).split(";");
         var myDiv1 = document.getElementById("iconShow");
         for(var i=0; i < iconList.length; i++){
             var img1 = document.createElement("img");
@@ -193,7 +201,7 @@ $(function() {
             myDiv1.appendChild(img1);
         }
 
-        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var imgList = $.trim(that.find("td").eq(15).text()).split(";");
         var myDiv2 = document.getElementById("imgShow");
         for(var i=0; i < imgList.length; i++){
             var img = document.createElement("img");
@@ -203,11 +211,18 @@ $(function() {
             img.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数
                 imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+                /*if(this.width == 420){
+                    this.width+=200;
+                } else {
+                    this.width = 420;
+                }*/
+                /*this.style.zoom= 2;
+                 window.open(this.src);*/
             };
             myDiv2.appendChild(img);
         }
 
-        var orientation_val = $.trim(that.find("td").eq(22).text());
+        var orientation_val = $.trim(that.find("td").eq(23).text());
 
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-appindex").val(that.find("td").eq(2).text());
@@ -218,22 +233,25 @@ $(function() {
         $("#input-devname").val(that.find("td").eq(6).text());
         $("#input-topcategory").val(that.find("td").eq(7).text());
         $("#input-category").val(that.find("td").eq(8).text());
+        $("#input-appchannel").val(that.find("td").eq(9).text());
 
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-        $("#input-description").val(that.find("td").eq(9).text());
-        $("#input-version").val(that.find("td").eq(10).text());
-        $("#input-versioncode").val(that.find("td").eq(11).text());
+        $("#input-description").val(that.find("td").eq(10).text());
+        $("#input-version").val(that.find("td").eq(11).text());
+        $("#input-versioncode").val(that.find("td").eq(12).text());
 
-        $("#input-icontype").val(that.find("td").eq(13).text());
+        $("#input-icontype").val(that.find("td").eq(14).text());
 
-        $("#input-download").val(that.find("td").eq(15).text());
+        $("#input-download").val(that.find("td").eq(16).text());
 
-        $("#input-size").val(that.find("td").eq(16).text());
-        $("#input-prority").val(that.find("td").eq(17).text());
+        $("#input-size").val(that.find("td").eq(17).text());
+        $("#input-prority").val(that.find("td").eq(18).text());
 
-        $("#input-remarks").val(that.find("td").eq(19).text());
-        $("#input-label").val(that.find("td").eq(20).text());
-        $("#input-star").val(that.find("td").eq(21).text());
+        $("#input-remarks").val(that.find("td").eq(20).text());
+        $("#input-label").val(that.find("td").eq(21).text());
+        $("#input-star").val(that.find("td").eq(22).text());
+        $("#input-appchannelid").val(that.find("td").eq(24).text());
+
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
         $("#addTempl-modal").modal("show");
         $("#orientation").attr("disabled", "disabled");
@@ -254,9 +272,11 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("审核应用信息");
+            $("#appdevChannelid").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
             $("h4#addTempl-modal-label").text("添加应用信息");
+            $("#appdevChannelid").hide();
             $form.data("action", "add");
             $form[0].reset();
 		}

@@ -117,7 +117,7 @@ $(function() {
             var search_depart_id = parseInt($('#input-search-name option:selected').val());
             var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
-            console.log($('#input-search-name').val())
+
             if($('#input-search-name option:selected').val() == "") {
                 $("#input-search-name").parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";

@@ -86,6 +86,7 @@ $(function() {
                                 data.append("devName", nickName);
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
+                                data.append("channelId", parseInt($('#channels option:selected').val()));
                                 data.append("description", $("#input-description").val());
                                 data.append("images", imgStr);
                                 data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
@@ -212,7 +213,8 @@ $(function() {
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname
+                "channel_name":search_channelname,
+                "status": 1
             };
 
             var opt = {
@@ -234,8 +236,8 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
+                    $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                   /* //return result.data.result;*/
                 },
                 "param" : data
             };
@@ -268,7 +270,7 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var check_topcategory = $.trim(that.find("td").eq(7).text());
+        /*var check_topcategory = $.trim(that.find("td").eq(7).text());
         var check_category = $.trim(that.find("td").eq(8).text());
         var topcategory_val = null;
         if(check_topcategory === "软件"){
@@ -305,11 +307,11 @@ $(function() {
                     $(this).attr("selected", true);
                 }
             });
-        }
+        }*/
 
-        var orientation_val = $.trim(that.find("td").eq(22).text());
+        var orientation_val = $.trim(that.find("td").eq(23).text());
 
-        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var iconList = $.trim(that.find("td").eq(13).text()).split(";");
         var myDiv1 = document.getElementById("iconShow");
         for(var i=0; i < iconList.length; i++){
             var img1 = document.createElement("img");
@@ -330,7 +332,7 @@ $(function() {
             myDiv1.appendChild(img1);
         }
 
-        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var imgList = $.trim(that.find("td").eq(15).text()).split(";");
         var myDiv2 = document.getElementById("imgShow");
         for(var i=0; i < imgList.length; i++){
             var img = document.createElement("img");
@@ -359,23 +361,24 @@ $(function() {
         $("#input-devid").val(that.find("td").eq(5).text());
         $("#input-devname").val(that.find("td").eq(6).text());
 
-        $("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
-
-
-        $("#input-description").val(that.find("td").eq(9).text());
-        $("#input-version").val(that.find("td").eq(10).text());
-        $("#input-versioncode").val(that.find("td").eq(11).text());
+        //$("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
+        $("#input-topcategory").val(that.find("td").eq(7).text());
+        $("#input-category").val(that.find("td").eq(8).text());
+        $("#input-appchannel").val(that.find("td").eq(9).text());
+        $("#input-description").val(that.find("td").eq(10).text());
+        $("#input-version").val(that.find("td").eq(11).text());
+        $("#input-versioncode").val(that.find("td").eq(12).text());
 
         //$("#input-icon").val(that.find("td").eq(12).text());
-        $("#input-icontype").val(that.find("td").eq(13).text());
+        $("#input-icontype").val(that.find("td").eq(14).text());
         //$("#input-images").val(that.find("td").eq(14).text());
         //$("#input-download").val(that.find("td").eq(15).text());
 
-        $("#input-size").val(that.find("td").eq(16).text());
-        $("#input-prority").val(that.find("td").eq(17).text());
+        $("#input-size").val(that.find("td").eq(17).text());
+        $("#input-prority").val(that.find("td").eq(18).text());
 
-        $("#input-label").val(that.find("td").eq(20).text());
-        $("#input-star").val(that.find("td").eq(21).text());
+        $("#input-label").val(that.find("td").eq(21).text());
+        $("#input-star").val(that.find("td").eq(22).text());
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
 
         $("#addTempl-modal").modal("show");
@@ -406,6 +409,12 @@ $(function() {
             $("#addApk").hide();
             $("#showProgress").hide();
             $("#btn-add-submit").hide();
+            $("#topcategorySelect").hide();
+            $("#topcategoryName").show();
+            $("#categorySelect").hide();
+            $("#categoryName").show();
+            $("#appchannelSelect").hide();
+            $("#appchannelName").show();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
 			$form.data("action", "edit");
@@ -421,13 +430,19 @@ $(function() {
             $("#addApk").show();
             $("#showProgress").show();
             $("#btn-add-submit").show();
+            $("#topcategorySelect").show();
+            $("#topcategoryName").hide();
+            $("#categorySelect").show();
+            $("#categoryName").hide();
+            $("#appchannelSelect").show();
+            $("#appchannelName").hide();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
             $form.data("action", "add");
             $form[0].reset();
 		}
 	});
-    $("#addTempl2-modal").on('show.bs.modal', function(e) {
+    /*$("#addTempl2-modal").on('show.bs.modal', function(e) {
         // 处理modal label显示及表单重置
         var $form = $("form#form-addTempl2");
         if (!e.relatedTarget) {
@@ -438,7 +453,7 @@ $(function() {
             $form.data("action", "add");
             $form[0].reset();
         }
-    });
+    });*/
 
     //关闭或者hide弹出框清空插入的图片
     $("#addTempl-modal .close").on('click', function() {
@@ -454,13 +469,22 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
+            devappName : {
+                required : true
+            },
+            devappSpell : {
+                required : true
+            },
+            devappdesp : {
+                required : true
+            }
         }
     });
-    //验证表单
+ /*   //验证表单
     $("#form-addTempl2").validate({
         rules : {
         }
-    });
+    });*/
 
     $("#dev-query-condition").validate({
         rules : {
@@ -508,15 +532,57 @@ $(function() {
         }
     });
 
+    $("#categorySelectItem").change(function(){
+        if($('#category1 option:selected').val() != "" || $('#category2 option:selected').val() != "" || $('#category3 option:selected').val() != ""){
+            $("#categorySelectItem").parent().removeClass("has-error");
+            $("#categorySelectItem .error").remove();
+        }
+    });
+
+    $("#searchchannels").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#addImgUrl").change(function(){
+        if($("img[class=up-img]").size() > 0){
+            $("#addImgUrl").removeClass("has-error");
+            $("#addImgUrl .error").remove();
+        }
+    });
+    $("#input-download").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $("#addApk .error").remove();
+        }
+    });
+
+
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($('#input-devType option:selected').val() == "") {
-                $("#input-password").parent().parent().addClass("has-error");
+            }else if($('#category1 option:selected').val() == "" && $('#category2 option:selected').val() == "" && $('#category3 option:selected').val() == "") {
+                $("#categorySelectItem").parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").append(err_html);
+                $("#categorySelectItem").append(err_html);
+                return;
+            }else if($('#searchchannels option:selected').val() == "") {
+                $("#searchchannels").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#searchchannels").append(err_html);
+                return;
+            }else if($("img[class=up-img]").size() == 0) {
+                $("#addImgUrl").addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#addImgUrl").append(err_html);
+                return;
+            }else if($('#input-download').val() == "") {
+                $("#input-download").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-download").parent().parent().append(err_html);
                 return;
             }else {
                 window.action.add();
@@ -530,7 +596,7 @@ $(function() {
         }
     });
 
-    $("#btn-add-submit2").on('click', function() {
+    /*$("#btn-add-submit2").on('click', function() {
         var action = $("form#form-addTempl2").data("action");
         if(action == "edit"){
             if (!$("#form-addTempl2").valid()) {
@@ -538,13 +604,13 @@ $(function() {
             }else if($('#input-channels option:selected').val() == "") {
                 $("#input-channels").parent().parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-channels").append(err_html);
+                $("#input-channels").parent().parent().append(err_html);
                 return;
             }else {
                 window.action.addToChannel();
             }
         }
-    });
+    });*/
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
