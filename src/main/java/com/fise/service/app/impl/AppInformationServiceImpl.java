@@ -668,6 +668,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			if (appResult.getStatus() == 1) {
 				email.setMsg("亲，恭喜您，你在沸石应用宝平台申请的应用已审核通过，祝您生活愉快。");// 此处填写邮件内容
 			}
+			if (appResult.getStatus() == 3) {
+			    email.setMsg("亲，您好，你在沸石应用宝平台申请的应用已审核下架。");
+			}
 			email.send();
 		} catch (Exception e) {
 			e.printStackTrace();
