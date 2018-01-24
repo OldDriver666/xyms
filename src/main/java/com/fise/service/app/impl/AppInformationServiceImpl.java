@@ -23,11 +23,14 @@ import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.dao.AppChannelListMapper;
 import com.fise.dao.AppInformationMapper;
 import com.fise.dao.WiAdminMapper;
 import com.fise.model.dto.appmarket.ApkInfo;
 import com.fise.model.dto.appmarket.ApkUtil;
 import com.fise.model.dto.utils.IconUtil;
+import com.fise.model.entity.AppChannelList;
+import com.fise.model.entity.AppChannelListExample;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
 import com.fise.model.entity.WiAdmin;
@@ -49,6 +52,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	
 	@Autowired
 	private WiAdminMapper adminDao;
+	
+	@Autowired
+	private AppChannelListMapper AppChannelListDao;
 
 	@Override
 	public Response query(Page<AppInformation> page) {
@@ -293,6 +299,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setDevName(param.getDevName());
 		appInfo.setTopCategory(param.getTopCategory());
 		appInfo.setCategory(param.getCategory());
+		appInfo.setChannelId(param.getChannelId());
 		// 0-待审核 1-发布 2-拒绝 3-下架
 		appInfo.setStatus(0);
 		appInfo.setDescription(param.getDescription());
@@ -382,6 +389,21 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("新增应用失败");
 			return response;
 		}
+		
+		//在channellist里添加频道应用，status默认为0 不可用
+		AppInformationExample example = new AppInformationExample();
+		AppInformationExample.Criteria criteria = example.createCriteria();
+		criteria.andAppNameEqualTo(appInfo.getAppName());
+		List<AppInformation> list = appInformationDao.selectByExample(example);
+		AppInformation app1=null;
+		if(list.size()!=0){
+		    app1 = list.get(0);
+		}
+		AppChannelList appChannelList = new AppChannelList();
+		appChannelList.setChannelId(appInfo.getChannelId());
+		appChannelList.setAppId(app1.getId());
+		AppChannelListDao.insertSelective(appChannelList);
+		
 		response.setMsg("新增应用成功");
 		response.setCode(200);
 		return response;
@@ -599,10 +621,31 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			response.setMsg("APP审核失败");
 			return response;
 		}
+		
+		//在channellist里修改频道应用，status修改为1 可以
+		if(developer.getStatus()==1){
+		    AppChannelListExample example1 = new AppChannelListExample();
+	        AppChannelListExample.Criteria criteria = example1.createCriteria();
+	        
+	        criteria.andChannelIdEqualTo(developer.getChannelId());
+	        criteria.andAppIdEqualTo(developer.getAppId());
+	        
+	        AppChannelList appChannelList = new AppChannelList();
+	        appChannelList.setStatus(1);
+	        
+	        result=AppChannelListDao.updateByExampleSelective(appChannelList, example1);
+	        
+	        if (result == 0) {
+	            response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+	            response.setMsg("APP审核失败");
+	            return response;
+	        }
+		}
+        
 		AppInformation appResult=appInformationDao.selectByPrimaryKey(developer.getAppId());
 		try {
 			HtmlEmail email = new HtmlEmail();// 不用更改
-			email.setHostName("smtp.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+			email.setHostName("smtp.exmail.qq.com");// 需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
 			email.setCharset("UTF-8");
 			email.setSSLOnConnect(true);
 			
@@ -616,14 +659,17 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				admin=list.get(0);
 			}
 			email.addTo(admin.getEmail());// 收件地址
-			email.setFrom("2839117863@qq.com", "天堂遗孤");// 此处填邮箱地址和用户名,用户名可以任意填写
-			email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");// 此处填写邮箱地址和客户端授权码
+			email.setFrom("chenzc@fise.com.cn", "fise智能");// 此处填邮箱地址和用户名,用户名可以任意填写
+			email.setAuthentication("chenzc@fise.com.cn", "Fise321");// 此处填写邮箱地址和客户端授权码
 			email.setSubject("孙大大通讯");// 此处填写邮件名，邮件名可任意填写
 			if (appResult.getStatus() == 2) {
 				email.setMsg("亲，您好,您在沸石应用宝平台申请的应用审核未通过，原因是:" + appResult.getRemarks() + "。");// 此处填写邮件内容
 			}
 			if (appResult.getStatus() == 1) {
 				email.setMsg("亲，恭喜您，你在沸石应用宝平台申请的应用已审核通过，祝您生活愉快。");// 此处填写邮件内容
+			}
+			if (appResult.getStatus() == 3) {
+			    email.setMsg("亲，您好，你在沸石应用宝平台申请的应用已审核下架。");
 			}
 			email.send();
 		} catch (Exception e) {

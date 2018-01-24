@@ -8,6 +8,7 @@
     <result column="package_name" jdbcType="VARCHAR" property="packageName" />
     <result column="dev_id" jdbcType="INTEGER" property="devId" />
     <result column="dev_name" jdbcType="VARCHAR" property="devName" />
+    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
     <result column="top_category" jdbcType="VARCHAR" property="topCategory" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -87,9 +88,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, app_name, app_spell, package_name, dev_id, dev_name, top_category, category, 
-    status, description, version, versioncode, icon, icon_type, images, download, size, 
-    updated, created, prority, remarks, label, md5, star, orientation
+    id, app_name, app_spell, package_name, dev_id, dev_name, channel_id, top_category, 
+    category, status, description, version, versioncode, icon, icon_type, images, download, 
+    size, updated, created, prority, remarks, label, md5, star, orientation
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppInformationExample" resultMap="BaseResultMap">
     select
@@ -132,22 +133,22 @@
   <insert id="insert" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information (id, app_name, app_spell, 
       package_name, dev_id, dev_name, 
-      top_category, category, status, 
-      description, version, versioncode, 
-      icon, icon_type, images, 
-      download, size, updated, 
-      created, prority, remarks, 
-      label, md5, star, orientation
-      )
+      channel_id, top_category, category, 
+      status, description, version, 
+      versioncode, icon, icon_type, 
+      images, download, size, 
+      updated, created, prority, 
+      remarks, label, md5, 
+      star, orientation)
     values (#{id,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{appSpell,jdbcType=VARCHAR}, 
       #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, #{devName,jdbcType=VARCHAR}, 
-      #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{versioncode,jdbcType=INTEGER}, 
-      #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, #{images,jdbcType=VARCHAR}, 
-      #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, 
-      #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
-      #{label,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER}
-      )
+      #{channelId,jdbcType=INTEGER}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{versioncode,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
+      #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
+      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, 
+      #{star,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information
@@ -169,6 +170,9 @@
       </if>
       <if test="devName != null">
         dev_name,
+      </if>
+      <if test="channelId != null">
+        channel_id,
       </if>
       <if test="topCategory != null">
         top_category,
@@ -246,6 +250,9 @@
       </if>
       <if test="devName != null">
         #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=INTEGER},
       </if>
       <if test="topCategory != null">
         #{topCategory,jdbcType=VARCHAR},
@@ -333,6 +340,9 @@
       <if test="record.devName != null">
         dev_name = #{record.devName,jdbcType=VARCHAR},
       </if>
+      <if test="record.channelId != null">
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+      </if>
       <if test="record.topCategory != null">
         top_category = #{record.topCategory,jdbcType=VARCHAR},
       </if>
@@ -403,6 +413,7 @@
       package_name = #{record.packageName,jdbcType=VARCHAR},
       dev_id = #{record.devId,jdbcType=INTEGER},
       dev_name = #{record.devName,jdbcType=VARCHAR},
+      channel_id = #{record.channelId,jdbcType=INTEGER},
       top_category = #{record.topCategory,jdbcType=VARCHAR},
       category = #{record.category,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -443,6 +454,9 @@
       </if>
       <if test="devName != null">
         dev_name = #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=INTEGER},
       </if>
       <if test="topCategory != null">
         top_category = #{topCategory,jdbcType=VARCHAR},
@@ -511,6 +525,7 @@
       package_name = #{packageName,jdbcType=VARCHAR},
       dev_id = #{devId,jdbcType=INTEGER},
       dev_name = #{devName,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
       top_category = #{topCategory,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},

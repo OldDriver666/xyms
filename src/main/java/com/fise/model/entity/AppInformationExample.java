@@ -524,6 +524,66 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
+        public Criteria andChannelIdIsNull() {
+            addCriterion("channel_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdIsNotNull() {
+            addCriterion("channel_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdEqualTo(Integer value) {
+            addCriterion("channel_id =", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotEqualTo(Integer value) {
+            addCriterion("channel_id <>", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdGreaterThan(Integer value) {
+            addCriterion("channel_id >", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("channel_id >=", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdLessThan(Integer value) {
+            addCriterion("channel_id <", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdLessThanOrEqualTo(Integer value) {
+            addCriterion("channel_id <=", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdIn(List<Integer> values) {
+            addCriterion("channel_id in", values, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotIn(List<Integer> values) {
+            addCriterion("channel_id not in", values, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdBetween(Integer value1, Integer value2) {
+            addCriterion("channel_id between", value1, value2, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("channel_id not between", value1, value2, "channelId");
+            return (Criteria) this;
+        }
+
         public Criteria andTopCategoryIsNull() {
             addCriterion("top_category is null");
             return (Criteria) this;

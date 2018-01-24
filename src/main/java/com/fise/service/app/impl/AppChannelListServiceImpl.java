@@ -66,6 +66,18 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
     public Response insert(AppChannelList param) {
         Response resp = new Response();
         
+        AppChannelListExample example = new AppChannelListExample();
+        AppChannelListExample.Criteria criteria = example.createCriteria();
+        
+        criteria.andChannelIdEqualTo(param.getChannelId());
+        criteria.andAppIdEqualTo(param.getAppId());
+        
+        List<AppChannelList> list = appChannelListDao.selectByExample(example);
+        
+        if(list.size()!=0){
+            return resp.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
+        }
+        
         param.setUpdated(DateUtil.getLinuxTimeStamp());
         
         appChannelListDao.insertSelective(param);

@@ -34,6 +34,9 @@ public class AppInformation implements Serializable {
     @JsonProperty("dev_name")
     private String devName;
 
+    @JsonProperty("channel_id")
+    private Integer channelId;
+
     /**
      * 应用大类型
      */
@@ -167,6 +170,14 @@ public class AppInformation implements Serializable {
 
     public void setDevName(String devName) {
         this.devName = devName;
+    }
+
+    public Integer getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Integer channelId) {
+        this.channelId = channelId;
     }
 
     public String getTopCategory() {
