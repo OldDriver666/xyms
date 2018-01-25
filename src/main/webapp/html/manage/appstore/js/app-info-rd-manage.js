@@ -86,7 +86,7 @@ $(function() {
                                 data.append("devName", nickName);
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
-                                data.append("channelId", parseInt($('#channels option:selected').val()));
+                                data.append("channelId", parseInt($('#searchchannels option:selected').val()));
                                 data.append("description", $("#input-description").val());
                                 data.append("images", imgStr);
                                 data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
