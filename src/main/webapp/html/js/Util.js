@@ -799,7 +799,7 @@ Util.regionArgumentsDetail = function(regionlist){
 Util.pathName = function(){
 	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
     uploadUrl = "http://xiaoyu.fise-wi.com:4869/";        //test version
-    headPicUrl = "http://10.252.252.250:8700/";        //test version
+    headPicUrl = "http://xiaoyu.fise-wi.com:8700/";        //test version
     Util.localStorage.add("ctx",ctx);
     Util.localStorage.add("uploadUrl",uploadUrl);
     Util.localStorage.add("headPicUrl",headPicUrl);

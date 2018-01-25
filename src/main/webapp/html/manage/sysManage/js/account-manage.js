@@ -145,7 +145,7 @@ $(function() {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					var myrolesArray = [];
 					for(var i=0; i< result.data.length; i++){
-						if(result.data[i].id != roleId){
+						if(result.data[i].id != roleId && result.data[i].id != 31){
 							myrolesArray.push(result.data[i]);
 						}
 					}
