@@ -58,7 +58,10 @@ public class RoleServiceImpl implements IRoleService {
         WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
         criterion.andAuthLevelLessThan(admin.getAuthLevel());
         criterion.andOrganizationIdEqualTo(param.getCompany_id());
-
+        if(param.getStatus()!=null){
+            criterion.andStatusEqualTo(param.getStatus());
+        }
+        
         return roleDao.selectByExample(example);
     }
 

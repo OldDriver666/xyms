@@ -21,9 +21,20 @@ public class QueryRoleParam implements Serializable {
 
     @NotNull
     private Integer role_id;
+    
+    private Integer status;
 
     private Integer include_all;
     
+    
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getInclude_all() {
         return include_all;
     }
