@@ -15,10 +15,10 @@
 <div class="layout-header">
     <div class="logo-wrapper">
 		<h1 class="tit-sub" style="border-left:none">
-			<a href="http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html" target="_blank">沸石开放平台</a>
+			<a href="#" target="_blank" id="openLink">沸石开放平台</a>
 		</h1>
         <h2 class="tit-sub">
-            <a href="http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html" target="_blank">管理中心</a>
+            <a href="#" target="_blank" id="serverLink">管理中心</a>
 		</h2>
     </div>
 </div>
@@ -220,7 +220,7 @@
 	<div class="foot">
 	<div class="inner">
 		<p class="footer_menu">
-			<a target="_blank" _hot_tag="OPEN.CONTRACTUS" href="http://www.fise.com.cn">联系我们</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN" href="http://www.fise.com.cn">投诉举报</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN.EN" href="http://www.fise.com.cn">Complaint Guidelines</a> | <a target="_blank" href="http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html">沸石开放平台</a>
+			<a target="_blank" _hot_tag="OPEN.CONTRACTUS" href="#" id="contactLink">联系我们</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN" href="#" id="reportLink">投诉举报</a> | <a target="_blank" _hot_tag="OPEN.COMPLAIN.EN" href="#" id="complaintLink">Complaint Guidelines</a> | <a target="_blank" href="#" id="platformLink">沸石开放平台</a>
 		</p>
 		<p class="copyrighten">Copyright &copy; 2007 - 2017 Fise. All Rights Reserved.</p>
 		<p class="copyrightzh">沸石公司 版权所有</p>
@@ -231,12 +231,26 @@
 <!-- body 结束 -->
 
 <script type ="text/javascript" src="js/jquery.min.js"></script>
-<script type ="text/javascript" src="js/forgetpwd.js"></script>
-<script type ="text/javascript" src="js/agreement.js" ></script>
 <script type ="text/javascript" src="js/Util.js"></script>
 <script type ="text/javascript" src="js/jquery.md5.js"></script>
 <script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="js/forgetpwd.js"></script>
+<script type ="text/javascript" src="js/agreement.js" ></script>
 <script type="text/javascript">
+	var openLinkHref = ctx + "xiaoyusvr/html/index.html";
+	$('#openLink').attr("href",openLinkHref );
+	var serverLinkHref = ctx + "xiaoyusvr/html/index.html";
+	$('#serverLink').attr("href",serverLinkHref );
+
+	var contactLinkHref = "http://www.fise.com.cn";
+	$('#contactLink').attr("href",contactLinkHref );
+	var reportLinkHref = "http://www.fise.com.cn";
+	$('#reportLink').attr("href",reportLinkHref );
+	var complaintLinkHref = "http://www.fise.com.cn";
+	$('#complaintLink').attr("href",complaintLinkHref );
+	var platformLinkHref = ctx + "xiaoyusvr/html/index.html";
+	$('#platformLink').attr("href",platformLinkHref );
+
 	toastr.options={
 		positionClass : 'toast-center-center',
 		showDuration: "300",
