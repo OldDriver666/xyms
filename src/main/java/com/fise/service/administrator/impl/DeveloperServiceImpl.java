@@ -160,6 +160,9 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			if (dev.getStatus() == 1) {
 				email.setMsg("亲，恭喜您，你在沸石开发者平台注册的信息已审核通过，祝您生活愉快。");// 此处填写邮件内容
 			}
+			if (dev.getStatus() == 2) {
+                email.setMsg("亲，您好，你在沸石开发者平台注册的信息已审核删除");// 此处填写邮件内容
+            }
 			email.send();
 		} catch (Exception e) {
 			e.printStackTrace();
