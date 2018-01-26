@@ -2,7 +2,7 @@ $(function() {
     var departId = Util.cookieStorage.getCookie("departId");
     var companyId = Util.cookieStorage.getCookie("companyId");
     var roleId = Util.cookieStorage.getCookie("roleId");
-    var id = Util.cookieStorage.getCookie("id");
+    var uid = Util.cookieStorage.getCookie("id");
 
     var url=location.search;
     var Request = new Object();

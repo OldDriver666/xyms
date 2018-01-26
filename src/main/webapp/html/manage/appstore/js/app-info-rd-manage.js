@@ -2,7 +2,7 @@ $(function() {
     var departId = Util.cookieStorage.getCookie("departId");
     var companyId = Util.cookieStorage.getCookie("companyId");
     var roleId = Util.cookieStorage.getCookie("roleId");
-    var id = Util.cookieStorage.getCookie("id");
+    var uid = Util.cookieStorage.getCookie("id");
     var nickName = Util.cookieStorage.getCookie("nickName");
 
     var url=location.search;
@@ -82,7 +82,7 @@ $(function() {
                                 //data.append("appIndex", $("#input-appindex").val());
                                 data.append("appName",$("#input-appname").val());
                                 data.append("appSpell", $("#input-appspell").val());
-                                data.append("devId", parseInt(id));
+                                data.append("devId", parseInt(uid));
                                 data.append("devName", nickName);
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
@@ -151,7 +151,7 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "dev_id":parseInt(id),
+                    "dev_id":parseInt(uid),
                     "app_name":search_appname,
                     "status":search_status
                 };
@@ -189,7 +189,7 @@ $(function() {
             if (confirm("删除后不可恢复，确定删除" + name + "？")) {
                 var url = ctx + "xiaoyusvr/appinformation/appDelete";
                 var data = new Object();
-                data.app_id = parseInt(id);
+                data.app_id = parseInt(deleteid);
 
 
                 Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
