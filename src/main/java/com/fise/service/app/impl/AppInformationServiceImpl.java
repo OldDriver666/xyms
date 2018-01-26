@@ -177,7 +177,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		Response response = new Response();
 		AppInformation appInfo=new AppInformation();
 		appInfo.setId(id);
-		appInfo.setStatus(4);
+		appInfo.setStatus(3);
 		int result = appInformationDao.updateByPrimaryKeySelective(appInfo);
 		if (result == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);

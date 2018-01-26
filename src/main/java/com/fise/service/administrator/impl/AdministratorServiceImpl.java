@@ -422,6 +422,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
             }
         } else {
             queryWhere.andRoleIdGreaterThan(loginAdmin.getRoleId());
+            queryWhere.andRoleIdNotEqualTo(31);
         }
         //标记为被删除的不返回
         queryWhere.andStatusNotEqualTo((byte) 2);
