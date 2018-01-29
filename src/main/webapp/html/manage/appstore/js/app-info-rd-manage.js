@@ -51,6 +51,7 @@ $(function() {
             for(var k=0; k <imgLen; k++){
                 var ff = $("img[class=up-img]")[k]
                 var base64Data = getBase64Image(ff)
+                //var base64Data = ff.src
                 var blobs = dataURItoBlob(base64Data)
                 var ffName = $("p[class=img-name-p]")[k].innerHTML
                 var imgdata = new FormData();
@@ -562,7 +563,8 @@ $(function() {
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
-            if (!$("#form-addTempl").valid()) {
+            window.action.add();
+            /*if (!$("#form-addTempl").valid()) {
                 return;
             }else if($('#category1 option:selected').val() == "" && $('#category2 option:selected').val() == "" && $('#category3 option:selected').val() == "") {
                 $("#categorySelectItem").parent().addClass("has-error");
@@ -586,7 +588,7 @@ $(function() {
                 return;
             }else {
                 window.action.add();
-            }
+            }*/
         }else if(action == "edit"){
             if (!$("#form-addTempl").valid()) {
                 return;
@@ -595,22 +597,6 @@ $(function() {
             }
         }
     });
-
-    /*$("#btn-add-submit2").on('click', function() {
-        var action = $("form#form-addTempl2").data("action");
-        if(action == "edit"){
-            if (!$("#form-addTempl2").valid()) {
-                return;
-            }else if($('#input-channels option:selected').val() == "") {
-                $("#input-channels").parent().parent().addClass("has-error");
-                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-channels").parent().parent().append(err_html);
-                return;
-            }else {
-                window.action.addToChannel();
-            }
-        }
-    });*/
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
@@ -972,25 +958,12 @@ function imgShow(outerdiv, innerdiv, bigimg, _this){
 
 
 function getBase64Image(img) {
-    /*var image = new Image()
-    image.src = img.src
-    image.onload = function () {
-        var expectWidth = this.naturalWidth
-        var expectHeight = this.naturalHeight
-        var canvas = document.createElement("canvas");
-        canvas.width = expectWidth;
-        canvas.height = expectHeight;
-        var ctxx = canvas.getContext("2d");
-        ctxx.drawImage(img, 0, 0, expectWidth, expectHeight);
-        var dataURL = canvas.toDataURL("image/jpg");
-        return dataURL
-    }*/
     var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
     var ctxx = canvas.getContext("2d");
-    ctxx.drawImage(img, 0, 0, img.width, img.height);
-    var dataURL = canvas.toDataURL("image/jpg");
+    ctxx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var dataURL = canvas.toDataURL("image/png");
     return dataURL
 }
 

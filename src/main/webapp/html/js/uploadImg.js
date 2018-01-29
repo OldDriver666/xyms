@@ -45,8 +45,8 @@ $(function(){
                 $input.appendTo($section);
                 var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
                 $input2.appendTo($section);
-
             }
+
         }
         setTimeout(function(){
             $(".up-section").removeClass("loading");
