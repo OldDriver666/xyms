@@ -606,10 +606,10 @@ Util.Page = (function() {
 
 function getBase64Image(img) {
     var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
     var ctxx = canvas.getContext("2d");
-    ctxx.drawImage(img, 0, 0, img.width, img.height);
+    ctxx.drawImage(img, 0, 0, canvas.width, canvas.height);
     var dataURL = canvas.toDataURL("image/png");
     return dataURL // return dataURL.replace("data:image/png;base64,", "");
 }
