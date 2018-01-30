@@ -160,7 +160,7 @@ public class ProblemServiceImpl implements IProblemService{
         }
         userlist.add(param.getParam().getUserId());
         //添加官方账号ID，用于发送广告
-        //userlist.add(Constants.FISE_AD_ID);
+        userlist.add(Constants.FISE_AD_ID);
         
         //System.out.println("-----------"+userlist.toString());
         criteria.andUserIdIn(userlist);

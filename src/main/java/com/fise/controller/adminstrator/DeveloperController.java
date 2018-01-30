@@ -33,11 +33,10 @@ public class DeveloperController {
 	
 	@IgnoreAuth
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Response register(@ModelAttribute DeveloperInsert developer,
-			                 @RequestParam("images") List<MultipartFile> files) {
+	public Response register(@ModelAttribute DeveloperInsert developer) {
 		Response response=new Response();
 		logger.info(developer.toString());
-		response=devservice.insert(developer,files);
+		response=devservice.insert(developer);
 		return response;
 	}
 	

@@ -2,7 +2,7 @@ package com.fise.utils;
 
 public interface Constants {
     //官方账号id
-    //public Integer FISE_AD_ID=250039;
+    public Integer FISE_AD_ID=2;
 	// url长度限制
 	public Integer MAX_URL_LENGTH = 1024;
 
