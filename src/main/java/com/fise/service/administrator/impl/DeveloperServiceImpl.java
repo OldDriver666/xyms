@@ -41,7 +41,7 @@ public class DeveloperServiceImpl implements IDeveloperService {
 	private WiAdminMapper adminDao;
 
 	@Override
-	public Response insert(DeveloperInsert param, List<MultipartFile> uploadfile) {
+	public Response insert(DeveloperInsert param) {
 		Response response = new Response();
 		WiAdmin developer = new WiAdmin();
 
@@ -71,19 +71,19 @@ public class DeveloperServiceImpl implements IDeveloperService {
 		
 		developer.setIdCard(param.getIdCard());
 		// 三张身份证的照片，上传到服务器中，获取它们的地址值，用;隔开
-		List<String> images = null;
+		/*List<String> images = null;
 		try {
 			images = photoUpload(uploadfile);
 		} catch (Exception e) {
 			response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 			response.setMsg("上传图片失败");
 			return response;
-		}
-		String imagesUrl = StringUtil.combineStr(images);
+		}*/
+		//String imagesUrl = StringUtil.combineStr(images);
 		developer.setCardPhoto(param.getCardPhoto());
 		developer.setDescription(param.getDescription());
 		developer.setUserType(param.getUserType());
-		developer.setCardPhoto(imagesUrl);
+		developer.setCardPhoto(param.getCardPhoto());
 
 		adminDao.insert(developer);
 		response.success(developer);
