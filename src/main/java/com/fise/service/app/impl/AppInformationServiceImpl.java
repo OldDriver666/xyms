@@ -370,6 +370,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
             iconpath = apkInfo.getApplicationIcon().substring(apkInfo.getApplicationIcon().lastIndexOf("/")+1);
             System.out.println(">>>>>>>>>>>>>"+iconpath);
+            iconpath = iconpath.replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
             IconUtil.extractFileFromApk(path+app, apkInfo.getApplicationIcon(), path+iconpath);
         } catch (Exception e) {
             e.printStackTrace();
