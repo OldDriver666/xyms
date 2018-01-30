@@ -8,6 +8,7 @@
 	<link href="css/global.css" type="text/css" rel="stylesheet"/>
 	<link href="css/register.css" type="text/css" rel="stylesheet"/>
 	<link href="css/zc-recommend.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/uploadImg.css"/>
 	<link rel="stylesheet" href="js/toastr/toastr.css"/>
 </head>
 <body>
@@ -175,15 +176,48 @@
 								<label _type="uuidTitle" for="">手持身份证照片</label>
 							</div>
 							<div _key="uuid" _min="1" class="form-cont">
-								<div class="add-pic">
+								<div id="addImgUrl" class="form-group" >
+									<label for="" class="col-sm-3 control-label"><span class="necessary">*</span>上传App截图图片</label>
+									<div class="img-box full">
+										<section class=" img-section">
+											<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+											<div class="z_photo upimg-div clear" >
+												<!--<section class="up-section fl">
+                                                     <span class="up-span"></span>
+                                                     <img src="img/buyerCenter/a7.png" class="close-upimg">
+                                                     <img src="img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
+                                                     <img src="img/test2.jpg" class="up-img">
+                                                     <p class="img-namep"></p>
+                                                     <input id="taglocation" name="taglocation" value="" type="hidden">
+                                                     <input id="tags" name="tags" value="" type="hidden">
+                                                 </section>-->
+												<section class="z_file fl">
+													<img src="img/a11.png" class="add-img">
+													<input type="file" name="file" id="file1" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+												</section>
+											</div>
+										</section>
+									</div>
+									<aside class="mask works-mask">
+										<div class="mask-content">
+											<p class="del-p ">您确定要删除作品图片吗？</p>
+											<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+										</div>
+									</aside>
+									<div _errorTips="uuid" class="err-tips" style="display:none;">
+										<em class="txt-err"><b class="ico-msg"></b>请上传手持身份证/护照的清晰照片</em>
+									</div>
+								</div>
+
+								<!--<div class="add-pic">
 									<div class="add-pic-imgbox1">
-										<!--<div _uploadBox="add1" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add1" class="form-col form-col1">
 											<input id="file1" multiple type="file" name="images"  class="add-pic-pre fileupload"  onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add1" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish1" class="add-pic-after" style="display:none;">
 											<img id="preview1" _img="1" src="">
 											<div class="operation">
@@ -195,20 +229,20 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display:none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传手持身份证/护照的清晰照片</em>
 										</div>
 									</div>
 
 									<div  class="add-pic-imgbox2">
-										<!--<div _uploadBox="add2" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add2" class="form-col form-col1">
 											<input id="file2" type="file" name="images"  class="add-pic-pre fileupload" onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add2" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish2" class="add-pic-after" style="display:none;">
 											<img id="preview2" _img="2" src="">
 											<div class="operation">
@@ -220,20 +254,20 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display:none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传手持身份证/护照的清晰照片</em>
 										</div>
 									</div>
 
 									<div class="add-pic-imgbox3">
-										<!--<div _uploadBox="add3" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add3" class="form-col form-col1">
 											<input id="file3" type="file" name="images"  class="add-pic-pre fileupload" onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add3" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish3" class="add-pic-after" style="display:none;">
 											<img id="preview3" _img="3" src="">
 											<div class="operation">
@@ -245,7 +279,7 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display:none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传手持身份证/护照的清晰照片</em>
 										</div>
@@ -265,7 +299,8 @@
 											<li>4.我司资质验证系统已与工商部门联网，请勿提供虚假证件</li>
 										</ul>
 									</div>
-								</div>
+								</div>-->
+
 							</div>
 						</div>
 						</form>
@@ -471,15 +506,47 @@
 								<label for="">营业执照照片</label>
 							</div>
 							<div class="form-cont">
-								<div class="add-pic">
+								<div id=" " class="form-group" >
+									<label for="" class="col-sm-3 control-label"><span class="necessary">*</span>上传App截图图片</label>
+									<div class="img-box full">
+										<section class=" img-section">
+											<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+											<div class="z_photo upimg-div clear" >
+												<!--<section class="up-section fl">
+                                                     <span class="up-span"></span>
+                                                     <img src="img/buyerCenter/a7.png" class="close-upimg">
+                                                     <img src="img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
+                                                     <img src="img/test2.jpg" class="up-img">
+                                                     <p class="img-namep"></p>
+                                                     <input id="taglocation" name="taglocation" value="" type="hidden">
+                                                     <input id="tags" name="tags" value="" type="hidden">
+                                                 </section>-->
+												<section class="z_file fl">
+													<img src="img/a11.png" class="add-img">
+													<input type="file" name="file" id="file2" class="file2" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+												</section>
+											</div>
+										</section>
+									</div>
+									<aside class="mask works-mask">
+										<div class="mask-content">
+											<p class="del-p ">您确定要删除作品图片吗？</p>
+											<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+										</div>
+									</aside>
+									<div _errorTips="uuid" class="err-tips" style="display: none;">
+										<em class="txt-err"><b class="ico-msg"></b>请上传最新年检的营业执照</em>
+									</div>
+								</div>
+								<!--<div class="add-pic">
 									<div _key="uuid" _min="1" class="add-pic-imgbox">
-										<!--<div _uploadBox="add4" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add4" class="form-col form-col1">
 											<input id="file4" type="file" name="images"  class="add-pic-pre fileupload1"  onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add4" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish4" class="add-pic-after" style="display:none;">
 											<img id="preview4" _img="1" src="">
 											<div class="operation">
@@ -491,20 +558,20 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display: none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传最新年检的营业执照</em>
 										</div>
 									</div>
 
 									<div _key="uuid" _min="1" class="add-pic-imgbox">
-										<!--<div _uploadBox="add5" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add5" class="form-col form-col1">
 											<input id="file5" type="file" name="images"  class="add-pic-pre fileupload1"  onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add5" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish5" class="add-pic-after" style="display:none;">
 											<img id="preview5" _img="1" src="">
 											<div class="operation">
@@ -516,20 +583,20 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display: none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传最新年检的营业执照</em>
 										</div>
 									</div>
 
 									<div _key="uuid" _min="1" class="add-pic-imgbox">
-										<!--<div _uploadBox="add6" class="form-col form-col1">
+										&lt;!&ndash;<div _uploadBox="add6" class="form-col form-col1">
 											<input id="file6" type="file" name="images"  class="add-pic-pre fileupload1"  onchange="imgPreview(this)">
-										</div>-->
+										</div>&ndash;&gt;
 										<a _uploadBox="add6" _type="upload" href="javascript:void(0);" onclick="return false;" class="add-pic-pre">
 											<b class="normal">+</b>
 										</a>
-										<!--上传完成后的状态-->
+										&lt;!&ndash;上传完成后的状态&ndash;&gt;
 										<div _uploadBox="finish6" class="add-pic-after" style="display:none;">
 											<img id="preview6" _img="1" src="">
 											<div class="operation">
@@ -541,7 +608,7 @@
 												</ul>
 											</div>
 										</div>
-										<!--错误提示-->
+										&lt;!&ndash;错误提示&ndash;&gt;
 										<div _errorTips="uuid" class="err-tips" style="display: none;">
 											<em class="txt-err"><b class="ico-msg"></b>请上传最新年检的营业执照</em>
 										</div>
@@ -560,7 +627,7 @@
 											<li>2.我司资质验证系统已与工商部门联网，请勿提供虚假证件。</li>
 										</ul>
 									</div>
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>
@@ -816,6 +883,7 @@
 <script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="js/register.js"></script>
 <script type ="text/javascript" src="js/agreement.js" ></script>
+<script type ="text/javascript" src="js/uploadImg.js"></script>
 <script type="text/javascript">
 	var openLinkHref = ctx + "xiaoyusvr/html/index.html";
 	$('#openLink').attr("href",openLinkHref );

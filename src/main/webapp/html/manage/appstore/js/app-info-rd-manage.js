@@ -51,7 +51,6 @@ $(function() {
             for(var k=0; k <imgLen; k++){
                 var ff = $("img[class=up-img]")[k]
                 var base64Data = getBase64Image(ff)
-                //var base64Data = ff.src
                 var blobs = dataURItoBlob(base64Data)
                 var ffName = $("p[class=img-name-p]")[k].innerHTML
                 var imgdata = new FormData();
@@ -563,8 +562,7 @@ $(function() {
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
-            window.action.add();
-            /*if (!$("#form-addTempl").valid()) {
+            if (!$("#form-addTempl").valid()) {
                 return;
             }else if($('#category1 option:selected').val() == "" && $('#category2 option:selected').val() == "" && $('#category3 option:selected').val() == "") {
                 $("#categorySelectItem").parent().addClass("has-error");
@@ -588,7 +586,7 @@ $(function() {
                 return;
             }else {
                 window.action.add();
-            }*/
+            }
         }else if(action == "edit"){
             if (!$("#form-addTempl").valid()) {
                 return;
