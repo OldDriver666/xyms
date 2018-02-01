@@ -25,7 +25,8 @@ $(function(){
                 var imgUrl = window.URL.createObjectURL(fileList[i]);
                 imgArr.push(imgUrl);
                 var $section = $("<section class='up-section fl loading'>");
-                imgContainer.prepend($section);
+                imgContainer.append($section);
+                //imgContainer.prepend($section);
                 var $span = $("<span class='up-span'>");
                 $span.appendTo($section);
 

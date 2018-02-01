@@ -35,14 +35,13 @@ $(function() {
             var data = new Object();
             data.user_id = parseInt(id);
             data.title = $("#input-title1").val();
-            data.content = $("#input-content1").val();
-
+            data.content = $(window.frames["LAY_layedit_1"].document).find('body').html()
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
-                    toastr.success("编辑成功!");
+                    toastr.success("添加成功!");
                     action.loadPageData();
-                    $("#input-content").empty();
+                    $(window.frames["LAY_layedit_1"].document).find('body').html("");
                 }else{
                     toastr.error(result.msg);
                 }
@@ -209,15 +208,22 @@ $(function() {
             $(this).next().remove();
         }
     });
+
+
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($('#input-devType option:selected').val() == "") {
-                $("#input-password").parent().parent().addClass("has-error");
+            }else if($('#input-title1').val() == "") {
+                $("#input-title1").parent().parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").parent().append(err_html);
+                $("#input-title1").parent().append(err_html);
+                return;
+            }else if($.trim($(window.frames["LAY_layedit_1"].document).find('body').html()) == "<br>" || $.trim($(window.frames["LAY_layedit_1"].document).find('body').html()) == "") {
+                $("#input-content1").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-content1").parent().append(err_html);
                 return;
             }else {
                 window.action.add();
@@ -230,6 +236,7 @@ $(function() {
             }
         }
     });
+
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
@@ -244,7 +251,44 @@ $(function() {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
+    });
 
+    $(".fileInsert").on('change', function(e){
+        var tag = e.target
+        var fileList = tag.files
+        if(fileList.length > 10){
+            alert("上传图片数目不可以超过10个，请重新选择");  //一次选择上传超过5个 或者是已经上传和这次上传的到的总数也不可以超过5个
+        }
+        else if(fileList.length < 10){
+            //fileList = validateUp(fileList);
+            for(var i = 0;i<fileList.length;i++){
+                var form = new FormData()
+                form.append('file', fileList[i], fileList[i].name)
+                var url = uploadUrl + "upload";
+                $.ajax({
+                    headers: {
+                    },
+                    url:url,
+                    type:"post",
+                    data:form,
+                    processData:false,
+                    contentType: false,
+                    success:function(result){
+                        if (result.ret == true) {
+                            var rturl = uploadUrl + result.info.md5;
+                            var insertStr = '<img src="' + rturl + '">';
+                            $(window.frames["LAY_layedit_1"].document).find('body').append(insertStr);
+                        }else{
+                            alert(result.ret);
+                        }
+                    },
+                    error:function(e){
+                        alert("错误！！");
+                    }
+                });
+            }
+
+        }
     });
 
 });
@@ -595,4 +639,31 @@ function imgShow(outerdiv, innerdiv, bigimg, _this){
     $(outerdiv).click(function(){//再次点击淡出消失弹出层
         $(this).fadeOut("fast");
     });
+}
+
+function validateUp(files){
+    var arrFiles = [];//替换的文件数组
+    for(var i = 0, file; file = files[i]; i++){
+        //获取文件上传的后缀名
+        var newStr = file.name.split("").reverse().join("");
+        if(newStr.split(".")[0] != null){
+            var type = newStr.split(".")[0].split("").reverse().join("");
+            console.log(type+"===type===");
+            if(jQuery.inArray(type, defaults.fileType) > -1){
+                // 类型符合，可以上传
+                if (file.size >= defaults.fileSize) {
+                    alert(file.size);
+                    alert('您这个"'+ file.name +'"文件大小过大');
+                } else {
+                    // 在这里需要判断当前所有文件中
+                    arrFiles.push(file);
+                }
+            }else{
+                alert('您这个"'+ file.name +'"上传类型不符合');
+            }
+        }else{
+            alert('您这个"'+ file.name +'"没有类型, 无法识别');
+        }
+    }
+    return arrFiles;
 }
