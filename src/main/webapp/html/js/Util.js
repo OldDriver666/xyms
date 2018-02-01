@@ -797,9 +797,9 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
-    uploadUrl = "http://xiaoyu.fise-wi.com:4869/";        //test version
-    headPicUrl = "http://xiaoyu.fise-wi.com:8700/";        //test version
+	ctx = "http://xiaoyutest.fise-wi.com:8787/";        //test version
+    uploadUrl = "http://xiaoyutest.fise-wi.com:4869/";        //test version
+    headPicUrl = "http://xiaoyutest.fise-wi.com:8700/";        //test version
     Util.localStorage.add("ctx",ctx);
     Util.localStorage.add("uploadUrl",uploadUrl);
     Util.localStorage.add("headPicUrl",headPicUrl);
