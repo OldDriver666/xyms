@@ -404,6 +404,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		AppChannelList appChannelList = new AppChannelList();
 		appChannelList.setChannelId(appInfo.getChannelId());
 		appChannelList.setAppId(app1.getId());
+		appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
 		AppChannelListDao.insertSelective(appChannelList);
 		
 		response.setMsg("新增应用成功");
@@ -618,11 +619,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appInfo.setRemarks(developer.getRemarks());
 
 		int result = appInformationDao.updateByExampleSelective(appInfo, example);
-		if (result == 0) {
+		/*if (result == 0) {
 			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 			response.setMsg("APP审核失败");
 			return response;
-		}
+		}*/
 		
 		//在channellist里修改频道应用，status修改为1 可以
 		if(developer.getStatus()==1){
@@ -634,6 +635,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	        
 	        AppChannelList appChannelList = new AppChannelList();
 	        appChannelList.setStatus(1);
+	        appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
 	        
 	        result=AppChannelListDao.updateByExampleSelective(appChannelList, example1);
 	        
