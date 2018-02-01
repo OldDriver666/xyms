@@ -108,7 +108,7 @@ public class AppChannelServiceImpl implements IAppChannelService{
     public AppChannel getChannelInfo(Integer channelId) {
         AppChannelExample example = new AppChannelExample();
         AppChannelExample.Criteria con = example.createCriteria();
-        con.andStatusEqualTo(1);
+        con.andStatusNotEqualTo(0);
         con.andIdEqualTo(channelId);
         List<AppChannel> data = appChannelDao.selectByExample(example);
         if(data.isEmpty())
