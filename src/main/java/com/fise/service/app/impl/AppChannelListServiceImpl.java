@@ -111,6 +111,8 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
 	    boolean hasMore=param.getCurrentPageNo()<param.getTotalPageCount()?true:false;
 	    map.put("hasMore", hasMore);
 		page.setExtraParam(map);
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
 		page.setResult(appData);
