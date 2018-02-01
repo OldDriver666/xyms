@@ -106,6 +106,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		map.put("hasMore", hasMore);
 		page.setPageNo(param.getPageNo());
 		page.setExtraParam(map);
+		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
 		page.setResult(appData);
