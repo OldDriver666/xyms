@@ -41,7 +41,7 @@ $(function() {
                     action.loadPageData();
 					action.allDevTypeQuery();
                 }else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
             });
 		},
@@ -69,10 +69,10 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else {
-					alert(result.msg);
+					toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+				toastr.error(errorMsg)
             });
 
 		},
@@ -88,10 +88,10 @@ $(function() {
 					allDevTypeArray = result.data;
 					localStorage.setItem("allDevTypeArray",JSON.stringify(allDevTypeArray));
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			},function() {
-				alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 
 		},
@@ -110,7 +110,7 @@ $(function() {
                     action.loadPageData();
 					action.allDevTypeQuery();
 				}else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -128,7 +128,7 @@ $(function() {
                         action.loadPageData();
 						action.allDevTypeQuery();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

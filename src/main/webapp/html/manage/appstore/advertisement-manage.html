@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
+	<link rel="stylesheet" href="../../css/uploadImg.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 	<style>
 		#modal-loading{
@@ -26,8 +27,13 @@
 			margin:180px auto;
 		}
 		.advurl{
-			width:25%;
+			width:20%;
             word-break: break-all;
+		}
+		td{
+			maximum-width: 20%;
+			word-wrap:break-word;
+			word-break:break-all;
 		}
 
 
@@ -76,12 +82,41 @@
 												<input type="text" class="form-control" id="input-advname" name="devXW" placeholder="请输入广告名称" >
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-advurl" class="col-sm-2 control-label"><span class="necessary"></span>图片地址</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-advurl" name="devXW" placeholder="请输入图片地址">
+
+										<div id="showPic" class="form-group" >
+											<label class="col-sm-2 control-label"><span class="necessary"></span>广告截图</label>
+											<div id="imgShow" class="col-sm-10">
 											</div>
 										</div>
+
+										<div id="addImgUrl" class="form-group" >
+											<label for="" class="col-sm-3 control-label"><span class="necessary"></span>上传广告截图图片</label>
+											<div class="img-box full">
+												<section class=" img-section">
+													<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+													<div class="z_photo upimg-div clear" >
+														<section class="z_file fl">
+															<img src="../../images/a11.png" class="add-img">
+															<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+														</section>
+													</div>
+												</section>
+											</div>
+											<aside class="mask works-mask">
+												<div class="mask-content">
+													<p class="del-p ">您确定要删除作品图片吗？</p>
+													<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+												</div>
+											</aside>
+										</div>
+
+										<div id="showImgUrl" class="form-group" >
+											<label for="input-advurl" class="col-sm-2 control-label"><span class="necessary"></span>图片地址</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-advurl" name="devXW" placeholder="请输入图片地址" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+
 										<div class="form-group" >
 											<label for="input-prority" class="col-sm-2 control-label"><span class="necessary"></span>权重</label>
 											<div class="col-sm-10">
@@ -144,6 +179,12 @@
 						</div><!-- /.modal -->
 					</div>
 
+					<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2000;width:100%;height:100%;display:none;">
+						<div id="innerdiv" style="position:absolute;">
+							<img id="bigimg" style="border:5px solid #fff;" src="" />
+						</div>
+					</div>
+
 				</div>
 			</nav>
 			<table id="table" class="table table-striped table-hover">
@@ -195,6 +236,7 @@
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
 <script type ="text/javascript" src="js/advertisement-manage.js"></script>
+<script type ="text/javascript" src="../../js/uploadImg.js"></script>
 <!-- jQuery Validate -->
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>

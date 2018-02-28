@@ -50,10 +50,10 @@ $(function() {
 					toastr.success("添加成功!");
 					action.loadPageData();
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			},function() {
-				alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 		},
 		//获取所有数据
@@ -80,12 +80,12 @@ $(function() {
 						$(".table-manage").hide();
 					}
 				} else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
+					toastr.info("记录不存在");
 				}else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			},function(errorMsg) {
-				alert(errorMsg);
+				toastr.error(errorMsg);
 			});
 		},
 		//编辑数据
@@ -110,7 +110,7 @@ $(function() {
 					toastr.success("编辑成功!");
 					action.loadPageData();
 				}else{
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			});
 		},
@@ -126,7 +126,7 @@ $(function() {
 						toastr.success("删除成功!");
 						action.loadPageData();
 					}else{
-						alert(result.msg);
+						toastr.error(result.msg);
 					}
 				});
 			}

@@ -184,76 +184,6 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
-        public Criteria andAppIndexIsNull() {
-            addCriterion("app_index is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexIsNotNull() {
-            addCriterion("app_index is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexEqualTo(String value) {
-            addCriterion("app_index =", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotEqualTo(String value) {
-            addCriterion("app_index <>", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexGreaterThan(String value) {
-            addCriterion("app_index >", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexGreaterThanOrEqualTo(String value) {
-            addCriterion("app_index >=", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLessThan(String value) {
-            addCriterion("app_index <", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLessThanOrEqualTo(String value) {
-            addCriterion("app_index <=", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLike(String value) {
-            addCriterion("app_index like", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotLike(String value) {
-            addCriterion("app_index not like", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexIn(List<String> values) {
-            addCriterion("app_index in", values, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotIn(List<String> values) {
-            addCriterion("app_index not in", values, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexBetween(String value1, String value2) {
-            addCriterion("app_index between", value1, value2, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotBetween(String value1, String value2) {
-            addCriterion("app_index not between", value1, value2, "appIndex");
-            return (Criteria) this;
-        }
-
         public Criteria andAppNameIsNull() {
             addCriterion("app_name is null");
             return (Criteria) this;
@@ -591,6 +521,66 @@ public class AppInformationExample {
 
         public Criteria andDevNameNotBetween(String value1, String value2) {
             addCriterion("dev_name not between", value1, value2, "devName");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdIsNull() {
+            addCriterion("channel_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdIsNotNull() {
+            addCriterion("channel_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdEqualTo(Integer value) {
+            addCriterion("channel_id =", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotEqualTo(Integer value) {
+            addCriterion("channel_id <>", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdGreaterThan(Integer value) {
+            addCriterion("channel_id >", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("channel_id >=", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdLessThan(Integer value) {
+            addCriterion("channel_id <", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdLessThanOrEqualTo(Integer value) {
+            addCriterion("channel_id <=", value, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdIn(List<Integer> values) {
+            addCriterion("channel_id in", values, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotIn(List<Integer> values) {
+            addCriterion("channel_id not in", values, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdBetween(Integer value1, Integer value2) {
+            addCriterion("channel_id between", value1, value2, "channelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("channel_id not between", value1, value2, "channelId");
             return (Criteria) this;
         }
 
@@ -1661,6 +1651,76 @@ public class AppInformationExample {
 
         public Criteria andLabelNotBetween(String value1, String value2) {
             addCriterion("label not between", value1, value2, "label");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5IsNull() {
+            addCriterion("md5 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5IsNotNull() {
+            addCriterion("md5 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5EqualTo(String value) {
+            addCriterion("md5 =", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5NotEqualTo(String value) {
+            addCriterion("md5 <>", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5GreaterThan(String value) {
+            addCriterion("md5 >", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5GreaterThanOrEqualTo(String value) {
+            addCriterion("md5 >=", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5LessThan(String value) {
+            addCriterion("md5 <", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5LessThanOrEqualTo(String value) {
+            addCriterion("md5 <=", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5Like(String value) {
+            addCriterion("md5 like", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5NotLike(String value) {
+            addCriterion("md5 not like", value, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5In(List<String> values) {
+            addCriterion("md5 in", values, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5NotIn(List<String> values) {
+            addCriterion("md5 not in", values, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5Between(String value1, String value2) {
+            addCriterion("md5 between", value1, value2, "md5");
+            return (Criteria) this;
+        }
+
+        public Criteria andMd5NotBetween(String value1, String value2) {
+            addCriterion("md5 not between", value1, value2, "md5");
             return (Criteria) this;
         }
 

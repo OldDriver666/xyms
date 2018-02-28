@@ -189,9 +189,9 @@ $(function() {
             $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
             action.getDevTxtInfo();
         }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
+            toastr.error("请选择文件！");
         }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
+            toastr.error("请选择设备类型！");
         }
     });
 
@@ -447,7 +447,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;

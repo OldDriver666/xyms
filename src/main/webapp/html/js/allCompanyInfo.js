@@ -2,6 +2,7 @@ $(function(){
     var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
     var depart_id = Util.cookieStorage.getCookie("departId");
+    var companyId = Util.cookieStorage.getCookie("companyId");
     var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
@@ -18,12 +19,17 @@ $(function(){
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     allCompanyArray = result.data;
-                    localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
+                    var Lens2 = allCompanyArray.length;
+                    for(var i=0; i< Lens2; i++){
+                        if(allCompanyArray[i].id == companyId){
+                            var myCompanyName = allCompanyArray[i].name;
+                            localStorage.setItem("myCompanyName", myCompanyName);
+                        }
+                    }
+                    //localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
                 } else {
-                    /*alert(result.msg);*/
                 }
             },function() {
-                /*alert("服务器开个小差，请稍后重试！")*/
             });
 
         },

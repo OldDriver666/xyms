@@ -133,7 +133,8 @@ public class ProblemServiceImpl implements IProblemService{
             MyProblemDao.insertSelective(myProblem);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -159,7 +160,7 @@ public class ProblemServiceImpl implements IProblemService{
         }
         userlist.add(param.getParam().getUserId());
         //添加官方账号ID，用于发送广告
-        //userlist.add(Constants.FISE_AD_ID);
+        userlist.add(Constants.FISE_AD_ID);
         
         //System.out.println("-----------"+userlist.toString());
         criteria.andUserIdIn(userlist);
@@ -287,7 +288,8 @@ public class ProblemServiceImpl implements IProblemService{
                     
                 });*/
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
@@ -357,6 +359,29 @@ public class ProblemServiceImpl implements IProblemService{
             return res;
         }
         
+        //查询用户可以看到的回答数（非好友或拉黑用户的回答无法看到）
+        AnswerExample example1 = new AnswerExample();
+        AnswerExample.Criteria criteria1 = example1.createCriteria();
+        criteria1.andStatusEqualTo(1);
+        
+        if(problem.getId()!=null){
+            criteria1.andProblemIdEqualTo(problem.getId());
+        }
+        
+        //查询好友回答
+        List<Integer> userlist=relationShipDao.findrelation(user_id);
+        //判断好友是否为空
+        if(userlist.size()==0){
+            userlist=new ArrayList<Integer>();
+        }
+        userlist.add(user_id);
+        criteria1.andUserIdIn(userlist);
+        
+        
+        List<Answer> list3=answerDao.selectByExample(example1);
+        
+        problem.setAnswerNum(list3.size());
+        
         Jedis jedis = null;
         try {
             jedis=RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);           
@@ -384,7 +409,8 @@ public class ProblemServiceImpl implements IProblemService{
             myProblem.setUpdated(DateUtil.getLinuxTimeStamp());
             MyProblemDao.updateByPrimaryKeySelective(myProblem);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -482,11 +508,10 @@ public class ProblemServiceImpl implements IProblemService{
         result.setUserId(problem.getUserId());
         result.setTitle(problem.getTitle());
         result.setContent(problem.getContent());
-        result.setPicture(problem.getPicture());
+        result.setAddress(problem.getAddress());
         result.setAnswerNum(problem.getAnswerNum());
         result.setBrowseNum(problem.getBrowseNum());
         result.setStatus(problem.getStatus());
-        result.setSchoolId(problem.getSchoolId());
         result.setUpdated(problem.getUpdated());
         result.setCreated(problem.getCreated());
         result.setNick(user.getNick());

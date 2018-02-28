@@ -41,8 +41,7 @@ $(function(){
             var szReg= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             var szMail = $('#personal input[_key="mail"]').val();
             var mailFlag = szReg.test(szMail);
-
-            var imgFlag = (document.getElementById("preview1").src == window.location.href) && (document.getElementById("preview2").src == window.location.href) && (document.getElementById("preview3").src == window.location.href);
+            var imgLen = $("img[class=up-img1]").size();
 
             if($('#personal input[_key="account"]').val() == ""){
                 $('#personal div[_errorTips="account"]').show();
@@ -66,9 +65,6 @@ $(function(){
             }else if($('#personal input[_key="id_card"]').val() == ""){
                 $('#personal div[_errorTips="id_card"]').show();
                 return;
-            }else if(imgFlag == true){
-                $('#personal div[_errorTips="uuid"]').show();
-                return;
             }else if(phoneFlag == false){
                 $('#personal div[_errorTips="tel"]').show();
                 return;
@@ -86,38 +82,12 @@ $(function(){
             }else if($(".agree-wp .ui-ico-chk").attr("_value") == 0){
                 $('div[_errorTips="agree-wp"]').show();
                 return;
+            }else if(imgLen == 0){
+                $('#personal div[_errorTips="uuid"]').show();
+                return;
+            }else if(imgLen > 0){
+                $('#personal div[_errorTips="uuid"]').hide();
             }
-
-            var form = new FormData();
-            var newBase64Data1 = document.getElementById("preview1").src;
-            var newBase64Data2 = document.getElementById("preview2").src;
-            var newBase64Data3 = document.getElementById("preview3").src;
-            if(newBase64Data1 != window.location.href){
-                var blob1 = dataURItoBlob(newBase64Data1); // 上一步中的函数
-                form.append("images", blob1, 'image1.png');
-            }
-            if(newBase64Data2 != window.location.href){
-                var blob2 = dataURItoBlob(newBase64Data2); // 上一步中的函数
-                form.append("images", blob2, 'image2.png');
-            }
-            if(newBase64Data3 != window.location.href){
-                var blob3 = dataURItoBlob(newBase64Data3); // 上一步中的函数
-                form.append("images", blob3, 'image3.png');
-            }
-            /*var blob1 = dataURItoBlob(newBase64Data1); // 上一步中的函数
-            var blob2 = dataURItoBlob(newBase64Data2); // 上一步中的函数
-            var blob3 = dataURItoBlob(newBase64Data3); // 上一步中的函数
-            form.append("images", blob1, 'image1.png');
-            form.append("images", blob2, 'image2.png');
-            form.append("images", blob3, 'image3.png');*/
-            form.append("account", $('#personal input[_key="account"]').val());
-            form.append("password",$.md5($('#personal input[_key="password"]').val()));
-            form.append("nickName", $('#personal input[_key="name"]').val());
-            form.append("phone", $('#personal input[_key="tel"]').val());
-            form.append("email", $('#personal input[_key="mail"]').val());
-            form.append("idCard", $('#personal input[_key="id_card"]').val());
-            form.append("description", '');
-            form.append("userType", 1);
 
             var url = ctx + "xiaoyusvr/boss/developer/queryAccount";
             var data = new Object();
@@ -134,41 +104,93 @@ $(function(){
 
                     Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
                         if (result1.msg == "邮箱验证通过") {
-                            $.ajax({
-                                url:ctx + "xiaoyusvr/boss/developer/register",
-                                type:"post",
-                                data:form,
-                                dataType: 'json',
-                                processData:false,
-                                contentType: false,
-                                success:function(result){
-                                    if (result.code == ReturnCode.SUCCESS) {
-                                        $(".register-entrance").hide();
-                                        $(".register-wrap").hide();
-                                        $(".finish-entrance").show();
-                                    }else{
-                                        alert(result.msg);
+                            var imgurl = uploadUrl + "upload";
+                            var imgArray = [];
+                            var imgCount = 0;
+                            for(var k=0; k <imgLen; k++){
+                                var ff = $("img[class=up-img1]")[k]
+                                var base64Data = getBase64Image(ff)
+                                var blobs = dataURItoBlob(base64Data)
+                                var ffName = $("p[class=img-name-p]")[k].innerHTML
+                                var imgdata = new FormData();
+                                imgdata.append('file', blobs, ffName)
+                                $.ajax({
+                                    headers: {
+                                    },
+                                    url:imgurl,
+                                    type:"post",
+                                    data:imgdata,
+                                    processData:false,
+                                    contentType: false,
+                                    success:function(result){
+                                        if (result.ret == true) {
+                                            imgArray.push(uploadUrl + result.info.md5);
+                                            if (++imgCount == imgLen){
+                                                var imgStr = ''
+                                                var arrLen = imgArray.length
+                                                if(1 == arrLen){
+                                                    imgStr = imgArray[0]
+                                                } else if(arrLen > 1){
+                                                    for (var n=0; n < arrLen - 1; n++){
+                                                        imgStr = imgStr + imgArray[n] + ';'
+                                                    }
+                                                    imgStr = imgStr + imgArray[arrLen - 1]
+                                                }
+                                                var form = new FormData();
+                                                form.append("account", $('#personal input[_key="account"]').val());
+                                                form.append("password",$.md5($('#personal input[_key="password"]').val()));
+                                                form.append("nickName", $('#personal input[_key="name"]').val());
+                                                form.append("phone", $('#personal input[_key="tel"]').val());
+                                                form.append("email", $('#personal input[_key="mail"]').val());
+                                                form.append("idCard", $('#personal input[_key="id_card"]').val());
+                                                form.append("description", '');
+                                                form.append("userType", 1);
+                                                form.append("cardPhoto", imgStr);
+                                                $.ajax({
+                                                    url:ctx + "xiaoyusvr/boss/developer/register",
+                                                    type:"post",
+                                                    data:form,
+                                                    dataType: 'json',
+                                                    processData:false,
+                                                    contentType: false,
+                                                    success:function(result){
+                                                        if (result.code == ReturnCode.SUCCESS) {
+                                                            $(".register-entrance").hide();
+                                                            $(".register-wrap").hide();
+                                                            $(".finish-entrance").show();
+                                                        }else{
+                                                            toastr.error(result.msg);
+                                                        }
+                                                    },
+                                                    error:function(e){
+                                                        toastr.error("错误！！");
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            alert(result.ret);
+                                        }
+                                    },
+                                    error:function(e){
+                                        alert("错误！！");
                                     }
-                                },
-                                error:function(e){
-                                    alert("错误！！");
-                                }
-                            });
+                                });
+                            }
                         }else if(result1.msg == "验证码有误，请重新输入！"){
                             errorCount++;
                             if(errorCount == 1){
-                                alert("对不起，您输入错误1次，还有2次输入机会");
+                                toastr.error("对不起，您输入错误1次，还有2次输入机会");
                             }else if(errorCount == 2){
-                                alert("对不起，您输入错误2次，还有1次输入机会");
+                                toastr.error("对不起，您输入错误2次，还有1次输入机会");
                             }else if(errorCount == 3){
-                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                toastr.error("对不起，您输入错误3次，请重新核实输入注册信息");
                                 $(".register-entrance").show();
                                 $(".register-wrap").hide();
                                 $(".finish-entrance").hide();
                                 errorCount = 0;
                             }
                         }else{
-                            alert(result1.msg);
+                            toastr.error(result1.msg);
                         }
                     });
                 }
@@ -182,8 +204,7 @@ $(function(){
             var szReg= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             var szMail = $('#agency input[_key="mail"]').val();
             var mailFlag = szReg.test(szMail);
-
-            var imgFlag = (document.getElementById("preview4").src == window.location.href) && (document.getElementById("preview5").src == window.location.href) && (document.getElementById("preview6").src == window.location.href);
+            var imgLen = $("img[class=up-img2]").size();
 
             if($('#agency input[_key="account"]').val() == ""){
                 $('#agency div[_errorTips="account"]').show();
@@ -210,9 +231,6 @@ $(function(){
             }else if($('#agency input[_key="id_card"]').val() == ""){
                 $('#agency div[_errorTips="id_card"]').show();
                 return;
-            }else if(imgFlag == true){
-                $('#agency div[_errorTips="uuid"]').show();
-                 return;
             }else if($('#agency input[_key="contact"]').val() == ""){
                 $('#agency div[_errorTips="contact"]').show();
                 return;
@@ -230,38 +248,12 @@ $(function(){
             }else if($(".agree-wp .ui-ico-chk").attr("_value") == 0){
                 $('div[_errorTips="agree-wp"]').show();
                 return;
+            }else if(imgLen == 0){
+                $('#agency div[_errorTips="uuid"]').show();
+                return;
+            }else if(imgLen > 0){
+                $('#agency div[_errorTips="uuid"]').hide();
             }
-
-            var form = new FormData();
-            var newBase64Data4 = document.getElementById("preview4").src;
-            var newBase64Data5 = document.getElementById("preview5").src;
-            var newBase64Data6 = document.getElementById("preview6").src;
-            if(newBase64Data4 != window.location.href){
-                var blob4 = dataURItoBlob(newBase64Data4); // 上一步中的函数
-                form.append("images", blob4, 'image4.png')
-            }
-            if(newBase64Data5 != window.location.href){
-                var blob5 = dataURItoBlob(newBase64Data5); // 上一步中的函数
-                form.append("images", blob5, 'image5.png');
-            }
-            if(newBase64Data6 != window.location.href){
-                var blob6 = dataURItoBlob(newBase64Data6); // 上一步中的函数
-                form.append("images", blob6, 'image6.png');
-            }
-           /* var blob4 = dataURItoBlob(newBase64Data4); // 上一步中的函数
-            var blob5 = dataURItoBlob(newBase64Data5); // 上一步中的函数
-            var blob6 = dataURItoBlob(newBase64Data6); // 上一步中的函数
-            form.append("images", blob4, 'image4.png');
-            form.append("images", blob5, 'image5.png');
-            form.append("images", blob6, 'image6.png');*/
-            form.append("account", $('#agency input[_key="account"]').val());
-            form.append("password",$.md5($('#agency input[_key="password"]').val()));
-            form.append("nickName", $('#agency input[_key="name"]').val());
-            form.append("phone", $('#agency input[_key="tel"]').val());
-            form.append("email", $('#agency input[_key="mail"]').val());
-            form.append("idCard", $('#agency input[_key="id_card"]').val());
-            form.append("description", $('#agency input[_key="contact"]').val());
-            form.append("userType", 2);
 
             var url = ctx + "xiaoyusvr/boss/developer/queryAccount";
             var data = new Object();
@@ -278,41 +270,93 @@ $(function(){
 
                     Util.ajaxLoadData(url1,data1,"POST",true,function(result1) {
                         if (result1.msg == "邮箱验证通过") {
-                            $.ajax({
-                                url:ctx + "xiaoyusvr/boss/developer/register",
-                                type:"post",
-                                data:form,
-                                dataType: 'json',
-                                processData:false,
-                                contentType: false,
-                                success:function(result){
-                                    if (result.code == ReturnCode.SUCCESS) {
-                                        $(".register-entrance").hide();
-                                        $(".register-wrap").hide();
-                                        $(".finish-entrance").show();
-                                    }else{
-                                        alert(result.msg);
+                            var imgurl = uploadUrl + "upload";
+                            var imgArray = [];
+                            var imgCount = 0;
+                            for(var k=0; k <imgLen; k++){
+                                var ff = $("img[class=up-img2]")[k]
+                                var base64Data = getBase64Image(ff)
+                                var blobs = dataURItoBlob(base64Data)
+                                var ffName = $("p[class=img-name-p]")[k].innerHTML
+                                var imgdata = new FormData();
+                                imgdata.append('file', blobs, ffName)
+                                $.ajax({
+                                    headers: {
+                                    },
+                                    url:imgurl,
+                                    type:"post",
+                                    data:imgdata,
+                                    processData:false,
+                                    contentType: false,
+                                    success:function(result){
+                                        if (result.ret == true) {
+                                            imgArray.push(uploadUrl + result.info.md5);
+                                            if (++imgCount == imgLen){
+                                                var imgStr = ''
+                                                var arrLen = imgArray.length
+                                                if(1 == arrLen){
+                                                    imgStr = imgArray[0]
+                                                } else if(arrLen > 1){
+                                                    for (var n=0; n < arrLen - 1; n++){
+                                                        imgStr = imgStr + imgArray[n] + ';'
+                                                    }
+                                                    imgStr = imgStr + imgArray[arrLen - 1]
+                                                }
+                                                var form = new FormData();
+                                                form.append("account", $('#agency input[_key="account"]').val());
+                                                form.append("password",$.md5($('#agency input[_key="password"]').val()));
+                                                form.append("nickName", $('#agency input[_key="name"]').val());
+                                                form.append("phone", $('#agency input[_key="tel"]').val());
+                                                form.append("email", $('#agency input[_key="mail"]').val());
+                                                form.append("idCard", $('#agency input[_key="id_card"]').val());
+                                                form.append("description", $('#agency input[_key="contact"]').val());
+                                                form.append("userType", 2);
+                                                form.append("cardPhoto", imgStr);
+                                                $.ajax({
+                                                    url:ctx + "xiaoyusvr/boss/developer/register",
+                                                    type:"post",
+                                                    data:form,
+                                                    dataType: 'json',
+                                                    processData:false,
+                                                    contentType: false,
+                                                    success:function(result){
+                                                        if (result.code == ReturnCode.SUCCESS) {
+                                                            $(".register-entrance").hide();
+                                                            $(".register-wrap").hide();
+                                                            $(".finish-entrance").show();
+                                                        }else{
+                                                            toastr.error(result.msg);
+                                                        }
+                                                    },
+                                                    error:function(e){
+                                                        toastr.error("错误！！");
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            alert(result.ret);
+                                        }
+                                    },
+                                    error:function(e){
+                                        alert("错误！！");
                                     }
-                                },
-                                error:function(e){
-                                    alert("错误！！");
-                                }
-                            });
+                                });
+                            }
                         }else if(result1.msg == "验证码有误，请重新输入！"){
                             errorCount++;
                             if(errorCount == 1){
-                                alert("对不起，您输入错误1次，还有2次输入机会");
+                                toastr.error("对不起，您输入错误1次，还有2次输入机会");
                             }else if(errorCount == 2){
-                                alert("对不起，您输入错误2次，还有1次输入机会");
+                                toastr.error("对不起，您输入错误2次，还有1次输入机会");
                             }else if(errorCount == 3){
-                                alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                                toastr.error("对不起，您输入错误3次，请重新核实输入注册信息");
                                 $(".register-entrance").show();
                                 $(".register-wrap").hide();
                                 $(".finish-entrance").hide();
                                 errorCount = 0;
                             }
                         }else{
-                            alert(result1.msg);
+                            toastr.error(result1.msg);
                         }
                     });
                 }
@@ -334,7 +378,7 @@ $(function(){
                 var tt =$('#personal input[_type="sendmailcode"]');
                 settime(tt);
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
                 $('#personal div[_errorTips="emailcodeAlready"]').show();
                 $('#personal div[_errorTips="emailcodeNone"]').hide();
             }
@@ -354,7 +398,7 @@ $(function(){
                 var tt =$('#agency input[_type="sendmailcode"]');
                 settime(tt);
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
                 $('#agency div[_errorTips="emailcodeAlready"]').show();
                 $('#agency div[_errorTips="emailcodeNone"]').hide();
             }
@@ -616,7 +660,7 @@ $(function(){
 
 
     //上传图片图标美化（不直接用Input或者隐藏方式）
-    $('a[_uploadBox="add1"]').on('click', function(){
+/*    $('a[_uploadBox="add1"]').on('click', function(){
         var input = document.createElement('input');
         input.id = "file1";
         input.class = "fileupload";
@@ -681,11 +725,11 @@ $(function(){
             imgPreview(input);
         };
         input.click();
-    });
+    });*/
 
     //预览图片上三个按钮
     //delete button
-    $('div[_uploadBox="finish1"] a[_type="delete"]').on('click', function(){
+/*    $('div[_uploadBox="finish1"] a[_type="delete"]').on('click', function(){
         document.getElementById("preview1").src = "";
         $('#personal a[_uploadBox="add1"]').show();
         $('#personal div[_uploadBox="finish1"]').hide();
@@ -745,7 +789,7 @@ $(function(){
     $('div[_uploadBox="finish6"] a[_type="upload"]').on('click', function(){
         //document.querySelector('#file6').click();
         $('a[_uploadBox="add6"]').click();
-    });
+    });*/
 
 
 
@@ -753,7 +797,7 @@ $(function(){
 
 
 //个人上传图片预览
-function imgPreview(fileDom){
+/*function imgPreview(fileDom){
     if(fileDom.id == 'file1'){
         $('#personal a[_uploadBox="add1"]').hide();
         $('#personal div[_uploadBox="finish1"]').show();
@@ -778,7 +822,7 @@ function imgPreview(fileDom){
     if (window.FileReader) {
         var reader = new FileReader();
     } else {
-        alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        toastr.error("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
     }
 
     //获取文件
@@ -786,7 +830,7 @@ function imgPreview(fileDom){
     var imageType = /^image\//;
     //是否是图片
     if (!imageType.test(file.type)) {
-        alert("请选择图片！");
+        toastr.error("请选择图片！");
         return;
     }
     //读取完成
@@ -822,8 +866,17 @@ function imgPreview(fileDom){
         img.src = imgurlGet;
     };
     reader.readAsDataURL(file);
-}
+}*/
 
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    var ctxx = canvas.getContext("2d");
+    ctxx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL
+}
 
 function dataURItoBlob(base64Data) {
     var byteString;

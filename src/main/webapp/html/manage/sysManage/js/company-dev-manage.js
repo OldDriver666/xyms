@@ -45,9 +45,72 @@ $(function() {
                     }
                 }
                 else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
+
+            /*var imgLen = $("img[class=up-img]").size();
+            var imgurl = uploadUrl + "upload";
+            var imgArray = [];
+            var imgCount = 0;
+            for(var k=0; k <imgLen; k++){
+                var ff = $("img[class=up-img]")[k]
+                var base64Data = getBase64Image(ff)
+                var blobs = dataURItoBlob(base64Data)
+                var ffName = $("p[class=img-name-p]")[k].innerHTML
+                var imgdata = new FormData();
+                imgdata.append('file', blobs, ffName)
+                $.ajax({
+                    headers: {
+                    },
+                    url:imgurl,
+                    type:"post",
+                    data:imgdata,
+                    processData:false,
+                    contentType: false,
+                    success:function(result){
+                        if (result.ret == true) {
+                            imgArray.push(uploadUrl + result.info.md5);
+                            if (++imgCount == imgLen){
+                                var imgStr = ''
+                                var arrLen = imgArray.length
+                                if(1 == arrLen){
+                                    imgStr = imgArray[0]
+                                } else if(arrLen > 1){
+                                    for (var n=0; n < arrLen - 1; n++){
+                                        imgStr = imgStr + imgArray[n] + ';'
+                                    }
+                                    imgStr = imgStr + imgArray[arrLen - 1]
+                                }
+                                var url = ctx + "xiaoyusvr/boss/departconf/addimdepartconfig";
+                                var data = new Object();
+                                data.depart_id = parseInt($('#input-depart_id option:selected').val());
+                                data.client_type = parseInt($('#input-devType option:selected').val());
+                                data.avatar = imgStr;
+
+                                Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                                    if (result.code == ReturnCode.SUCCESS) {
+                                        $("#addTempl-modal").modal('hide');
+                                        toastr.success("添加成功!");
+                                        action.loadPageData();
+                                        if(parseInt($("#input-depart_id").val()) == parseInt(depart_id)){
+                                            action.myDevTypeQuery();
+                                        }
+                                    }
+                                    else{
+                                        alert(result.msg);
+                                    }
+                                });
+                            }
+                        }else{
+                            alert(result.ret);
+                        }
+                    },
+                    error:function(e){
+                        alert("错误！！");
+                    }
+                });
+            }*/
 		},
 		//获取所有数据
 		loadPageData : function() {
@@ -55,6 +118,12 @@ $(function() {
             var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
+            if($('#input-search-name option:selected').val() == "") {
+                $("#input-search-name").parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-search-name").append(err_html);
+                return;
+            }
             var url = ctx + "xiaoyusvr/boss/departconf/queryimdepartconfig";
             var data = new Object();
             data.depart_id = search_depart_id;
@@ -73,18 +142,35 @@ $(function() {
                         $(".table-manage").hide();
                     }
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg);
+                toastr.error(errorMsg);
             });
 
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
+            var dataArray1 = [];
+            var allDevTypeArray = [];
+            var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
+            var moduleId = 0;
+            var data = new Object();
+            data.client_type = null;
+            data.client_name = "";
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    allDevTypeArray = result.data;
+                    $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
+                    $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+                } else {
+                }
+            },function() {
+            });
+
+           /* var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
             $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
-            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');*/
         },
         //获取设备类型列表数据
         myDevTypeQuery: function(){
@@ -122,25 +208,39 @@ $(function() {
                             localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
-                            alert(result_query.msg);
+                            toastr.error(result_query.msg);
                         }
                     },function() {
-                        alert("服务器开个小差，请稍后重试！")
+                        toastr.error("服务器开个小差，请稍后重试！")
                     });
 
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                toastr.error("服务器开个小差，请稍后重试！")
             });
 
         },
         //获取全部公司团体数据
         loadCompanyInfoData: function(){
-            var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+            var allCompanyArray = [];
+            var url = ctx + "xiaoyusvr/boss/organization/query";
+            var moduleId = 0;
+            var data = new Object();
+            data.name = "";
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    allCompanyArray = result.data;
+                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
+                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+                } else {
+                }
+            },function() {
+            });
+            /*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
             $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
-            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');*/
         },
 		//编辑数据
 		edit : function() {
@@ -186,7 +286,7 @@ $(function() {
 	};
 	window.action = action;
     action.init();
-	action.loadPageData();
+	//action.loadPageData();
     action.loadDevTypeData();
     action.loadCompanyInfoData();
 
@@ -201,6 +301,8 @@ $(function() {
             $("#input-depart_id-wrap").hide();
             $("#input-depart_id-txt-wrap").show();
             $("#input-depart_idNo-wrap").hide();
+            $("#addImgUrl").hide();
+            $("#showImgUrl").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加公司设备信息");
@@ -210,6 +312,8 @@ $(function() {
             $("#input-depart_id-wrap").show();
             $("#input-depart_id-txt-wrap").hide();
             $("#input-depart_idNo-wrap").hide();
+            $("#addImgUrl").hide();
+            $("#showImgUrl").show()
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -270,3 +374,28 @@ $(function() {
 	});
 
 });
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctxx = canvas.getContext("2d");
+    ctxx.drawImage(img, 0, 0, img.width, img.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL // return dataURL.replace("data:image/png;base64,", "");
+}
+
+
+function dataURItoBlob(base64Data) {
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);
+    else
+        byteString = unescape(base64Data.split(',')[1]);
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], {type:mimeString});
+}

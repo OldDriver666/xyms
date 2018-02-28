@@ -30,6 +30,23 @@ $(function() {
 
             }
         },
+        add: function(){
+            var url = ctx + "xiaoyusvr/problem/insertback";
+            var data = new Object();
+            data.user_id = parseInt(id);
+            data.title = $("#input-title1").val();
+            data.content = $(window.frames["LAY_layedit_1"].document).find('body').html()
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $("#addTempl-modal").modal('hide');
+                    toastr.success("添加成功!");
+                    action.loadPageData();
+                    $(window.frames["LAY_layedit_1"].document).find('body').html("");
+                }else{
+                    toastr.error(result.msg);
+                }
+            });
+        },
 		//获取所有数据
 		loadPageData : function() {
 			var search_Title = $("#input-search-title").val();
@@ -88,7 +105,7 @@ $(function() {
                     action.loadPageData();
                     $("#input-content").empty();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		}
@@ -125,10 +142,31 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑信息");
+			$("h4#addTempl-modal-label").text("编辑问题");
+            $("#pId").show();
+            $("#uId").show();
+            $("#input-status-wrap").show();
+            $("#title1").hide();
+            $("#title2").show();
+            $("#content1").hide();
+            $("#content2").show();
+            $("#addImgUrl").hide();
+            $("#showPic").show();
 			$form.data("action", "edit");
-		} else if (e.relatedTarget.id = "btn-add") {
-		}
+		}  else if (e.relatedTarget.id = "btn-add") {
+            $("h4#addTempl-modal-label").text("添加问题");
+            $("#pId").hide();
+            $("#uId").hide();
+            $("#input-status-wrap").hide();
+            $("#title1").show();
+            $("#title2").hide();
+            $("#content1").show();
+            $("#content2").hide();
+            $("#addImgUrl").show();
+            $("#showPic").hide();
+            $form.data("action", "add");
+            $form[0].reset();
+        }
 	});
 
     //关闭或者hide弹出框清空插入的图片
@@ -170,15 +208,22 @@ $(function() {
             $(this).next().remove();
         }
     });
+
+
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($('#input-devType option:selected').val() == "") {
-                $("#input-password").parent().parent().addClass("has-error");
+            }else if($('#input-title1').val() == "") {
+                $("#input-title1").parent().parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").parent().append(err_html);
+                $("#input-title1").parent().append(err_html);
+                return;
+            }else if($.trim($(window.frames["LAY_layedit_1"].document).find('body').html()) == "<br>" || $.trim($(window.frames["LAY_layedit_1"].document).find('body').html()) == "") {
+                $("#input-content1").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-content1").parent().append(err_html);
                 return;
             }else {
                 window.action.add();
@@ -191,6 +236,7 @@ $(function() {
             }
         }
     });
+
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
@@ -205,7 +251,44 @@ $(function() {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
+    });
 
+    $(".fileInsert").on('change', function(e){
+        var tag = e.target
+        var fileList = tag.files
+        if(fileList.length > 10){
+            alert("上传图片数目不可以超过10个，请重新选择");  //一次选择上传超过5个 或者是已经上传和这次上传的到的总数也不可以超过5个
+        }
+        else if(fileList.length < 10){
+            //fileList = validateUp(fileList);
+            for(var i = 0;i<fileList.length;i++){
+                var form = new FormData()
+                form.append('file', fileList[i], fileList[i].name)
+                var url = uploadUrl + "upload";
+                $.ajax({
+                    headers: {
+                    },
+                    url:url,
+                    type:"post",
+                    data:form,
+                    processData:false,
+                    contentType: false,
+                    success:function(result){
+                        if (result.ret == true) {
+                            var rturl = uploadUrl + result.info.md5;
+                            var insertStr = '<img src="' + rturl + '">';
+                            $(window.frames["LAY_layedit_1"].document).find('body').append(insertStr);
+                        }else{
+                            alert(result.ret);
+                        }
+                    },
+                    error:function(e){
+                        alert("错误！！");
+                    }
+                });
+            }
+
+        }
     });
 
 });
@@ -445,7 +528,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
@@ -518,3 +601,69 @@ Util.Page = (function() {
     };
     return Page;
 })();
+
+function imgShow(outerdiv, innerdiv, bigimg, _this){
+    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+    $("<img/>").attr("src", src).load(function(){
+        var windowW = $(window).width();//获取当前窗口宽度
+        var windowH = $(window).height();//获取当前窗口高度
+        var realWidth = this.width;//获取图片真实宽度
+        var realHeight = this.height;//获取图片真实高度
+        var imgWidth, imgHeight;
+        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+        if(realHeight>windowH*scale) {//判断图片高度
+            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                imgWidth = windowW*scale;//再对宽度进行缩放
+            }
+        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+        } else {//如果图片真实高度和宽度都符合要求，高宽不变
+            imgWidth = realWidth;
+            imgHeight = realHeight;
+        }
+        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+    });
+
+    $(outerdiv).click(function(){//再次点击淡出消失弹出层
+        $(this).fadeOut("fast");
+    });
+}
+
+function validateUp(files){
+    var arrFiles = [];//替换的文件数组
+    for(var i = 0, file; file = files[i]; i++){
+        //获取文件上传的后缀名
+        var newStr = file.name.split("").reverse().join("");
+        if(newStr.split(".")[0] != null){
+            var type = newStr.split(".")[0].split("").reverse().join("");
+            console.log(type+"===type===");
+            if(jQuery.inArray(type, defaults.fileType) > -1){
+                // 类型符合，可以上传
+                if (file.size >= defaults.fileSize) {
+                    alert(file.size);
+                    alert('您这个"'+ file.name +'"文件大小过大');
+                } else {
+                    // 在这里需要判断当前所有文件中
+                    arrFiles.push(file);
+                }
+            }else{
+                alert('您这个"'+ file.name +'"上传类型不符合');
+            }
+        }else{
+            alert('您这个"'+ file.name +'"没有类型, 无法识别');
+        }
+    }
+    return arrFiles;
+}

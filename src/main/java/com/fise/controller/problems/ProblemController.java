@@ -29,6 +29,7 @@ import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.Problems;
 import com.fise.model.result.ProResult;
+import com.fise.service.auth.IAuthService;
 import com.fise.service.concern.IConcernService;
 import com.fise.service.problems.IProblemService;
 import com.fise.utils.Constants;
@@ -48,6 +49,9 @@ public class ProblemController {
     
     @Resource
     IConcernService concernService;
+    
+    @Resource
+    IAuthService authService;
     
     /*提交问题*/
     @AuthValid
@@ -160,6 +164,7 @@ public class ProblemController {
             }
         } catch (Exception e) {
             logger.info(e);
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (null != os) {
@@ -167,6 +172,7 @@ public class ProblemController {
                 }
             } catch (Exception e) {
                 logger.info(e);
+                throw new RuntimeException(e);
             }
             try {
                 if (null != bis) {
@@ -174,6 +180,7 @@ public class ProblemController {
                 }
             } catch (Exception e) {
                 logger.info(e);
+                throw new RuntimeException(e);
             }
         }
     }
@@ -337,5 +344,39 @@ public class ProblemController {
         return resp;
     }
     
-  
+    /*后台管理  管理员推送消息*/
+    @RequestMapping(value="/insertback",method=RequestMethod.POST)
+    public Response insertProblemBack(@RequestBody @Valid Problems record) throws IOException{
+        Response res = new Response();
+        
+        if(!authService.inserAuth()){
+            return res.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
+        logger.info(record.toString());
+        
+        /*if(record.getSchoolId()==null){
+            return res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }*/
+        
+        if(record.getUserId()==null || StringUtil.isEmpty(record.getTitle())){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("话题不能为空");
+            return res;
+        }
+        
+        if(StringUtil.isEmpty(record.getContent())){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("内容不能为空");
+            return res;
+        }
+        
+        res=problemService.insert(record);
+        //默认已经关注
+        if(res.getData()!=null){
+            res=concernService.addConcern((Concern)res.getData());
+            return res.success();
+        }
+        return res;
+    }
 }

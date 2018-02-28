@@ -2,7 +2,7 @@ $(function() {
     var departId = Util.cookieStorage.getCookie("departId");
     var companyId = Util.cookieStorage.getCookie("companyId");
     var roleId = Util.cookieStorage.getCookie("roleId");
-    var id = Util.cookieStorage.getCookie("id");
+    var uid = Util.cookieStorage.getCookie("id");
     var nickName = Util.cookieStorage.getCookie("nickName");
 
     var url=location.search;
@@ -44,71 +44,100 @@ $(function() {
                 var topcategory_txt = "电子书";
                 var category_txt = $('#category3 option:selected').text();
             }
-            var iconLen = $("#input-icon")[0].files.length;
-            var imgLen = $("#input-images")[0].files.length;
-
-            var url = ctx + "xiaoyusvr/appinformation/appInsert";
-            var data = new FormData();
-            data.append("appIndex", $("#input-appindex").val());
-            data.append("appName",$("#input-appname").val());
-            data.append("appSpell", $("#input-appspell").val());
-            data.append("packageName", $("#input-packagename").val());
-
-            data.append("devId", parseInt(id));
-            data.append("devName", nickName);
-
-            data.append("topCategory", topcategory_txt);
-            data.append("category", category_txt);
-
-            data.append("description", $("#input-description").val());
-            data.append("version", $("#input-version").val());
-            data.append("versioncode", parseInt($("#input-versioncode").val()));
-
-            data.append("app_icon", $("#input-icon")[0].files[0], $("#input-icon")[0].files[0].name);
-            data.append("iconType", parseInt($("#input-icontype").val()));
+            var imgLen = $("img[class=up-img]").size();
+            var imgurl = uploadUrl + "upload";
+            var imgArray = [];
+            var imgCount = 0;
             for(var k=0; k <imgLen; k++){
-                data.append("app_images", $("#input-images")[0].files[k], $("#input-images")[0].files[k].name);
-            }
-            data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
-
-            data.append("size", $("#input-size").val());
-            data.append("prority", parseInt($("#input-prority").val()));
-            data.append("label", $("#input-label").val());
-            data.append("star", $("#input-star").val());
-            data.append("orientation", parseInt($('#orientation option:selected').val()));
-
-            var userid = Util.cookieStorage.getCookie("id");
-            var str =  "5|5|5|" + userid + "|" + moduleId;
-            var access_Token = Util.cookieStorage.getCookie("accessToken");
-
-            $.ajax({
-                headers: {
-                    /*"Accept": "application/json",*/
-                    "FISE-UA": str,
-                    "FISE-AccessToken": access_Token
-                    /*"Content-Type":"application/json;charset=UTF-8"*/
-                },
-                url:url,
-                type:"post",
-                data:data,
-                /*dataType: 'json',*/
-                processData:false,
-                contentType: false,
-                success:function(result){
-                    if (result.msg == "新增应用成功") {
-                        $("#addTempl-modal").modal('hide');
-                        toastr.success("新增应用成功!");
-                        action.loadPageData();
-                        $("#iconShow").empty();
-                        $("#imgShow").empty();
-                    }else{
-                        alert(result.msg);
+                var ff = $("img[class=up-img]")[k]
+                var base64Data = getBase64Image(ff)
+                var blobs = dataURItoBlob(base64Data)
+                var ffName = $("p[class=img-name-p]")[k].innerHTML
+                var imgdata = new FormData();
+                imgdata.append('file', blobs, ffName)
+                $.ajax({
+                    headers: {
+                    },
+                    url:imgurl,
+                    type:"post",
+                    data:imgdata,
+                    processData:false,
+                    contentType: false,
+                    success:function(result){
+                        if (result.ret == true) {
+                            imgArray.push(uploadUrl + result.info.md5);
+                            if (++imgCount == imgLen){
+                                var imgStr = ''
+                                var arrLen = imgArray.length
+                                if(1 == arrLen){
+                                    imgStr = imgArray[0]
+                                } else if(arrLen > 1){
+                                    for (var n=0; n < arrLen - 1; n++){
+                                        imgStr = imgStr + imgArray[n] + ';'
+                                    }
+                                    imgStr = imgStr + imgArray[arrLen - 1]
+                                }
+                                var url = ctx + "xiaoyusvr/appinformation/appInsert";
+                                var data = new FormData();
+                                //data.append("appIndex", $("#input-appindex").val());
+                                data.append("appName",$("#input-appname").val());
+                                data.append("appSpell", $("#input-appspell").val());
+                                data.append("devId", parseInt(uid));
+                                data.append("devName", nickName);
+                                data.append("topCategory", topcategory_txt);
+                                data.append("category", category_txt);
+                                data.append("channelId", parseInt($('#searchchannels option:selected').val()));
+                                data.append("description", $("#input-description").val());
+                                data.append("images", imgStr);
+                                data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
+                                var userid = Util.cookieStorage.getCookie("id");
+                                var str =  "5|5|5|" + userid + "|" + moduleId;
+                                var access_Token = Util.cookieStorage.getCookie("accessToken");
+                                $.ajax({
+                                    headers: {
+                                        "FISE-UA": str,
+                                        "FISE-AccessToken": access_Token
+                                    },
+                                    url:url,
+                                    type:"post",
+                                    data:data,
+                                    processData:false,
+                                    contentType: false,
+                                    xhr: function(){
+                                        var xhr = $.ajaxSettings.xhr();
+                                        if(onprogress && xhr.upload) {
+                                            xhr.upload.addEventListener("progress" , onprogress, false);
+                                            return xhr;
+                                        }
+                                    },
+                                    success:function(result){
+                                        if (result.msg == "新增应用成功") {
+                                            $("#addTempl-modal").modal('hide');
+                                            toastr.success("新增应用成功!");
+                                            action.loadPageData();
+                                            $("#iconShow").empty();
+                                            $("#imgShow").empty();
+                                            $(".up-section").remove();
+                                            $("#son").html( 0 +"%" );
+                                            $("#son").css("width" , 0 +"%");
+                                        }else{
+                                            alert(result.msg);
+                                        }
+                                    },
+                                    error:function(e){
+                                        alert("错误！！");
+                                    }
+                                });
+                            }
+                        }else{
+                            alert(result.ret);
+                        }
+                    },
+                    error:function(e){
+                        alert("错误！！");
                     }
-                },
-                error:function(e){
-                    alert("错误！！");
-                }
-            });
+                });
+            }
         },
 		//获取所有数据
 		loadPageData : function() {
@@ -122,7 +151,7 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "dev_id":parseInt(id),
+                    "dev_id":parseInt(uid),
                     "app_name":search_appname,
                     "status":search_status
                 };
@@ -154,90 +183,13 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-            var topcategory_val = $("input[name=topcategory]:checked").val();
-            var topcategory_txt = "";
-            var category_txt = "";
-            if(topcategory_val == "1"){
-                topcategory_txt = "软件";
-                category_txt = $('#category1 option:selected').text();
-            }else if(topcategory_val == "2"){
-                topcategory_txt = "游戏";
-                category_txt = $('#category2 option:selected').text();
-            }else if(topcategory_val == "3"){
-                topcategory_txt = "电子书";
-                category_txt = $('#category3 option:selected').text();
-            }
-
-            var iconLen = $("#input-icon")[0].files.length;
-            var imgLen = $("#input-images")[0].files.length;
-
-            var url = ctx + "xiaoyusvr/appinformation/appModify";
-            var data = new FormData();
-            data.append("id", parseInt($("#input-id").val()));
-            data.append("appIndex", $("#input-appindex").val());
-            data.append("appName",$("#input-appname").val());
-            data.append("appSpell", $("#input-appspell").val());
-            data.append("packageName", $("#input-packagename").val());
-            data.append("devId", parseInt($("#input-devid").val()));
-            data.append("devName", $("#input-devname").val());
-            data.append("topCategory", topcategory_txt);
-            data.append("category", category_txt);
-            data.append("description", $("#input-description").val());
-            data.append("version", $("#input-version").val());
-            data.append("versioncode", parseInt($("#input-versioncode").val()));
-
-            data.append("app_icon", $("#input-icon")[0].files[0], $("#input-icon")[0].files[0].name);
-            data.append("iconType", parseInt($("#input-icontype").val()));
-            for(var k=0; k <imgLen; k++){
-                data.append("app_images", $("#input-images")[0].files[k], $("#input-images")[0].files[k].name);
-            }
-            data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
-
-            data.append("size", $("#input-size").val());
-            data.append("prority", parseInt($("#input-prority").val()));
-            data.append("label", $("#input-label").val());
-            data.append("star", $("#input-star").val());
-            data.append("orientation", parseInt($('#orientation option:selected').val()));
-
-            var userid = Util.cookieStorage.getCookie("id");
-            var str =  "5|5|5|" + userid + "|" + moduleId;
-            var access_Token = Util.cookieStorage.getCookie("accessToken");
-
-            $.ajax({
-                headers: {
-                    /*"Accept": "application/json",*/
-                    "FISE-UA": str,
-                    "FISE-AccessToken": access_Token
-                    /*"Content-Type":"application/json;charset=UTF-8"*/
-                },
-                url:url,
-                type:"post",
-                data:data,
-                /*dataType: 'json',*/
-                processData:false,
-                contentType: false,
-                success:function(result){
-                    if (result.code == ReturnCode.SUCCESS) {
-                        $("#addTempl-modal").modal('hide');
-                        toastr.success("编辑成功!");
-                        action.loadPageData();
-                        $("#iconShow").empty();
-                        $("#imgShow").empty();
-                    }else{
-                        alert(result.msg);
-                    }
-                },
-                error:function(e){
-                    alert("错误！！");
-                }
-            });
 		},
         //删除数据
         deleteConfig : function(deleteid) {
             if (confirm("删除后不可恢复，确定删除" + name + "？")) {
                 var url = ctx + "xiaoyusvr/appinformation/appDelete";
                 var data = new Object();
-                data.app_id = parseInt(id);
+                data.app_id = parseInt(deleteid);
 
 
                 Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
@@ -261,7 +213,8 @@ $(function() {
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname
+                "channel_name":search_channelname,
+                "status": 1
             };
 
             var opt = {
@@ -283,8 +236,8 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
+                    $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                   /* //return result.data.result;*/
                 },
                 "param" : data
             };
@@ -304,10 +257,10 @@ $(function() {
                     $("#addTempl2-modal").modal('hide');
                     toastr.success("添加成功!");
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
-        },
+        }
 	};
 	window.action = action;
     action.init();
@@ -316,8 +269,8 @@ $(function() {
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent().parent();
-        var check_topcategory = $.trim(that.find("td").eq(7).text());
+        var that = $(this).parent().parent();
+        /*var check_topcategory = $.trim(that.find("td").eq(7).text());
         var check_category = $.trim(that.find("td").eq(8).text());
         var topcategory_val = null;
         if(check_topcategory === "软件"){
@@ -354,11 +307,11 @@ $(function() {
                     $(this).attr("selected", true);
                 }
             });
-        }
+        }*/
 
-        var orientation_val = $.trim(that.find("td").eq(22).text());
+        var orientation_val = $.trim(that.find("td").eq(23).text());
 
-        var iconList = $.trim(that.find("td").eq(12).text()).split(";");
+        var iconList = $.trim(that.find("td").eq(13).text()).split(";");
         var myDiv1 = document.getElementById("iconShow");
         for(var i=0; i < iconList.length; i++){
             var img1 = document.createElement("img");
@@ -379,7 +332,7 @@ $(function() {
             myDiv1.appendChild(img1);
         }
 
-        var imgList = $.trim(that.find("td").eq(14).text()).split(";");
+        var imgList = $.trim(that.find("td").eq(15).text()).split(";");
         var myDiv2 = document.getElementById("imgShow");
         for(var i=0; i < imgList.length; i++){
             var img = document.createElement("img");
@@ -401,30 +354,31 @@ $(function() {
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-appindex").val(that.find("td").eq(2).text());
+        //$("#input-appindex").val(that.find("td").eq(2).text());
         $("#input-appname").val(that.find("td").eq(1).text());
         $("#input-appspell").val(that.find("td").eq(3).text());
         $("#input-packagename").val(that.find("td").eq(4).text());
         $("#input-devid").val(that.find("td").eq(5).text());
         $("#input-devname").val(that.find("td").eq(6).text());
 
-        $("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
-
-
-        $("#input-description").val(that.find("td").eq(9).text());
-        $("#input-version").val(that.find("td").eq(10).text());
-        $("#input-versioncode").val(that.find("td").eq(11).text());
+        //$("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
+        $("#input-topcategory").val(that.find("td").eq(7).text());
+        $("#input-category").val(that.find("td").eq(8).text());
+        $("#input-appchannel").val(that.find("td").eq(9).text());
+        $("#input-description").val(that.find("td").eq(10).text());
+        $("#input-version").val(that.find("td").eq(11).text());
+        $("#input-versioncode").val(that.find("td").eq(12).text());
 
         //$("#input-icon").val(that.find("td").eq(12).text());
-        $("#input-icontype").val(that.find("td").eq(13).text());
+        $("#input-icontype").val(that.find("td").eq(14).text());
         //$("#input-images").val(that.find("td").eq(14).text());
         //$("#input-download").val(that.find("td").eq(15).text());
 
-        $("#input-size").val(that.find("td").eq(16).text());
-        $("#input-prority").val(that.find("td").eq(17).text());
+        $("#input-size").val(that.find("td").eq(17).text());
+        $("#input-prority").val(that.find("td").eq(18).text());
 
-        $("#input-label").val(that.find("td").eq(20).text());
-        $("#input-star").val(that.find("td").eq(21).text());
+        $("#input-label").val(that.find("td").eq(21).text());
+        $("#input-star").val(that.find("td").eq(22).text());
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
 
         $("#addTempl-modal").modal("show");
@@ -444,27 +398,51 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑应用信息");
+			$("h4#addTempl-modal-label").text("查看应用");
             $("#add-developerid-wrap").hide();
             $("#add-developername-wrap").hide();
             $("#showIcon").show();
             $("#showIconprompt").show();
             $("#showImage").show();
             $("#showImageprompt").show();
+            $("#addImgUrl").hide();
+            $("#addApk").hide();
+            $("#showProgress").hide();
+            $("#btn-add-submit").hide();
+            $("#topcategorySelect").hide();
+            $("#topcategoryName").show();
+            $("#categorySelect").hide();
+            $("#categoryName").show();
+            $("#appchannelSelect").hide();
+            $("#appchannelName").show();
+            $("#son").html( 0 +"%" );
+            $("#son").css("width" , 0 +"%");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-            $("h4#addTempl-modal-label").text("添加应用信息");
+            $("h4#addTempl-modal-label").text("添加应用");
             $("#add-developerid-wrap").hide();
             $("#add-developername-wrap").hide();
             $("#showIcon").hide();
             $("#showIconprompt").hide();
             $("#showImage").hide();
             $("#showImageprompt").hide();
+            $("#addImgUrl").show();
+            $("#addApk").show();
+            $("#showProgress").show();
+            $("#btn-add-submit").show();
+            $("#topcategorySelect").show();
+            $("#topcategoryName").hide();
+            $("#categorySelect").show();
+            $("#categoryName").hide();
+            $("#appchannelSelect").show();
+            $("#appchannelName").hide();
+            $("#son").html( 0 +"%" );
+            $("#son").css("width" , 0 +"%");
             $form.data("action", "add");
             $form[0].reset();
 		}
 	});
-    $("#addTempl2-modal").on('show.bs.modal', function(e) {
+    /*$("#addTempl2-modal").on('show.bs.modal', function(e) {
         // 处理modal label显示及表单重置
         var $form = $("form#form-addTempl2");
         if (!e.relatedTarget) {
@@ -475,7 +453,7 @@ $(function() {
             $form.data("action", "add");
             $form[0].reset();
         }
-    });
+    });*/
 
     //关闭或者hide弹出框清空插入的图片
     $("#addTempl-modal .close").on('click', function() {
@@ -491,17 +469,25 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
+            devappName : {
+                required : true
+            },
+            devappSpell : {
+                required : true
+            },
+            devappdesp : {
+                required : true
+            }
         }
     });
-    //验证表单
+ /*   //验证表单
     $("#form-addTempl2").validate({
         rules : {
         }
-    });
+    });*/
 
     $("#dev-query-condition").validate({
         rules : {
-
         }
     });
     $("#input-userID").change(function(){
@@ -546,15 +532,57 @@ $(function() {
         }
     });
 
+    $("#categorySelectItem").change(function(){
+        if($('#category1 option:selected').val() != "" || $('#category2 option:selected').val() != "" || $('#category3 option:selected').val() != ""){
+            $("#categorySelectItem").parent().removeClass("has-error");
+            $("#categorySelectItem .error").remove();
+        }
+    });
+
+    $("#searchchannels").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#addImgUrl").change(function(){
+        if($("img[class=up-img]").size() > 0){
+            $("#addImgUrl").removeClass("has-error");
+            $("#addImgUrl .error").remove();
+        }
+    });
+    $("#input-download").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $("#addApk .error").remove();
+        }
+    });
+
+
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($('#input-devType option:selected').val() == "") {
-                $("#input-password").parent().parent().addClass("has-error");
+            }else if($('#category1 option:selected').val() == "" && $('#category2 option:selected').val() == "" && $('#category3 option:selected').val() == "") {
+                $("#categorySelectItem").parent().addClass("has-error");
                 var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-password").append(err_html);
+                $("#categorySelectItem").append(err_html);
+                return;
+            }else if($('#searchchannels option:selected').val() == "") {
+                $("#searchchannels").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#searchchannels").append(err_html);
+                return;
+            }else if($("img[class=up-img]").size() == 0) {
+                $("#addImgUrl").addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#addImgUrl").append(err_html);
+                return;
+            }else if($('#input-download').val() == "") {
+                $("#input-download").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-download").parent().parent().append(err_html);
                 return;
             }else {
                 window.action.add();
@@ -568,22 +596,6 @@ $(function() {
         }
     });
 
-    $("#btn-add-submit2").on('click', function() {
-        var action = $("form#form-addTempl2").data("action");
-        if(action == "edit"){
-            if (!$("#form-addTempl2").valid()) {
-                return;
-            }else if($('#input-channels option:selected').val() == "") {
-                $("#input-channels").parent().parent().addClass("has-error");
-                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-channels").append(err_html);
-                return;
-            }else {
-                window.action.addToChannel();
-            }
-        }
-    });
-
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
@@ -592,7 +604,6 @@ $(function() {
             action.loadPageData();
         }
 	});
-
 });
 
 
@@ -830,7 +841,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
@@ -941,6 +952,40 @@ function imgShow(outerdiv, innerdiv, bigimg, _this){
     $(outerdiv).click(function(){//再次点击淡出消失弹出层
         $(this).fadeOut("fast");
     });
+}
+
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    var ctxx = canvas.getContext("2d");
+    ctxx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL
+}
+
+
+function dataURItoBlob(base64Data) {
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);
+    else
+        byteString = unescape(base64Data.split(',')[1]);
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], {type:mimeString});
+}
+
+function onprogress(evt){
+    var loaded = evt.loaded;     //已经上传大小情况
+    var tot = evt.total;      //附件总大小
+    var per = Math.floor(100*loaded/tot);  //已经上传的百分比
+    $("#son").html( per +"%" );
+    $("#son").css("width" , per +"%");
 }
 
 

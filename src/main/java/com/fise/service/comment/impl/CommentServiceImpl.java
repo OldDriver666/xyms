@@ -134,7 +134,8 @@ public class CommentServiceImpl implements ICommentService{
             myCommentDao.insertSelective(myComment);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally{
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
@@ -241,7 +242,8 @@ public class CommentServiceImpl implements ICommentService{
                 setNick(c,result,page.getParam().getFromUserid());
                 listresult.add(result);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new RuntimeException(e);
             }finally {
                 RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
             }
@@ -310,7 +312,8 @@ public class CommentServiceImpl implements ICommentService{
             myComment.setUpdated(DateUtil.getLinuxTimeStamp());
             myCommentDao.updateByPrimaryKeySelective(myComment);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new RuntimeException(e);
         }finally {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }

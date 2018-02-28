@@ -34,7 +34,7 @@ $(function(){
                 $('#personal div[_errorTips="passworderror"]').show();
                 return;
             }else if(verifyCode != 1){
-                alert("请重新进行邮箱验证");
+                toastr.error("请重新进行邮箱验证");
                 return;
             }
 
@@ -47,13 +47,13 @@ $(function(){
                 if(result.msg == "修改密码成功"){
                     $(".register-wrap").hide();
                     $(".finish-entrance").show();
-                    window.location.href = "http://xiaoyu.fise-wi.com:8787/xiaoyusvr/html/index.html";
+                    window.location.href = ctx + "xiaoyusvr/html/index.html";
                     $('#personal input[_key="mail"]').val("");
                     $('#personal input[_key="account"]').val("");
                     $('#personal input[_key="emailcode"]').val("");
                     verifyCode = 0;
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                     $(".register-wrap").show();
                     $(".finish-entrance").hide();
                 }
@@ -83,7 +83,7 @@ $(function(){
                 var tt =$('#personal input[_type="sendmailcode"]');
                 settime(tt);
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
                 $('#personal div[_errorTips="emailcodeAlready"]').show();
                 $('#personal div[_errorTips="emailcodeNone"]').hide();
             }
@@ -120,17 +120,17 @@ $(function(){
                         $('#personal input[_key="account"]').val(result1.data);
                         verifyCode = 1;
                     }else{
-                        alert(result1.msg);
+                        toastr.error(result1.msg);
                     }
                 });
             }else if(result.msg == "验证码有误，请重新输入！"){
                 errorCount++;
                 if(errorCount == 1){
-                    alert("对不起，您输入错误1次，还有2次输入机会");
+                    toastr.error("对不起，您输入错误1次，还有2次输入机会");
                 }else if(errorCount == 2){
-                    alert("对不起，您输入错误2次，还有1次输入机会");
+                    toastr.error("对不起，您输入错误2次，还有1次输入机会");
                 }else if(errorCount == 3){
-                    alert("对不起，您输入错误3次，请重新核实输入注册信息");
+                    toastr.error("对不起，您输入错误3次，请重新核实输入注册信息");
                     errorCount = 0;
                     $('#personal input[_key="mail"]').val("");
                     $('#personal input[_key="emailcode"]').val("");
@@ -139,7 +139,7 @@ $(function(){
                     $('#personal input[_type="sendmailcode"]').val("发送验证码到邮箱");
                 }
             }else{
-                alert(result.msg);
+                toastr.error(result.msg);
             }
         });
     });

@@ -6,6 +6,7 @@
 <title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/uploadImg.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 </head>
 
@@ -95,10 +96,32 @@
 												<input type="text" class="form-control" id="input-devTypeNo" name="devTypeNo" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group">
+
+										<div id="addImgUrl" class="form-group" >
+											<label for="" class="col-sm-3 control-label"><span class="necessary"></span>上传设备头像图片</label>
+											<div class="img-box full">
+												<section class=" img-section">
+													<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+													<div class="z_photo upimg-div clear" >
+														<section class="z_file fl">
+															<img src="../../images/a11.png" class="add-img">
+															<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+														</section>
+													</div>
+												</section>
+											</div>
+											<aside class="mask works-mask">
+												<div class="mask-content">
+													<p class="del-p ">您确定要删除作品图片吗？</p>
+													<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+												</div>
+											</aside>
+										</div>
+
+										<div id="showImgUrl" class="form-group" >
 											<label for="input-avatar" class="col-sm-2 control-label"><span class="necessary"></span>默认头像</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-avatar" name="avatar" placeholder="请输入默认头像URL">
+												<input type="text" class="form-control" id="input-avatar" name="devXW" placeholder="请输入默认头像URL" >
 											</div>
 										</div>
 									</form>
@@ -142,6 +165,7 @@
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
 <script type ="text/javascript" src="js/company-dev-manage.js"></script>
+<script type ="text/javascript" src="../../js/uploadImg.js"></script>
 <!-- jQuery Validate -->
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
@@ -150,9 +174,10 @@
 <tr>
 	<td style="display:none;">${config_id}</td>
 	<td style="display:none;">${depart_id}</td>
-	<td>${companyNameQuery(depart_id)}</td>
+	<td>${$('#input-search-name option:selected').text()}</td>
+	<!--<td>${companyNameQuery(depart_id)}</td>-->
 	<td>${typeNameQuery(client_type)}</td>
-	<td> <img src= ${"http://10.252.252.250:8700/" + avatar} ></td>
+	<td> <img src= ${headPicUrl + avatar} ></td>
 	<td style="display:none;">${client_type}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
@@ -176,7 +201,7 @@
 			}
 		}
 	}
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(id){
 		for(var i=0; i< Lens2; i++){
@@ -184,7 +209,7 @@
 				return allCompanyArray[i].name;
 			}
 		}
-	}
+	}*/
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",

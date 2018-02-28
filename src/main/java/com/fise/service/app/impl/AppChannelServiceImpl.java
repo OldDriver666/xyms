@@ -39,6 +39,10 @@ public class AppChannelServiceImpl implements IAppChannelService{
             criteria.andChannelNameEqualTo(page.getParam().getChannelName());
         }
         
+        if(page.getParam().getStatus()!=null){
+            criteria.andStatusEqualTo(page.getParam().getStatus());
+        }
+        
         List<AppChannel> list = appChannelDao.selectByPage(example, page);
         
         page.setParam(null);
@@ -73,7 +77,7 @@ public class AppChannelServiceImpl implements IAppChannelService{
 		Response response = new Response();
 		AppChannelExample example = new AppChannelExample();
 		AppChannelExample.Criteria criteria = example.createCriteria();
-		criteria.andStatusEqualTo(1);
+		criteria.andStatusNotEqualTo(0);
 		example.setOrderByClause("prority desc");
 		List<AppChannel> datas = appChannelDao.selectByExample(example);
 		List<AppChannelResult> channelData = new ArrayList<AppChannelResult>();
@@ -104,7 +108,7 @@ public class AppChannelServiceImpl implements IAppChannelService{
     public AppChannel getChannelInfo(Integer channelId) {
         AppChannelExample example = new AppChannelExample();
         AppChannelExample.Criteria con = example.createCriteria();
-        con.andStatusEqualTo(1);
+        con.andStatusNotEqualTo(0);
         con.andIdEqualTo(channelId);
         List<AppChannel> data = appChannelDao.selectByExample(example);
         if(data.isEmpty())

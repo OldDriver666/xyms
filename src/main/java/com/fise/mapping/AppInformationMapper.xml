@@ -3,12 +3,12 @@
 <mapper namespace="com.fise.dao.AppInformationMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.AppInformation">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="app_index" jdbcType="VARCHAR" property="appIndex" />
     <result column="app_name" jdbcType="VARCHAR" property="appName" />
     <result column="app_spell" jdbcType="VARCHAR" property="appSpell" />
     <result column="package_name" jdbcType="VARCHAR" property="packageName" />
     <result column="dev_id" jdbcType="INTEGER" property="devId" />
     <result column="dev_name" jdbcType="VARCHAR" property="devName" />
+    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
     <result column="top_category" jdbcType="VARCHAR" property="topCategory" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -25,6 +25,7 @@
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
     <result column="star" jdbcType="VARCHAR" property="star" />
     <result column="orientation" jdbcType="INTEGER" property="orientation" />
   </resultMap>
@@ -87,9 +88,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, app_index, app_name, app_spell, package_name, dev_id, dev_name, top_category, 
+    id, app_name, app_spell, package_name, dev_id, dev_name, channel_id, top_category, 
     category, status, description, version, versioncode, icon, icon_type, images, download, 
-    size, updated, created, prority, remarks, label, star, orientation
+    size, updated, created, prority, remarks, label, md5, star, orientation
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppInformationExample" resultMap="BaseResultMap">
     select
@@ -130,33 +131,30 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.AppInformation">
-    insert into app_information (id, app_index, app_name, 
-      app_spell, package_name, dev_id, 
-      dev_name, top_category, category, 
+    insert into app_information (id, app_name, app_spell, 
+      package_name, dev_id, dev_name, 
+      channel_id, top_category, category, 
       status, description, version, 
       versioncode, icon, icon_type, 
       images, download, size, 
       updated, created, prority, 
-      remarks, label, star, 
-      orientation)
-    values (#{id,jdbcType=INTEGER}, #{appIndex,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
-      #{appSpell,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, 
-      #{devName,jdbcType=VARCHAR}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      remarks, label, md5, 
+      star, orientation)
+    values (#{id,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{appSpell,jdbcType=VARCHAR}, 
+      #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, #{devName,jdbcType=VARCHAR}, 
+      #{channelId,jdbcType=INTEGER}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
       #{versioncode,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
       #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
       #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
-      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, 
-      #{orientation,jdbcType=INTEGER})
+      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, 
+      #{star,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="appIndex != null">
-        app_index,
       </if>
       <if test="appName != null">
         app_name,
@@ -172,6 +170,9 @@
       </if>
       <if test="devName != null">
         dev_name,
+      </if>
+      <if test="channelId != null">
+        channel_id,
       </if>
       <if test="topCategory != null">
         top_category,
@@ -221,6 +222,9 @@
       <if test="label != null">
         label,
       </if>
+      <if test="md5 != null">
+        md5,
+      </if>
       <if test="star != null">
         star,
       </if>
@@ -231,9 +235,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
-      </if>
-      <if test="appIndex != null">
-        #{appIndex,jdbcType=VARCHAR},
       </if>
       <if test="appName != null">
         #{appName,jdbcType=VARCHAR},
@@ -249,6 +250,9 @@
       </if>
       <if test="devName != null">
         #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=INTEGER},
       </if>
       <if test="topCategory != null">
         #{topCategory,jdbcType=VARCHAR},
@@ -298,6 +302,9 @@
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
+      </if>
       <if test="star != null">
         #{star,jdbcType=VARCHAR},
       </if>
@@ -318,9 +325,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.appIndex != null">
-        app_index = #{record.appIndex,jdbcType=VARCHAR},
-      </if>
       <if test="record.appName != null">
         app_name = #{record.appName,jdbcType=VARCHAR},
       </if>
@@ -335,6 +339,9 @@
       </if>
       <if test="record.devName != null">
         dev_name = #{record.devName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelId != null">
+        channel_id = #{record.channelId,jdbcType=INTEGER},
       </if>
       <if test="record.topCategory != null">
         top_category = #{record.topCategory,jdbcType=VARCHAR},
@@ -384,6 +391,9 @@
       <if test="record.label != null">
         label = #{record.label,jdbcType=VARCHAR},
       </if>
+      <if test="record.md5 != null">
+        md5 = #{record.md5,jdbcType=VARCHAR},
+      </if>
       <if test="record.star != null">
         star = #{record.star,jdbcType=VARCHAR},
       </if>
@@ -398,12 +408,12 @@
   <update id="updateByExample" parameterType="map">
     update app_information
     set id = #{record.id,jdbcType=INTEGER},
-      app_index = #{record.appIndex,jdbcType=VARCHAR},
       app_name = #{record.appName,jdbcType=VARCHAR},
       app_spell = #{record.appSpell,jdbcType=VARCHAR},
       package_name = #{record.packageName,jdbcType=VARCHAR},
       dev_id = #{record.devId,jdbcType=INTEGER},
       dev_name = #{record.devName,jdbcType=VARCHAR},
+      channel_id = #{record.channelId,jdbcType=INTEGER},
       top_category = #{record.topCategory,jdbcType=VARCHAR},
       category = #{record.category,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -420,6 +430,7 @@
       prority = #{record.prority,jdbcType=INTEGER},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       label = #{record.label,jdbcType=VARCHAR},
+      md5 = #{record.md5,jdbcType=VARCHAR},
       star = #{record.star,jdbcType=VARCHAR},
       orientation = #{record.orientation,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -429,9 +440,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.AppInformation">
     update app_information
     <set>
-      <if test="appIndex != null">
-        app_index = #{appIndex,jdbcType=VARCHAR},
-      </if>
       <if test="appName != null">
         app_name = #{appName,jdbcType=VARCHAR},
       </if>
@@ -446,6 +454,9 @@
       </if>
       <if test="devName != null">
         dev_name = #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=INTEGER},
       </if>
       <if test="topCategory != null">
         top_category = #{topCategory,jdbcType=VARCHAR},
@@ -495,6 +506,9 @@
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
       </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
       <if test="star != null">
         star = #{star,jdbcType=VARCHAR},
       </if>
@@ -506,12 +520,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.AppInformation">
     update app_information
-    set app_index = #{appIndex,jdbcType=VARCHAR},
-      app_name = #{appName,jdbcType=VARCHAR},
+    set app_name = #{appName,jdbcType=VARCHAR},
       app_spell = #{appSpell,jdbcType=VARCHAR},
       package_name = #{packageName,jdbcType=VARCHAR},
       dev_id = #{devId,jdbcType=INTEGER},
       dev_name = #{devName,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
       top_category = #{topCategory,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
@@ -528,10 +542,12 @@
       prority = #{prority,jdbcType=INTEGER},
       remarks = #{remarks,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
       star = #{star,jdbcType=VARCHAR},
       orientation = #{orientation,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

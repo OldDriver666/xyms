@@ -57,10 +57,10 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
-					alert(result.msg);
+					toastr.error(result.msg);
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
             });
 
 		},

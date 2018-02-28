@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>修改密码</title>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 
 </head>
 
@@ -100,7 +101,15 @@
 <script src="../../js/jquery.i18n.properties-min-1.0.9.js"></script>
 <script src="../../js/Util.js"></script>
 <script src="../../resource/lib/jquery.md5.js"></script>
-
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type="text/javascript">
+toastr.options={
+positionClass : 'toast-center-center',
+showDuration: "300",
+hideDuration: "300",
+timeOut: "1000"
+};
+</script>
 <script>
 $(function() {
     //获取cookie
@@ -161,15 +170,15 @@ $(function() {
 			Util.ajaxLoadData(url, data,moduleId,"POST", true, function (result) {
 				if (result.code == ReturnCode.SUCCESS) {
 					$("#editPW-modal").modal('hide');
-					alert("修改完成！");
+					toastr.success("修改完成！");
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			}, function () {
-				alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 		}else{
-			alert("两次输入的密码不一致！")
+			toastr.error("两次输入的密码不一致！")
 		}
     });
 
@@ -194,12 +203,12 @@ $(function() {
 					Util.cookieStorage.setCookie("nickname", newNickName);
 					$(".nickName_txt").text(newNickName);
 					$("#NickName-modal").modal('hide');
-					alert("修改完成！");
+					toastr.success("修改完成！");
 				} else {
-					alert(result.msg);
+					toastr.error(result.msg);
 				}
 			}, function () {
-				alert("服务器开个小差，请稍后重试！")
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 		}
     });

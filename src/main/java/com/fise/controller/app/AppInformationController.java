@@ -63,7 +63,7 @@ public class AppInformationController {
         Response resp = new Response();
         logger.info(param.toString());
         
-        if(StringUtil.isEmpty(param.getAppIndex()) || StringUtil.isEmpty(param.getAppName()) || StringUtil.isEmpty(param.getAppSpell())){
+        if(StringUtil.isEmpty(param.getAppName()) || StringUtil.isEmpty(param.getAppSpell())){
             return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
@@ -132,11 +132,9 @@ public class AppInformationController {
      */
 	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
 	public Response appInsert(@ModelAttribute AppInformation param,
-			                  @RequestParam("app_images") List<MultipartFile> uploadPhoto,
-			                  @RequestParam("app") MultipartFile uploadApp,
-			                  @RequestParam("app_icon") MultipartFile uploadIcon) {
+                              @RequestParam("app") MultipartFile uploadApp) {
         Response response = new Response();
-		response = appInfoemationService.appInsert(param,uploadPhoto,uploadApp,uploadIcon);
+		response = appInfoemationService.appInsert(param,uploadApp);
 		return response;
     }
     
@@ -169,9 +167,9 @@ public class AppInformationController {
      */
 	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
 	public Response appModify(@ModelAttribute AppInformation param,
-                              @RequestParam("app_images") List<MultipartFile> uploadPhoto,
-                              @RequestParam("app") MultipartFile uploadApp,
-                              @RequestParam("app_icon") MultipartFile uploadIcon) {
+	                          @RequestParam("app_images") List<MultipartFile> uploadPhoto,
+	                          @RequestParam("app") MultipartFile uploadApp,
+	                          @RequestParam("app_icon") MultipartFile uploadIcon) {
     	Response response = new Response();
     	
 		response = appInfoemationService.appModify(param,uploadPhoto,uploadApp,uploadIcon);

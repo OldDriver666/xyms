@@ -678,9 +678,10 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-    //ctx = "http://10.252.252.250:8787/";        //test version
-	ctx = "http://xiaoyu.fise-wi.com:8787/";        //test version
+	ctx = "http://xiaoyutest.fise-wi.com:8787/";        //test version
+    uploadUrl = "http://xiaoyutest.fise-wi.com:4869/";        //test version
     Util.localStorage.add("ctx",ctx);
+    Util.localStorage.add("uploadUrl",uploadUrl);
 };
 
 //获取资源文件
@@ -726,6 +727,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
+uploadUrl = Util.localStorage.get("uploadUrl");
 
 // cdn url
 /*cdnImg = Util.localStorage.get("cdnImg");

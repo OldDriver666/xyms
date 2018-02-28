@@ -32,24 +32,67 @@ $(function() {
         },
         //新增数据
         add : function() {
-            var url = ctx + "xiaoyusvr/appsplash/insert";
-            var data = new Object();
-            data.status = parseInt($("input[name=status]:checked").val());
-            data.name = $("#input-name").val();
-            data.url = $("#input-url").val();
-            data.action_url = $("#input-action_url").val();
-            data.prority = parseInt($("#input-prority").val());
-            data.delay = $("#input-delay").val();
+            var imgLen = $("img[class=up-img]").size();
+            var imgurl = uploadUrl + "upload";
+            var imgArray = [];
+            var imgCount = 0;
+            for(var k=0; k <imgLen; k++){
+                var ff = $("img[class=up-img]")[k]
+                var base64Data = getBase64Image(ff)
+                var blobs = dataURItoBlob(base64Data)
+                var ffName = $("p[class=img-name-p]")[k].innerHTML
+                var imgdata = new FormData();
+                imgdata.append('file', blobs, ffName)
+                $.ajax({
+                    headers: {
+                    },
+                    url:imgurl,
+                    type:"post",
+                    data:imgdata,
+                    processData:false,
+                    contentType: false,
+                    success:function(result){
+                        if (result.ret == true) {
+                            imgArray.push(uploadUrl + result.info.md5);
+                            if (++imgCount == imgLen){
+                                var imgStr = ''
+                                var arrLen = imgArray.length
+                                if(1 == arrLen){
+                                    imgStr = imgArray[0]
+                                } else if(arrLen > 1){
+                                    for (var n=0; n < arrLen - 1; n++){
+                                        imgStr = imgStr + imgArray[n] + ';'
+                                    }
+                                    imgStr = imgStr + imgArray[arrLen - 1]
+                                }
+                                var url = ctx + "xiaoyusvr/appsplash/insert";
+                                var data = new Object();
+                                data.status = parseInt($("input[name=status]:checked").val());
+                                data.name = $("#input-name").val();
+                                data.url = imgStr;
+                                data.action_url = $("#input-action_url").val();
+                                data.prority = parseInt($("#input-prority").val());
+                                data.delay = $("#input-delay").val();
 
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl-modal").modal('hide');
-                    toastr.success("添加成功!");
-                    action.loadPageData();
-                }else{
-                    alert(result.msg);
-                }
-            });
+                                Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                                    if (result.code == ReturnCode.SUCCESS) {
+                                        $("#addTempl-modal").modal('hide');
+                                        toastr.success("添加成功!");
+                                        action.loadPageData();
+                                    }else{
+                                        toastr.error(result.msg);
+                                    }
+                                });
+                            }
+                        }else{
+                            toastr.error(result.ret);
+                        }
+                    },
+                    error:function(e){
+                        toastr.error("错误！！");
+                    }
+                });
+            }
         },
 		//获取所有数据
 		loadPageData : function() {
@@ -108,9 +151,10 @@ $(function() {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
+                    $("#imgShow").empty();
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		}
@@ -137,6 +181,21 @@ $(function() {
         $("#input-prority").val(that.find("td").eq(4).text());
         $("#input-delay").val(that.find("td").eq(6).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
+
+        var imgList = $.trim(that.find("td").eq(2).text()).split(";");
+        var myDiv2 = document.getElementById("imgShow");
+        for(var i=0; i < imgList.length; i++){
+            var img = document.createElement("img");
+            img.setAttribute("class", "newImg");
+            img.width =420;
+            img.src = imgList[i];
+            img.onclick=function() {
+                var _this = $(this);//将当前的pimg元素作为_this传入函数
+                imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+            };
+            myDiv2.appendChild(img);
+        }
+
         $("#addTempl-modal").modal("show");
     });
 
@@ -145,13 +204,30 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑闪屏页信息");
+            $("#addImgUrl").hide();
+            $("#showImgUrl").show();
+            $("#showPic").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
             $("h4#addTempl-modal-label").text("添加闪屏页信息");
+            $("#addImgUrl").show();
+            $("#showImgUrl").hide();
+            $("#showPic").hide();
             $form.data("action", "add");
             $form[0].reset();
 		}
 	});
+
+    //关闭或者hide弹出框清空插入的图片
+    $("#addTempl-modal .close").on('click', function() {
+        $(".up-section").empty();
+        $("#imgShow").empty();
+    });
+
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $(".up-section").empty();
+        $("#imgShow").empty();
+    });
 
 	//验证表单
     $("#form-addTempl").validate({
@@ -451,7 +527,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert("记录不存在");
+                toastr.info("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
@@ -524,3 +600,67 @@ Util.Page = (function() {
     };
     return Page;
 })();
+
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    var ctxx = canvas.getContext("2d");
+    ctxx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL // return dataURL.replace("data:image/png;base64,", "");
+}
+
+
+function dataURItoBlob(base64Data) {
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);
+    else
+        byteString = unescape(base64Data.split(',')[1]);
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], {type:mimeString});
+}
+
+function imgShow(outerdiv, innerdiv, bigimg, _this){
+    var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+    /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+    $("<img/>").attr("src", src).load(function(){
+        var windowW = $(window).width();//获取当前窗口宽度
+        var windowH = $(window).height();//获取当前窗口高度
+        var realWidth = this.width;//获取图片真实宽度
+        var realHeight = this.height;//获取图片真实高度
+        var imgWidth, imgHeight;
+        var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+        if(realHeight>windowH*scale) {//判断图片高度
+            imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放
+            imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度
+            if(imgWidth>windowW*scale) {//如宽度扔大于窗口宽度
+                imgWidth = windowW*scale;//再对宽度进行缩放
+            }
+        } else if(realWidth>windowW*scale) {//如图片高度合适，判断图片宽度
+            imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
+            imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+        } else {//如果图片真实高度和宽度都符合要求，高宽不变
+            imgWidth = realWidth;
+            imgHeight = realHeight;
+        }
+        $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放
+
+        var w = (windowW-imgWidth)/2;//计算图片与窗口左边距
+        var h = (windowH-imgHeight)/2;//计算图片与窗口上边距
+        $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性
+        $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+    });
+
+    $(outerdiv).click(function(){//再次点击淡出消失弹出层
+        $(this).fadeOut("fast");
+    });
+}

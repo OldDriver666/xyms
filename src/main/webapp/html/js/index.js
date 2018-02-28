@@ -21,10 +21,7 @@ $(function(){
                 Util.cookieStorage.clearCookie("roleId");
                 Util.cookieStorage.clearCookie("creatorId");
                 Util.cookieStorage.clearCookie("userType");
-                localStorage.removeItem("myDevTypeArray");
-                localStorage.removeItem("myUserRolesArray");
-                localStorage.removeItem("allDevTypeArray");
-                localStorage.removeItem("allCompanyArray");
+                localStorage.clear();
                 window.location.href = "login.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");

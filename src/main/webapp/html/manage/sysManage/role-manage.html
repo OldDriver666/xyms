@@ -280,7 +280,8 @@
 	<td >${role_level}</td>
 	<td>${role_name}</td>
 	<td>${desc}</td>
-	<td >${companyNameQuery(company_id)}</td>
+	<td>${localStorage.getItem("myCompanyName")}</td>
+	<!--<td >${companyNameQuery(company_id)}</td>-->
 	<td >${depart_id}</td>
 	<td style="display:none;">${company_id}</td>
 	<td style="display:none;">${depart_id}</td>
@@ -307,7 +308,7 @@
 		}
 	}
 
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(type){
 		for(var i=0; i< Lens2; i++){
@@ -315,7 +316,7 @@
 				return allCompanyArray[i].name;
 			}
 		}
-	}
+	}*/
 
 	toastr.options={
 		positionClass : 'toast-center-center',

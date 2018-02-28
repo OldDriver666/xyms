@@ -12,10 +12,10 @@ public class WiOrganizationRole implements Serializable {
 
     @JsonProperty("role_level")
     private Integer authLevel;
-    
+
     @JsonProperty("role_name")
     private String name;
-    
+
     @JsonProperty("desc")
     private String description;
 
@@ -24,6 +24,11 @@ public class WiOrganizationRole implements Serializable {
 
     @JsonProperty("depart_id")
     private Integer departId;
+
+    /**
+     * 1-管理员 0-开发者
+     */
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
@@ -73,5 +78,13 @@ public class WiOrganizationRole implements Serializable {
 
     public void setDepartId(Integer departId) {
         this.departId = departId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

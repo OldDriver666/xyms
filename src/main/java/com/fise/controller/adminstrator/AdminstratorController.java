@@ -123,15 +123,15 @@ public class AdminstratorController {
         Response resp = new Response();
         try {  
             HtmlEmail email = new HtmlEmail();//不用更改  
-            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com  
+            email.setHostName("smtp.exmail.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com  
             email.setCharset("UTF-8");  
             email.setSSLOnConnect(true);
             
             email.addTo(map.get("emailaddress"));// 收件地址  
             //这是本人自己qq邮箱，测试使用，建议后期修改邮箱地址
-            email.setFrom("2839117863@qq.com", "fise智能");//此处填邮箱地址和用户名,用户名可以任意填写  
+            email.setFrom("chenzc@fise.com.cn", "fise智能");//此处填邮箱地址和用户名,用户名可以任意填写  
             //修改新的客户端授权码
-            email.setAuthentication("2839117863@qq.com", "vjulajvpgeiqdcjd");//此处填写邮箱地址和客户端授权码  
+            email.setAuthentication("chenzc@fise.com.cn", "Fise321");//此处填写邮箱地址和客户端授权码  
   
             email.setSubject("验证码");//此处填写邮件名，邮件名可任意填写  
             email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + StringUtil.makeCode(6,false));//此处填写邮件内容  

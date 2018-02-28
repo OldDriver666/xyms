@@ -1286,7 +1286,7 @@ body {
 }
 /*è¾“å…¥æ¡† start*/
 .ui-intxt {
-  height: 18px;
+  /*height: 18px;*/
   line-height: 18px;
   padding: 10px 8px;
   border: 1px solid #C5C5C5;

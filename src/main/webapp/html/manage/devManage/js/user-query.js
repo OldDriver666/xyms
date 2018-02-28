@@ -36,7 +36,7 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-                	alert(result.msg);
+                    toastr.error(result.msg);
 				}
             });
 		},
@@ -86,8 +86,52 @@ $(function() {
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
-            $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
+            var dataArray1 = [];
+            var dataArray2 = [];
+            var myDevTypeArray = [];
+            var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
+            var moduleId = 0;
+            var data = new Object();
+            data.client_type = null;
+            data.client_name = "";
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    dataArray1 = result.data;
+
+                    var url_query = ctx + "xiaoyusvr/boss/departconf/queryimdepartconfig";
+                    var moduleId_query = 0;
+                    var data_query = new Object();
+                    data_query.depart_id = parseInt(companyId);
+                    data_query.client_type = null;
+                    Util.ajaxLoadData(url_query,data_query,moduleId_query,"POST",true,function(result_query) {
+                        if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){
+                            dataArray2 = result_query.data;
+                            var Len1 = dataArray1.length;
+                            var Len2 = dataArray2.length;
+                            for(var i =0; i < Len2; i++){
+                                for(var j=0; j<Len1; j++){
+                                    if(dataArray2[i].client_type == dataArray1[j].client_type){
+                                        var str ={
+                                            client_type :dataArray1[j].client_type,
+                                            client_name :dataArray1[j].client_name
+                                        };
+                                        myDevTypeArray.push(str);
+                                    }
+                                }
+                            }
+                            /*$("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');*/
+                        } else {
+                        }
+                    },function() {
+                    });
+
+                } else {
+                }
+            },function() {
+            });
+
+           /* var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
+            $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');*/
         },
 		//编辑数据
 		edit : function() {
@@ -107,7 +151,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             });
 		},
@@ -122,7 +166,7 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-                        alert(result.msg);
+                        toastr.error(result.msg);
                     }
 				});
 			}
@@ -243,9 +287,9 @@ $(function() {
             $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
             action.getDevTxtInfo();
         }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
+            toastr.info("请选择文件！");
         }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
+            toastr.info("请选择设备类型！");
         }
     });
 
@@ -511,7 +555,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert(result.msg);
+                toastr.error(result.msg);
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
@@ -576,7 +620,7 @@ Util.Page = (function() {
         };
 
         var errorCallback = function(errorMsg){
-            alert(errorMsg);
+            toastr.error(errorMsg);
         };
 
         Util.ajaxLoadData(url,data,moduleId,"POST",true,callback, errorCallback);

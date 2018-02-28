@@ -7,6 +7,7 @@
 	<title>登录</title>
 	<link rel="stylesheet" href="layui/css/layui.css" media="all">
 	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<link rel="stylesheet" href="resource/plugin/toastr/toastr.css"/>
 
 <style type="text/css">
 .beg-login-bg {
@@ -63,10 +64,10 @@
 		</form>
 		</br>
 		<div class="form-group">
-			<a class="input-group" style="color:#fff; text-decoration: none; border-bottom: 1px solid; display:inline-block; margin-left:20px;" target="_blank" href="http://xiaoyu.fise-wi.com:8787/xiaoyusvr/developer-register/index.html">
+			<a class="input-group" style="color:#fff; text-decoration: none; border-bottom: 1px solid; display:inline-block; margin-left:20px;" target="_blank" href= "#" id="registerLink">
 				注册App开发者账号
 			</a>
-			<a class="input-group" style="color:#fff; text-decoration: none; border-bottom: 1px solid; display:inline-block; margin-left:80px;" target="_blank" href="http://xiaoyu.fise-wi.com:8787/xiaoyusvr/forget-pwd/index.html">
+			<a class="input-group" style="color:#fff; text-decoration: none; border-bottom: 1px solid; display:inline-block; margin-left:80px;" target="_blank" href= "#" id="forgetLink">
 				忘记密码?
 			</a>
 
@@ -83,6 +84,20 @@
 <script src="js/Util.js"></script>
 <script src="resource/lib/jquery.md5.js"></script>
 <script src="js/json2.js"></script>
+<script type ="text/javascript" src="resource/plugin/toastr/toastr.min.js"></script>
+<script type="text/javascript">
+	var registerHref = ctx + "xiaoyusvr/developer-register/index.html";
+	$('#registerLink').attr("href",registerHref );
+	var forgetHref = ctx + "xiaoyusvr/forget-pwd/index.html"
+	$('#forgetLink').attr("href",forgetHref );
+
+	toastr.options={
+		positionClass : 'toast-center-center',
+		showDuration: "300",
+		hideDuration: "300",
+		timeOut: "1000"
+	};
+</script>
 <script>
     $("#form_login").submit(function(){
         return false;
@@ -104,14 +119,15 @@
 				Util.cookieStorage.setCookie("userType",result.data.userType);
                 window.location.href = "index.html";
             }  else {
-                alert(result.msg);
+				toastr.error(result.msg);
             }
         },function() {
-            alert("服务器开个小差，请稍后重试！");
+			toastr.error("服务器开个小差，请稍后重试！");
         });
     });
 
 </script>
+
 </body>
 
 </html>
