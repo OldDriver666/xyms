@@ -4113,3 +4113,38 @@ device_id 和  master_id 都不填则查询所有
 ```
 null 没有数据返回 看code是否成功
 ```
+
+####搜一搜接口
+|   接口地址    |   xiaoyusvr/boss/admin/search    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              |  
+
+####请求
+可以上传图片文件
+```
+{
+     "param":""       //选填-查询内容 
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "title": "FISE-China的微博_微博",
+         "url": "http://www.baidu.com/link?url=b2Xx_5znDcrDvP1Ev-ztlN7nH0x1r-QoEqkMh5jeLHjfeFoyfpFLa3qkqWgwhURz",
+         "photo": "https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1215533174,1202780059&fm=85&s=FAB625C088520DCC4E8534170300D0D0",
+         "content": "FISE-China。 FISE-China的微博主页、个人资料、相册。新浪微博,随时随地分享身边的新鲜事儿。"
+      },
+      {
+         "title": "极限荣耀:2017 FISE世界极限运动巡回赛酷炫启航_搜狐科技_搜狐网",
+         "url": "http://www.baidu.com/link?url=DlJ-EmYF_v5izNnlUxdUVi_nUX3gGzQDxjrAprd_Kb7aQPlEIW--hdMekZ2JbB5J",
+         "photo": "https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=419235958,3098413290&fm=85&s=8CB24B950266F4EE4E017C9603007000",
+         "content": "2017年5月30日 - 2017 FISE世界极限运动巡回赛于5月24日-5月28日在法国Montpellier(蒙彼利埃)举行。荣耀作为2017 FISE世界极限运动巡回赛中法国分赛站和中国分赛站的一..."
+      }
+      	]
+}      	
+```
