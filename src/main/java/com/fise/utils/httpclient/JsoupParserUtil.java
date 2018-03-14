@@ -30,18 +30,21 @@ public class JsoupParserUtil {
         Document docSub;// 博客每一项
         Elements elmPerLink;// 列表中的每一个博客超链接
         // ---------------------------------------------
-        Elements content = doc.getElementsByClass("result c-container ");
+        Elements content = doc.getElementsByClass("c-container");
         for (int i = 0; i < content.size(); i++) {
             docSub = Jsoup.parse(content.get(i).toString());
             // 标题+链接
             elmPerLink = content.get(i).getElementsByTag("a");
-            str标题 = elmPerLink.get(0).text();
+            //str标题 = elmPerLink.get(0).text();
             strURL = elmPerLink.get(0).attr("href");
+            str标题 = docSub.getElementsByClass("c-title c-gap-top-small").text();
             
-            str图片 = docSub.getElementsByClass("c-img c-img6").attr("src").toString();
+            str图片 = content.get(i).getElementsByTag("img").attr("src").toString();
+            
+            
             //str阅读次数 = getNum(str阅读次数_全);
 
-            str内容 = docSub.getElementsByClass("c-abstract").text();
+            str内容 = content.get(i).getElementsByTag("p").text();
             //str评论数 = getNum(str评论数_全);
 
            /* System.out.println("标题: " + str标题);
