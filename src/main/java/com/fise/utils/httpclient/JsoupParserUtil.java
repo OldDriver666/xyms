@@ -14,10 +14,10 @@ import com.fise.model.entity.Search;
 
 public class JsoupParserUtil {
 
-    public static List<Search> getElement(String param) throws IOException {
+    public static List<Search> getElement(String param,Integer page) throws IOException {
         //File file = new File("D:/CSDN.NET.html");
         
-        String reqURL="https://www.baidu.com/s?wd="+param;
+        String reqURL="https://m.baidu.com/s?word="+param+"&pn="+(page-1)*10;
         List<Search> list = new ArrayList<Search>();
         
         String str标题 = "";

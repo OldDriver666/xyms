@@ -159,7 +159,7 @@ public class AdminstratorController {
         
         List<Search> list = null;
         try {
-            list = JsoupParserUtil.getElement(map.get("param"));
+            list = JsoupParserUtil.getElement(map.get("param"),Integer.valueOf(map.get("page")));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
