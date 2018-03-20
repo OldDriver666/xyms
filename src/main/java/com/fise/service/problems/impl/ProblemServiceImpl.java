@@ -229,7 +229,7 @@ public class ProblemServiceImpl implements IProblemService{
                 MyProblemExample example2 = new MyProblemExample();
                 MyProblemExample.Criteria criteria2 = example2.createCriteria();
                 criteria2.andProblemIdEqualTo(problem.getId());
-                criteria.andUserIdEqualTo(problem.getUserId());
+                criteria2.andUserIdEqualTo(problem.getUserId());
                 criteria2.andStatusEqualTo(1);
                 List<MyProblem> list2=MyProblemDao.selectByExample(example2);
                 MyProblem myProblem=list2.get(0);

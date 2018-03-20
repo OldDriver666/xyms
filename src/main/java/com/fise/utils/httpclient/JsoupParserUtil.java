@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.fise.model.entity.Search;
@@ -39,8 +40,7 @@ public class JsoupParserUtil {
             strURL = elmPerLink.get(0).attr("href");
             str标题 = docSub.getElementsByClass("c-title c-gap-top-small").text();
             
-            str图片 = content.get(i).getElementsByTag("img").attr("src").toString();
-            
+            str图片 = docSub.getElementsByTag("img").attr("src").toString();
             
             //str阅读次数 = getNum(str阅读次数_全);
 
