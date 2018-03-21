@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.fise.model.entity.Search;
+import com.fise.utils.StringUtil;
 
 public class JsoupParserUtil {
 
@@ -52,8 +53,12 @@ public class JsoupParserUtil {
             System.out.println("阅读图片: " + str图片);
             System.out.println("阅读内容: " + str内容);*/
             
-            Search search = new Search(str标题, strURL, str图片, str内容);
-            list.add(search);
+            if(StringUtil.isEmpty(str标题) && StringUtil.isEmpty(str图片) && StringUtil.isEmpty(str内容)){
+                
+            }else {
+                Search search = new Search(str标题, strURL, str图片, str内容);
+                list.add(search);
+            }
         }
         
         return list;
