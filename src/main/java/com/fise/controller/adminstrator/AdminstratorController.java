@@ -1,5 +1,7 @@
 package com.fise.controller.adminstrator;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.Search;
 import com.fise.model.param.AdminInsert;
 import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
@@ -24,6 +27,7 @@ import com.fise.model.param.LogoutParam;
 import com.fise.service.administrator.IAdministratorService;
 import com.fise.service.auth.IAuthService;
 import com.fise.utils.StringUtil;
+import com.fise.utils.httpclient.JsoupParserUtil;
 
 @RestController
 @RequestMapping("/boss/admin")
@@ -143,5 +147,28 @@ public class AdminstratorController {
             e.printStackTrace();  
             return resp.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);  
         }  
-    }  
+    }
+    
+    //搜一搜（百度接口）
+    @IgnoreAuth
+    @RequestMapping(value="/search",method=RequestMethod.POST)
+    public Response searchQuery(@RequestBody @Valid Map<String, String> map){
+        Response response = new Response();
+        
+        logger.info(map.toString());
+        
+        List<Search> list = null;
+        try {
+            list = JsoupParserUtil.getElement(map.get("param"),Integer.valueOf(map.get("page")));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            
+            response.setCode(400);
+            response.setMsg("解析html出错");
+            return response;
+        }
+        
+        return response.success(list);
+    }
 }
