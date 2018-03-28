@@ -85,6 +85,12 @@ public class RoleServiceImpl implements IRoleService {
 
         return result;
     }
+    
+    @Override
+    public List<ModulePermissResult> queryAuthByName(QueryRoleParam param) {
+    	
+    	return permissionDao.selectAuthByName(param.getCompany_id(), param.getRole_id(),param.getName());
+    }
 
     @Override
     public Response updateRoleAuth(RolePermissionParam param) {

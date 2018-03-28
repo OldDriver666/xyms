@@ -1324,6 +1324,50 @@ null 没有数据返回 看code是否成功
 ]
 ``` 
 
+####根据菜单的名称模糊查询角色权限
+|   接口地址    |   xiaoyusvr/boss/role/queryAuthByName
+        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ "role_id":x,       //必填-自己角色
+ "company_id":x     //必填-自己公司
+ "name":"x"         //菜单名称
+}
+
+//回复
+[
+      {
+         "module_id": 2,
+         "module_name": "Broadcast",
+         "url": "manage/main/main.html",
+         "module_type": 0,
+         "priority": 2300,
+         "parent_id": 0,
+         "status": 0,
+         "permiss_id": 16,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      },
+      {
+         "module_id": 3,
+         "module_name": "设备管理",
+         "url": "",
+         "module_type": 0,
+         "priority": 1900,
+         "parent_id": 0,
+         "status": 1,
+         "permiss_id": 88,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      }
+]
+``` 
+
 ####修改角色权限
 |   接口地址    |   xiaoyusvr/boss/role/updateAuth        |
 |   ---         |   ---                   |

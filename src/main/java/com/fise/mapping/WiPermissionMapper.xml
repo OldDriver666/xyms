@@ -323,4 +323,16 @@
             and p.status = 1 and m.status=1
           </if>
   </select>
+  
+  <select id="selectAuthByName" parameterType="map" resultMap="AuthResultMap">
+    select p.id,m.name,m.url,m.module_type,m.id as module_id,m.priority,m.parent_id,
+           p.status,insert_auth,p.update_auth,p.query_auth
+    from wi_permission p left JOIN wi_module m
+         on p.module_id=m.id and p.company_id=m.belong_company
+    where 
+         m.parent_id !=0 and p.status = 1 and m.status=1
+   		 and p.company_id=#{company,jdbcType=INTEGER} 
+         and p.role_id=#{role,jdbcType=INTEGER}
+         and m.name like concat("%",#{name,jdbcType=VARCHAR},"%")
+  </select>
 </mapper>
