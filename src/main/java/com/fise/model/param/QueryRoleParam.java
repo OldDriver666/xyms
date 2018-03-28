@@ -26,8 +26,18 @@ public class QueryRoleParam implements Serializable {
 
     private Integer include_all;
     
+    private String name;
     
-    public Integer getStatus() {
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getStatus() {
         return status;
     }
 

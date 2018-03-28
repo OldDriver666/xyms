@@ -124,4 +124,14 @@ public class RoleController {
         response = roleSvr.delRole(role);
         return response;
     }
+    
+    @RequestMapping(value = "/queryAuthByName", method = RequestMethod.POST)
+    public Response queryAuthByName(@RequestBody @Valid QueryRoleParam param) {
+        Response resp = new Response();
+
+        List<ModulePermissResult> data = roleSvr.queryAuthByName(param);
+        resp.success(data);
+
+        return resp;
+    }
 }
