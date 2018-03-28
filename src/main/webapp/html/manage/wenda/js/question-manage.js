@@ -172,10 +172,12 @@ $(function() {
     //关闭或者hide弹出框清空插入的图片
     $("#addTempl-modal .close").on('click', function() {
         $("#input-content").empty();
+        $(window.frames["LAY_layedit_1"].document).find('body').html("");
     });
 
     $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
         $("#input-content").empty();
+        $(window.frames["LAY_layedit_1"].document).find('body').html("");
     });
 
 

@@ -1,0 +1,269 @@
+   
+++++++++++++++++   1.开发者注册接口  ++++++++++++++++
+   |   接口地址    |  /boss/developer/register     |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+
+   ####请求
+{
+  "account":"X",                                                 //用户名
+  "password":"X",                                                //密码
+  "nick_name":"X",                                               //昵称
+  "phone":"X",                                                   //电话
+  "email":"X",                                                   //邮件
+  "creator_id":"X",                                              //创建者ID
+  "id_card":"X",                                                 //身份证号
+  "card_photo":"X",  (<input type=" " name="images">)            //身份证照片(三张)
+  "description":"X",                                             //描述
+  "userType":X                                                   //用户类型
+}	   
+		   
+  ####返回   
+  {
+   "code": 0,
+   "msg": "ok",
+   "data":null
+  }
+  
+  
++++++++++++++  2.开发者审核接口  +++++++++++++
+   |   接口地址    |  /boss/developer/checkup      |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+
+   ####请求
+   {
+   "developer_id":X,                //开发者ID也就是wi_admin表中的主键ID
+   "status":X,                      //通过或者不通过
+   "remarks":X                      //通过或者不通过的原因
+   }
+   
+   ####返回   
+  {
+   "code": 0,
+   "msg": "ok",
+   "data":null
+  }
+  
++++++++++++++  3.APP添加的接口   +++++++++++++++  
+   |   接口地址    |  /appinformation/appInsert    |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+  ####请求 
+   {
+      "app_index":"6",                                                           //app的唯一索引
+      "app_name":"5",                                                            //app的中文名字
+      "app_spell":"0",                                                           //app的拼音或英文
+      "package_name":"0",                                                        //包名
+      "dev_id":1,                                                                //开发者ID
+      "dev_name":"222",                                                          //开发者名字
+      "top_category":"211",                                                      //应用类型(大类)
+      "category":"223",                                                          //应用类型(小类)
+      "status":0,                                                                //状态
+      "description":"dsdas",                                                     //描述              
+      "version":"2.35",                                                          //版本号
+      "version_code":78,                                                         //版本代码
+      "icon":"X",   (<input type=" " name="icon">)                               //图标  
+      "icon_type":3,                                                             //图标类型
+      "images":"fdf", (<input type=" " name="images">)                           //应用图片             
+      "download":"ewqewq", (<input type=" " name="app">)                         //应用的下载地址
+      "size":"dwdwd",                                                            //应用的大小
+      "prority":33,                                                              //应用的权重
+      "remarks":"wewqe",                                                         //备注
+      "label":"dasdi",                                                           //标签
+      "star":"dda",                                                              //评分
+      "orientation":1                                                            //图片的摆放(0-竖 1-横)
+    }
+  ####返回
+   ```
+  无内容，直接查看返回码
+
+  
++++++++++++++  4.APP删除的接口   +++++++++++++++ 
+   |   接口地址    |  /appinformation/appDelete    |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+  ####请求 
+  {
+  "app_id":1
+  
+  }
+ ####返回
+   ```
+  无内容，直接查看返回码  
+  
++++++++++++++  5.APP审核的接口   +++++++++++++++ 
+   |   接口地址    |  /appinformation/checkup    |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+  ####请求 
+{
+   "app_id":X,                       //app的ID
+   "status":X,                      //通过或者不通过
+   "remarks":X                      //通过或者不通过的原因
+}
+ ####返回
+   ```
+  无内容，直接查看返回码 
+  
++++++++++++++  5.APP修改的接口   +++++++++++++++ 
+   |   接口地址    |  /appinformation/appModify    |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+  ####请求 
+{
+      "app_index":"6",                                                           //app的唯一索引
+      "app_name":"5",                                                            //app的中文名字
+      "app_spell":"0",                                                           //app的拼音或英文
+      "package_name":"0",                                                        //包名
+      "dev_id":1,                                                                //开发者ID
+      "dev_name":"222",                                                          //开发者名字
+      "top_category":"211",                                                      //应用类型(大类)
+      "category":"223",                                                          //应用类型(小类)
+      "status":0,                                                                //状态
+      "description":"dsdas",                                                     //描述              
+      "version":"2.35",                                                          //版本号
+      "version_code":78,                                                         //版本代码
+      "icon":"X",   (<input type=" " name="icon">)                               //图标  
+      "icon_type":3,                                                             //图标类型
+      "images":"fdf", (<input type=" " name="images">)                           //应用图片             
+      "download":"ewqewq", (<input type=" " name="app">)                         //应用的下载地址
+      "size":"dwdwd",                                                            //应用的大小
+      "prority":33,                                                              //应用的权重
+      "remarks":"wewqe",                                                         //备注
+      "label":"dasdi",                                                           //标签
+      "star":"dda",                                                              //评分
+      "orientation":1                                                            //图片的摆放(0-竖 1-横)
+}  
+  
+ ####返回
+   ```
+  无内容，直接查看返回码  
+  
+ +++++++++++++  5.APP查询的接口   +++++++++++++++  
+   |   接口地址    |  /appinformation/appModify    |
+   |   ---         |   ---                         |
+   |   请求方式    |   HTTP POST                   |
+   |   参数格式    |   JSON                        |
+
+    ####请求 
+{
+ "page_no":X,
+  "param":{ 
+          "dev_id":x                    (可选)             //开发者ID     
+          }
+} 
+  
+①传dev_id,表示根据dev_id 查询出该开发者所创建的App
+②如果不传，则表示是管理员，可以查看所有的App
+ 
+
+#########返回
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "hasMore": false,
+      "result": [
+         {
+            "appName": "安卓商店",
+            "download": "http://shouji.360tpcdn.com/170809/b1db53b15738fa3b400745049d2015c1/com.juying.androidmarket_20000001.apk",
+            "description": "安卓市场",
+            "version": "1.2.3",
+            "versionCode": "123",
+            "category": "系统工具",
+            "star": "4.6",
+            "icon": "http://p17.qhimg.com/t0128b0b333e05c2db2.png",
+            "iconType": 1,
+            "size": "2.07M",
+            "packageName": "com.fise.app",
+            "appId": 1
+         },
+         {
+            "appName": "自拍神器",
+            "download": "http://shouji.360tpcdn.com/170726/0a4b5a3e1e9eec332b7bffd9b2064404/com.thundersoft.hz.selfportrait_61.apk",
+            "description": "自拍美颜",
+            "version": "2.3.4",
+            "versionCode": "223",
+            "category": "自拍",
+            "star": "4.7",
+            "icon": "http://p19.qhimg.com/t01ef636aae4cbd.png",
+            "iconType": 2,
+            "size": "13.50M",
+            "packageName": "com.fise.app",
+            "appId": 2
+         },
+         {
+            "appName": "超级课程表",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "111",
+            "category": "日常工具",
+            "star": "4.8",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 1,
+            "size": "19.32M",
+            "packageName": "com.fise.app",
+            "appId": 3
+         },
+         {
+            "appName": "超级课程",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "321",
+            "category": "日常工具",
+            "star": "4.1",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 2,
+            "size": "19.32M",
+            "packageName": "com.fise.app",
+            "appId": 4
+         },
+         {
+            "appName": "超级",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "853",
+            "category": "日常工具",
+            "star": "4.2",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 1,
+            "size": "19.32M",
+            "packageName": "com.fise.app",
+            "appId": 5
+         },
+         {
+            "appName": "超级",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "853",
+            "category": "日常工具",
+            "star": "4.2",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 1,
+            "size": "19.32M",
+            "packageName": "com.fise.app",
+            "appId": 6
+         }
+      ]
+   }
+} 
+  
+  
+  
