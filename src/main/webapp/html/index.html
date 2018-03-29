@@ -1,291 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>小雨管理平台</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <script>
-        function getCookie(name) {
-            var start = document.cookie.indexOf(name + "=");
-            var len = start + name.length + 1;
-            if ((!start) && (name != document.cookie.substring(0, name.length))) {
-                return "";
-            }
-            if (start == -1) {
-                return "";
-            }
-            var end = document.cookie.indexOf(';', len);
-            if (end == -1) {
-                end = document.cookie.length;
-            }
-            return unescape(document.cookie.substring(len, end));
-        }
-        var token_value = getCookie("accessToken");
-        if (token_value == "") {
-            window.location.href = "login.html";
-        }
-    </script>
-    <link rel="stylesheet" href="layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="css/global.css" media="all">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link id="layuicss-skinlayercss" rel="stylesheet" href="layui/css/modules/layer/default/layer.css" media="all">
-    <style>
-        .layui-tab-title {
-            background-color: #e3eae9;
-        }
 
-        .layui-tab-title .layui-this {
-            background-color: #fff;
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Amaze UI Admin index Examples</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="resource/plugin/toastr/toastr.css"/>
+    <style>
+        .customIcon{
+            position: relative;
+            width: 22px;
+            height: 22px;
+        }
+        #iframePage{
+            width:100%;
+            height:100%;
         }
     </style>
 </head>
-<body>
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header header header-demo">
-        <div class="layui-main">
-            <a class="logo" style="left: 0;" href="index.html">
-                <span style="font-size: 22px;">小雨管理平台</span>
-            </a>
-            <ul class="layui-nav head-r-nav">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="admin-header-user">
-                        <img src="images/0.jpg" style="width: 40px; height: 40px; border-radius: 100%;">
-                        <span id="admin-header-nick"></span>
-                        <span class="layui-nav-more"></span>
+
+<body data-type="index">
+
+
+    <header class="am-topbar am-topbar-inverse admin-header">
+        <div class="am-topbar-brand">
+            <span class="tpl-logo">小雨管理平台</span>
+            <!--<a href="javascript:;" class="tpl-logo">
+                <img src="assets/img/logo.png" alt="">
+            </a>-->
+        </div>
+        <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+
+        </div>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="tpl-header-list-user-nick" id="admin-header-nick"></span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
                     </a>
-                    <dl class="layui-nav-child" style="display: none;">
-                        <dd>
-                            <a href="javascript:;" data-url="manage/myInfo/myInfo.html"><i class="fa fa-user-circle"
-                                                                                           aria-hidden="true"></i> 个人信息</a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;" id="header-safeExit"><i class="fa fa-sign-out"
-                                                                           aria-hidden="true"></i> 安全退出</a>
-                        </dd>
-                    </dl>
+                    <ul class="am-dropdown-content" id="showPerInfo">
+                        <li><a class="personal-Info" data-url="manage/myInfo/myInfo.html" data-name="个人信息" ><span class="am-icon-bell-o"></span> 资料</a></li>
+                        <li><a class="header-safeExit"><span class="am-icon-power-off "></span> 退出</a></li>
+                    </ul>
                 </li>
+                <li><a href="###" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
             </ul>
         </div>
-    </div>
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree admin-nav-tree" id="menuContent"></ul>
-        </div>
-    </div>
-    <div class="layui-body">
-        <div class="layui-tab admin-nav-card" lay-filter="admin-tab">
-            <ul class="layui-tab-title" id="admin-tab">
-                <!--<li class="layui-this">
-                    <i class="layui-icon" style="top: 2px; font-size: 16px;">&#xe63c;</i>
-                    <cite>整体概述</cite>
-                </li>-->
-            </ul>
-            <div class="layui-tab-content" id="admin-tab-container">
-                <!--<div class="layui-tab-item layui-show">
-                    <iframe src="manage/main/main.html"></iframe>
-                </div>-->
+    </header>
+
+
+
+
+
+
+
+    <div class="tpl-page-container tpl-page-header-fixed">
+
+
+        <div class="tpl-left-nav tpl-left-nav-hover">
+            <div class="tpl-left-nav-title">
+                小雨管理列表
+            </div>
+            <div class="tpl-left-nav-list">
+                <ul class="tpl-left-nav-menu">
+                    <li class="tpl-left-nav-item">
+                        <div class="input-group custom-search-form" style="margin: 0 23px 0 4px; width:90%;">
+                            <input id="menuInput" class="form-control" placeholder="Search..." type="text">
+                            <span class="input-group-btn" id="menuSearch">
+                                <button class="btn btn-default" type="button">
+                                    <i class="am-icon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="tpl-left-nav-menu tpl-left-nav-sub-menu active" id="menuDowns" style="display:block;"></ul>
+                <ul class="tpl-left-nav-menu" id="menuContent"></ul>
+                <ul class="tpl-left-nav-menu">
+                    <li class="tpl-left-nav-item">
+                        <a  class="nav-link tpl-left-nav-link-list header-safeExit">
+                            <i class="am-icon-key"></i>
+                            <span>登录</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+
+        <div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title" id="menuName">
+            </div>
+            <iframe id="iframePage"></iframe>
+        </div>
     </div>
 
-    <div class="site-tree-mobile layui-hide"><i class="layui-icon"></i></div>
-    <div class="site-mobile-shade"></div>
 
-</div>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
-<script type="text/javascript" src="js/jquery.tmpl.js"></script>
-<script src="js/Util.js"></script>
-<script src="resource/lib/jquery.md5.js"></script>
-<script src="js/index.js"></script>
-<script src="js/myDevType.js"></script>
-<script src="js/allCompanyInfo.js"></script>
-<script src="js/myUserRoles.js"></script>
-<script src="js/myAppChannels.js"></script>
-<script src="js/polling.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/iscroll.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.js"></script>
+    <script src="js/Util.js"></script>
+    <script src="resource/lib/jquery.md5.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/myDevType.js"></script>
+    <script src="js/allCompanyInfo.js"></script>
+    <script src="js/myUserRoles.js"></script>
+    <script src="js/myAppChannels.js"></script>
+    <script src="js/polling.js"></script>
+    <script type ="text/javascript" src="resource/plugin/toastr/toastr.min.js"></script>
 
 <script type="text/x-jquery-tmpl" id="pageMenu">
-<li class="layui-nav-item layui-nav-itemed">
-	<dl class=" layui-nav-child">
-		<dd>
-			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${module_id} data-url=${url}>
-				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${module_name}</cite>
-			</a>
-			<ul class="layui-nav-child" style="display: none">
-			  {{each(i,item) children}}
-		        <li>
-				<a class="children-menu" href="javascript:;" data-menuid=${item.module_id} data-url=${item.url} data-insert=${item.insert_auth} data-query=${item.query_auth} data-update=${item.update_auth}>
-				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${item.module_name}</cite>
-				</a>
-				</li>
-				{{/each}}
-	        </ul>
-		</dd>
-	</dl>
-</li>
+    <li class="tpl-left-nav-item">
+        <a href="javascript:;" class="nav-link tpl-left-nav-link-list" data-menuid=${module_id} data-url=${url}  data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth} data-name=${module_name}>
+           <img class="customIcon" src= ${"images/menuIcon/" + module_id + ".png"} />
+            <span>${module_name}</span>
+            <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+        </a>
+        <ul class="tpl-left-nav-sub-menu">
+            {{each(i,item) children}}
+                <li>
+                    <a class="childrenMenu" href="javascript:;" data-menuid=${item.module_id} data-url=${item.url} data-insert=${item.insert_auth} data-query=${item.query_auth} data-update=${item.update_auth} data-name=${item.module_name}>
+                        <i class="am-icon-angle-right"></i>
+                        <span>${item.module_name}</span>
+                        <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    </li>
 </script>
 
-<script type="text/javascript" src="layui/layui.js"></script>
-<script>
-    layui.use(['element', 'layer'], function () {
-        var element = layui.element(),
-                $ = layui.jquery,
-                layer = layui.layer;
+<script type="text/x-jquery-tmpl" id="searchMenu">
+    <li class="tpl-left-nav-item">
+        <a class="childrenMenu" href="javascript:;" class="nav-link tpl-left-nav-link-list" data-menuid=${module_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth} data-name=${module_name}>
+            <i class="am-icon-angle-right"></i>
+            <span>${module_name}</span>
+            <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+        </a>
+    </li>
+</script>
 
-        //iframe自适应
-        $(window).on('resize', function () {
-            var $content = $('.admin-nav-card .layui-tab-content');
-            $content.height($(this).height() - 131);
-            $content.find('iframe').each(function () {
-                $(this).height($content.height());
-            });
-        }).resize();
-
-
-        //添加tab
-        var $tabs = $('#admin-tab');
-        var $container = $('#admin-tab-container');
-
-        //绑定 nav 点击事件（水平nav menu）
-        $('ul.head-r-nav').find('dd > a').each(function () {
-            var $this = $(this);
-            //获取设定的url
-            var url = $this.data('url');
-            if (url !== undefined) {
-                $this.on('click', function () {
-                    var iframe = '<iframe src="' + url + '"></iframe>'
-                    var aHtml = $this.html();
-                    var count = 0;
-                    var tabIndex;
-                    $tabs.find('li').each(function (i, e) {
-                        var $cite = $(this).children('cite');
-                        if ($cite.text() === $this.find('cite').text()) {
-                            count++;
-                            tabIndex = i;
-                        }
-                        ;
-                    });
-                    //tab不存在
-                    if (count === 0) {
-                        //添加删除样式
-                        aHtml += '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>';
-                        //添加tab
-                        element.tabAdd('admin-tab', {
-                            title: aHtml,
-                            content: iframe
-                        });
-                        //iframe 自适应
-                        var $content = $('.admin-nav-card .layui-tab-content');
-                        $content.find('iframe').each(function () {
-                            $(this).height($content.height());
-                        });
-                        //绑定关闭事件
-                        $tabs = $('#admin-tab');
-                        var $li = $tabs.find('li');
-                        $li.eq($li.length - 1).children('i.layui-tab-close').on('click', function () {
-                            element.tabDelete('admin-tab', $(this).parent('li').index()).init();
-                        });
-                        //获取焦点
-                        element.tabChange('admin-tab', $li.length - 1);
-
-                    } else {
-                        //切换tab
-                        element.tabChange('admin-tab', tabIndex);
-                    }
-                });
-            }
-        });
-
-        //绑定 nav 点击事件(垂直nav menu)
-             //点击一级菜单
-        $('.layui-side-scroll').on('click', '.layui-nav-child-a', function () {
-            $(this).next().toggle(200);
-        });
-
-             //点击二级菜单
-        $('.layui-side-scroll').on('click', '.children-menu', function () {
-            var $this = $(this);
-            var url = $this.data('url');
-            var menuid = $this.data('menuid');
-            var insertRight = $this.data('insert');
-            var queryRight = $this.data('query');
-            var updateRight = $this.data('update');
-            url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
-            if (url !== undefined) {
-                var iframe = '<iframe src="' + url + '"></iframe>'
-                var aHtml = $this.html();
-                var count = 0;
-                var tabIndex;
-                $tabs.find('li').each(function (i, e) {
-                    var $cite = $(this).children('cite');
-                    if ($cite.text() === $this.find('cite').text()) {
-                        count++;
-                        tabIndex = i;
-                    }
-                    ;
-                });
-                //tab不存在
-                if (count === 0) {
-                    //添加删除样式
-                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>';
-                    //添加tab
-                    element.tabAdd('admin-tab', {
-                        title: aHtml,
-                        content: iframe
-                    });
-                    //iframe 自适应
-                    var $content = $('.admin-nav-card .layui-tab-content');
-                    $content.find('iframe').each(function () {
-                        $(this).height($content.height());
-                    });
-                    //绑定关闭事件
-                    $tabs = $('#admin-tab');
-                    var $li = $tabs.find('li');
-                    $li.eq($li.length - 1).children('i.layui-tab-close').on('click', function () {
-                        element.tabDelete('admin-tab', $(this).parent('li').index()).init();
-                    });
-                    //获取焦点
-                    element.tabChange('admin-tab', $li.length - 1);
-
-                } else {
-                    //切换tab
-                    element.tabChange('admin-tab', tabIndex);
-                }
-            }
-        });
-
-
-
-        $('#user').on('click', function () {
-            $('#user-item').toggle();
-        });
-
-
-        //手机设备的简单适配
-        var treeMobile = $('.site-tree-mobile'),
-                shadeMobile = $('.site-mobile-shade');
-        treeMobile.on('click', function () {
-            $('body').addClass('site-mobile');
-        });
-        shadeMobile.on('click', function () {
-            $('body').removeClass('site-mobile');
-        });
-    });
+<script type="text/x-jquery-tmpl" id="showMenuName">
+    <span>${name}</span>
 </script>
 
 <script type="text/javascript">
-    layui.config({
-        base: 'js/'
-    });
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
 
     //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外
     function banBackSpace(e){
@@ -320,5 +205,7 @@
         document.onkeydown=banBackSpace;
     }
 </script>
+
 </body>
+
 </html>
