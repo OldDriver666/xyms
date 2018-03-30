@@ -14,7 +14,6 @@ $(function(){
         if (url !== "" && url !== "data-insert=1") {
             $("#menuName").html('');
             $(".am-icon-big").html('');
-            $(".fenli").html('');
             $(".am-active").html('');
             var menuid = $this.data('menuid');
             var insertRight = $this.data('insert');
@@ -32,7 +31,6 @@ $(function(){
     $('.tpl-left-nav').on('click', '.childrenMenu', function () {
         $("#menuName").html('');
         $(".am-icon-big").html('');
-        $(".fenli").html('');
         $(".am-active").html('');
         var $this = $(this);
         var url = $this.data('url');
@@ -45,7 +43,6 @@ $(function(){
         if (url !== undefined) {
             $('#iframePage').attr('src', url);
             $("#menuName").html(moduleName);
-            $(".fenli").html('分类');
             $(".am-active").html(moduleName);
         }
         $('#menuDowns').html('');
@@ -117,7 +114,6 @@ $(function(){
         var url = $this.data('url');
         $("#menuName").html('');
         $(".am-icon-big").html('');
-        $(".fenli").html('');
         $(".am-active").html('');
         var moduleName = $this.data('name');
         $('#iframePage').attr('src', url);

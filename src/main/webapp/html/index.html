@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Amaze UI Admin index Examples</title>
+    <title>小雨管理平台</title>
     <meta name="description" content="这是一个 index 页面">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,10 +38,10 @@
             height:100%;
         }
         .tpl-left-nav-item .nav-link span{
-            font-size: 16px !important;
+            font-size: 14px !important;
         }
         .tpl-left-nav-sub-menu a span{
-            font-size: 15px !important;
+            font-size: 14px !important;
         }
 
     </style>
@@ -54,7 +54,7 @@
         <div class="am-topbar-brand">
             <!--<span class="tpl-logo">小雨管理平台</span>-->
             <a href="javascript:;" class="tpl-logo">
-                <img src="images/logo@3x.png" alt="">
+                <img src="images/logo@3x.png" alt="" style="width:100px;">
             </a>
         </div>
         <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
@@ -90,8 +90,8 @@
 
 
         <div class="tpl-left-nav tpl-left-nav-hover">
-            <div class="tpl-left-nav-title"></div>
-            <div class="tpl-left-nav-list" style="position:absolute; top:50px;">
+            <!--<div class="tpl-left-nav-title"></div>-->
+            <div class="tpl-left-nav-list" style="position:absolute; top:25px;">
                 <ul class="tpl-left-nav-menu">
                     <li class="tpl-left-nav-item">
                         <div class="input-group custom-search-form" style="margin: 0 23px 0 4px; width:90%;">
@@ -118,10 +118,9 @@
         </div>
 
         <div class="tpl-content-wrapper">
-            <div class="tpl-content-page-title" id="menuName"></div>
+            <div class="tpl-content-page-title" id="menuName" style="display:none;"></div>
             <ol class="am-breadcrumb">
                 <li><a href="#" class="am-icon-big"></a></li>
-                <li><a href="#" class="fenli"></a></li>
                 <li class="am-active"></li>
             </ol>
             <iframe id="iframePage"></iframe>
