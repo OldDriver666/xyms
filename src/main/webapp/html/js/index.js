@@ -5,6 +5,17 @@ $(function(){
 	var id = Util.cookieStorage.getCookie("id");
     var nickName = Util.cookieStorage.getCookie("nickName");
 
+    $('.tpl-left-nav-link-list').on('click', function() {
+        $(this).siblings('.tpl-left-nav-sub-menu').slideToggle(80)
+            .end()
+            .find('.tpl-left-nav-more-ico').toggleClass('tpl-left-nav-more-ico-rotate');
+    })
+
+    $('.tpl-header-nav-hover-ico').on('click', function() {
+        $('.tpl-left-nav').toggle();
+        $('.tpl-content-wrapper').toggleClass('tpl-content-wrapper-hover');
+    })
+
     //点击一级菜单
     $('#menuContent').on('click', '.tpl-left-nav-link-list', function () {
         $(this).next().toggle(200);
