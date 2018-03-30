@@ -25,10 +25,25 @@
             width: 22px;
             height: 22px;
         }
+        #menuDowns{
+            display: block;
+            z-index: 1000;
+            width:100%;
+            position: absolute;
+            opacity: 1;
+            background: #e3e3e3;
+        }
         #iframePage{
             width:100%;
             height:100%;
         }
+        .tpl-left-nav-item .nav-link span{
+            font-size: 16px !important;
+        }
+        .tpl-left-nav-sub-menu a span{
+            font-size: 15px !important;
+        }
+
     </style>
 </head>
 
@@ -37,10 +52,10 @@
 
     <header class="am-topbar am-topbar-inverse admin-header">
         <div class="am-topbar-brand">
-            <span class="tpl-logo">小雨管理平台</span>
-            <!--<a href="javascript:;" class="tpl-logo">
-                <img src="assets/img/logo.png" alt="">
-            </a>-->
+            <!--<span class="tpl-logo">小雨管理平台</span>-->
+            <a href="javascript:;" class="tpl-logo">
+                <img src="images/logo@3x.png" alt="">
+            </a>
         </div>
         <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
 
@@ -60,7 +75,7 @@
                         <li><a class="header-safeExit"><span class="am-icon-power-off "></span> 退出</a></li>
                     </ul>
                 </li>
-                <li><a href="###" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
+                <li><a class="tpl-header-list-link header-safeExit"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
             </ul>
         </div>
     </header>
@@ -75,14 +90,12 @@
 
 
         <div class="tpl-left-nav tpl-left-nav-hover">
-            <div class="tpl-left-nav-title">
-                小雨管理列表
-            </div>
-            <div class="tpl-left-nav-list">
+            <div class="tpl-left-nav-title"></div>
+            <div class="tpl-left-nav-list" style="position:absolute; top:50px;">
                 <ul class="tpl-left-nav-menu">
                     <li class="tpl-left-nav-item">
                         <div class="input-group custom-search-form" style="margin: 0 23px 0 4px; width:90%;">
-                            <input id="menuInput" class="form-control" placeholder="Search..." type="text">
+                            <input id="menuInput" class="form-control" placeholder="查询菜单..." type="text" >
                             <span class="input-group-btn" id="menuSearch">
                                 <button class="btn btn-default" type="button">
                                     <i class="am-icon-search"></i>
@@ -91,7 +104,7 @@
                         </div>
                     </li>
                 </ul>
-                <ul class="tpl-left-nav-menu tpl-left-nav-sub-menu active" id="menuDowns" style="display:block;"></ul>
+                <ul class="tpl-left-nav-menu tpl-left-nav-sub-menu active" id="menuDowns" ></ul>
                 <ul class="tpl-left-nav-menu" id="menuContent"></ul>
                 <ul class="tpl-left-nav-menu">
                     <li class="tpl-left-nav-item">
@@ -105,8 +118,12 @@
         </div>
 
         <div class="tpl-content-wrapper">
-            <div class="tpl-content-page-title" id="menuName">
-            </div>
+            <div class="tpl-content-page-title" id="menuName"></div>
+            <ol class="am-breadcrumb">
+                <li><a href="#" class="am-icon-big"></a></li>
+                <li><a href="#" class="fenli"></a></li>
+                <li class="am-active"></li>
+            </ol>
             <iframe id="iframePage"></iframe>
         </div>
     </div>
@@ -151,17 +168,13 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="searchMenu">
-    <li class="tpl-left-nav-item">
+    <li class="tpl-left-nav-item searchItem">
         <a class="childrenMenu" href="javascript:;" class="nav-link tpl-left-nav-link-list" data-menuid=${module_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth} data-name=${module_name}>
             <i class="am-icon-angle-right"></i>
             <span>${module_name}</span>
             <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
         </a>
     </li>
-</script>
-
-<script type="text/x-jquery-tmpl" id="showMenuName">
-    <span>${name}</span>
 </script>
 
 <script type="text/javascript">

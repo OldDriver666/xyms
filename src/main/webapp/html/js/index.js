@@ -13,21 +13,27 @@ $(function(){
         var url = $this.data('url');
         if (url !== "" && url !== "data-insert=1") {
             $("#menuName").html('');
+            $(".am-icon-big").html('');
+            $(".fenli").html('');
+            $(".am-active").html('');
             var menuid = $this.data('menuid');
             var insertRight = $this.data('insert');
             var queryRight = $this.data('query');
             var updateRight = $this.data('update');
             var moduleName = $this.data('name');
-            var nameArray = [{name: moduleName}]
             url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
             $('#iframePage').attr('src', url);
-            $("#showMenuName").tmpl(nameArray).appendTo('#menuName');
+            $("#menuName").html(moduleName);
+            $(".am-icon-big").html(moduleName);
         }
     });
 
     //点击二级菜单
     $('.tpl-left-nav').on('click', '.childrenMenu', function () {
         $("#menuName").html('');
+        $(".am-icon-big").html('');
+        $(".fenli").html('');
+        $(".am-active").html('');
         var $this = $(this);
         var url = $this.data('url');
         var menuid = $this.data('menuid');
@@ -35,13 +41,50 @@ $(function(){
         var queryRight = $this.data('query');
         var updateRight = $this.data('update');
         var moduleName = $this.data('name');
-        var nameArray = [{name: moduleName}]
         url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
         if (url !== undefined) {
             $('#iframePage').attr('src', url);
-            $("#showMenuName").tmpl(nameArray).appendTo('#menuName');
+            $("#menuName").html(moduleName);
+            $(".fenli").html('分类');
+            $(".am-active").html(moduleName);
         }
         $('#menuDowns').html('');
+        if($(this).parent().attr('class') == 'tpl-left-nav-item searchItem'){
+            $("#menuContent li ul li a").each(function(){
+                if($(this).data('name') == moduleName){
+                    $(this).parent().parent().slideDown(200);
+                    $(this).parent().parent().parent().siblings().find('.tpl-left-nav-sub-menu').slideUp(200);
+                    $(".am-icon-big").html($(this).parent().parent().prev().data('name'));
+                }
+            });
+        } else{
+            $(".am-icon-big").html($(this).parent().parent().prev().data('name'));
+        }
+    });
+
+    //模糊搜索菜单栏功能
+    $("#menuInput").bind('change',function(){
+        if($("#menuInput").val() == ''){
+            $('#menuDowns').html("");
+            return
+        }
+        $('#menuDowns').html("");
+        var url = ctx + "xiaoyusvr/boss/role/queryAuthByName";
+        var data = {
+            "role_id":parseInt(roleId),
+            "company_id":parseInt(companyId),
+            "name": $("#menuInput").val()
+        };
+        var moduleId= 0;
+        Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+            if(result.code == ReturnCode.SUCCESS){
+                $("#searchMenu").tmpl(result.data).appendTo('#menuDowns');
+            }  else {
+                toastr.error(result.msg);
+            }
+        },function() {
+            toastr.error("服务器开个小差，请稍后重试！");
+        });
     });
 
     //模糊搜索菜单栏功能
@@ -73,11 +116,12 @@ $(function(){
         var $this = $(this);
         var url = $this.data('url');
         $("#menuName").html('');
+        $(".am-icon-big").html('');
+        $(".fenli").html('');
+        $(".am-active").html('');
         var moduleName = $this.data('name');
-        var nameArray = [{name: moduleName}]
         $('#iframePage').attr('src', url);
-        $("#showMenuName").tmpl(nameArray).appendTo('#menuName');
-        /*$('#showPerInfo').toggle();*/
+        $("#menuName").html(moduleName);
     });
 
     //安全退出
