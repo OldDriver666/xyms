@@ -129,6 +129,8 @@ $(function(){
         var moduleName = $this.data('name');
         $('#iframePage').attr('src', url);
         $("#menuName").html(moduleName);
+        $(".am-icon-big").html(moduleName);
+        $(".am-active").html('');
     });
 
     //安全退出
