@@ -16,6 +16,7 @@ $(function(){
         $('.tpl-content-wrapper').toggleClass('tpl-content-wrapper-hover');
     })
 
+
     //点击一级菜单
     $('#menuContent').on('click', '.tpl-left-nav-link-list', function () {
         $(this).next().toggle(200);
@@ -131,7 +132,12 @@ $(function(){
         $("#menuName").html(moduleName);
         $(".am-icon-big").html(moduleName);
         $(".am-active").html('');
+        $("#showPerInfo").toggle(200);
     });
+
+    $("#headerNick").on('click', function(){
+        $("#showPerInfo").toggle(200);
+    })
 
     //安全退出
     $(".header-safeExit").on('click', function(){

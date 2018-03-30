@@ -65,8 +65,8 @@
         <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
-                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
-                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                <li class="am-dropdown" data-am-dropdown >
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;"  id="headerNick">
                         <span class="tpl-header-list-user-nick" id="admin-header-nick"></span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
                     </a>
                     <ul class="am-dropdown-content" id="showPerInfo">
@@ -80,18 +80,13 @@
     </header>
 
 
-
-
-
-
-
     <div class="tpl-page-container tpl-page-header-fixed" style="position:relative;">
 
 
         <div class="tpl-left-nav tpl-left-nav-hover">
             <!--<div class="tpl-left-nav-title"></div>-->
             <div class="tpl-left-nav-list" style="position:absolute; top:25px;">
-                <ul class="tpl-left-nav-menu">
+                <ul class="tpl-left-nav-menu ">
                     <li class="tpl-left-nav-item">
                         <div class="input-group custom-search-form" style="margin: 0 23px 0 4px; width:90%;">
                             <input id="menuInput" class="form-control" placeholder="查询菜单..." type="text" >
@@ -104,6 +99,7 @@
                     </li>
                 </ul>
                 <ul class="tpl-left-nav-menu tpl-left-nav-sub-menu active" id="menuDowns" ></ul>
+
                 <ul class="tpl-left-nav-menu" id="menuContent"></ul>
                 <ul class="tpl-left-nav-menu">
                     <li class="tpl-left-nav-item">
@@ -132,7 +128,6 @@
     <script src="assets/js/iscroll.js"></script>
     <script src="assets/js/app.js"></script>-->
     <script src="js/jquery.min.js"></script>
-    <script src="assets/js/amazeui.min.js"></script>
     <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
     <script type="text/javascript" src="js/jquery.tmpl.js"></script>
     <script src="js/Util.js"></script>
