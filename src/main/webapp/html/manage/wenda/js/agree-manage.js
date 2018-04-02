@@ -34,14 +34,14 @@ $(function() {
 		loadPageData : function() {
 			var search_userid = $("#input-search-userid").val();
             var search_answerid = $("#input-search-answerid").val();
-
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/agree/queryback";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "user_id":search_userid,
                     "answer_id":search_answerid

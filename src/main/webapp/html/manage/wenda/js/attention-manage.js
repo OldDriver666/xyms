@@ -34,13 +34,14 @@ $(function() {
 		loadPageData : function() {
 			var search_userid = $("#input-search-userid").val();
             var search_questionid = $("#input-search-questionid").val();
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/concern/queryback";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "user_id":search_userid,
                     "problem_id":search_questionid

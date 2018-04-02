@@ -49,13 +49,14 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
 			var search_sensitiveword = $("#input-search-sensitiveword").val();
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/sensitiveword/query";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "sensitive_word":search_sensitiveword
                 };

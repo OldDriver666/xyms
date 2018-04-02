@@ -35,14 +35,14 @@ $(function() {
 			var search_answerid = $("#input-search-answerid").val();
             var search_commentid = $("#input-search-commentid").val();
             var search_problemid = $("#input-search-problemid").val();
-
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/comment/queryback";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "answer_id":search_answerid,
                     "comment_id":search_commentid,

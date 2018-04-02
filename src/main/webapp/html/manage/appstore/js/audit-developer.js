@@ -33,11 +33,12 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
 			var url = ctx + "xiaoyusvr/boss/developer/query";
 			var data = new Object();
 			data.page_no = 1;
-			data.page_size = 20;
+			data.page_size = page_content_num;
 			data.param = {
 				"developer_id": null,
 				"account":$("#input-search-account").val(),

@@ -156,13 +156,13 @@ $(function() {
     var nowTime = getNowFormatDate();//当前日期
     var init_days = 3;//初始时的天数
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
-    action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
+    //action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
     //点击日期选择天数，显示相应天数的数据
     $(".group li").on("click",function(){
         $(this).addClass("curr").siblings().removeClass("curr");
         var days = $(this).data("days");
         var starDate = changeDate(nowTime, days);
-        action.getUseRegData(starDate,nowTime,days);
+        //action.getUseRegData(starDate,nowTime,days);
     });
     //计算当前日期减去天数=目标日期
     function changeDate(date, days) {

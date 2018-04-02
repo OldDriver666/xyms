@@ -51,14 +51,14 @@ $(function() {
 		loadPageData : function() {
 			var search_Title = $("#input-search-title").val();
             var search_Nick = $("#input-search-nick").val();
-
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/problem/queryback";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "title":search_Title
                 };
@@ -182,16 +182,16 @@ $(function() {
 
 
 	//验证表单
-    $("#form-addTempl").validate({
-        rules : {
-        }
-    });
-
-    $("#dev-query-condition").validate({
-        rules : {
-
-        }
-    });
+    // $("#form-addTempl").validate({
+     //    rules : {
+     //    }
+    // });
+    //
+    // $("#dev-query-condition").validate({
+     //    rules : {
+    //
+     //    }
+    // });
     $("#input-userID").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");

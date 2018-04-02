@@ -47,13 +47,14 @@ $(function() {
             var search_phone = $("#input-search-phone").val();
             var search_user_id = parseInt($("#input-search-user_id").val());
             var search_online_status = parseInt($("#input-search-online_status option:selected").val());
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/boss/user/query";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = page_content_num;
                 data.param = {
                     "domain":search_domain,
                     "phone":search_phone,
@@ -101,7 +102,7 @@ $(function() {
                     var url_query = ctx + "xiaoyusvr/boss/departconf/queryimdepartconfig";
                     var moduleId_query = 0;
                     var data_query = new Object();
-                    data_query.depart_id = parseInt(companyId);
+                    //data_query.depart_id = parseInt(companyId);
                     data_query.client_type = null;
                     Util.ajaxLoadData(url_query,data_query,moduleId_query,"POST",true,function(result_query) {
                         if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){

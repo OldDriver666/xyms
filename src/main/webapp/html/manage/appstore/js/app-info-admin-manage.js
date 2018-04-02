@@ -34,13 +34,14 @@ $(function() {
 		loadPageData : function() {
 			var search_appname = $("#input-search-appname").val();
             var search_status = parseInt($('#input-search-status option:selected').val());
+            var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "xiaoyusvr/appinformation/appQuery";
             var data = new Object();
             data.page_no = 1;
-            data.page_size = 20;
+            data.page_size = page_content_num;
             data.param = {
                 "dev_id": null,
                 "app_name":search_appname,
