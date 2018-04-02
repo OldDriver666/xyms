@@ -311,6 +311,9 @@ $(function() {
             action.loadPageData();
         }
     });
+    $("#input-page-content-num").change(function() {
+        action.loadPageData();
+    });
     $("#input-search-user_id").on('keydown', function(e) {
         if(isNaN($("#input-search-user_id").val())) {
             $("#input-search-user_id").parent().addClass("has-error");

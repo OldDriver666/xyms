@@ -186,6 +186,9 @@ $(function() {
             action.loadPageData();
         }
 	});
+    $("#input-page-content-num").change(function() {
+        action.loadPageData();
+    });
     $("#input-search-commentid").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();

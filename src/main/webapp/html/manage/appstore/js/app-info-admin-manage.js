@@ -393,7 +393,9 @@ $(function() {
             action.loadPageData();
         }
 	});
-
+    $("#input-page-content-num").change(function() {
+        action.loadPageData();
+    });
 });
 
 

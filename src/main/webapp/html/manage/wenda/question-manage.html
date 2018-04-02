@@ -51,6 +51,12 @@
 			left: 0px;
 			z-index: 100;
 		}
+		.btn-active{
+			color:#3bb4f2;
+		}
+		.btn-active:link,.btn-active:visited{
+			color:#3bb4f2;
+		}
 
 	</style>
 </head>
@@ -78,12 +84,12 @@
 								</select>
 							</div>
 						</div>
-						<button id="btn-search" type="button" class="btn btn-default">
+						<button id="btn-search" type="button" class="btn btn-default btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
 					</div>
 					<div class="navbar-form navbar-right">
-						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+						<button id="btn-add" type="button" class="btn btn-default btn-success" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加问题</span>
 						</button>
 					</div>
@@ -255,7 +261,11 @@
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+		<a href="javascript:void(0);" class="table-edit-btn">
+			<button type="button" class="btn btn-default btn-sm btn-active">
+			<span class="glyphicon glyphicon-edit"></span> 编辑
+			</button>
+		</a>
 	</td>
 </tr>
 </script>

@@ -202,6 +202,9 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
+    $("#input-page-content-num").change(function() {
+        action.loadPageData();
+    });
 	$("#input-search-channelid").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
