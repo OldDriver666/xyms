@@ -53,7 +53,7 @@
 								</select>
 							</div>
 						</div>
-						<button id="btn-search" type="button" class="btn btn-default">
+						<button id="btn-search" type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
 					</div>
@@ -209,7 +209,11 @@
 	<td style="display:none">${idCard}</td>
 	<td style="display:none">${cardPhoto}</td>
 	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">审核</a>
+	    <a href="javascript:void(0);" class="table-edit-btn">
+			<button type="button" class="btn btn-default btn-sm btn-check">
+			<span class="glyphicon glyphicon-check"></span> 审核
+			</button>
+		</a>
 	</td>
 </tr>
 </script>

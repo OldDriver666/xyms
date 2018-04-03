@@ -53,7 +53,7 @@
 						<!--<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加管理员</span>
 						</button>-->
-						<button id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
+						<button id="btn-add-userRoles" type="button" class="btn btn-success" data-toggle="modal" data-target="#addTempl2-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加用户角色</span>
 						</button>
 					</div>
@@ -286,7 +286,11 @@
 	<td style="display:none;">${company_id}</td>
 	<td style="display:none;">${depart_id}</td>
 	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	    <a href="javascript:void(0);" class="table-edit-btn">
+			<button type="button" class="btn btn-default btn-sm btn-edit">
+			<span class="glyphicon glyphicon-edit"></span> 编辑
+			</button>
+		</a>
 	   <!--<a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>-->
 	</td>
 </tr>

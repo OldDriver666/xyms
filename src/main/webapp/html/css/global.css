@@ -368,3 +368,15 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 #table, #table th {
   text-align: center !important;
 }*/
+
+/*按钮样式*/
+.table-edit-btn .btn-edit {color:#3bb4f2;}
+.table-edit-btn .btn-edit:link,.table-edit-btn .btn-edit:visited {color:#3bb4f2;  }
+.table-del-btn .btn-del {color: #dd514c;}
+.table-del-btn .btn-del:link,.table-del-btn .btn-del:visited {color:#dd514c;  }
+.table-edit-btn .btn-check {color: #F37B1D;}
+.table-edit-btn .btn-check:link,.table-edit-btn .btn-check:visited {color:#F37B1D;  }
+.table-edit-btn .btn-add {color: #4db14d;}
+.table-edit-btn .btn-add:link,.table-edit-btn .btn-add:visited {color:#4db14d;  }
+.table-edit-btn .btn-eye {color: #ffe764;}
+.table-edit-btn .btn-eye:link,.table-edit-btn .btn-eye:visited {color:#ffe764;  }

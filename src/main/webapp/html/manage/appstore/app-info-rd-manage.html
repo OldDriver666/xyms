@@ -47,6 +47,7 @@
 			word-wrap:break-word;
 			word-break:break-all;
 		}
+		a:hover {text-decoration: none;}
 
 	</style>
 </head>
@@ -82,12 +83,12 @@
 								</select>
 							</div>
 						</div>
-						<button id="btn-search" type="button" class="btn btn-default">
+						<button id="btn-search" type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
 					</div>
 					<div class="navbar-form navbar-right">
-						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+						<button id="btn-add" type="button" class="btn btn-success" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加应用</span>
 						</button>
 						<!--<button style="display:none" id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
@@ -488,8 +489,16 @@
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
-	       <a href="javascript:void(0);" class="table-edit-btn">查看</a>
-	       <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
+			<a href="javascript:void(0);" class="table-edit-btn">
+				<button type="button" class="btn btn-default btn-sm btn-eye">
+					<span class="glyphicon glyphicon-eye-open"></span> 查看
+				</button>
+			</a>
+			<a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteConfig(${id})">
+				<button type="button" class="btn btn-default btn-sm btn-del">
+					<span class="glyphicon glyphicon-trash"></span> 删除
+				</button>
+			</a>
 	</td>
 </tr>
 </script>

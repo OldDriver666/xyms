@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+	<style>
+		a:hover {text-decoration: none;}
+	</style>
 </head>
 
 <body>
@@ -16,7 +19,7 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-form navbar-right">
-						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+						<button id="btn-add" type="button" class="btn btn-success" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加菜单信息</span>
 						</button>
 					</div>
@@ -135,8 +138,16 @@
 	<td class="td-parent_id">${parentId}</td>
 	<td class="td-status">{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
 	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	    <a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteItem(${id})">删除</a>
+		<a href="javascript:void(0);" class="table-edit-btn">
+	    	<button type="button" class="btn btn-default btn-sm btn-edit">
+				<span class="glyphicon glyphicon-edit"></span> 编辑
+			</button>
+		</a>
+	    <a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteItem(${id})">
+	    	<button type="button" class="btn btn-default btn-sm btn-del">
+				<span class="glyphicon glyphicon-trash"></span> 删除
+			</button>
+	    </a>
 	</td>
 </tr>
 </script>

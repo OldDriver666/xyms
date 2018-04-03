@@ -70,7 +70,7 @@
 								</select>
 							</div>
 						</div>
-						<button id="btn-search" type="button" class="btn btn-default">
+						<button id="btn-search" type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
 					</div>
@@ -423,12 +423,20 @@
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 	    <div class="showmore">
-	       <a href="javascript:void(0);" class="table-edit-btn">审核</a>
+	       	<a href="javascript:void(0);" class="table-edit-btn">
+				<button type="button" class="btn btn-default btn-sm btn-check">
+				<span class="glyphicon glyphicon-check"></span> 审核
+				</button>
+			</a>
 	    </div>
 	</td>
 	<td class="table-update">
 	    <div class="showmore">
-	       <a href="javascript:void(0);" class="table-add-btn">添加到频道</a>
+	       <a href="javascript:void(0);" class="table-edit-btn">
+				<button type="button" class="btn btn-default btn-sm btn-add">
+				<span class="glyphicon glyphicon-plus"></span> 添加到频道
+				</button>
+			</a>
 	       <!--<a href="javascript:void(0);" onclick="action.addToChannel(${id})">添加到频道</a>-->
 	    </div>
 	</td>
