@@ -4193,3 +4193,139 @@ null 没有数据返回 看code是否成功
       	]
 }      	
 ```
+
+###投诉
+####投诉查询
+|   接口地址    |   xiaoyusvr/boss/complaints/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+      "param":{  
+     	          "plaintiffName":"甲方",            //投诉方
+                   "defendantName": "乙方",           //被投诉方
+                   "defendantType": "群",             //被投诉方类型(群,个人)
+                   "complaintType": "广告"            //投诉类型(黄 赌 毒 骗 广告)
+     		  },
+      "page_no":1,
+      "page_size":10   
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 2,
+      "total_page_count": 1,
+      
+      "result": [
+         {
+            "id": 1,
+            "plaintiffId": "jf",
+            "plaintiffName": "甲方",
+            "defendantId": "yf",
+            "defendantName": "乙方",
+            "defendantType": "群",
+            "complaintType": "广告",
+            "content": "大力金刚丸",
+            "picture": "1111"
+         },
+         {
+            "id": 2,
+            "plaintiffId": "jf",
+            "plaintiffName": "甲方",
+            "defendantId": "yf",
+            "defendantName": "乙方",
+            "defendantType": "群",
+            "complaintType": "广告",
+            "content": "大力金刚丸",
+            "picture": "2222"
+         }
+      ]
+   }
+```
+
+####新增投诉
+|   接口地址    |   xiaoyusvr/boss/complaints/insert   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "plaintiffId": "jf",        //投诉方id
+	"plaintiffName": "甲方",     //投诉方名称
+	"defendantId": "yf",        //被投诉方id
+	"defendantName": "乙方",     //被投诉方名称
+	"defendantType": "群",       //被投诉方类型
+	"complaintType": "广告",     //投诉类型
+	"content": "大力金刚丸",      //投诉内容
+	"picture": "1111"           //图片地址
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####修改投诉
+|   接口地址    |   xiaoyusvr/boss/complaints/update   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "id":1,
+     "plaintiffId": "jf",        //投诉方id
+	"plaintiffName": "甲方",     //投诉方名称
+	"defendantId": "yf",        //被投诉方id
+	"defendantName": "乙方",     //被投诉方名称
+	"defendantType": "群",       //被投诉方类型
+	"complaintType": "广告",     //投诉类型
+	"content": "大力金刚丸",      //投诉内容
+	"picture": "1111"           //图片地址
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####删除投诉
+|   接口地址    |   xiaoyusvr/boss/complaints/delete   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "id":1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+
+
