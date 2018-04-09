@@ -151,6 +151,8 @@ $(function() {
 					}
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
+                    $("#add-search-userRoles").selectpicker('refresh');
+                    $("#input-search-userRoles").selectpicker('refresh');
 				} else {
 					toastr.error(result.msg);
 				}
@@ -171,6 +173,9 @@ $(function() {
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
+                    $("#input-search-company_id").selectpicker('refresh');
+                    $("#add-companyId").selectpicker('refresh');
+                    $("#role-companyId").selectpicker('refresh');
 					if(1 !== parseInt(roleId)){
 						var Lens2 = allCompanyArray.length;
 						for(var i=0; i< Lens2; i++){

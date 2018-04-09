@@ -94,6 +94,8 @@ $(function() {
 					allDevTypeArray = result.data;
 					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
 					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+                    $("#input-search-client_type").selectpicker('refresh');
+                    $("#input-devType").selectpicker('refresh');
 				} else {
 				}
 			},function() {
@@ -115,6 +117,8 @@ $(function() {
 					allCompanyArray = result.data;
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
+                    $("#input-search-depart_id").selectpicker('refresh');
+                    $("#input-depart_id").selectpicker('refresh');
 				} else {
 				}
 			},function() {

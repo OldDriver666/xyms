@@ -104,6 +104,9 @@ $(function() {
                     $("#pageUserRoles").tmpl(result.data).appendTo('#search-input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-devType2');
+                    $("#search-input-userRoles").selectpicker('refresh');
+                    $("#input-userRoles").selectpicker('refresh');
+                    $("#input-devType2").selectpicker('refresh');
                 } else {
                     toastr.error(result.msg);
                 }
@@ -120,6 +123,7 @@ $(function() {
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
+                    $("#input-moduleName").selectpicker('refresh');
                 } else {
                     toastr.error(result.msg);
                 }

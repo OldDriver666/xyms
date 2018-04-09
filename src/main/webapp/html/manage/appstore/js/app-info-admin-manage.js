@@ -134,6 +134,7 @@ $(function() {
                 },
                 "resultFilter" : function(result) {
                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
+                    $("#input-channels").selectpicker('refresh');
                    /* //return result.data.result;*/
                 },
                 "param" : data

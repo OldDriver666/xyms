@@ -239,6 +239,7 @@ $(function() {
                 "resultFilter" : function(result) {
                     $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
+                    $("#searchchannels").selectpicker('refresh');
                 },
                 "param" : data
             };

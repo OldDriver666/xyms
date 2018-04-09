@@ -6,6 +6,7 @@
 	<title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap-select.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 	<style>
@@ -37,8 +38,8 @@
 				<div class="container-fluid">
 					<div class="navbar-form navbar-left">
 						<div class="form-group" >
-							<div class="col-sm-10">
-								<select name="search-userRoles" id="search-input-userRoles" class="form-control">
+							<div class="col-sm-10" style="min-width: 172px">
+								<select name="search-userRoles" id="search-input-userRoles" class="selectpicker show-menu-arrow show-tick form-control">
 									<option value="">请选择角色类型</option>
 								</select>
 							</div>
@@ -66,8 +67,8 @@
 										<input type="hidden" id="input-permissId">
 										<div class="form-group" id="input-moduleName-wrap">
 											<label for="input-moduleName" class="col-sm-2 control-label"><span class="necessary">*</span>菜单名称</label>
-											<div class="col-sm-10">
-												<select name="moduleName" id="input-moduleName" class="form-control">
+											<div class="col-sm-10" style="min-width: 172px">
+												<select name="moduleName" id="input-moduleName" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择菜单名称</option>
 												</select>
 											</div>
@@ -119,8 +120,8 @@
 										</div>
 										<div class="form-group" id="input-userRoles-wrap">
 											<label for="input-userRoles" class="col-sm-2 control-label"><span class="necessary">*</span>角色类型</label>
-											<div class="col-sm-10">
-												<select name="userRoles" id="input-userRoles" class="form-control">
+											<div class="col-sm-10" style="min-width: 172px">
+												<select name="userRoles" id="input-userRoles" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择角色类型</option>
 												</select>
 											</div>
@@ -202,8 +203,8 @@
 										</div>
 										<div class="form-group" id="input-userRoles-wrap2">
 											<label for="input-userRoles2" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型</label>
-											<div class="col-sm-10">
-												<select name="userRoles2" id="input-userRoles2" class="form-control">
+											<div class="col-sm-10" style="min-width: 162px">
+												<select name="userRoles2" id="input-userRoles2" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择</option>
 												</select>
 											</div>
@@ -261,6 +262,7 @@
 
 <script type ="text/javascript" src="../../js/jquery.min.js"></script>
 <script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap-select.js"></script>
 <script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>

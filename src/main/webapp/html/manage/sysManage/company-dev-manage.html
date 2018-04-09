@@ -6,8 +6,12 @@
 <title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap-select.css"/>
 	<link rel="stylesheet" href="../../css/uploadImg.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+	<style>
+		a:hover{text-decoration: none;}
+	</style>
 </head>
 
 <body>
@@ -23,15 +27,15 @@
 					</div>
 					<div class="navbar-form navbar-left">
 						<div class="form-group" >
-							<div class="col-sm-10">
-								<select name="searchName" id="input-search-name" class="form-control">
+							<div class="col-sm-10" style="min-width: 300px">
+								<select name="searchName" id="input-search-name" class="selectpicker show-menu-arrow show-tick form-control">
 									<option value="">请选择公司名称</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group" >
-							<div class="col-sm-10">
-								<select name="searchType" id="input-search-client_type" class="form-control">
+							<div class="col-sm-10"style="min-width: 220px">
+								<select name="searchType" id="input-search-client_type" class="selectpicker show-menu-arrow show-tick form-control">
 									<option value="">请选择设备类型</option>
 								</select>
 							</div>
@@ -57,8 +61,8 @@
 										<input type="hidden" id="input-config_id">
 										<div class="form-group" id="input-depart_id-wrap">
 											<label for="input-depart_id" class="col-sm-2 control-label"><span class="necessary">*</span>公司名称</label>
-											<div class="col-sm-10">
-												<select name="depart_id" id="input-depart_id" class="form-control">
+											<div class="col-sm-10"style="min-width: 300px">
+												<select name="depart_id" id="input-depart_id" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择公司名称</option>
 												</select>
 											</div>
@@ -78,8 +82,8 @@
 
 										<div class="form-group" id="input-devType-wrap">
 											<label for="input-devType" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型</label>
-											<div class="col-sm-10">
-												<select name="devType" id="input-devType" class="form-control">
+											<div class="col-sm-10" style="min-width: 172px">
+												<select name="devType" id="input-devType" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择设备类型</option>
 												</select>
 											</div>
@@ -161,6 +165,7 @@
 
 <script type ="text/javascript" src="../../js/jquery.min.js"></script>
 <script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap-select.js"></script>
 <script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
@@ -180,8 +185,16 @@
 	<td> <img src= ${headPicUrl + avatar} ></td>
 	<td style="display:none;">${client_type}</td>
 	<td class="table-update">
-	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	    <a href="javascript:void(0);" onclick="action.deleteConfig(${config_id})">删除</a>
+	    <a href="javascript:void(0);" class="table-edit-btn">
+	    	<button type="button" class="btn btn-default btn-sm btn-edit">
+			<span class="glyphicon glyphicon-edit"></span> 编辑
+			</button>
+		</a>
+	    <a href="javascript:void(0);" onclick="action.deleteConfig(${config_id})">
+	    	<button type="button" class="btn btn-default btn-sm btn-del">
+				<span class="glyphicon glyphicon-trash"></span> 删除
+			</button>
+		</a>
 	</td>
 </tr>
 </script>
@@ -201,6 +214,7 @@
 			}
 		}
 	}
+
 	/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(id){

@@ -163,6 +163,8 @@ $(function() {
                     allDevTypeArray = result.data;
                     $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
                     $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+                    $("#input-devType").selectpicker('refresh');
+                    $("#input-search-client_type").selectpicker('refresh');
                 } else {
                 }
             },function() {
@@ -234,7 +236,10 @@ $(function() {
                     allCompanyArray = result.data;
                     $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
                     $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+                    $("#input-search-name").selectpicker('refresh');
+                    $("#input-depart_id").selectpicker('refresh');
                 } else {
+
                 }
             },function() {
             });

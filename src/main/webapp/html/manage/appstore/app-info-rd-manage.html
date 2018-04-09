@@ -6,6 +6,7 @@
 	<title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap-select.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../css/uploadImg.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
@@ -57,13 +58,23 @@
 		<div class="mod-body">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
-					<div id="dev-query-condition" class="navbar-form navbar-left">
+					<div id="dev-query-condition" class="navbar-form navbar-left" style="padding-left: 0px;">
+						<div class="form-group">
+							<div class="col-sm-10" style="min-width: 102px; padding-left: 0px;padding-right: 22px">
+								<select name="search-online_status" id="input-page-content-num" class="selectpicker show-menu-arrow show-tick form-control">
+									<option value="10" selected="selected">10行</option>
+									<option value="25">25行</option>
+									<option value="50">50行</option>
+									<option value="100">100行</option>
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<input id="input-search-appname" type="text" class="form-control" placeholder="请输入应用名称">
 						</div>
 						<div class="form-group" >
-							<div class="col-sm-10">
-								<select name="search-status" id="input-search-status" class="form-control">
+							<div class="col-sm-10"style="min-width: 162px">
+								<select name="search-status" id="input-search-status" class="selectpicker show-menu-arrow show-tick form-control">
 									<option value="">请选择状态</option>
 									<option value="0">待审核</option>
 									<option value="1">发布</option>
@@ -72,16 +83,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-sm-10">
-								<select name="search-online_status" id="input-page-content-num" class="form-control">
-									<option value="10" selected="selected">10行</option>
-									<option value="25">25行</option>
-									<option value="50">50行</option>
-									<option value="100">100行</option>
-								</select>
-							</div>
-						</div>
+
 						<button id="btn-search" type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
@@ -162,8 +164,8 @@
 										</div>
 										<div class="form-group" id="categorySelect">
 											<label class="col-sm-3 control-label"><span class="necessary">*</span>应用小类型</label>
-											<div class="col-sm-9" id="categorySelectItem">
-												<select id="category1" class="form-control" >
+											<div class="col-sm-9" id="categorySelectItem"style="min-width: 220px">
+												<select id="category1" class="selectpicker show-menu-arrow show-tick form-control" >
 													<option value="" >请选择应用小类型</option>
 													<option value="1" >常用工具</option>
 													<option value="2">育儿母婴</option>
@@ -177,11 +179,11 @@
 													<option value="10">音乐</option>
 													<option value="11" >通讯</option>
 												</select>
-												<select id="category2" class="form-control" style="display: none">
+												<select id="category2" class="selectpicker show-menu-arrow show-tick form-control" style="display: none">
 													<option value="" >请选择应用小类型</option>
 													<option value="12" >游戏</option>
 												</select>
-												<select id="category3" class="form-control" style="display: none">
+												<select id="category3" class="selectpicker show-menu-arrow show-tick form-control" style="display: none">
 													<option value="" >请选择应用小类型</option>
 													<option value="13" >电子书</option>
 												</select>
@@ -195,8 +197,8 @@
 										</div>
 										<div class="form-group" id="appchannelSelect">
 											<label class="col-sm-3 control-label"><span class="necessary">*</span>应用频道</label>
-											<div class="col-sm-9">
-												<select name="searchchannels" id="searchchannels" class="form-control">
+											<div class="col-sm-9"style="min-width: 162px">
+												<select name="searchchannels" id="searchchannels" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择频道</option>
 												</select>
 												<!--<select name="search-channels" id="channels" class="form-control">
@@ -449,6 +451,7 @@
 
 <script type ="text/javascript" src="../../js/jquery.min.js"></script>
 <script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap-select.js"></script>
 <script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>

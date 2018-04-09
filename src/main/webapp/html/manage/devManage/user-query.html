@@ -6,6 +6,7 @@
 	<title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap-select.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 	<style>
@@ -35,7 +36,17 @@
 		<div class="mod-body">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
-					<div id="dev-query-condition" class="navbar-form navbar-left">
+					<div id="dev-query-condition" class="navbar-form navbar-left" style="padding-left: 0px">
+						<div class="form-group">
+							<div class="col-sm-10" style="min-width: 102px; padding-left: 0px;padding-right: 22px">
+								<select name="search-online_status" id="input-page-content-num" class="selectpicker show-menu-arrow show-tick form-control">
+									<option value="10" selected="selected">10行</option>
+									<option value="25">25行</option>
+									<option value="50">50行</option>
+									<option value="100">100行</option>
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<input id="input-search-user_id" type="text" class="form-control" placeholder="请输入用户ID">
 						</div>
@@ -46,24 +57,15 @@
 							<input id="input-search-phone" type="text" class="form-control" placeholder="请输入用户电话号码">
 						</div>
 						<div class="form-group">
-							<div class="col-sm-10">
-								<select name="search-online_status" id="input-search-online_status" class="form-control">
+							<div class="col-sm-10" style="min-width: 204px">
+								<select name="search-online_status" id="input-search-online_status" class="selectpicker show-menu-arrow show-tick form-control">
 									<option value="">请选择用户在线状态</option>
 									<option value="1">在线</option>
 									<option value="0">离线</option>
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-sm-10">
-								<select name="search-online_status" id="input-page-content-num" class="form-control">
-									<option value="10" selected="selected">10行</option>
-									<option value="25">25行</option>
-									<option value="50">50行</option>
-									<option value="100">100行</option>
-								</select>
-							</div>
-						</div>
+
 						<button id="btn-search" type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
@@ -231,6 +233,7 @@
 
 <script type ="text/javascript" src="../../js/jquery.min.js"></script>
 <script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap-select.js"></script>
 <script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>

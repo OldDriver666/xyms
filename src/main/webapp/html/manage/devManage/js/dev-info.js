@@ -133,6 +133,7 @@ $(function() {
                             }
                             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
                             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType2');
+                            $("#input-devType").selectpicker('refresh');
                         } else {
                         }
                     },function() {

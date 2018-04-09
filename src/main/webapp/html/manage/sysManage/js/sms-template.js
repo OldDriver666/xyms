@@ -81,6 +81,7 @@ $(function() {
 			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					$("#pageSMSTmpl").tmpl(result.data).appendTo('#input-platfrom_name');
+                    $("#input-platfrom_name").selectpicker('refresh');
 					var platformArray = result.data;
 					var templateArray = JSON.parse(paramArray);
 					for(var i=0; i< templateArray.length; i++){

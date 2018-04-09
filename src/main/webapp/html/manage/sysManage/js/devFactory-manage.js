@@ -97,6 +97,8 @@ $(function() {
 					allCompanyArray = result.data;
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
 					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+                    $("#input-search-name").selectpicker('refresh');
+                    $("#input-depart_id").selectpicker('refresh');
 				} else {
 				}
 			},function() {
