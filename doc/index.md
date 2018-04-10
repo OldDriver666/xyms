@@ -4328,4 +4328,106 @@ null 没有数据返回 看code是否成功
 ```
 
 
+###投诉类型
+####投诉类型查询
+|   接口地址    |   xiaoyusvr/boss/complainttype/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
 
+####请求
+```
+{
+
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "code": 0,
+      "msg": "ok",
+      "data": [
+         {
+            "id": 1,
+            "type": "广告"
+         },
+         {
+            "id": 2,
+            "type": "淫秽"
+         },
+         {
+            "id": 3,
+            "type": "赌博"
+         },
+         {
+            "id": 4,
+            "type": "毒品"
+         }
+      ]
+   }
+}
+```
+
+####新增投诉类型
+|   接口地址    |   xiaoyusvr/boss/complainttype/insert   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+         {
+            "type": "广告"
+         }
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####修改投诉类型
+|   接口地址    |   xiaoyusvr/boss/complainttype/update   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+         {
+            "id": 1,
+            "type": "广告"
+         }
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####删除投诉类型
+|   接口地址    |   xiaoyusvr/boss/complainttype/delete   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "id":1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
