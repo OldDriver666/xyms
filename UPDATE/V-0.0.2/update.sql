@@ -1,9 +1,8 @@
 CREATE TABLE `complaint_type` (
-  `id` int(11) NOT NULL COMMENT 'id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `type` varchar(128) DEFAULT NULL COMMENT '投诉类型',
-  `desc` varchar(255) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) COMMENT='投诉类型';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='投诉类型';
 
 CREATE TABLE `complaints` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -16,4 +15,4 @@ CREATE TABLE `complaints` (
   `content` varchar(255) DEFAULT NULL COMMENT '投诉内容',
   `picture` varchar(512) DEFAULT NULL COMMENT '图片',
   PRIMARY KEY (`id`)
-)  COMMENT='投诉表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='投诉表';
