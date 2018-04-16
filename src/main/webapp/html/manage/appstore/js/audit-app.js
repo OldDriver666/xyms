@@ -248,6 +248,8 @@ $(function() {
 
         $("#input-size").val(that.find("td").eq(17).text());
         $("#input-prority").val(that.find("td").eq(18).text());
+        $("#input-updatetime").val(that.find("td").eq(25).text());
+        $("#input-createtime").val(that.find("td").eq(26).text());
 
         $("#input-remarks").val(that.find("td").eq(20).text());
         $("#input-label").val(that.find("td").eq(21).text());
@@ -342,12 +344,12 @@ $(function() {
             $(this).next().remove();
         }
     });
-    $("#input-channels").change(function(){
+    /*$("#input-channels").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
-    });
+    });*/
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         /*if(action == "add"){

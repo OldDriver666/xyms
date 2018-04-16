@@ -376,7 +376,24 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 .table-del-btn .btn-del:link,.table-del-btn .btn-del:visited {color:#dd514c;  }
 .table-edit-btn .btn-check {color: #F37B1D;}
 .table-edit-btn .btn-check:link,.table-edit-btn .btn-check:visited {color:#F37B1D;  }
-.table-edit-btn .btn-add {color: #4db14d;}
-.table-edit-btn .btn-add:link,.table-edit-btn .btn-add:visited {color:#4db14d;  }
-.table-edit-btn .btn-eye {color: #ffe764;}
-.table-edit-btn .btn-eye:link,.table-edit-btn .btn-eye:visited {color:#ffe764;  }
+.table-add-btn .btn-add {color: #4db14d;}
+.table-add-btn .btn-add:link,.table-add-btn .btn-add:visited {color:#4db14d;  }
+.table-edit-btn .btn-eye,.table-see-btn .btn-eye {color:#4799cb;}
+.table-edit-btn .btn-eye:link,.table-edit-btn .btn-eye:visited,.table-see-btn .btn-eye:link,.table-see-btn .btn-eye:visited {color:#4799cb;  }
+
+
+/*table的内容样式*/
+.table-content{
+  word-wrap:break-word;
+  table-layout:fixed;
+
+}
+.table-content-hidden{
+  word-wrap:break-word;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}

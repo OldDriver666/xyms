@@ -800,9 +800,9 @@ Util.pathName = function(){
     ctx = "http://10.252.252.250:8787/";        //dev version
     uploadUrl = "http://10.252.252.250:4869/";        //test version
     headPicUrl = "http://10.252.252.250:8700/";        //test version
-	//ctx = "http://xiaoyutest.fise-wi.com:8787/";        //test version
-    //uploadUrl = "http://xiaoyutest.fise-wi.com:4869/";        //test version
-    //headPicUrl = "http://xiaoyutest.fise-wi.com:8700/";        //test version
+	/*ctx = "http://xiaoyutest.fise-wi.com:8787/";        //test version
+    uploadUrl = "http://xiaoyutest.fise-wi.com:4869/";        //test version
+    headPicUrl = "http://xiaoyutest.fise-wi.com:8700/";        //test version*/
     Util.localStorage.add("ctx",ctx);
     Util.localStorage.add("uploadUrl",uploadUrl);
     Util.localStorage.add("headPicUrl",headPicUrl);

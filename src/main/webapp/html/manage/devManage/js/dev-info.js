@@ -427,12 +427,12 @@ $(function() {
             $(this).next().remove();
         }
     });
-    $("#input-devType").change(function(){
+    /*$("#input-devType").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
-    });
+    });*/
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){

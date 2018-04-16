@@ -92,17 +92,17 @@
 					</div>
 				</div>
 			</nav>
-			<table id="table" class="table table-striped table-hover">
+			<table id="table" class="table table-striped table-hover table-content">
 				<thead>
 					<tr>
 						<th>菜单ID</th>
 						<th>菜单名称</th>
 						<th>Priority</th>
 						<th>SN</th>
-						<th>URL</th>
+						<th style="width: 340px; ">URL</th>
 						<th>ParentID</th>
 						<th>状态</th>
-						<th class="table-manage">管理</th>
+						<th class="table-manage" style="width: 160px">管理</th>
 					</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -135,8 +135,8 @@
 	<td class="td-moduleId">${id}</td>
 	<td class="td-moduleName">${name}</td>
 	<td class="td-priority">${priority}</td>
-	<td class="td-sn">${sn}</td>
-	<td class="td-url">${url}</td>
+	<td class="td-sn table-content-hidden">${sn}</td>
+	<td class="td-url table-content-hidden">${url}</td>
 	<td class="td-parent_id">${parentId}</td>
 	<td class="td-status">{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
 	<td class="table-update">

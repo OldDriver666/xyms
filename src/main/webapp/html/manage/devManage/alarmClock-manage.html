@@ -130,7 +130,7 @@
 
 				</div>
 			</nav>
-			<table id="table" class="table table-striped table-hover">
+			<table id="table" class="table table-striped table-hover table-content">
 				<thead>
 				<tr>
 					<th>设备ID</th>
@@ -139,12 +139,12 @@
 					<th>任务参数</th>
 					<th>开始时间</th>
 					<th>结束时间</th>
-					<th>状态</th>
+					<th style="width: 60px">状态</th>
 					<th>重复模式</th>
-					<th>重复时间字符串</th>
-					<th>更新时间</th>
-					<th>创建时间</th>
-					<th class="table-manage">管理</th>
+					<th style="width: 120px">重复时间字符串</th>
+					<th style="width: 100px">更新时间</th>
+					<th style="width: 100px">创建时间</th>
+					<th class="table-manage" style="width: 160px">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -178,7 +178,7 @@
 	<td style="display:none">${task_id}</td>
 	<td >${device_id}</td>
 	<td>{{if task_type == 0}}上课记录 {{else task_type == 1}}关爱记录 {{/if}}</td>
-	<td >${task_name}</td>
+	<td class="table-content-hidden">${task_name}</td>
 	<td >${task_param}</td>
 	<td >${begin_time}</td>
 	<td >${end_time}</td>

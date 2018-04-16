@@ -236,6 +236,9 @@ $(function() {
         $("#input-category").val(that.find("td").eq(8).text());
         $("#input-appchannel").val(that.find("td").eq(9).text());
 
+        $("#input-updatetime").val(that.find("td").eq(25).text());
+        $("#input-createtime").val(that.find("td").eq(26).text());
+
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#input-description").val(that.find("td").eq(10).text());
         $("#input-version").val(that.find("td").eq(11).text());
@@ -341,12 +344,12 @@ $(function() {
             $(this).next().remove();
         }
     });
-    $("#input-channels").change(function(){
+   /* $("#input-channels").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
-    });
+    });*/
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         /*if(action == "add"){

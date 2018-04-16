@@ -376,6 +376,9 @@ $(function() {
         //$("#input-images").val(that.find("td").eq(14).text());
         //$("#input-download").val(that.find("td").eq(15).text());
 
+        $("#input-updatetime").val(that.find("td").eq(25).text());
+        $("#input-createtime").val(that.find("td").eq(26).text());
+
         $("#input-size").val(that.find("td").eq(17).text());
         $("#input-prority").val(that.find("td").eq(18).text());
 
@@ -541,12 +544,12 @@ $(function() {
         }
     });
 
-    $("#searchchannels").change(function(){
+   /* $("#searchchannels").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
-    });
+    });*/
     $("#addImgUrl").change(function(){
         if($("img[class=up-img]").size() > 0){
             $("#addImgUrl").removeClass("has-error");

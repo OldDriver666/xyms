@@ -225,12 +225,12 @@ $(function() {
         $("#addTempl-modal").modal("show");
     });
 
-	$("#input-search-depart_id").change(function () {
+	/*$("#input-search-depart_id").change(function () {
 		if ($(this).val() != "") {
 			$(this).parent().removeClass("has-error");
 			$(this).next().remove();
 		}
-	});
+	});*/
 
 	//验证表单
     $("#form-addTempl").validate({

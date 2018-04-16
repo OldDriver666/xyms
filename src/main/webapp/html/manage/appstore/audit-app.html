@@ -192,7 +192,7 @@
 										<div class="form-group" >
 											<label for="input-download" class="col-sm-3 control-label"><span class="necessary"></span>安装包</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-download" name="devXW" placeholder="请输入下载地址" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+												<textarea type="text" class="form-control" id="input-download" name="devXW" placeholder="请输入下载地址" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" ></textarea>
 											</div>
 										</div>
 										<div class="form-group" >
@@ -205,6 +205,18 @@
 											<label for="input-prority" class="col-sm-3 control-label"><span class="necessary"></span>prority</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入prority"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-updatetime" class="col-sm-3 control-label"><span class="necessary"></span>更新时间</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-updatetime" name="devXW" placeholder="请输入prority"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-createtime" class="col-sm-3 control-label"><span class="necessary"></span>创建时间</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-createtime" name="devXW" placeholder="请输入prority"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
@@ -327,14 +339,14 @@
 
 				</div>
 			</nav>
-			<table id="table" class="table table-striped table-hover">
+			<table id="table" class="table table-striped table-hover table-content">
 				<thead>
 				<tr>
 					<th>AppID</th>
-					<th>应用名称</th>
+					<th style="width: 100px">应用名称</th>
 					<!--<th>APP唯一标示</th>
 					<th>app_spell</th>-->
-					<th>包名</th>
+					<th style="width: 100px">包名</th>
 					<!--<th>开发者ID</th>-->
 					<th>开发者名称</th>
 					<th>应用大类型</th>
@@ -349,15 +361,15 @@
 					<!--<th>下载地址</th>-->
 					<th>应用大小</th>
 					<!--<th>prority</th>-->
-					<th>状态</th>
+					<th style="width: 60px">状态</th>
 					<th>备注信息</th>
 					<!--<th>标签</th>
 					<th>star</th>
 					<th>orientation</th>-->
-					<th>更新时间</th>
-					<th>创建时间</th>
+					<!--<th>更新时间</th>
+					<th>创建时间</th>-->
 					<th class="table-manage">管理</th>
-					<th class="table-manage">频道应用</th>
+					<th class="table-manage" style="width: 107px">频道应用</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -401,7 +413,7 @@
 	<td><div class="showmore">${app_name}</div></td>
 	<td style="display:none;">${app_index}</td>
 	<td style="display:none;">${app_spell}</td>
-	<td>${package_name}</td>
+	<td class="table-content-hidden">${package_name}</td>
 	<td style="display:none;"><div class="showmore">${dev_id}</div></td>
 	<td><div class="showmore">${dev_name}</div></td>
 	<td><div class="showmore">${top_category}</div></td>
@@ -422,8 +434,8 @@
 	<td style="display:none;">${star}</td>
 	<td style="display:none;">${orientation}</td>
 	<td style="display:none;">${channel_id}</td>
-	<td>${Util.formatDateTime(updated)}</td>
-	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none;">${Util.formatDateTime(updated)}</td>
+	<td style="display:none;">${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 	    <div class="showmore">
 	       	<a href="javascript:void(0);" class="table-edit-btn">

@@ -89,14 +89,30 @@ $(function() {
             status_val = 1;
         }
 
-        $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-devIME").val(that.find("td").eq(1).text());
+        $("#device_id").val(that.find("td").eq(0).text());
+        $("#master_id").val(that.find("td").eq(1).text());
+        $("#group_id").val(that.find("td").eq(2).text());
+        $("#manage-NO").val(that.find("td").eq(3).text());
+        $("#shedding-alarm").val(that.find("td").eq(4).text());
+        $("#electric-power-alarm").val(that.find("td").eq(5).text());
+        $("#shutdown-alarm").val(that.find("td").eq(6).text());
+        $("#silent-monitor").val(that.find("td").eq(7).text());
+        $("#step-counter").val(that.find("td").eq(8).text());
+        $("#call-alarm").val(that.find("td").eq(9).text());
+        $("#charging").val(that.find("td").eq(10).text());
+        $("#working-mode").val(that.find("td").eq(11).text());
+        $("#answer-ring-pattern").val(that.find("td").eq(12).text());
+        $("#schoolID").val(that.find("td").eq(13).text());
+        $("#light_time").val(that.find("td").eq(14).text());
+        $("#update-time").val(that.find("td").eq(15).text());
+        $("#creation-time").val(that.find("td").eq(16).text());
+        /*$("#input-devIME").val(that.find("td").eq(1).text());
         $("#input-devXW").val(that.find("td").eq(2).text());
         $("#input-devTypeNo").val(that.find("td").eq(9).text());
         $("#input-devType-txt").val(that.find("td").eq(3).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#input-phoneNo").val(that.find("td").eq(7).text());
-        $("#input-Mark").val(that.find("td").eq(8).text());
+        $("#input-Mark").val(that.find("td").eq(8).text());*/
         $("#addTempl-modal").modal("show");
     });
 
@@ -104,7 +120,7 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑设备信息");
+			$("h4#addTempl-modal-label").text("查看设备详情");
             $("#input-phoneNo-wrap").show();
             $("#input-devType-wrap").hide();
             $("#input-devTypeNo-wrap").hide();

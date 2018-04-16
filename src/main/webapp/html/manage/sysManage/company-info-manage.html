@@ -99,19 +99,19 @@
 					</div>
 				</div>
 			</nav>
-			<table id="table" class="table table-striped table-hover">
+			<table id="table" class="table table-striped table-hover table-content">
 				<thead>
 				<tr>
 					<!--<th>公司ID</th>-->
-					<th>公司名称</th>
-					<th>地址</th>
+					<th style="width: 200px">公司名称</th>
+					<th style="width: 200px">地址</th>
 					<th>电话号码</th>
 					<th>Email</th>
-					<th>公司简介</th>
-					<th>状态</th>
-					<th>更新时间</th>
-					<th>创建时间</th>
-					<th class="table-manage">管理</th>
+					<th style="max-width: 250px">公司简介</th>
+					<th style="width: 80px">状态</th>
+					<th style="width: 100px">更新时间</th>
+					<th style="width: 100px">创建时间</th>
+					<th class="table-manage" style="width: 160px">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -146,7 +146,7 @@
 	<td>${address}</td>
 	<td>${contact}</td>
 	<td>${email}</td>
-	<td>${describtion}</td>
+	<td class="table-content-hidden">${describtion}</td>
 	<td>{{if status == 0}}删除{{else status == 1}}正常{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
