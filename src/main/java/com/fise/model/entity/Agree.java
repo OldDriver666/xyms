@@ -16,6 +16,16 @@ public class Agree implements Serializable {
      */
     @JsonProperty("user_id")
     private Integer userId;
+    
+    /**
+     * 用户昵称
+     */
+    private String nick;
+    
+    /**
+     * 回答内容
+     */
+    private String content;
 
     /**
      * 回答id
@@ -88,7 +98,23 @@ public class Agree implements Serializable {
         this.created = created;
     }
 
-    @Override
+    public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }
