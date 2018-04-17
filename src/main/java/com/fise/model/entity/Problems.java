@@ -28,6 +28,11 @@ public class Problems implements Serializable {
      */
     @MaxLength(value=1500)
     private String content;
+    
+    /**
+     * 用户昵称
+     */
+    private String nick;
 
     /**
      * 回答数量
@@ -140,7 +145,15 @@ public class Problems implements Serializable {
         this.created = created;
     }
 
-    @Override
+    public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }

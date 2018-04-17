@@ -10,6 +10,7 @@
     <result column="browse_num" jdbcType="INTEGER" property="browseNum" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
   </resultMap>
@@ -321,12 +322,19 @@
   </select>
   
   <select id="querytitlebypage" parameterType="map" resultMap="BaseResultMap">
-      select 
-      <include refid="Base_Column_List" />
-      from Problems 
+      SELECT
+		*
+		FROM
+			(
+				SELECT
+					p.*, u.nick
+				FROM
+					Problems p
+				LEFT JOIN IMUser u ON u.id = p.user_id
+			) a
       <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+	      <include refid="Update_By_Example_Where_Clause" />
+	  </if>
       <if test="example.orderByClause != null">
       order by ${example.orderByClause}
     </if> 
