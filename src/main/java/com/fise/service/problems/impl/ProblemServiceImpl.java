@@ -540,16 +540,13 @@ public class ProblemServiceImpl implements IProblemService{
         }
         
         if(!StringUtil.isEmpty(param.getParam().getTitle())){
-            param.getParam().setTitle("%" + param.getParam().getTitle() + "%");
-            criteria.andTitleLike(param.getParam().getTitle());
+            criteria.andTitleLike("%" + param.getParam().getTitle()  + "%");
         }
         if(!StringUtil.isEmpty(param.getParam().getNick())){
-            param.getParam().setNick("%" + param.getParam().getNick() + "%");
-            criteria.andNickLike(param.getParam().getNick());
+        	criteria.andNickLike("%" + param.getParam().getNick()  + "%");
         }
         if(!StringUtil.isEmpty(param.getParam().getContent())){
-            param.getParam().setContent("%" + param.getParam().getContent() + "%");
-            criteria.andContentLike(param.getParam().getContent());
+            criteria.andContentLike("%" + param.getParam().getContent()  + "%");
         }
         example.setOrderByClause("created desc");
         List<Problems> list=problemsDao.querytitlebypage(example, param);

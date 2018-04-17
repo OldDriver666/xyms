@@ -481,8 +481,7 @@ public class AnswerServiceImpl implements IAnswerService{
             criteria.andProblemIdEqualTo(param.getParam().getProblemId());
         }
         if(!StringUtil.isEmpty(param.getParam().getNick())){
-            param.getParam().setNick("%" + param.getParam().getNick() + "%");
-            criteria.andNickLike(param.getParam().getNick());
+        	criteria.andNickLike("%" + param.getParam().getNick()  + "%");
         }
         if(StringUtil.isNotEmpty(param.getParam().getTitle())){
             criteria.andTitleLike("%" + param.getParam().getTitle() + "%");
