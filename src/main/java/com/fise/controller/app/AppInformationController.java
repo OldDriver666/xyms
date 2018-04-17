@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
@@ -180,7 +181,8 @@ public class AppInformationController {
    	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
        	logger.info(param.getParam().toString());
    		Response response = new Response();
-   		Integer devId=param.getParam().getDevId();
+//   		Integer devId=param.getParam().getDevId();
+   		Integer devId=HttpContext.getMemberId();
    		String appName=param.getParam().getAppName();
    		Integer status=param.getParam().getStatus();
    		if(devId==null&&StringUtil.isEmpty(appName)&&status==null){
