@@ -52,7 +52,8 @@
 			left: 0px;
 			z-index: 100;
 		}
-
+		a:hover,a:active{text-decoration: none;color: #333;}
+		.answer_num{ color: #333;}
 	</style>
 </head>
 
@@ -253,7 +254,7 @@
 	<!--<td class="content">{{html content}}</td>-->
 	<td>${user_id}</td>
 	<td class="table-content-hidden">${nick}</td>
-	<td>${answer_num}</td>
+	<td><a href="javascript:void(0);" class="answer_num" target="_blank">${answer_num}</a></td>
 	<td>${browse_num}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td style="display: none">${content}</td>
@@ -310,6 +311,20 @@ function uploadfile(input) {
         reader.readAsText(file);
     }
 }
+</script>
+<!--点击获取跳转信息-->
+<script type="text/javascript">
+    $("#pageContent").on("click",".answer_num",function(){
+        var that = $(this).parent().parent();
+        var questionID = that.find("td").eq(0).text();
+        window.location.href= "answer-manage.html?questionID="+questionID;
+    });
+</script>
+<!--跳转过来的问题ID-->
+<script type="text/javascript">
+    var thisURL = document.URL;
+    var getval =thisURL.split('?')[1];
+    var showval= getval.split("=")[1];
 </script>
 </body>
 </html>
