@@ -282,9 +282,15 @@
   </update>
   
   <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from Answer
+	SELECT * FROM
+			(
+				SELECT
+					a.*,p.title, u.nick
+				FROM
+					Answer a
+				INNER JOIN	Problems p ON p.id=a.problem_id
+				LEFT JOIN IMUser u ON u.id = p.user_id
+			) a
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
