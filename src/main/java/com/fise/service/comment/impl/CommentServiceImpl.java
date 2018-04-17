@@ -414,13 +414,13 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         if(StringUtil.isNotEmpty(page.getParam().getAcontent())){
-            criteria.andAcontentLike(page.getParam().getAcontent());
+            criteria.andAcontentLike("%" + page.getParam().getAcontent() + "%" );
         }
         if(StringUtil.isNotEmpty(page.getParam().getTitle())){
-            criteria.andTitleLike(page.getParam().getTitle());
+            criteria.andTitleLike("%" + page.getParam().getTitle() + "%" );
         }
         if(StringUtil.isNotEmpty(page.getParam().getBcontent())){
-            criteria.andBcontentLike(page.getParam().getBcontent());
+            criteria.andBcontentLike("%" + page.getParam().getBcontent() + "%" );
         }
 
         
