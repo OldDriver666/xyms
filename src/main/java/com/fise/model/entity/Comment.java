@@ -16,6 +16,12 @@ public class Comment implements Serializable {
      */
     @JsonProperty("from_userid")
     private Integer fromUserid;
+    
+    /**用户昵称*/ private String fnick   ;
+	/**被回复用户昵称*/ private String tnick   ;
+	/**评论内容*/ private String acontent;
+	/**原评论内容*/ private String bcontent;
+	/**问题标题*/ private String title   ;
 
     /**
      * 回复对方
@@ -143,7 +149,47 @@ public class Comment implements Serializable {
         this.created = created;
     }
 
-    @Override
+    public String getFnick() {
+		return fnick;
+	}
+
+	public void setFnick(String fnick) {
+		this.fnick = fnick;
+	}
+
+	public String getTnick() {
+		return tnick;
+	}
+
+	public void setTnick(String tnick) {
+		this.tnick = tnick;
+	}
+
+	public String getAcontent() {
+		return acontent;
+	}
+
+	public void setAcontent(String acontent) {
+		this.acontent = acontent;
+	}
+
+	public String getBcontent() {
+		return bcontent;
+	}
+
+	public void setBcontent(String bcontent) {
+		this.bcontent = bcontent;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }
