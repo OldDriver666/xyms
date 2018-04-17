@@ -3392,7 +3392,9 @@ user_id 和  answer_id 都不填则查询所有
             "updated": 0,
             "created": 1502877000,
             "user_id": 3,
-            "answer_id": 1
+            "answer_id": 1,
+            "nick":"",		            //选填-用户昵称
+            "content":""               //选填-回答内容
          }
       ]
    }
