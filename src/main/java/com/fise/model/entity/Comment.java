@@ -19,7 +19,7 @@ public class Comment implements Serializable {
     
     /**用户昵称*/ private String fnick   ;
 	/**被回复用户昵称*/ private String tnick   ;
-	/**评论内容*/ private String acontent;
+	/**回答内容*/ private String acontent;
 	/**原评论内容*/ private String bcontent;
 	/**问题标题*/ private String title   ;
 

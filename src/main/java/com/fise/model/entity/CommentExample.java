@@ -733,6 +733,21 @@ public class CommentExample {
             addCriterion("created not between", value1, value2, "created");
             return (Criteria) this;
         }
+        
+        public Criteria andAcontentLike(String value) {
+            addCriterion("acontent like", value, "acontent");
+            return (Criteria) this;
+        }
+        
+        public Criteria andTitleLike(String value) {
+            addCriterion("title like", value, "title");
+            return (Criteria) this;
+        }
+        
+        public Criteria andBcontentLike(String value) {
+            addCriterion("bcontent like", value, "bcontent");
+            return (Criteria) this;
+        }
     }
 
     /**

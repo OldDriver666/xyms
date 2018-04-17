@@ -413,6 +413,17 @@ public class CommentServiceImpl implements ICommentService{
             criteria.andCommentIdEqualTo(page.getParam().getCommentId());
         }
         
+        if(StringUtil.isNotEmpty(page.getParam().getAcontent())){
+            criteria.andAcontentLike(page.getParam().getAcontent());
+        }
+        if(StringUtil.isNotEmpty(page.getParam().getTitle())){
+            criteria.andTitleLike(page.getParam().getTitle());
+        }
+        if(StringUtil.isNotEmpty(page.getParam().getBcontent())){
+            criteria.andBcontentLike(page.getParam().getBcontent());
+        }
+
+        
         List<Comment> list=commentDao.selectByPage(example, page);
         
         page.setParam(null);
