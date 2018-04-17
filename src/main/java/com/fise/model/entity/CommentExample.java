@@ -735,17 +735,17 @@ public class CommentExample {
         }
         
         public Criteria andAcontentLike(String value) {
-            addCriterion("acontent like", "%" + value + "%" , "acontent");
+            addCriterion("acontent like", value , "acontent");
             return (Criteria) this;
         }
         
         public Criteria andTitleLike(String value) {
-            addCriterion("title like", "%" + value + "%" , "title");
+            addCriterion("title like", value, "title");
             return (Criteria) this;
         }
         
         public Criteria andBcontentLike(String value) {
-            addCriterion("bcontent like", "%" + value + "%" , "bcontent");
+            addCriterion("bcontent like",  value , "bcontent");
             return (Criteria) this;
         }
     }

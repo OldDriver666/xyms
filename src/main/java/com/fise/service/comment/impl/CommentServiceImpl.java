@@ -403,6 +403,9 @@ public class CommentServiceImpl implements ICommentService{
         CommentExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("created desc");
         
+        if(page.getParam().getId()!=null){
+            criteria.andIdEqualTo(page.getParam().getId());
+        }
         if(page.getParam().getAnswerId()!=null){
             criteria.andAnswerIdEqualTo(page.getParam().getAnswerId());
         }
@@ -414,13 +417,16 @@ public class CommentServiceImpl implements ICommentService{
         }
         
         if(StringUtil.isNotEmpty(page.getParam().getAcontent())){
-            criteria.andAcontentLike(page.getParam().getAcontent());
+            criteria.andAcontentLike("%" + page.getParam().getAcontent() + "%" );
         }
         if(StringUtil.isNotEmpty(page.getParam().getTitle())){
-            criteria.andTitleLike(page.getParam().getTitle());
+            criteria.andTitleLike("%" + page.getParam().getTitle() + "%" );
         }
         if(StringUtil.isNotEmpty(page.getParam().getBcontent())){
-            criteria.andBcontentLike(page.getParam().getBcontent());
+            criteria.andBcontentLike("%" + page.getParam().getBcontent() + "%" );
+        }
+        if(StringUtil.isNotEmpty(page.getParam().getContent())){
+            criteria.andContentLike("%" + page.getParam().getContent() + "%" );
         }
 
         

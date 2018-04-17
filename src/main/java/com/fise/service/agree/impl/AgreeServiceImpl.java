@@ -14,6 +14,7 @@ import com.fise.model.entity.AgreeExample;
 import com.fise.model.entity.Answer;
 import com.fise.service.agree.IAgreeService;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 @Service
 public class AgreeServiceImpl implements IAgreeService{
@@ -89,6 +90,12 @@ public class AgreeServiceImpl implements IAgreeService{
         }
         if(page.getParam().getUserId()!=null){
             criteria.andUserIdEqualTo(page.getParam().getUserId());
+        }
+        if(StringUtil.isNotEmpty(page.getParam().getContent())){
+            criteria.andContentLike("%" + page.getParam().getContent() + "%");
+        }
+        if(!StringUtil.isEmpty(page.getParam().getNick())){
+            criteria.andNickLike("%" + page.getParam().getNick()  + "%");
         }
         
         List<Agree> list=agreeDao.selectBypage(example, page);

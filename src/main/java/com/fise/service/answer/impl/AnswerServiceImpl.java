@@ -467,24 +467,33 @@ public class AnswerServiceImpl implements IAnswerService{
     }
 
     @Override
-    public Response queryBack(Page<Answer> page) {
+    public Response queryBack(Page<Answer> param) {
         Response resp = new Response();
         
         AnswerExample example = new AnswerExample();
         AnswerExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("created desc");
         
-        if(page.getParam().getUserId()!=null){
-            criteria.andUserIdEqualTo(page.getParam().getUserId());
+        if(param.getParam().getUserId()!=null){
+            criteria.andUserIdEqualTo(param.getParam().getUserId());
         }
-        if(page.getParam().getProblemId()!=null){
-            criteria.andProblemIdEqualTo(page.getParam().getProblemId());
+        if(param.getParam().getProblemId()!=null){
+            criteria.andProblemIdEqualTo(param.getParam().getProblemId());
+        }
+        if(!StringUtil.isEmpty(param.getParam().getNick())){
+        	criteria.andNickLike("%" + param.getParam().getNick()  + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getParam().getTitle())){
+            criteria.andTitleLike("%" + param.getParam().getTitle() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getParam().getContent())){
+            criteria.andContentLike("%" + param.getParam().getContent() + "%");
         }
         
-        List<Answer> list=answerDao.selectBypage(example, page);
-        page.setParam(null);
-        page.setResult(list);
-        resp.success(page);
+        List<Answer> list=answerDao.selectBypage(example, param);
+        param.setParam(null);
+        param.setResult(list);
+        resp.success(param);
         return resp;
     }
 

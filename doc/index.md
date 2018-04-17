@@ -3070,9 +3070,12 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 {
      "param":{
-     	            "title":""             //选填-要查询的问题话题
+     			"id":""                    //选填-要查询的问题话题Id
+     	         "title":""                 //选填-要查询的问题话题
+     	         "content":""               //选填-要查询的问题内容
+     	         "user_id":""			     //选填-要查询的用户Id
+     	         "nick":""			     //选填-要查询的用户昵称
      		  },
-     "extra_param":{"nick":""},	          //选填-要查询的用户昵称  extra_param要写
      "page_no":1                      
 }
 ```
@@ -3098,6 +3101,7 @@ type和name都是选填，如果都不填，则查询所有信息
             "updated": 1505802100,
             "created": 1504236766,
             "user_id": 250060,
+            "nick": "jack",
             "answer_num": 0,
             "browse_num": 6,
             "school_id": 62490
@@ -3141,8 +3145,11 @@ type和name都是选填，如果都不填，则查询所有信息
 user_id 和  problem_id 都不填则查询所有
 {
    "param":{
-                   "user_id":1,       //选填-回答的用户ID
-                   "problem_id":2     //选填-回答的问题ID
+                   "user_id":1,               //选填-回答的用户ID
+                   "nick":"",			      //选填-回答的用户昵称
+                   "problem_id":2 ,            //选填-回答的问题ID
+                   "title":""  ,               //选填-回答的问题标题
+                   "content":""                //选填-回答内容
                 },
    "page_no":x
 }
@@ -3167,7 +3174,9 @@ user_id 和  problem_id 都不填则查询所有
             "updated": 0,
             "created": 0,
             "user_id": 1,
+            "nick":"",			      //回答的用户昵称
             "problem_id": 2,
+		   "title":"" ,             //回答的问题标题
             "agree_num": 0,
             "comment_num": 5
          }
@@ -3210,8 +3219,10 @@ user_id 和  problem_id 都不填则查询所有
 user_id 和   problem_id 都不填则查询所有
 {
     "param":{
-                     "user_id":3,                 //选填-用户ID
-                     "problem_id":30              //选填-关注的问题ID
+                     "user_id":3,                  //选填-用户ID
+                     "nick":""	,		           //选填-要查询的用户昵称
+                     "problem_id":30  ,            //选填-关注的问题ID
+                     "title":""                    //选填-要查询的问题标题
             },
     "page_no":x             
 }
@@ -3273,9 +3284,14 @@ user_id 和   problem_id 都不填则查询所有
 answer_id comment_id problem_id 都不填则查询所有
 {
   "param":{
+  			   "id":1,                      //选填-评论id
+                "content":""  ,               //选填-评论内容
                 "answer_id":1,               //选填-回答id
-                "comment_id":4,              //选填-评论id
-                "problem_id":2               //选填-问题id   
+                "acontent":"" ,               //选填-回答内容
+                "comment_id":4,              //选填-原评论id
+                "bcontent":""  ,              //选填-原评论内容
+                "problem_id":2 ,              //选填-问题id 
+                "title":""                   //选填-问题标题  
            },
    "page_no":1               //选填-页码数  默认为1
 }
@@ -3302,7 +3318,12 @@ answer_id comment_id problem_id 都不填则查询所有
             "to_userid": 0,
             "answer_id": 1,
             "comment_id": 2,
-            "problem_id": 2
+            "problem_id": 2,
+			"fnick",          //用户昵称 
+			"tnick",          //被回复用户昵称 
+			"acontent",       //评论内容 
+			"bcontent",       //原评论内容 
+			"title"           //问题标题 
          }
       ]
    }
@@ -3344,8 +3365,10 @@ answer_id comment_id problem_id 都不填则查询所有
 user_id 和  answer_id 都不填则查询所有
 {"param":
            {
-				"user_id":3,          //选填-用户id
-				"answer_id":1         //选填-问题id
+				"user_id":3,               //选填-用户id
+				"nick":"",		         //选填-用户昵称
+				"answer_id":1,              //选填-回答id
+				"content":""               //选填-回答内容
             },
  "page_no":1                          //选填-页码数   默认为1
 }
@@ -3369,7 +3392,9 @@ user_id 和  answer_id 都不填则查询所有
             "updated": 0,
             "created": 1502877000,
             "user_id": 3,
-            "answer_id": 1
+            "answer_id": 1,
+            "nick":"",		            //选填-用户昵称
+            "content":""               //选填-回答内容
          }
       ]
    }

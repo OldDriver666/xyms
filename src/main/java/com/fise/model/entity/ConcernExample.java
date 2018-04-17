@@ -3,6 +3,8 @@ package com.fise.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fise.model.entity.AnswerExample.Criteria;
+
 public class ConcernExample {
     protected String orderByClause;
 
@@ -481,6 +483,16 @@ public class ConcernExample {
 
         public Criteria andCreatedNotBetween(Integer value1, Integer value2) {
             addCriterion("created not between", value1, value2, "created");
+            return (Criteria) this;
+        }
+        
+        public Criteria andNickLike(String value) {
+            addCriterion("nick like", value, "nick");
+            return (Criteria) this;
+        }
+        
+        public Criteria andTitleLike(String value) {
+            addCriterion("title like", value , "title");
             return (Criteria) this;
         }
     }
