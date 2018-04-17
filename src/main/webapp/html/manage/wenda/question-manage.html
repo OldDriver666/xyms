@@ -197,15 +197,16 @@
 				<thead>
 				<tr>
 					<th>问题ID</th>
-					<th style="width: 380px">问题标题</th>
+					<th style="width: 350px">问题标题</th>
 					<!--<th>问题内容</th>-->
 					<th>用户ID</th>
+					<th>昵称</th>
 					<th>回答数</th>
 					<th>浏览数</th>
 					<th>状态</th>
-					<th>更新时间</th>
-					<th>创建时间</th>
-					<th class="table-manage">管理</th>
+					<th style="width: 150px">更新时间</th>
+					<th style="width: 150px">创建时间</th>
+					<th class="table-manage" style="width: 80px">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -251,6 +252,7 @@
 	<td class="title table-content-hidden">${title}</td>
 	<!--<td class="content">{{html content}}</td>-->
 	<td>${user_id}</td>
+	<td class="table-content-hidden">${nick}</td>
 	<td>${answer_num}</td>
 	<td>${browse_num}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
