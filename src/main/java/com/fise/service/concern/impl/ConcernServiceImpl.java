@@ -398,6 +398,13 @@ public class ConcernServiceImpl implements IConcernService{
         if(page.getParam().getProblemId()!=null){
             criteria.andProblemIdEqualTo(page.getParam().getProblemId());
         }
+        if(!StringUtil.isEmpty(page.getParam().getNick())){
+            page.getParam().setNick("%" + page.getParam().getNick() + "%");
+            criteria.andNickLike(page.getParam().getNick());
+        }
+        if(StringUtil.isNotEmpty(page.getParam().getTitle())){
+            criteria.andTitleLike("%" + page.getParam().getTitle() + "%");
+        }
         
         List<Concern> list=concernDao.selectByPage(example, page);
         
