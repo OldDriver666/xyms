@@ -16,6 +16,16 @@ public class Concern implements Serializable {
      */
     @JsonProperty("user_id")
     private Integer userId;
+    
+    /**
+     * 用户昵称
+     */
+    private String nick;
+    
+    /**
+     * 问题标题
+     */
+    private String title;
 
     /**
      * 问题ID
@@ -88,7 +98,23 @@ public class Concern implements Serializable {
         this.created = created;
     }
 
-    @Override
+    public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }

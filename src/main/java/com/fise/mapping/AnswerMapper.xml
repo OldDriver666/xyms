@@ -6,6 +6,8 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="problem_id" jdbcType="INTEGER" property="problemId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="agree_num" jdbcType="INTEGER" property="agreeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="status" jdbcType="TINYINT" property="status" />
@@ -282,9 +284,15 @@
   </update>
   
   <select id="selectBypage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from Answer
+	SELECT * FROM
+			(
+				SELECT
+					a.*,p.title, u.nick
+				FROM
+					Answer a
+				INNER JOIN	Problems p ON p.id=a.problem_id
+				LEFT JOIN IMUser u ON u.id = p.user_id
+			) a
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
