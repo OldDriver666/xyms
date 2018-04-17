@@ -313,6 +313,10 @@ public class ProblemsExample {
             addCriterion("title not between", value1, value2, "title");
             return (Criteria) this;
         }
+        public Criteria andNickLike(String value) {
+            addCriterion("nick like", value, "nick");
+            return (Criteria) this;
+        }
 
         public Criteria andContentIsNull() {
             addCriterion("content is null");
