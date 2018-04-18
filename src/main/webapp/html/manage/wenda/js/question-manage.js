@@ -108,11 +108,59 @@ $(function() {
                     toastr.error(result.msg);
                 }
             });
-		}
-	};
+		},
+        //页面跳转数据
+        questionPageData : function() {
+            var thisURL = document.URL;
+            var getval =thisURL.split('?')[1];
+            var showval= getval.split("=")[1];
+            var search_Title = $("#input-search-title").val();
+            var search_Nick = $("#input-search-nick").val();
+            var page_content_num = parseInt($("#input-page-content-num").val());
+
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/problem/queryback";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = page_content_num;
+            data.param = {
+                "title":search_Title,
+            };
+            data.extra_param = {
+                "nick":search_Nick
+            };
+
+            var opt = {
+                "targetContentId" : "pageContent",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageTmpl",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    return result.data.result;
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
+        },
+    };
 	window.action = action;
     action.init();
 	action.loadPageData();
+	action.questionPageData()
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -126,9 +174,9 @@ $(function() {
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-userID").val(that.find("td").eq(3).text());
+        $("#input-userID").val(that.find("td").eq(2).text());
         $("#input-title").val(that.find("td").eq(1).text());
-        $("#input-content").append(that.find("td").eq(6).text());
+        $("#input-content").append(that.find("td").eq(7).text());
         //$("#input-content").val(that.find("td").eq(2).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
@@ -256,6 +304,12 @@ $(function() {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
+    });
+    $(function() {
+        action.questionPageData();
+        $("#btn-search").on('click', function() {
+            action.loadPageData();
+        });
     });
 
     $(".fileInsert").on('change', function(e){

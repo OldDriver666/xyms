@@ -34,7 +34,8 @@
 			max-width: 100%;
 			max-height: 200px;
 		}
-
+		a:hover,a:active{text-decoration: none;color: #333;}
+		.questionID{ color: #333;display:inline-block;width: 50px;height: 25px}
 	</style>
 </head>
 
@@ -165,7 +166,7 @@
 	<td>${id}</td>
 	<td class="content table-content-hidden">${content}</td>
 	<td>${user_id}</td>
-	<td>${problem_id}</td>
+	<td><a href="javascript:void(0);" class="questionID">${problem_id}</a></td>
 	<td>${agree_num}</td>
 	<td>${comment_num}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
@@ -206,6 +207,20 @@ function uploadfile(input) {
         reader.readAsText(file);
     }
 }
+</script>
+<!--跳转过来的问题ID-->
+<!--<script type="text/javascript">
+    var thisURL = document.URL;
+    var getval =thisURL.split('?')[1];
+    var showval= getval.split("=")[1];
+</script>-->
+<!--点击获取跳转信息-->
+<script type="text/javascript">
+    $("#pageContent").on("click",".questionID",function(){
+        var that = $(this).parent().parent();
+        var questionID = that.find("td").eq(4).text();
+        window.location.href= "question-manage.html?questionID="+questionID;
+    });
 </script>
 </body>
 </html>
