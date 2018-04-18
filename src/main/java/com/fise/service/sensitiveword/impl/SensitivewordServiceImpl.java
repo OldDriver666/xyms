@@ -32,6 +32,7 @@ public class SensitivewordServiceImpl implements ISensitivewordService {
 		Response resp = new Response();
 
 		sensitiveWordsDao.insertSelective(param);
+		init();
 		return resp.success();
 	}
 
@@ -58,7 +59,7 @@ public class SensitivewordServiceImpl implements ISensitivewordService {
 		Response resp = new Response();
 
 		sensitiveWordsDao.deleteByPrimaryKey(id);
-
+		init();
 		return resp.success();
 	}
 

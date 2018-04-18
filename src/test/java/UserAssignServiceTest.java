@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fise.model.entity.SensitiveWords;
 import com.fise.service.sensitiveword.ISensitivewordService;
 
 
@@ -19,23 +20,54 @@ public class UserAssignServiceTest extends BaseJunit4Test {
 	@Transactional // 标明此方法需使用事务
 	@Rollback(false) // 标明使用完此方法后事务不回滚,true时为回滚
 	public void insert() {
-		long start = System.currentTimeMillis();
+		
+		String text = "江蛤蟆毛腊肉温影帝习包子胡荣耻";
+		long start = System.currentTimeMillis();		
 		System.out.println("start-----------------------------------" + start);
-
-		List<String> list1 = sensitivewordService.checkSensitiveWord("DFA算法的原理可以参考 这里 ，简单来说就是通过Map构造出一颗敏感词树，树的每一条由根节点到叶子节点的路径构成袁腾飞一个敏感词，例如下图");
+		List<String> list1 = sensitivewordService.checkSensitiveWord(text);
 		for (String str : list1) {
 			System.out.println(str);
-		}
-		long middle = System.currentTimeMillis();
+		}		
+		long middle = System.currentTimeMillis();		
 		System.out.println("-----------------------------------" + middle);
 		System.out.println("-----------------------------------" + (middle - start));
-		List<String> list2 = sensitivewordService.checkSensitiveWord("DFA算法的原理可以参考 这里 ，简单来说就是通过Map构造出一颗敏感词树，树的每一条由根节点到叶子节点的路径构成一个中共黑敏感词，例如下图");
+		
+		List<String> list2 = sensitivewordService.checkSensitiveWord(text);
 		for (String str : list2) {
 			System.out.println(str);
 		}
 		long end = System.currentTimeMillis();
 		System.out.println("end-----------------------------------" + System.currentTimeMillis());
 		System.out.println("-----------------------------------" + (end - middle));
+		
+		SensitiveWords param = new SensitiveWords();
+		param.setSensitiveWord("共匪");
+		sensitivewordService.insert(param);		
+		long add = System.currentTimeMillis();
+		System.out.println("add-----------------------------------" + System.currentTimeMillis());
+		System.out.println("-----------------------------------" + (add - end));
+		
+		List<String> list3 = sensitivewordService.checkSensitiveWord(text);
+		for (String str : list3) {
+			System.out.println(str);
+		}
+		long t1 = System.currentTimeMillis();
+		System.out.println("t1-----------------------------------" + System.currentTimeMillis());
+		System.out.println("-----------------------------------" + (t1-add));
+		
+		sensitivewordService.delete(1070);
+		long del = System.currentTimeMillis();
+		System.out.println("del-----------------------------------" + System.currentTimeMillis());
+		System.out.println("-----------------------------------" + (del-t1));
+		
+		List<String> list4= sensitivewordService.checkSensitiveWord(text);
+		for (String str : list4) {
+			System.out.println(str);
+		}
+		long t2 = System.currentTimeMillis();
+		System.out.println("t2-----------------------------------" + System.currentTimeMillis());
+		System.out.println("-----------------------------------" + (t2-del));
+		
 	}
 
 }
