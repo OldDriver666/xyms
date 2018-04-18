@@ -35,6 +35,7 @@ import com.fise.model.entity.SensitiveWordsExample;
 import com.fise.model.entity.CommentExample.Criteria;
 import com.fise.model.result.CommentResult;
 import com.fise.service.comment.ICommentService;
+import com.fise.service.sensitiveword.ISensitivewordService;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
@@ -69,19 +70,18 @@ public class CommentServiceImpl implements ICommentService{
     
     @Autowired IMMarkMapper imMarkDao;
     
+    @Autowired
+    ISensitivewordService sensitivewordService;
+    
     @Override
     public Response addComment(Comment record) {
         Response res = new Response();
         
         //检测敏感词
-        SensitiveWordsExample sensitiveWordsExample = new SensitiveWordsExample();
-        SensitiveWordsExample.Criteria criteria1 = sensitiveWordsExample.createCriteria();
-        List<SensitiveWords> sensitiveWordsList=sensitiveWordsDao.selectByExample(sensitiveWordsExample);
-        SensitivewordFilter filter = new SensitivewordFilter(sensitiveWordsList);
-        Set<String> set = filter.getSensitiveWord(record.getContent(), 1);
-        if(set.size()!=0){
+        List<String> listWords = sensitivewordService.checkSensitiveWord(record.getContent());
+        if(listWords.size() != 0){
             res.failure(ErrorCode.ERROR_SENSITIVEWORDS_EXISTED);
-            res.setMsg("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
+            res.setMsg("语句中包含敏感词的个数为：" + listWords.size() + "。包含：" + listWords.toString());
             return res;
         }
         
