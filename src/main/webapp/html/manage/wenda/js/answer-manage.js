@@ -5,6 +5,7 @@ $(function() {
     var id = Util.cookieStorage.getCookie("id");
 
     var url=location.search;
+
     var Request = new Object();
     if(url.indexOf("?")!=-1) {
         var str = url.substr(1)　//去掉?号
@@ -17,6 +18,7 @@ $(function() {
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
+    var questionID = Request["questionID"];
 
 	var action = {
         init: function(){
@@ -91,9 +93,6 @@ $(function() {
 		},
         //页面跳转数据
         questionPageData : function() {
-            var thisURL = document.URL;
-            var getval =thisURL.split('?')[1];
-            var showval= getval.split("=")[1];
             var search_userid = $("#input-search-userid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -105,9 +104,8 @@ $(function() {
             data.page_size = page_content_num;
             data.param = {
                 "user_id":search_userid,
-                "problem_id":showval,
+                "problem_id":questionID,
             };
-
             var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,

@@ -313,18 +313,27 @@ function uploadfile(input) {
 }
 </script>
 <!--点击获取跳转信息-->
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $("#pageContent").on("click",".answer_num",function(){
         var that = $(this).parent().parent();
         var questionID = that.find("td").eq(0).text();
         window.location.href= "answer-manage.html?questionID="+questionID;
     });
-</script>
+</script>-->
 <!--跳转过来的问题ID-->
-<script type="text/javascript">
+<!--<script type="text/javascript">
     var thisURL = document.URL;
     var getval =thisURL.split('?')[1];
     var showval= getval.split("=")[1];
+</script>-->
+<script type="text/javascript">
+    $("#pageContent").on("click",".answer_num",function(){
+        var that = $(this).parent().parent();
+        var questionID = that.find("td").eq(0).text();
+        window.parent.questionID=questionID;
+        window.parent.toHtml="manage/wenda/answer-manage.html";
+        parent.gotoHtml();
+    });
 </script>
 </body>
 </html>

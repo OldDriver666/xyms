@@ -212,7 +212,29 @@
         document.onkeydown=banBackSpace;
     }
 </script>
+<script>
+    var toHtml;
+    var questionID;
+    function gotoHtml() {
+        $("#menuName").html('');
+        $(".am-icon-big").html('问答圈');
+        $(".am-active").html('回答管理');
+        var $this = $(this);
+        var url = toHtml;
+        var menuid = $this.data('menuid');
+        var insertRight = $this.data('insert');
+        var queryRight = $this.data('query');
+        var updateRight = $this.data('update');
+        var moduleName = $this.data('name');
+        url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid)+"&questionID="+(questionID);
+        if (url !== undefined) {
+            $('#iframePage').attr('src', url);
+            $("#menuName").html(moduleName);
+            $(".am-active").html(moduleName);
+        }
 
+    }
+</script>
 </body>
 
 </html>
