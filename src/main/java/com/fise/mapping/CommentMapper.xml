@@ -306,11 +306,11 @@
 					c.*, f.nick fnick, t.nick tnick, a.content acontent,b.content bcontent, p.title
 				FROM
 					`Comment` c
-				INNER JOIN  IMUser f ON f.id = c.from_userid
-				INNER JOIN  IMUser t ON t.id = c.to_userid
-				INNER JOIN	Answer a ON a.id=c.answer_id
-				INNER JOIN	`Comment` b ON b.id=c.comment_id
-				INNER JOIN	Problems p ON p.id=c.problem_id
+				LEFT JOIN  IMUser f ON f.id = c.from_userid
+				LEFT JOIN  IMUser t ON t.id = c.to_userid
+				LEFT JOIN	Answer a ON a.id=c.answer_id
+				LEFT JOIN	`Comment` b ON b.id=c.comment_id
+				LEFT JOIN	Problems p ON p.id=c.problem_id
 			) a
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
