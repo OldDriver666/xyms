@@ -110,7 +110,7 @@ $(function() {
             });
 		},
         //页面跳转数据
-        questionPageData : function() {
+       /* questionPageData : function() {
             var thisURL = document.URL;
             var getval =thisURL.split('?')[1];
             var showval= getval.split("=")[1];
@@ -120,17 +120,20 @@ $(function() {
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/problem/queryback";
+            var url = ctx + "xiaoyusvr/answer/querybyid";
             var data = new Object();
+            data.user_id = parseInt(id);
             data.page_no = 1;
             data.page_size = page_content_num;
             data.param = {
                 "title":search_Title,
+                "problem_id":showval,
+                "order":"created"
+
             };
             data.extra_param = {
                 "nick":search_Nick
             };
-
             var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,
@@ -155,12 +158,11 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-        },
+        },*/
     };
 	window.action = action;
     action.init();
 	action.loadPageData();
-	action.questionPageData()
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -305,12 +307,12 @@ $(function() {
             action.loadPageData();
         }
     });
-    $(function() {
+    /*$(function() {
         action.questionPageData();
         $("#btn-search").on('click', function() {
             action.loadPageData();
         });
-    });
+    });*/
 
     $(".fileInsert").on('change', function(e){
         var tag = e.target

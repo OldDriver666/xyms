@@ -5,6 +5,7 @@ $(function() {
     var id = Util.cookieStorage.getCookie("id");
 
     var url=location.search;
+
     var Request = new Object();
     if(url.indexOf("?")!=-1) {
         var str = url.substr(1)　//去掉?号
@@ -17,6 +18,7 @@ $(function() {
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
+    var questionID = Request["questionID"];
 
 	var action = {
         init: function(){
@@ -91,9 +93,6 @@ $(function() {
 		},
         //页面跳转数据
         questionPageData : function() {
-            var thisURL = document.URL;
-            var getval =thisURL.split('?')[1];
-            var showval= getval.split("=")[1];
             var search_userid = $("#input-search-userid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -105,9 +104,8 @@ $(function() {
             data.page_size = page_content_num;
             data.param = {
                 "user_id":search_userid,
-                "problem_id":showval,
+                "problem_id":questionID,
             };
-
             var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,
@@ -152,7 +150,10 @@ $(function() {
 
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-userID").val(that.find("td").eq(2).text());
-        $("#input-questionid").val(that.find("td").eq(3).text());
+        $("#input-user-nike").val(that.find("td").eq(3).text());
+        $("#input-questionid").val(that.find("td").eq(4).text());
+        $("#input-question-content").append(that.find("td").eq(5).text());
+        $("#input-answer-content").append(that.find("td").eq(1).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -189,6 +190,14 @@ $(function() {
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
+    });
+    $("#addTempl-modal .close").on('click', function() {
+        $("#input-answer-content").empty();
+        $("#input-question-content").empty();
+    });
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $("#input-answer-content").empty();
+        $("#input-question-content").empty();
     });
     $("#input-devType").change(function(){
         if($(this).val() != ""){

@@ -82,9 +82,21 @@
 											</div>
 										</div>
 										<div class="form-group" >
+											<label for="input-user-nike" class="col-sm-2 control-label"><span class="necessary"></span>用户昵称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-user-nike" name="devIME" placeholder="请输入用户昵称" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
 											<label for="input-answerid" class="col-sm-2 control-label"><span class="necessary"></span>回答ID</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-answerid" name="devXW" placeholder="请输入回答ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-answer-content" class="col-sm-2 control-label"><span class="necessary"></span>回答内容</label>
+											<div class="col-sm-10">
+												<div id="input-answer-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
 											</div>
 										</div>
 										<div class="form-group" id="input-status-wrap">
@@ -116,7 +128,9 @@
 					<th>点赞ID</th>
 					<th>状态</th>
 					<th>用户ID</th>
+					<th>用户昵称</th>
 					<th>回答ID</th>
+					<th style="width: 200px">回答内容</th>
 					<th style="width: 150px">更新时间</th>
 					<th style="width: 150px">创建时间</th>
 					<th class="table-manage" style="width: 80px">管理</th>
@@ -162,7 +176,9 @@
 	<td>${id}</td>
 	<td>{{if status == 0}}未点赞 {{else status == 1}}点赞{{/if}}</td>
 	<td>${user_id}</td>
+	<td>${nick}</td>
 	<td>${answer_id}</td>
+	<td class="table-content-hidden">${content}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
