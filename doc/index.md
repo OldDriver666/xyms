@@ -3097,6 +3097,7 @@ type和name都是选填，如果都不填，则查询所有信息
             "title": "Ewwwwwww",
             "content": "Wwwwww",
             "picture": "",
+            "concerns": 1,     //关注数
             "status": 1,
             "updated": 1505802100,
             "created": 1504236766,

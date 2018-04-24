@@ -45,6 +45,11 @@ public class Problems implements Serializable {
      */
     @JsonProperty("browse_num")
     private Integer browseNum;
+    
+    /**
+     * 关注数量
+     */
+    private Integer concerns;
 
     /**
      * 1-可用   0-删除
@@ -151,6 +156,14 @@ public class Problems implements Serializable {
 
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+
+	public Integer getConcerns() {
+		return concerns;
+	}
+
+	public void setConcerns(Integer concerns) {
+		this.concerns = concerns;
 	}
 
 	@Override

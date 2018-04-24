@@ -8,6 +8,7 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="answer_num" jdbcType="INTEGER" property="answerNum" />
     <result column="browse_num" jdbcType="INTEGER" property="browseNum" />
+    <result column="concerns" jdbcType="INTEGER" property="concerns" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="nick" jdbcType="VARCHAR" property="nick" />
@@ -327,10 +328,12 @@
 		FROM
 			(
 				SELECT
-					p.*, u.nick
+					p.*, u.nick, count(c.id) concerns
 				FROM
 					Problems p
 				LEFT JOIN IMUser u ON u.id = p.user_id
+				LEFT JOIN Concern c on c.problem_id=p.id
+				GROUP BY p.id
 			) a
       <if test="_parameter != null">
 	      <include refid="Update_By_Example_Where_Clause" />
