@@ -90,9 +90,21 @@
 											</div>
 										</div>
 										<div class="form-group" >
+											<label for="input-comment-content" class="col-sm-3 control-label"><span class="necessary"></span>评论内容</label>
+											<div class="col-sm-9">
+												<div id="input-comment-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
+											</div>
+										</div>
+										<div class="form-group" >
 											<label for="input-fromuserID" class="col-sm-3 control-label"><span class="necessary"></span>用户ID</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-fromuserID" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-user-nike" class="col-sm-3 control-label"><span class="necessary"></span>用户昵称</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-user-nike" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" >
@@ -102,9 +114,21 @@
 											</div>
 										</div>
 										<div class="form-group" >
+											<label for="input-user-tnick" class="col-sm-3 control-label"><span class="necessary"></span>被回复用户昵称</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-user-tnick" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
 											<label for="input-answerid" class="col-sm-3 control-label"><span class="necessary"></span>回答ID</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-answerid" name="devXW" placeholder="请输入回答ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-answer-content" class="col-sm-3 control-label"><span class="necessary"></span>回答内容</label>
+											<div class="col-sm-9">
+												<div id="input-answer-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px;"></div>
 											</div>
 										</div>
 										<div class="form-group" >
@@ -114,9 +138,33 @@
 											</div>
 										</div>
 										<div class="form-group" >
+											<label for="input-comment-bcontent" class="col-sm-3 control-label"><span class="necessary"></span>原评论内容</label>
+											<div class="col-sm-9">
+												<div id="input-comment-bcontent" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
+											</div>
+										</div>
+										<div class="form-group" >
 											<label for="input-problemid" class="col-sm-3 control-label"><span class="necessary"></span>问题ID</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" id="input-problemid" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-question-content" class="col-sm-3 control-label"><span class="necessary"></span>问题标题</label>
+											<div class="col-sm-9">
+												<div id="input-question-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-updateTime" class="col-sm-3 control-label"><span class="necessary"></span>更新时间</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-updateTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="input-createTime" class="col-sm-3 control-label"><span class="necessary"></span>创建时间</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="input-createTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="input-status-wrap">
@@ -146,15 +194,20 @@
 				<thead>
 				<tr>
 					<th style="width: 100px">当前评论ID</th>
-					<th style="width: 350px">评论内容</th>
+					<th style="width: 115px">评论内容</th>
 					<th>用户ID</th>
+					<th>用户昵称</th>
 					<th style="width: 100px">被回复用户ID</th>
+					<th style="width: 115px">被回复用户昵称</th>
 					<th>回答ID</th>
+					<th style="width: 115px">评论内容</th>
 					<th>原评论ID</th>
+					<th style="width: 115px">原评论内容</th>
 					<th>问题ID</th>
+					<th style="width: 115px">问题标题</th>
 					<th>状态</th>
-					<th style="width: 150px">更新时间</th>
-					<th style="width: 150px">创建时间</th>
+					<!--<th style="width: 150px">更新时间</th>
+					<th style="width: 150px">创建时间</th>-->
 					<th class="table-manage" style="width: 80px">管理</th>
 				</tr>
 				</thead>
@@ -198,13 +251,18 @@
 	<td><div class="showMore">${id}</div></td>
 	<td class="content table-content-hidden">${content}</td>
 	<td>${from_userid}</td>
+	<td class="table-content-hidden">${fnick}</td>
 	<td><div class="showMore">${to_userid}</div></td>
+	<td class="table-content-hidden">${tnick}</td>
 	<td>${answer_id}</td>
+	<td class="table-content-hidden">${acontent}</td>
 	<td>${comment_id}</td>
+	<td class="table-content-hidden">${bcontent}</td>
 	<td>${problem_id}</td>
+	<td class="table-content-hidden">${title}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
-	<td>${Util.formatDateTime(updated)}</td>
-	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none">${Util.formatDateTime(updated)}</td>
+	<td style="display:none">${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">
 			<button type="button" class="btn btn-default btn-sm btn-edit">

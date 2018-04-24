@@ -186,7 +186,7 @@ $(function() {
         for(var i=0; i < iconList.length; i++){
             var img1 = document.createElement("img");
             img1.setAttribute("class", "newIcon");
-            img1.width =120;
+            img1.width =50;
             img1.src = iconList[i];
             img1.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数
@@ -207,7 +207,7 @@ $(function() {
         for(var i=0; i < imgList.length; i++){
             var img = document.createElement("img");
             img.setAttribute("class", "newImg");
-            img.width =420;
+            img.width =200;
             img.src = imgList[i];
             img.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数

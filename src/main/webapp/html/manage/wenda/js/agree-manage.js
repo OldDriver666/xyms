@@ -107,7 +107,9 @@ $(function() {
 
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-userID").val(that.find("td").eq(2).text());
-        $("#input-answerid").val(that.find("td").eq(3).text());
+        $("#input-user-nike").val(that.find("td").eq(3).text());
+        $("#input-answerid").val(that.find("td").eq(4).text());
+        $("#input-answer-content").append(that.find("td").eq(5).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -138,6 +140,18 @@ $(function() {
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
         }
+    });
+    $("#input-user-nike").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#addTempl-modal .close").on('click', function() {
+        $("#input-answer-content").empty();
+    });
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $("#input-answer-content").empty();
     });
     $("#input-title").change(function(){
         if($(this).val() != ""){

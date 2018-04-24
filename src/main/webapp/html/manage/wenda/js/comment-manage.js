@@ -108,11 +108,19 @@ $(function() {
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
+        $("#input-comment-content").append(that.find("td").eq(1).text());
         $("#input-fromuserID").val(that.find("td").eq(2).text());
-        $("#input-touserID").val(that.find("td").eq(3).text());
-        $("#input-answerid").val(that.find("td").eq(4).text());
-        $("#input-commentid").val(that.find("td").eq(5).text());
-        $("#input-problemid").val(that.find("td").eq(6).text());
+        $("#input-user-nike").val(that.find("td").eq(3).text());
+        $("#input-touserID").val(that.find("td").eq(4).text());
+        $("#input-user-tnick").val(that.find("td").eq(5).text());
+        $("#input-answerid").val(that.find("td").eq(6).text());
+        $("#input-answer-content").append(that.find("td").eq(7).text());
+        $("#input-commentid").val(that.find("td").eq(8).text());
+        $("#input-comment-bcontent").append(that.find("td").eq(9).text());
+        $("#input-problemid").val(that.find("td").eq(10).text());
+        $("#input-question-content").append(that.find("td").eq(11).text());
+        $("#input-updateTime").val(that.find("td").eq(13).text());
+        $("#input-createTime").val(that.find("td").eq(14).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -126,6 +134,18 @@ $(function() {
 		} else if (e.relatedTarget.id = "btn-add") {
 		}
 	});
+    $("#addTempl-modal .close").on('click', function() {
+        $("#input-answer-content").empty();
+        $("#input-comment-bcontent").empty();
+        $("#input-question-content").empty();
+        $("#input-comment-content").empty();
+    });
+    $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
+        $("#input-answer-content").empty();
+        $("#input-comment-bcontent").empty();
+        $("#input-question-content").empty();
+        $("#input-comment-content").empty();
+    });
 
 	//验证表单
     $("#form-addTempl").validate({
@@ -139,6 +159,32 @@ $(function() {
         }
     });
     $("#input-userID").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+
+    $("#input-user-nike").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#input-user-tnick").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+
+    $("#input-updateTime").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#input-createTime").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
