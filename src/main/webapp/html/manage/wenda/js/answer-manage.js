@@ -35,6 +35,8 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
 			var search_userid = $("#input-search-userid").val();
+            var search_nick = $("#input-search-nick").val();
+            var search_questiontitle = $("#input-search-questiontitle").val();
             var search_questionid = $("#input-search-questionid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -45,8 +47,10 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = page_content_num;
                 data.param = {
+                    "nick":search_nick,
                     "user_id":search_userid,
                     "problem_id":search_questionid,
+                    "title":search_questiontitle
                 };
 
             var opt = {
@@ -235,6 +239,16 @@ $(function() {
             action.loadPageData();
         }
 	});
+    $("#input-search-questiontitle").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-nick").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
     $("#input-page-content-num").change(function() {
         action.loadPageData();
     });

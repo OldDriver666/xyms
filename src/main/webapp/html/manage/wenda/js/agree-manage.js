@@ -33,6 +33,8 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
 			var search_userid = $("#input-search-userid").val();
+            var search_nike = $("#input-search-nike").val();
+            var search_content = $("#input-search-content").val();
             var search_answerid = $("#input-search-answerid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -44,7 +46,9 @@ $(function() {
                 data.page_size = page_content_num;
                 data.param = {
                     "user_id":search_userid,
-                    "answer_id":search_answerid
+                    "nick":search_nike,
+                    "answer_id":search_answerid,
+                    "content":search_content
                 };
 
             var opt = {
@@ -198,6 +202,16 @@ $(function() {
             action.loadPageData();
         }
 	});
+    $("#input-search-nike").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-content").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
     $("#input-search-answerid").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();

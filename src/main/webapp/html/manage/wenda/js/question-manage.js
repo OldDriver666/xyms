@@ -51,6 +51,8 @@ $(function() {
 		loadPageData : function() {
 			var search_Title = $("#input-search-title").val();
             var search_Nick = $("#input-search-nick").val();
+            var search_questionID = $("#input-search-questionID").val();
+            var search_userid = $("#input-search-userid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -60,11 +62,14 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = page_content_num;
                 data.param = {
-                    "title":search_Title
+                    "title":search_Title,
+                    "nick":search_Nick,
+                    "user_id":search_userid,
+                    "id":search_questionID
                 };
-                data.extra_param = {
+                /*data.extra_param = {
                     "nick":search_Nick
-                };
+                };*/
 
             var opt = {
                 "targetContentId" : "pageContent",
@@ -303,6 +308,16 @@ $(function() {
 
 	});
     $("#input-search-nick").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-questionID").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-userid").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }

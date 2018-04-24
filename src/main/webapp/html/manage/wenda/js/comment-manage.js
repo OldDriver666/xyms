@@ -33,6 +33,9 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
 			var search_answerid = $("#input-search-answerid").val();
+            var search_acontent = $("#input-search-acontent").val();
+            var search_bcontent = $("#input-search-bcontent").val();
+            var search_title = $("#input-search-title").val();
             var search_commentid = $("#input-search-commentid").val();
             var search_problemid = $("#input-search-problemid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
@@ -45,8 +48,11 @@ $(function() {
                 data.page_size = page_content_num;
                 data.param = {
                     "answer_id":search_answerid,
+                    "acontent":search_acontent,
                     "comment_id":search_commentid,
-                    "problem_id":search_problemid
+                    "bcontent":search_bcontent,
+                    "problem_id":search_problemid,
+                    "title":search_title
                 };
 
             var opt = {
@@ -232,6 +238,21 @@ $(function() {
             action.loadPageData();
         }
 	});
+    $("#input-search-acontent").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-bcontent").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-title").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
     $("#input-page-content-num").change(function() {
         action.loadPageData();
     });
