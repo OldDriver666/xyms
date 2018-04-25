@@ -80,9 +80,10 @@ public class ProblemServiceImpl implements IProblemService{
         Response res = new Response();
         //检测敏感词
         List<String> listWords = sensitivewordService.checkSensitiveWord(record.getContent());
+        listWords.addAll(sensitivewordService.checkSensitiveWord(record.getTitle()));
         if(listWords.size() != 0){
             res.failure(ErrorCode.ERROR_SENSITIVEWORDS_EXISTED);
-            res.setMsg("语句中包含敏感词的个数为：" + listWords.size() + "。包含：" + listWords.toString());
+            res.setMsg("标题和内容中包含敏感词的个数为：" + listWords.size() + "。包含：" + listWords.toString());
             return res;
         }
         
