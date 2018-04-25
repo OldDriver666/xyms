@@ -97,7 +97,7 @@
 						</button>
 					</div>
 
-					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+					<div class="modal right fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -230,7 +230,7 @@
 </div>
 <div class="fileContentTxt" style="display: none;"></div>
 
-<div class="modal fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal right fade" id="modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body" style="text-align: center;">
@@ -260,7 +260,7 @@
 	<!--<td class="content">{{html content}}</td>-->
 	<td>${user_id}</td>
 	<td class="table-content-hidden">${nick}</td>
-	<td><a href="javascript:void(0);" class="answer_num" target="_blank">${answer_num}</a></td>
+	<td><a href="javascript:void(0);" class="answer_num">${answer_num}</a></td>
 	<td>${browse_num}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td style="display: none">${content}</td>
@@ -336,9 +336,8 @@ function uploadfile(input) {
     $("#pageContent").on("click",".answer_num",function(){
         var that = $(this).parent().parent();
         var questionID = that.find("td").eq(0).text();
-        window.parent.questionID=questionID;
-        window.parent.toHtml="manage/wenda/answer-manage.html";
-        parent.gotoHtml();
+        var toHtml="manage/wenda/answer-manage.html";
+        parent.gotoHtml({'questionID':questionID, 'toHtml':toHtml});
     });
 </script>
 </body>
