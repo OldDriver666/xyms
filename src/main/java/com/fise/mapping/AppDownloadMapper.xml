@@ -201,4 +201,18 @@
       download_time = #{downloadTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <insert id="addListAppDownload" parameterType="java.util.List">
+    insert into app_download 
+    	(user_id, app_id, download_time)
+    values 
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	    (
+	      #{item.userId,jdbcType=INTEGER}, 
+	      #{item.appId,jdbcType=INTEGER}, 
+	      #{item.downloadTime,jdbcType=INTEGER}
+	    )  
+	    </foreach>
+  </insert>
+  
 </mapper>

@@ -13,6 +13,8 @@ public interface AppDownloadMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(AppDownload record);
+    
+    int addListAppDownload(List<AppDownload> records);
 
     int insertSelective(AppDownload record);
 

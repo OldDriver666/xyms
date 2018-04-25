@@ -4514,6 +4514,37 @@ null 没有数据返回 看code是否成功
    }
 ```
 
+####p批量新增下载记录
+|   接口地址    |   xiaoyusvr/boss/appdownload/addlist   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+        {"list":
+			[
+			     {
+			      "userId":11,
+			      "appId":44,
+			      "downloadTime":1494573507
+			     },
+			     {
+			      "userId":11,
+			      "appId":44,
+			      "downloadTime":1494573507
+			     }
+			]
+		}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
 ####修改下载记录
 |   接口地址    |   xiaoyusvr/boss/appdownload/update   |
 |   ---         |   ---          |
