@@ -59,4 +59,12 @@ public class AppDownloadServiceImpl implements IAppDownloadService{
 	        return resp;
 	    }
 
+		@Override
+		public Response addListAppDownload(List<AppDownload> param) {
+			Response resp = new Response();
+	        appDownloadDao.addListAppDownload(param);
+	        resp.success();
+	        return resp;
+		}
+
 }
