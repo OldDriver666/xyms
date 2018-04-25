@@ -397,35 +397,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
   -moz-text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis;
 }
-/*modal*/
-.modal.left .modal-dialog,
-.modal.right .modal-dialog {
-  position: fixed;;
-  margin: 30px auto;
-  -webkit-transition: -webkit-transform .3s ease-out;
-  -o-transition: -o-transform .3s ease-out;
-  transition: transform .8s ease-out;
-  -webkit-transform: translate(0, -25%);
-  -ms-transform: translate(0, -25%);
-  -o-transform: translate(0, -25%);
-  transform: translate(25%, 0);
-}
-
-
-/*Left*/
-.modal.left.fade .modal-dialog{
-  left: -25%;
-  -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-  -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-  -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-  transition: opacity 0.3s linear, left 0.3s ease-out;
-}
-
-.modal.left.fade.in .modal-dialog{
-  left:25%;
-}
-
-/*Right*/
+/*modalRight*/
 .modal.right.fade .modal-dialog {
   right: -25%;
   -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
@@ -435,6 +407,6 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 
 .modal.right.fade.in .modal-dialog {
-  right: 25%;
+  right: 0;
 }
 
