@@ -25,3 +25,21 @@ CREATE TABLE `app_download` (
   PRIMARY KEY (`id`),
   KEY `idx_app` (`app_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='应用下载表';
+
+
+alter table Answer add index idx_user(user_id);
+alter table Answer add index idx_problem(problem_id);
+
+alter table Concern add index idx_user(user_id);
+alter table Concern add index idx_problem(problem_id);
+
+
+alter table `Comment`  add index idx_from_user (from_userid);
+alter table `Comment`  add index idx_to_user (to_userid);
+alter table `Comment`  add index idx_answer(answer_id);
+alter table `Comment`  add index idx_comment (comment_id);
+alter table `Comment`  add index idx_problem (problem_id);
+
+
+alter table Agree add index idx_user(user_id);
+alter table Agree add index idx_answer(answer_id);
