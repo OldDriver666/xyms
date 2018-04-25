@@ -16,3 +16,12 @@ CREATE TABLE `complaints` (
   `picture` varchar(512) DEFAULT NULL COMMENT '图片',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='投诉表';
+
+CREATE TABLE `app_download` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `app_id` int(11) DEFAULT NULL COMMENT '应用id',
+  `download_time` int(11) DEFAULT NULL COMMENT '下载时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_app` (`app_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='应用下载表';

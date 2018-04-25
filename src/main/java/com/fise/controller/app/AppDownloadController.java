@@ -1,7 +1,5 @@
 package com.fise.controller.app;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -66,6 +64,9 @@ public class AppDownloadController {
     @RequestMapping(value = "/addlist", method = RequestMethod.POST)
     public Response addListAppDownload(@RequestBody @Valid AppDownloadList param){
         Response resp = new Response();
+        if (null == param.getList()) {
+        	return null;
+		}
         resp = appDownloadSvr.addListAppDownload(param.getList());
         logger.info("批量新增下载记录:"+JsonUtil.toJson(param)+"结果:" + resp.getMsg());
         return resp;
