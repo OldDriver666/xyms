@@ -4457,3 +4457,102 @@ null 没有数据返回 看code是否成功
    "msg": "ok",
    }
 ```
+
+
+###下载记录
+####下载记录查询
+|   接口地址    |   xiaoyusvr/boss/appdownload/query    |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+	"app_id":""   //下载记录 可以为空
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "code": 0,
+      "msg": "ok",
+      "data": [
+         {
+            "id": 1,
+            "userId": 11,
+            "appId": 44,
+            "downloadTime": 1494573507
+         }
+      ]
+   }
+}
+```
+
+####新增下载记录
+|   接口地址    |   xiaoyusvr/boss/appdownload/insert   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+         {
+			"userId":11,
+			"appId":44,
+			"downloadTime":1494573507
+         }
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####修改下载记录
+|   接口地址    |   xiaoyusvr/boss/appdownload/update   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+         {
+             "id":1,
+			"userId":11,
+			"appId":44,
+			"downloadTime":1494573507
+         }
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```
+
+####删除下载记录
+|   接口地址    |   xiaoyusvr/boss/appdownload/delete   |
+|   ---         |   ---          |
+|   请求方式    |   HTTP POST         |
+|   参数格式    |   JSON              | 
+
+####请求
+```
+{
+     "id":1
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   }
+```

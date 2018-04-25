@@ -24,7 +24,6 @@ public class AppDownloadController {
     @Resource 
     IAppDownloadService appDownloadSvr;
     
-    @IgnoreAuth
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response query(@RequestBody @Valid AppDownload param){
 
@@ -43,7 +42,6 @@ public class AppDownloadController {
         logger.info("新增下载记录:"+JsonUtil.toJson(param)+"结果:" + resp.getMsg());
         return resp;
     }
-    @IgnoreAuth
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid AppDownload param){
         Response resp = new Response();
@@ -53,7 +51,6 @@ public class AppDownloadController {
         logger.info("修改下载记录:"+param.toString()+" 结果:"+resp.getMsg());
         return resp;
     }
-    @IgnoreAuth
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Response delete(@RequestBody @Valid AppDownload param){
         Response resp = new Response();
