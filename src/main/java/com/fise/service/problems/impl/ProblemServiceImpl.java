@@ -548,7 +548,11 @@ public class ProblemServiceImpl implements IProblemService{
         if(!StringUtil.isEmpty(param.getParam().getContent())){
             criteria.andContentLike("%" + param.getParam().getContent()  + "%");
         }
-        example.setOrderByClause("created desc");
+        if (StringUtil.isNotEmpty(param.getOrderby())) {
+        	example.setOrderByClause(param.getOrderby());
+		} else {
+			example.setOrderByClause("created desc");
+		}
         List<Problems> list=problemsDao.querytitlebypage(example, param);
         
         param.setResult(list);

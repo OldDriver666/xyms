@@ -321,6 +321,7 @@ public class ProblemController {
     
     
     /*后台管理 查询问题*/
+    @IgnoreAuth
     @RequestMapping(value="/queryback",method=RequestMethod.POST)
     public Response queryBack(@RequestBody @Valid Page<Problems> param){
         Response resp = new Response();

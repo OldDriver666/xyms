@@ -3076,6 +3076,7 @@ type和name都是选填，如果都不填，则查询所有信息
      	         "user_id":""			     //选填-要查询的用户Id
      	         "nick":""			     //选填-要查询的用户昵称
      		  },
+     "orderby":"answer_num desc"  ,         //选填-按什么字段排序
      "page_no":1                      
 }
 ```

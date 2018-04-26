@@ -38,6 +38,11 @@ public class Page<T> implements Pagination, Serializable {
 
 	@JsonProperty("result")
 	private List<T> result; // 当前页记录List形式
+	
+    /**
+     * 排序字段
+     */
+    private String orderby;
 
 	public Page() {
 		super();
@@ -139,6 +144,14 @@ public class Page<T> implements Pagination, Serializable {
 	@JsonIgnore
 	public int getCurrentPageNo() {
 		return pageNo;
+	}
+
+	public String getOrderby() {
+		return orderby;
+	}
+
+	public void setOrderby(String orderby) {
+		this.orderby = orderby;
 	}
 
 	@Override
