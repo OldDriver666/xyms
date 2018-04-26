@@ -214,21 +214,29 @@
 </script>
 <script>
     function gotoHtml(tocontent) {
-        /*$("#menuDowns").find("a").each(function () {
-            console.log($(this).attr("data-url"))
-        })*/
+        $("a").each(function () {
+            if($(this).attr("data-url") == tocontent.toHtml){
+                menuid = $(this).attr("data-menuid");
+                insertRight = $(this).attr("data-insert");
+                queryRight = $(this).attr("data-query");
+                updateRight = $(this).attr("data-update");
+                moduleName = $(this).attr("data-name");
+                modulepName = $(this).parent().parent().siblings("a").attr("data-name");
+            }
+        })
 
         $("#menuName").html('');
-        $(".am-icon-big").html('问答圈');
-        $(".am-active").html('回答管理');
+        $(".am-icon-big").html(modulepName);
+        $(".am-active").html(moduleName);
         var $this = $(this);
         var url = tocontent.toHtml;
-        var menuid = $this.data('menuid');
-        var insertRight = $this.data('insert');
-        var queryRight = $this.data('query');
-        var updateRight = $this.data('update');
-        var moduleName = $this.data('name');
-        url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid)+"&questionID="+(tocontent.questionID);
+        var menuid;
+        var insertRight;
+        var queryRight;
+        var updateRight;
+        var moduleName;
+        var modulepName;
+        url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid)+"&searchID="+(tocontent.searchID);
         if (url !== undefined) {
             $('#iframePage').attr('src', url);
             $("#menuName").html(moduleName);

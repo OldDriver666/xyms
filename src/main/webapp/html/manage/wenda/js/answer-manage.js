@@ -18,7 +18,7 @@ $(function() {
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
-    var questionID = Request["questionID"];
+    var searchID = Request["searchID"];
 
 	var action = {
         init: function(){
@@ -96,7 +96,7 @@ $(function() {
             });
 		},
         //页面跳转数据
-        questionPageData : function() {
+        searchPageData : function() {
             var search_userid = $("#input-search-userid").val();
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -108,7 +108,7 @@ $(function() {
             data.page_size = page_content_num;
             data.param = {
                 "user_id":search_userid,
-                "problem_id":questionID,
+                "problem_id":searchID,
             };
             var opt = {
                 "targetContentId" : "pageContent",
@@ -139,7 +139,7 @@ $(function() {
 	window.action = action;
     action.init();
 	action.loadPageData();
-	action.questionPageData()
+	action.searchPageData()
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -258,7 +258,7 @@ $(function() {
         }
     });
     $(function () {
-        action.questionPageData()
+        action.searchPageData()
         $("#btn-search").on('click', function() {
             action.loadPageData();
         });

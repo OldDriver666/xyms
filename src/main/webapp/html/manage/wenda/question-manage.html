@@ -335,9 +335,9 @@ function uploadfile(input) {
 <script type="text/javascript">
     $("#pageContent").on("click",".answer_num",function(){
         var that = $(this).parent().parent();
-        var questionID = that.find("td").eq(0).text();
+        var searchID = that.find("td").eq(0).text();
         var toHtml="manage/wenda/answer-manage.html";
-        parent.gotoHtml({'questionID':questionID, 'toHtml':toHtml});
+        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml});
     });
 </script>
 </body>
