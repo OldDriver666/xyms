@@ -183,7 +183,7 @@ $(function() {
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-userID").val(that.find("td").eq(2).text());
         $("#input-title").val(that.find("td").eq(1).text());
-        $("#input-content").append(that.find("td").eq(7).text());
+        $("#input-content").append(that.find("td").eq(8).text());
         //$("#input-content").val(that.find("td").eq(2).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");

@@ -78,7 +78,7 @@
 					</div>
 
 					<div class="modal right fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
-						<div class="modal-dialog">
+						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -86,93 +86,94 @@
 								</div>
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
-										<div class="form-group" >
-											<label for="input-id" class="col-sm-3 control-label"><span class="necessary"></span>当前评论ID</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-id" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>当前评论ID</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-id" name="devIME" placeholder="请输入当前评论ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-comment-content" class="col-sm-3 control-label"><span class="necessary"></span>评论内容</label>
-											<div class="col-sm-9">
-												<div id="input-comment-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-fromuserID" class="col-sm-3 control-label"><span class="necessary"></span>用户ID</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-fromuserID" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>用户ID</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-fromuserID" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-user-nike" class="col-sm-3 control-label"><span class="necessary"></span>用户昵称</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-user-nike" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>用户昵称</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-user-nike" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-touserID" class="col-sm-3 control-label"><span class="necessary"></span>被回复用户ID</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-touserID" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>被回复用户ID</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-touserID" name="devXW" placeholder="请输入被回复对方用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-user-tnick" class="col-sm-3 control-label"><span class="necessary"></span>被回复用户昵称</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-user-tnick" class="col-sm-4 control-label"><span class="necessary"></span>被回复用户昵称</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-user-tnick" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-answerid" class="col-sm-3 control-label"><span class="necessary"></span>回答ID</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-answerid" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>回答ID</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-answerid" name="devXW" placeholder="请输入回答ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-answer-content" class="col-sm-3 control-label"><span class="necessary"></span>回答内容</label>
-											<div class="col-sm-9">
-												<div id="input-answer-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px;"></div>
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-commentid" class="col-sm-3 control-label"><span class="necessary"></span>原评论ID</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-commentid" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>原评论ID</label>
+											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-commentid" name="devXW" placeholder="请输入原评论ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-comment-bcontent" class="col-sm-3 control-label"><span class="necessary"></span>原评论内容</label>
-											<div class="col-sm-9">
+										<div class="form-group col-sm-6" >
+											<label for="input-problemid" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>问题ID</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="input-problemid" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group col-sm-6" >
+											<label for="input-updateTime" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>更新时间</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="input-updateTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group col-sm-6" >
+											<label for="input-createTime" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>创建时间</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="input-createTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group col-sm-6" >
+											<label for="input-comment-content" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>评论内容</label>
+											<div class="col-sm-8">
+												<div id="input-comment-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
+											</div>
+										</div>
+										<div class="form-group col-sm-6" >
+											<label for="input-comment-bcontent" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>原评论内容</label>
+											<div class="col-sm-8">
 												<div id="input-comment-bcontent" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-problemid" class="col-sm-3 control-label"><span class="necessary"></span>问题ID</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-problemid" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											<label for="input-answer-content" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>回答内容</label>
+											<div class="col-sm-10">
+												<div id="input-answer-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px;"></div>
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-question-content" class="col-sm-3 control-label"><span class="necessary"></span>问题标题</label>
-											<div class="col-sm-9">
+											<label for="input-question-content" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题标题</label>
+											<div class="col-sm-10">
 												<div id="input-question-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
 											</div>
 										</div>
-										<div class="form-group" >
-											<label for="input-updateTime" class="col-sm-3 control-label"><span class="necessary"></span>更新时间</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-updateTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-createTime" class="col-sm-3 control-label"><span class="necessary"></span>创建时间</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-createTime" name="devXW" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
-											</div>
-										</div>
+
 										<div class="form-group" id="input-status-wrap">
-											<label class="col-sm-3 control-label">状态</label>
-											<div class="col-sm-9">
+											<label class="col-sm-2 control-label distribCol1">状态</label>
+											<div class="col-sm-10">
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 不可用
 												</label>
@@ -197,17 +198,17 @@
 				<thead>
 				<tr>
 					<th style="width: 100px">当前评论ID</th>
-					<th style="width: 115px">评论内容</th>
+					<th style="width: 110px">评论内容</th>
 					<th>用户ID</th>
 					<th style="width: 75px">用户昵称</th>
 					<th style="width: 115px">被回复用户ID</th>
 					<th style="width: 120px">被回复用户昵称</th>
-					<th>回答ID</th>
-					<th style="width: 115px">回答内容</th>
+					<th style="width: 60px">回答ID</th>
+					<th style="width: 110px">回答内容</th>
 					<th style="width: 75px">原评论ID</th>
-					<th style="width: 115px">原评论内容</th>
+					<th style="width: 110px">原评论内容</th>
 					<th>问题ID</th>
-					<th style="width: 115px">问题标题</th>
+					<th style="width: 110px">问题标题</th>
 					<th>状态</th>
 					<!--<th style="width: 150px">更新时间</th>
 					<th style="width: 150px">创建时间</th>-->

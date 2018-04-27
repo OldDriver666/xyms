@@ -104,6 +104,7 @@ $(function() {
             data.address = $("#input-address").val();
 			data.contact = $("#input-contact").val();
 			data.email = $("#input-email").val();
+            data.createTime = $("input-createTime").val();
 			data.describtion = $("#input-describtion").val();
 			data.status = parseInt($("input[name=status]:checked").val());
 
@@ -173,6 +174,7 @@ $(function() {
 		$("#input-contact").val(that.find("td").eq(3).text());
 		$("#input-email").val(that.find("td").eq(4).text());
 		$("#input-describtion").val(that.find("td").eq(5).text());
+        $("#input-createTime").val(that.find("td").eq(8).text());
 		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -183,6 +185,12 @@ $(function() {
 			$(this).next().remove();
 		}
 	});
+    $("#input-createTime").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
 	//验证表单
     $("#form-addTempl").validate({
         rules : {

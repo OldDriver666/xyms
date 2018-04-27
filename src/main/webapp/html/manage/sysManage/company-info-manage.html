@@ -54,31 +54,37 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-address" class="col-sm-2 control-label"><span class="necessary"></span>地址</label>
+											<label for="input-address" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>地址</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-address" name="address" placeholder="请输入公司地址">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-contact" class="col-sm-2 control-label"><span class="necessary"></span>电话号码</label>
+											<label for="input-contact" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>电话号码</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-contact" name="contact" placeholder="请输入公司联系方式">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-email" class="col-sm-2 control-label"><span class="necessary"></span>Email</label>
+											<label for="input-email" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>Email</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-email" name="email" placeholder="请输入公司Email">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-describtion" class="col-sm-2 control-label"><span class="necessary"></span>公司简介</label>
+											<label for="input-describtion" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>公司简介</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-describtion" name="describtion" placeholder="请输入公司简介描述信息">
 											</div>
 										</div>
+										<div class="form-group" >
+											<label for="input-createTime" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>创建时间</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-createTime" name="devXW" placeholder="请输入创建时间" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
 										<div class="form-group" id="input-status-wrap">
-											<label class="col-sm-2 control-label">状态</label>
+											<label class="col-sm-2 control-label distribCol1">状态</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 删除
@@ -103,14 +109,14 @@
 				<thead>
 				<tr>
 					<!--<th>公司ID</th>-->
-					<th style="width: 200px">公司名称</th>
-					<th style="width: 200px">地址</th>
+					<th style="width: 260px">公司名称</th>
+					<th style="width: 260px">地址</th>
 					<th>电话号码</th>
 					<th>Email</th>
-					<th style="max-width: 250px">公司简介</th>
+					<!--<th style="max-width: 250px">公司简介</th>-->
 					<th style="width: 80px">状态</th>
 					<th style="width: 150px">更新时间</th>
-					<th style="width: 150px">创建时间</th>
+					<!--<th style="width: 150px">创建时间</th>-->
 					<th class="table-manage" style="width: 150px">管理</th>
 				</tr>
 				</thead>
@@ -146,10 +152,10 @@
 	<td>${address}</td>
 	<td>${contact}</td>
 	<td>${email}</td>
-	<td class="table-content-hidden">${describtion}</td>
+	<td class="table-content-hidden" style="display:none">${describtion}</td>
 	<td>{{if status == 0}}删除{{else status == 1}}正常{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
-	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none;">${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 		<a href="javascript:void(0);" class="table-edit-btn">
 	    	<button type="button" class="btn btn-default btn-sm btn-edit">
