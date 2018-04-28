@@ -137,9 +137,14 @@ $(function() {
         },
 	};
 	window.action = action;
-    action.init();
-	action.loadPageData();
-	action.searchPageData()
+    /*action.init();
+	action.loadPageData();*/
+
+    if(searchID == ""){
+        action.loadPageData();
+    }else{
+        action.searchPageData();
+    }
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -257,13 +262,13 @@ $(function() {
             action.loadPageData();
         }
     });
-    $(function () {
-        action.searchPageData()
-        $("#btn-search").on('click', function() {
+    /*$(function () {
+        if(searchID == ""){
             action.loadPageData();
-        });
-    });
-
+        }else{
+            action.searchPageData();
+        }
+    });*/
 });
 
 
