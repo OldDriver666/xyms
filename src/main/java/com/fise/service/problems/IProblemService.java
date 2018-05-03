@@ -1,8 +1,11 @@
 package com.fise.service.problems;
 
+import java.util.List;
+
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Problems;
+import com.fise.model.param.ProblemsParam;
 
 public interface IProblemService {
     /*提出问题*/
@@ -28,4 +31,7 @@ public interface IProblemService {
     
     /*后台管理  修改问题*/
     public Response update(Problems param);
+    
+    /*后台管理  批量删除问题*/
+    public Response bashDelete(List<Problems> list);
 }

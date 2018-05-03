@@ -570,4 +570,19 @@ public class ProblemServiceImpl implements IProblemService{
         resp.success();
         return resp;
     }
+
+	@Override
+	public Response bashDelete(List<Problems> list) {
+		Response resp = new Response();
+		ProblemsExample example = new ProblemsExample();
+	    ProblemsExample.Criteria criteria=example.createCriteria();
+	    List<Integer> idList = new ArrayList<Integer>();
+	    for (Problems problems : list) {
+	    	idList.add(problems.getId());
+		}
+	    criteria.andIdIn(idList);
+	    problemsDao.deleteByExample(example);
+        resp.success();
+        return resp;
+	}
 }

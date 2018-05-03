@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -18,8 +17,8 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
@@ -28,6 +27,7 @@ import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.Concern;
 import com.fise.model.entity.Problems;
+import com.fise.model.param.ProblemsParam;
 import com.fise.model.result.ProResult;
 import com.fise.service.auth.IAuthService;
 import com.fise.service.concern.IConcernService;
@@ -378,6 +378,21 @@ public class ProblemController {
             res=concernService.addConcern((Concern)res.getData());
             return res.success();
         }
+        return res;
+    }
+    
+    
+    /*后台管理  批量删除问题*/
+    @RequestMapping(value="/bashDelete",method=RequestMethod.POST)
+    public Response bashDelete(@RequestBody @Valid ProblemsParam param){
+        Response res = new Response();
+        if(null == param.getList() || param.getList().size() == 0){
+            res.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            res.setMsg("参数不能为空");
+            return res;
+        }
+        logger.info(param.toString());
+        res=problemService.bashDelete(param.getList());
         return res;
     }
 }
