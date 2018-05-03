@@ -107,45 +107,44 @@
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<div class="form-group" id="pId">
-											<label for="input-id" class="col-sm-2 control-label"><span class="necessary"></span>问题ID</label>
+											<label for="input-id" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题ID</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-id" name="devIME" placeholder="请输入问题ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="uId">
-											<label for="input-userID" class="col-sm-2 control-label"><span class="necessary"></span>用户ID</label>
+											<label for="input-userID" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>用户ID</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-userID" name="devIME" placeholder="请输入用户ID号" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="title1">
-											<label for="input-title1" class="col-sm-2 control-label"><span class="necessary"></span>问题标题</label>
+											<label for="input-title1" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题标题</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-title1" name="devXW" placeholder="请输入问题标题" >
 											</div>
 										</div>
 										<div class="form-group" id="title2">
-											<label for="input-title" class="col-sm-2 control-label"><span class="necessary"></span>问题标题</label>
+											<label for="input-title" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题标题</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-title" name="devXW" placeholder="请输入问题标题" readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="content1">
-											<label for="input-content1" class="col-sm-2 control-label"><span class="necessary"></span>问题内容</label>
+											<label for="input-content1" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题内容</label>
 											<div class="col-sm-10">
 												<textarea type="text" class="form-control" id="input-content1" name="devXW" placeholder="请输入问题内容"  ></textarea>
-
 											</div>
 										</div>
 
 										<div class="form-group" id="content2">
-											<label for="input-content" class="col-sm-2 control-label"><span class="necessary"></span>问题内容</label>
+											<label for="input-content" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>问题内容</label>
 											<div class="col-sm-10">
 											    <div id="input-content" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none; padding:7px 0px 0px 12px"></div>
 											</div>
 										</div>
 										<div id="addImgUrl" class="form-group" >
-											<label for="" class="col-sm-2 control-label"><span class="necessary"></span>上传图片</label>
+											<label for="" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>上传图片</label>
 											<div class="col-sm-10 z_file fl">
 												<img src="../../images/a11.png" class="add-img">
 												<input type="file" name="file" id="fileInsert" class="fileInsert" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
@@ -172,7 +171,7 @@
 											</aside>
 										</div>-->
 										<div class="form-group" id="input-status-wrap">
-											<label class="col-sm-2 control-label">状态</label>
+											<label class="col-sm-2 control-label distribCol1">状态</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 不可用
@@ -204,12 +203,13 @@
 				<thead>
 				<tr>
 					<th>问题ID</th>
-					<th style="width: 350px">问题标题</th>
+					<th style="width: 200px">问题标题</th>
 					<!--<th>问题内容</th>-->
 					<th>用户ID</th>
 					<th>昵称</th>
 					<th>回答数</th>
 					<th>浏览数</th>
+					<th>关注数</th>
 					<th>状态</th>
 					<th style="width: 150px">更新时间</th>
 					<th style="width: 150px">创建时间</th>
@@ -262,6 +262,7 @@
 	<td class="table-content-hidden">${nick}</td>
 	<td><a href="javascript:void(0);" class="answer_num">${answer_num}</a></td>
 	<td>${browse_num}</td>
+	<td>${concerns}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td style="display: none">${content}</td>
 	<td>${Util.formatDateTime(updated)}</td>

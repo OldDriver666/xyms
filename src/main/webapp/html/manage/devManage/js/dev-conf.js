@@ -178,7 +178,7 @@ $(function() {
             $(this).next().remove();
         }
     });
-    $("#btn-add-submit").on('click', function() {
+    /*$("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
@@ -198,9 +198,9 @@ $(function() {
                 window.action.edit();
             }
         }
-    });
+    });*/
 
-    $("#btn-add-submit2").click(function(){
+    /*$("#btn-add-submit2").click(function(){
         if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
             $("#addTempl-modal2").modal('hide');
             $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
@@ -210,7 +210,7 @@ $(function() {
         }else if($("#input-devType2").val() == ''){
             toastr.error("请选择设备类型！");
         }
-    });
+    });*/
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();

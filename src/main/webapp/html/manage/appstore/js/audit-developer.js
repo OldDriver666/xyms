@@ -140,7 +140,7 @@ $(function() {
 		for(var i=0; i < imgList.length; i++){
 			var img = document.createElement("img");
 			img.setAttribute("class", "newImg");
-			img.width =460;
+			img.width =200;
 			img.src = imgList[i];
 			img.onclick=function() {
 				var _this = $(this);//将当前的pimg元素作为_this传入函数

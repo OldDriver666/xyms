@@ -77,38 +77,38 @@
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-id">
 										<div class="form-group" >
-											<label for="input-channelname" class="col-sm-2 control-label"><span class="necessary"></span>频道名称</label>
+											<label for="input-channelname" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>频道名称</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-channelname" name="devIME" placeholder="请输入频道名称"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-background" class="col-sm-2 control-label"><span class="necessary"></span>背景颜色</label>
+											<label for="input-background" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>背景颜色</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-background" name="devXW" placeholder="请输入背景颜色"  >
+												<input type="text" class="form-control jscolor" id="input-background" name="devXW" placeholder="请输入背景颜色"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-description" class="col-sm-2 control-label"><span class="necessary"></span>频道描述</label>
+											<label for="input-description" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>频道描述</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入频道描述"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-prority" class="col-sm-2 control-label"><span class="necessary"></span>权重值</label>
+											<label for="input-prority" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>权重值</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入权重值"  >
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="input-textcolor" class="col-sm-2 control-label"><span class="necessary"></span>文字颜色</label>
+											<label for="input-textcolor" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>文字颜色</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-textcolor" name="devXW" placeholder="请输入文字颜色"  >
+												<input type="text" class="form-control jscolor" id="input-textcolor" name="devXW" placeholder="请输入文字颜色"  >
 											</div>
 										</div>
 
 										<div id="showPic" class="form-group" >
-											<label class="col-sm-2 control-label"><span class="necessary"></span>频道截图</label>
+											<label class="col-sm-2 control-label distribCol1"><span class="necessary"></span>频道截图</label>
 											<div id="imgShow" class="col-sm-10">
 											</div>
 										</div>
@@ -135,14 +135,14 @@
 										</div>
 
 										<div id="showImgUrl" class="form-group" >
-											<label for="input-image" class="col-sm-2 control-label"><span class="necessary"></span>图片地址</label>
+											<label for="input-image" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>图片地址</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-image" name="devXW" placeholder="请输入图片地址"  readonly style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 
 										<div class="form-group" id="input-status-wrap">
-											<label class="col-sm-2 control-label">状态</label>
+											<label class="col-sm-2 control-label distribCol1">状态</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 关闭
@@ -216,6 +216,7 @@
 <script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="../../js/jscolor.js"></script>
 <script type ="text/javascript" src="js/channel-manage.js"></script>
 <script type ="text/javascript" src="../../js/uploadImg.js"></script>
 <!-- jQuery Validate -->
@@ -229,8 +230,8 @@
 	<td>${description}</td>
 	<td>${prority}</td>
 	<td class="advurl" style="display:none">${image}</td>
-	<td>${back_ground}</td>
-	<td>${text_color}</td>
+	<td style="background:${back_ground}">${back_ground}</td>
+	<td style="background:${text_color}">${text_color}</td>
 	<td>{{if status == 0}}关闭 {{else status == 1}}正常 {{else status == 2}}正常{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>

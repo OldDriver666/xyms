@@ -180,9 +180,13 @@ $(function() {
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-channelname").val(that.find("td").eq(1).text());
         $("#input-background").val(that.find("td").eq(5).text());
+        $("#input-background").attr("value",that.find("td").eq(5).text());
+        $("#input-background").css("background",that.find("td").eq(5).text());
         $("#input-description").val(that.find("td").eq(2).text());
         $("#input-prority").val(that.find("td").eq(3).text());
         $("#input-textcolor").val(that.find("td").eq(6).text());
+        $("#input-textcolor").attr("value",that.find("td").eq(6).text());
+        $("#input-textcolor").css("background",that.find("td").eq(6).text());
         $("#input-image").val(that.find("td").eq(4).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 
@@ -199,8 +203,26 @@ $(function() {
             };
             myDiv2.appendChild(img);
         }
-
         $("#addTempl-modal").modal("show");
+    });
+    $("#input-textcolor").change(function(){
+        $("#input-textcolor").blur(function () {
+            if($("#input-textcolor").val().indexOf("#")!=-1){
+            }else {
+                var a = $("#input-textcolor").val().toLowerCase();
+                $("#input-textcolor").val("#"+a);
+            }
+        });
+
+    });
+    $("#input-background").change(function(){
+        $("#input-background").blur(function () {
+            if($("#input-background").val().indexOf("#")!=-1){
+            }else {
+                var a = $("#input-background").val().toLowerCase();
+                $("#input-background").val("#"+a);
+            }
+        });
     });
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
@@ -296,9 +318,7 @@ $(function() {
         }
 
 	});
-
 });
-
 
 
 
