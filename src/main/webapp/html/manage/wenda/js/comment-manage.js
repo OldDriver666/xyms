@@ -103,11 +103,7 @@ $(function() {
 		},
         //页面跳转数据
         searchPageData : function() {
-            if(toHtmlID == 54){
-                var search_problemid = searchID;
-            }else if(toHtmlID == 55){
-                var search_answerid = searchID;
-            }
+            var search_answerid = searchID;
             var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量

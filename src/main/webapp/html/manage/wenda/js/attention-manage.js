@@ -17,6 +17,8 @@ $(function() {
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
+    var searchID = Request["searchID"];
+    var toHtmlID = Request["toHtmlID"];
 
 	var action = {
         init: function(){
@@ -92,11 +94,56 @@ $(function() {
                     toastr.error(result.msg);
                 }
             });
-		}
+		},
+        //页面跳转数据
+        searchPageData : function() {
+
+            var search_questionid = searchID
+            var page_content_num = parseInt($("#input-page-content-num").val());
+
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/concern/queryback";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = page_content_num;
+            data.param = {
+                "problem_id":search_questionid,
+            };
+
+            var opt = {
+                "targetContentId" : "pageContent",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageTmpl",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    return result.data.result;
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
+        },
 	};
 	window.action = action;
     action.init();
-	action.loadPageData();
+    if(searchID == ""){
+        action.loadPageData();
+    }else{
+        action.searchPageData();
+    }
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
