@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.WiModule;
 import com.fise.model.entity.WiModuleExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface WiModuleMapper {
     int updateByPrimaryKeySelective(WiModule record);
 
     int updateByPrimaryKey(WiModule record);
+    
+    List<WiModule> selectByExampleByPage(@Param("example") WiModuleExample example,@Param("page") Page<WiModule> page);
 }

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.WiModule;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.service.auth.IAuthService;
 import com.fise.service.module.IModuleService;
@@ -92,5 +95,24 @@ public class ModuleController {
             resp = moduleSvr.DeleteModule(new Integer(param.get("module_id")));
         }
         return resp;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
+    public Response queryModuleByPage(@RequestBody @Valid Page<WiModule> param){
+
+        Response resp = new Response();
+            resp.success(moduleSvr.queryModuleByPage(param));
+
+        logger.info("获取菜单:"+JsonUtil.toJson(param));
+        return resp;
+    }
+    
+    @RequestMapping(value = "/queryParentModule", method = RequestMethod.POST)
+    public Response queryParentModule(){
+    	
+    	Response resp = new Response();
+    	resp.success(moduleSvr.queryParentModule());
+    	return resp;
     }
 }
