@@ -179,16 +179,15 @@ public class AppInformationController {
     
    	@RequestMapping(value = "/appQuery", method = RequestMethod.POST)
    	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
-       	logger.info(param.getParam().toString());
+//       	logger.info(param.getParam().toString());
    		Response response = new Response();
 //   		Integer devId=param.getParam().getDevId();
-   		Integer devId=HttpContext.getMemberId();
-   		String appName=param.getParam().getAppName();
-   		Integer status=param.getParam().getStatus();
-   		if(devId==null&&StringUtil.isEmpty(appName)&&status==null){
-   			response=appInfoemationService.query(param);	
-   			return response;
-   		}
+//   		String appName=param.getParam().getAppName();
+//   		Integer status=param.getParam().getStatus();
+//   		if(devId==null&&StringUtil.isEmpty(appName)&&status==null){
+//   			response=appInfoemationService.query(param);	
+//   			return response;
+//   		}
    		response=appInfoemationService.queryByParam(param);	
    		return response;
    	}

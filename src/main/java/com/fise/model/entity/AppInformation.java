@@ -99,6 +99,11 @@ public class AppInformation implements Serializable {
     private Integer created;
 
     private Integer prority;
+    
+    /**
+     * 下载次数
+     */
+    private Integer count;
 
     /**
      * 备注信息
@@ -331,4 +336,13 @@ public class AppInformation implements Serializable {
     public void setOrientation(Integer orientation) {
         this.orientation = orientation;
     }
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+    
 }

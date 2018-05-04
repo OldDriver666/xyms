@@ -22,6 +22,7 @@
     <result column="size" jdbcType="VARCHAR" property="size" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="created" jdbcType="INTEGER" property="created" />
+    <result column="count" jdbcType="INTEGER" property="count" />
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="label" jdbcType="VARCHAR" property="label" />
@@ -549,9 +550,12 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from app_information
+	SELECT * from (SELECT
+		i.*, count(d.id) count
+	FROM
+		app_information i
+	LEFT JOIN app_download d ON d.app_id = i.id
+	GROUP BY i.id)a
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
