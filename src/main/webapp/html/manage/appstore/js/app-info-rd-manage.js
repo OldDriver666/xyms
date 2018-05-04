@@ -362,6 +362,7 @@ $(function() {
         $("#input-packagename").val(that.find("td").eq(4).text());
         $("#input-devid").val(that.find("td").eq(5).text());
         $("#input-devname").val(that.find("td").eq(6).text());
+        $("#input-count").val(that.find("td").eq(27).text());
 
         //$("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
         $("#input-topcategory").val(that.find("td").eq(7).text());
@@ -381,6 +382,7 @@ $(function() {
 
         $("#input-size").val(that.find("td").eq(17).text());
         $("#input-prority").val(that.find("td").eq(18).text());
+        $("#input-package_name").val(that.find("td").eq(4).text());
 
         $("#input-label").val(that.find("td").eq(21).text());
         $("#input-star").val(that.find("td").eq(22).text());
@@ -514,6 +516,12 @@ $(function() {
         }
     });
     $("#input-channels").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#input-count").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
             $(this).next().remove();
