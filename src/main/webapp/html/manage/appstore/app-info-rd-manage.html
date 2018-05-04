@@ -446,6 +446,7 @@
 					<!--<th>更新时间</th>
 					<th>创建时间</th>-->
 					<th>下载次数</th>
+					<th>icon</th>
 					<th class="table-manage">管理</th>
 					<!--<th class="table-manage">频道应用</th>-->
 				</tr>
@@ -516,6 +517,7 @@
 	<td style="display:none;">${Util.formatDateTime(updated)}</td>
 	<td style="display:none;">${Util.formatDateTime(created)}</td>
 	<td>${count}</td>
+	<td><img src=${icon}></td>
 	<td class="table-update">
 			<a href="javascript:void(0);" class="table-edit-btn">
 				<button type="button" class="btn btn-default btn-sm btn-eye">
