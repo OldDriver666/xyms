@@ -253,7 +253,8 @@ function uploadfile(input) {
         var that = $(this).parent().parent();
         var searchID = that.find("td").eq(0).text();
         var toHtml="manage/wenda/agree-manage.html";
-        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml});
+        var toHtmlID = 54;
+        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml,'toHtmlID':toHtmlID});
     });
 </script>
 <!--获取评论跳转信息-->
@@ -262,7 +263,8 @@ function uploadfile(input) {
         var that = $(this).parent().parent();
         var searchID = that.find("td").eq(0).text();
         var toHtml="manage/wenda/comment-manage.html";
-        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml});
+        var toHtmlID = 54;
+        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml,'toHtmlID':toHtmlID});
     });
 </script>
 </body>

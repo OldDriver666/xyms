@@ -54,6 +54,7 @@
 		}
 		a:hover,a:active{color: #3bb4f2;}
 		.answer_num{ color: #3bb4f2;display:inline-block;width: 50px;height: 20px;text-decoration: underline }
+		.concerns_num{ color: #3bb4f2;display:inline-block;width: 50px;height: 20px;text-decoration: underline }
 	</style>
 </head>
 
@@ -262,7 +263,7 @@
 	<td class="table-content-hidden">${nick}</td>
 	<td><a href="javascript:void(0);" class="answer_num">${answer_num}</a></td>
 	<td>${browse_num}</td>
-	<td>${concerns}</td>
+	<td><a href="javascript:void(0);" class="concerns_num">${concerns}</a></td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td style="display: none">${content}</td>
 	<td>${Util.formatDateTime(updated)}</td>
@@ -338,7 +339,17 @@ function uploadfile(input) {
         var that = $(this).parent().parent();
         var searchID = that.find("td").eq(0).text();
         var toHtml="manage/wenda/answer-manage.html";
-        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml});
+        var toHtmlID = 54;
+        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml,'toHtmlID':toHtmlID});
+    });
+</script>
+<script type="text/javascript">
+    $("#pageContent").on("click",".concerns_num",function(){
+        var that = $(this).parent().parent();
+        var searchID = that.find("td").eq(0).text();
+        var toHtml="manage/wenda/comment-manage.html";
+        var toHtmlID = 54;
+        parent.gotoHtml({'searchID':searchID, 'toHtml':toHtml,'toHtmlID':toHtmlID});
     });
 </script>
 </body>
