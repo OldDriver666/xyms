@@ -235,6 +235,7 @@ $(function() {
         $("#input-topcategory").val(that.find("td").eq(7).text());
         $("#input-category").val(that.find("td").eq(8).text());
         $("#input-appchannel").val(that.find("td").eq(9).text());
+        $("#input-count").val(that.find("td").eq(27).text());
 
         $("#input-updatetime").val(that.find("td").eq(25).text());
         $("#input-createtime").val(that.find("td").eq(26).text());
@@ -344,6 +345,12 @@ $(function() {
             $(this).next().remove();
         }
     });
+    /*$("#input-count").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });*/
    /* $("#input-channels").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");

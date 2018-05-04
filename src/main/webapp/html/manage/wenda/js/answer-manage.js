@@ -19,6 +19,8 @@ $(function() {
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
     var searchID = Request["searchID"];
+    var toHtmlID = Request["toHtmlID"];
+
 
 	var action = {
         init: function(){
@@ -97,7 +99,7 @@ $(function() {
 		},
         //页面跳转数据
         searchPageData : function() {
-            var search_userid = $("#input-search-userid").val();
+            var search_questionid = searchID;
             var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -107,8 +109,7 @@ $(function() {
             data.page_no = 1;
             data.page_size = page_content_num;
             data.param = {
-                "user_id":search_userid,
-                "problem_id":searchID,
+                "problem_id":search_questionid,
             };
             var opt = {
                 "targetContentId" : "pageContent",

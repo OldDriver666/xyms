@@ -18,6 +18,7 @@ $(function() {
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
     var searchID = Request["searchID"];
+    var toHtmlID = Request["toHtmlID"];
 
 	var action = {
         init: function(){
