@@ -81,7 +81,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		AppInformationExample.Criteria criteria = example.createCriteria();
 
 		criteria.andStatusEqualTo(1);
-		example.setOrderByClause("prority desc");
+		example.setOrderByClause("prority desc, id");
 
 		if (!StringUtil.isEmpty(param.getParam().getAppName())) {
 			criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");

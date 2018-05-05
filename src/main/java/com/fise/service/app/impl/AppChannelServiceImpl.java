@@ -78,7 +78,7 @@ public class AppChannelServiceImpl implements IAppChannelService{
 		AppChannelExample example = new AppChannelExample();
 		AppChannelExample.Criteria criteria = example.createCriteria();
 		criteria.andStatusNotEqualTo(0);
-		example.setOrderByClause("prority desc");
+		example.setOrderByClause("prority desc, id");
 		List<AppChannel> datas = appChannelDao.selectByExample(example);
 		List<AppChannelResult> channelData = new ArrayList<AppChannelResult>();
 		for (int i = 0; i < datas.size(); i++) {
