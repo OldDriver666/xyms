@@ -90,7 +90,7 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
 		con.andStatusEqualTo(1);
-		example.setOrderByClause("prority desc");
+		example.setOrderByClause("prority desc, id");
 		con.andIdIn(idList);
 		param.setPageSize(10);
 		List<AppInformation> appList = appInfoDao.selectByPage(example, param);
