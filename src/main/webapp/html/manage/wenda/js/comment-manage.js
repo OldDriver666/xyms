@@ -114,7 +114,6 @@ $(function() {
             data.page_size = page_content_num;
             data.param = {
                 "answer_id":search_answerid,
-                "problem_id":search_problemid
             };
 
             var opt = {
