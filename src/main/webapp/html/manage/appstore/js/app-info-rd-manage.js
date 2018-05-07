@@ -311,14 +311,14 @@ $(function() {
             });
         }*/
 
-        var orientation_val = $.trim(that.find("td").eq(23).text());
+        var orientation_val = $.trim(that.find("td").eq(24).text());
 
-        var iconList = $.trim(that.find("td").eq(13).text()).split(";");
+        var iconList = $.trim(that.find("td").eq(14).text()).split(";");
         var myDiv1 = document.getElementById("iconShow");
         for(var i=0; i < iconList.length; i++){
             var img1 = document.createElement("img");
             img1.setAttribute("class", "newIcon");
-            img1.width =50;
+            img1.width =30;
             img1.src = iconList[i];
             img1.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数
@@ -334,12 +334,12 @@ $(function() {
             myDiv1.appendChild(img1);
         }
 
-        var imgList = $.trim(that.find("td").eq(15).text()).split(";");
+        var imgList = $.trim(that.find("td").eq(16).text()).split(";");
         var myDiv2 = document.getElementById("imgShow");
         for(var i=0; i < imgList.length; i++){
             var img = document.createElement("img");
             img.setAttribute("class", "newImg");
-            img.width =200;
+            img.width =50;
             img.src = imgList[i];
             img.onclick=function() {
                 var _this = $(this);//将当前的pimg元素作为_this传入函数
@@ -358,34 +358,34 @@ $(function() {
         $("#input-id").val(that.find("td").eq(0).text());
         //$("#input-appindex").val(that.find("td").eq(2).text());
         $("#input-appname").val(that.find("td").eq(1).text());
-        $("#input-appspell").val(that.find("td").eq(3).text());
-        $("#input-packagename").val(that.find("td").eq(4).text());
-        $("#input-devid").val(that.find("td").eq(5).text());
-        $("#input-devname").val(that.find("td").eq(6).text());
-        $("#input-count").val(that.find("td").eq(27).text());
+        $("#input-appspell").val(that.find("td").eq(4).text());
+        $("#input-packagename").val(that.find("td").eq(5).text());
+        $("#input-devid").val(that.find("td").eq(6).text());
+        $("#input-devname").val(that.find("td").eq(7).text());
+        $("#input-count").val(that.find("td").eq(28).text());
 
         //$("input[name=topcategory]").filter("[value=" + topcategory_val + "]").prop('checked', true);
-        $("#input-topcategory").val(that.find("td").eq(7).text());
-        $("#input-category").val(that.find("td").eq(8).text());
-        $("#input-appchannel").val(that.find("td").eq(9).text());
-        $("#input-description").val(that.find("td").eq(10).text());
-        $("#input-version").val(that.find("td").eq(11).text());
-        $("#input-versioncode").val(that.find("td").eq(12).text());
+        $("#input-topcategory").val(that.find("td").eq(8).text());
+        $("#input-category").val(that.find("td").eq(9).text());
+        $("#input-appchannel").val(that.find("td").eq(10).text());
+        $("#input-description").val(that.find("td").eq(11).text());
+        $("#input-version").val(that.find("td").eq(12).text());
+        $("#input-versioncode").val(that.find("td").eq(13).text());
 
         //$("#input-icon").val(that.find("td").eq(12).text());
-        $("#input-icontype").val(that.find("td").eq(14).text());
+        $("#input-icontype").val(that.find("td").eq(15).text());
         //$("#input-images").val(that.find("td").eq(14).text());
         //$("#input-download").val(that.find("td").eq(15).text());
 
-        $("#input-updatetime").val(that.find("td").eq(25).text());
-        $("#input-createtime").val(that.find("td").eq(26).text());
+        $("#input-updatetime").val(that.find("td").eq(26).text());
+        $("#input-createtime").val(that.find("td").eq(27).text());
 
-        $("#input-size").val(that.find("td").eq(17).text());
-        $("#input-prority").val(that.find("td").eq(18).text());
-        $("#input-package_name").val(that.find("td").eq(4).text());
+        $("#input-size").val(that.find("td").eq(18).text());
+        $("#input-prority").val(that.find("td").eq(19).text());
+        $("#input-package_name").val(that.find("td").eq(5).text());
 
-        $("#input-label").val(that.find("td").eq(21).text());
-        $("#input-star").val(that.find("td").eq(22).text());
+        $("#input-label").val(that.find("td").eq(22).text());
+        $("#input-star").val(that.find("td").eq(23).text());
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
 
         $("#addTempl-modal").modal("show");
@@ -432,6 +432,10 @@ $(function() {
             $("#showIcon").hide();
             $("#showIconprompt").hide();
             $("#showImage").hide();
+            $("#input-createtime").hide();
+            $("#input-updatetime1").hide();
+            $("#input-count1").hide();
+            $("#input-package_name1").hide();
             $("#showImageprompt").hide();
             $("#addImgUrl").show();
             $("#addApk").show();
