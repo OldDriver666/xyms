@@ -8,6 +8,8 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="prority" jdbcType="INTEGER" property="prority" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -235,9 +237,13 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from app_channel_list
+	SELECT * from (SELECT
+		l.*, c.channel_name,
+		i.app_name
+	FROM
+		app_channel_list l
+	LEFT JOIN app_channel c ON c.id = l.channel_id
+	LEFT JOIN app_information i ON i.id = l.app_id)a
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

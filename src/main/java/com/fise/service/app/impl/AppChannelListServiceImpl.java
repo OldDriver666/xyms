@@ -21,6 +21,7 @@ import com.fise.model.entity.AppInformationExample;
 import com.fise.model.result.AppBaseResult;
 import com.fise.service.app.IAppChannelListService;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 @Service
 public class AppChannelListServiceImpl implements IAppChannelListService{
@@ -38,11 +39,11 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
         AppChannelListExample example = new AppChannelListExample();
         AppChannelListExample.Criteria criteria = example.createCriteria();
         
-        if(param.getParam().getAppId()!=null){
-            criteria.andAppIdEqualTo(param.getParam().getAppId());
+        if(StringUtil.isNotEmpty(param.getParam().getAppName())){
+            criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
         }
-        if(param.getParam().getChannelId()!=null){
-            criteria.andChannelIdEqualTo(param.getParam().getChannelId());
+        if(StringUtil.isNotEmpty(param.getParam().getChannelName())){
+        	criteria.andChannelNameLike("%" + param.getParam().getChannelName() + "%");
         }
         
         List<AppChannelList> list =appChannelListDao.selectByPage(example, param);

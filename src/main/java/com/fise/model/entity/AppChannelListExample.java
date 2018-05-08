@@ -3,6 +3,8 @@ package com.fise.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fise.model.entity.AppInformationExample.Criteria;
+
 public class AppChannelListExample {
     protected String orderByClause;
 
@@ -482,6 +484,16 @@ public class AppChannelListExample {
         public Criteria andProrityNotBetween(Integer value1, Integer value2) {
             addCriterion("prority not between", value1, value2, "prority");
             return (Criteria) this;
+        }
+        
+        public Criteria andAppNameLike(String value) {
+            addCriterion("app_name like", value, "appName");
+            return (Criteria) this;
+        }
+        
+        public Criteria andChannelNameLike(String value) {
+        	addCriterion("channel_name like", value, "channelName");
+        	return (Criteria) this;
         }
     }
 

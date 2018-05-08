@@ -25,6 +25,12 @@ public class AppChannelList implements Serializable {
      * 权重
      */
     private Integer prority;
+    
+    @JsonProperty("app_name")
+    private String appName;
+    
+    @JsonProperty("channel_name")
+    private String channelName;
 
     private static final long serialVersionUID = 1L;
 
@@ -80,5 +86,21 @@ public class AppChannelList implements Serializable {
     public String toString() {
         return JsonUtil.toJson(this);
     }
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
     
 }

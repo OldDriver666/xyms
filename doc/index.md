@@ -3628,11 +3628,12 @@ channel_name 不填则查询所有
 ```
 都不填则查询所有
 {
-    "param":{
-                 "channel_id":5,     //选填-频道id
-                 "app_id":2          //选填-应用id 
-             }
-    "page_no":1
+     "param":{ 
+     	        "channel_name":"女",    //选填-频道
+                 "app_name":"安"         //选填-应用
+     		  },	
+     "page_no":1, 
+     "page_size":10 
 }
 ```
 ####回复
@@ -3641,6 +3642,7 @@ channel_name 不填则查询所有
    "code": 0,
    "msg": "ok",
    "data": {
+      "orderby": null,
       "page_no": 1,
       "page_size": 10,
       "total_count": 1,
@@ -3649,12 +3651,14 @@ channel_name 不填则查询所有
       "extra_param": null,
       "result": [
          {
-            "id": 2,
-            "status": 1,
-            "updated": 1,
+            "id": 18,
+            "status": 0,
+            "updated": 1509937653,
             "prority": 0,
-            "channel_id": 5,
-            "app_id": 2
+            "channel_id": 2,
+            "app_id": 193,
+            "app_name": "安卓壁纸",
+            "channel_name": "女生频道"
          }
       ]
    }

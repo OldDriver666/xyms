@@ -33,6 +33,7 @@ public class AppChannelListController {
     IAppChannelService appChannelService;
     
     /*应用商城   频道应用查询*/
+    @IgnoreAuth
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response query(@RequestBody @Valid Page<AppChannelList> param){
         Response resp = new Response();
