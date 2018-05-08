@@ -112,14 +112,14 @@
 												<input type="text" class="form-control" id="input-appindex" name="devIME" placeholder="请输入APP唯一标示"  >
 											</div>
 										</div>-->
-										<div class="form-group col-sm-6" >
-											<label for="input-appname" class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用名称</label>
+										<div class="form-group col-sm-6" style="margin-bottom: 0px">
+											<label for="input-appname" class="col-sm-4 control-label distribCol1" style="margin-bottom: 0px"><span class="necessary">*</span>应用名称</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-appname" name="devappName" placeholder="请输入应用名称"  >
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
-											<label for="input-appspell" class="col-sm-4 control-label"><span class="necessary">*</span>应用名称拼音</label>
+										<div class="form-group col-sm-6" style="margin-bottom: 0px">
+											<label for="input-appspell" class="col-sm-4 control-label" style="margin-bottom: 0px"><span class="necessary">*</span>应用名称拼音</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-appspell" name="devappSpell" placeholder="请输入应用名称的拼音"  >
 											</div>
@@ -130,31 +130,31 @@
 												<input type="text" class="form-control" id="input-packagename" name="devXW" placeholder="请输入包名"  >
 											</div>
 										</div>-->
-										<div class="form-group col-sm-6" id="add-developerid-wrap">
+										<div class="form-group col-sm-6" id="add-developerid-wrap" style="margin-bottom: 0px">
 											<label for="input-devid" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>开发者ID</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-devid" name="devappdvpid" placeholder="请输入开发者ID"  >
 											</div>
 										</div>
-										<div class="form-group col-sm-6" id="add-developername-wrap">
+										<div class="form-group col-sm-6" id="add-developername-wrap" style="margin-bottom: 0px">
 											<label for="input-devname" class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>开发者名称</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-devname" name="devappdvper" placeholder="请输入开发者名称"  >
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
+										<div class="form-group col-sm-6" id="input-createtime1" style="margin-bottom: 0px">
 											<label for="input-createtime" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>创建时间</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-createtime" name="devXW" placeholder="请输入创建时间"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
+										<div class="form-group col-sm-6" id="input-updatetime1" style="margin-bottom: 0px">
 											<label for="input-updatetime" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>更新时间</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-updatetime" name="devXW" placeholder="请输入更新时间"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-12" id="topcategorySelect">
+										<div class="form-group col-sm-12" id="topcategorySelect" style="margin-bottom: 0px">
 											<label class="col-sm-2 control-label distribCol1"><span class="necessary">*</span>应用大类型</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
@@ -168,7 +168,7 @@
 												</label>
 											</div>
 										</div>
-										<div class="form-group col-sm-6" id="topcategoryName">
+										<div class="form-group col-sm-6" id="topcategoryName" style="margin-bottom: 0px">
 											<label for="input-topcategory" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>应用大类型</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-topcategory" name="devXW" placeholder="请输入应用大类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
@@ -176,8 +176,8 @@
 										</div>
 										<div class="form-group col-sm-12" id="categorySelect">
 											<label class="col-sm-2 control-label distribCol1"><span class="necessary">*</span>应用小类型</label>
-											<div class="col-sm-10" id="categorySelectItem"style="min-width: 220px">
-												<select id="category1" class="selectpicker show-menu-arrow show-tick form-control"  >
+											<div class="col-sm-10" id="categorySelectItem">
+												<select id="category1" class="form-control"  >
 													<option value="" >请选择应用小类型</option>
 													<option value="1" >常用工具</option>
 													<option value="2">育儿母婴</option>
@@ -191,23 +191,23 @@
 													<option value="10">音乐</option>
 													<option value="11" >通讯</option>
 												</select>
-												<select id="category2" class="selectpicker show-menu-arrow show-tick form-control" style="display: none">
+												<select id="category2" class="form-control" style="display: none">
 													<option value="" >请选择应用小类型</option>
 													<option value="12" >游戏</option>
 												</select>
-												<select id="category3" class="selectpicker show-menu-arrow show-tick form-control" style="display: none">
+												<select id="category3" class="form-control" style="display: none">
 													<option value="" >请选择应用小类型</option>
 													<option value="13" >电子书</option>
 												</select>
 											</div>
 										</div>
-										<div class="form-group col-sm-6" id="categoryName">
+										<div class="form-group col-sm-6" id="categoryName" style="margin-bottom: 0px">
 											<label for="input-category" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>应用小类型</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-category" name="devXW" placeholder="请输入应用小类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-6" id="appchannelSelect">
+										<div class="form-group col-sm-6" id="appchannelSelect" style="margin-bottom: 0px">
 											<label class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用频道</label>
 											<div class="col-sm-8"style="min-width: 162px">
 												<select name="searchchannels" id="searchchannels" class="selectpicker show-menu-arrow show-tick form-control">
@@ -221,25 +221,25 @@
 												</select>-->
 											</div>
 										</div>
-										<div class="form-group col-sm-6" id="appchannelName">
+										<div class="form-group col-sm-6" id="appchannelName" style="margin-bottom: 0px">
 											<label for="input-appchannel" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>应用频道</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-appchannel" name="devChannel" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
+										<div class="form-group col-sm-6" id="input-count1" style="margin-bottom: 0px">
 											<label for="input-count" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>下载次数</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-count" name="devXW" placeholder="请输入下载次数"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
+										<div class="form-group col-sm-6" id="input-package_name1" style="margin-bottom: 0px">
 											<label for="input-package_name" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>包名</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="input-package_name" name="devXW" placeholder="请输入包名"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-6" >
+										<div class="form-group col-sm-6"  style="margin-bottom: 0px">
 											<label for="input-description" class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用简介</label>
 											<div class="col-sm-8">
 												<textarea type="text" class="form-control" id="input-description" name="devappdesp" placeholder="请输入应用简介"  ></textarea>
@@ -258,7 +258,7 @@
 												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  >
 											</div>
 										</div>-->
-										<div id="showIcon" class="form-group" >
+										<div id="showIcon" class="form-group">
 											<label class="col-sm-2 control-label distribCol1"><span class="necessary"></span>当前应用图标</label>
 											<div id="iconShow" class="col-sm-10">
 											</div>
@@ -281,7 +281,7 @@
 											</div>
 										</div>-->
 
-										<div id="showImage" class="form-group" >
+										<div id="showImage" class="form-group" style="margin-bottom: 0px">
 											<label class="col-sm-2 control-label distribCol1"><span class="necessary"></span>当前应用截图</label>
 											<div id="imgShow" class="col-sm-10">
 											</div>
@@ -298,12 +298,12 @@
 											</div>
 										</div>-->
 
-										<div id="addImgUrl" class="form-group" >
+										<div id="addImgUrl" class="form-group">
 											<label for="" class="col-sm-3 control-label"><span class="necessary">*</span>上传App截图图片</label>
 											<div class="img-box full">
 												<section class=" img-section">
 													<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
-													<div class="z_photo upimg-div clear" >
+													<div class="z_photo upimg-div clear">
 														<!--<section class="up-section fl">
 															 <span class="up-span"></span>
 															 <img src="img/buyerCenter/a7.png" class="close-upimg">
@@ -328,13 +328,13 @@
 											</aside>
 										</div>
 
-										<div id="addApk" class="form-group" >
+										<div id="addApk" class="form-group">
 											<label for="input-download" class="col-sm-2 control-label distribCol1"><span class="necessary">*</span>上传APP安装包</label>
 											<div class="col-sm-10">
 												<input type="file" class="form-control" id="input-download" name="app" placeholder="请上传应用安装包"  >
 											</div>
 										</div>
-										<div id="showProgress" class="form-group" >
+										<div id="showProgress" class="form-group" style="margin-bottom: 0px">
 											<label for="upprogress" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>安装包上传进度:</label>
 											<div class="col-sm-10" id="upprogress">
 												<div id="parent">
@@ -421,6 +421,7 @@
 				<tr>
 					<!--<th>AppID</th>-->
 					<th>应用名称</th>
+					<th>应用图标</th>
 					<!--<th>APP唯一标示</th>
 					<th>app_spell</th>-->
 					<!--<th>包名</th>-->
@@ -446,7 +447,7 @@
 					<!--<th>更新时间</th>
 					<th>创建时间</th>-->
 					<th>下载次数</th>
-					<th>应用图标</th>
+
 					<th class="table-manage">管理</th>
 					<!--<th class="table-manage">频道应用</th>-->
 				</tr>
@@ -491,6 +492,7 @@
 <tr>
 	<td style="display:none;">${id}</td>
 	<td>${app_name}</td>
+	<td><img src=${icon} style="width:30px;"></td>
 	<td style="display:none;">${app_index}</td>
 	<td style="display:none;">${app_spell}</td>
 	<td class="table-content-hidden" style="display:none;">${package_name}</td>
@@ -517,7 +519,7 @@
 	<td style="display:none;">${Util.formatDateTime(updated)}</td>
 	<td style="display:none;">${Util.formatDateTime(created)}</td>
 	<td>${count}</td>
-	<td><img src=${icon} style="width:30px;"></td>
+
 	<td class="table-update">
 			<a href="javascript:void(0);" class="table-edit-btn">
 				<button type="button" class="btn btn-default btn-sm btn-eye">
