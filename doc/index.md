@@ -3629,7 +3629,7 @@ channel_name 不填则查询所有
 都不填则查询所有
 {
      "param":{ 
-     	        "channel_name":"女",    //选填-频道
+     	        "channel_id":1,    //选填-频道id
                  "app_name":"安"         //选填-应用
      		  },	
      "page_no":1, 

@@ -42,8 +42,9 @@ public class AppChannelListServiceImpl implements IAppChannelListService{
         if(StringUtil.isNotEmpty(param.getParam().getAppName())){
             criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
         }
-        if(StringUtil.isNotEmpty(param.getParam().getChannelName())){
-        	criteria.andChannelNameLike("%" + param.getParam().getChannelName() + "%");
+
+        if(param.getParam().getChannelId()!=null){
+            criteria.andChannelIdEqualTo(param.getParam().getChannelId());
         }
         
         List<AppChannelList> list =appChannelListDao.selectByPage(example, param);
