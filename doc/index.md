@@ -4687,3 +4687,359 @@ null 没有数据返回 看code是否成功
 }
 ```
 
+####分页查询配置
+|   接口地址    |   xiaoyusvr/boss/clienttype/queryClienTypePage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST              |
+|   参数格式    |   JSON                   | 
+
+#####请求
+```
+param都不填则全部查询
+{
+ "param":{
+    "client_type":x,                   //选填-设备类型
+    "client_name":""                   //选填-设备类型名称
+           },
+   "page_no":x     
+}
+```
+#####回复
+```
+[
+ "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    },
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    }
+    ]
+]
+```
+
+
+####公司分页查询
+|   接口地址    |   xiaoyusvr/boss/organization/queryPage        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+"param":{
+          "name":""                    //选填-不填，则查询所有[名称支持模糊查询]      
+        },
+ "page_no":x
+}
+
+//回复
+[
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+    {
+        "id": 1,
+        "name": "沸石智能有限公司",
+        "address": "沸石智能有限公司",
+        "contact": "100",
+        "email": "0",
+        "describtion": "",
+        "status": 1,
+        "created": 0,
+        "updated": 0
+    },
+    {
+        "id": 2,
+        "name": "沸石智能有限公司",
+        "address": "沸石智能有限公司",
+        "contact": "100",
+        "email": "0",
+        "describtion": "",
+        "status": 1,
+        "created": 0,
+        "updated": 0
+    }
+    ]
+]
+```
+
+
+####分页查询设备
+|   接口地址    |   xiaoyusvr/boss/accountmanage/queryPage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+#####请求
+```
+没有，则查询所有
+{
+"param":{
+     "depart_id":x                 //选填-公司id
+        },
+     "page_no":1    
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "description": "试产100小位号",
+            "status": 1,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101000001",
+            "end_account": "W0101000099"
+         },
+         {
+            "id": 2,
+            "description": "正式产小位号段-卡片机",
+            "status": 0,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101003000",
+            "end_account": "W0101006100"
+         },
+         {
+            "id": 9,
+            "description": "儿童手表正式量产",
+            "status": 0,
+            "created": 1503314057,
+            "depart_id": 1,
+            "begin_account": "W0201000001",
+            "end_account": "W0201003100"
+         }
+      ]
+   }
+}
+```
+
+
+####分页查询部门配置
+|   接口地址    |   xiaoyusvr/boss/departconf/queryImdepCfgPage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                  |
+
+####请求
+```
+都不填则全部查询
+{
+   "param":{
+       "depart_id":x,                   //选填-公司/团体ID  
+       "client_type":x                  //选填-设备类型
+           },
+   "page_no":x
+}
+```
+#####回复
+```
+[
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+        {
+      "config_id":x,                   
+      "depart_id":x,
+      "client_type":x,
+      "avatar":"",
+      "created":x
+    },
+    {
+      "config_id":x,                   
+      "depart_id":x,
+      "client_type":x,
+      "avatar":"",
+      "created":x
+    }
+    ]
+] 
+```  
+
+
+
+####分页查询设备新版本
+|   接口地址    |   xiaoyusvr/boss/deviceversion/queryPage        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+#####请求
+```
+{
+ "param":{
+       "depart_id":x,                    //必填-公司ID
+       "dev_type":x                      //选填-设备类型
+         },
+ "page_no":1       
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "status": 0,
+            "version_id": 1,
+            "depart_id": 1,
+            "dev_type": 19,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 3,
+            "depart_id": 1,
+            "dev_type": 25,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 5,
+            "depart_id": 1,
+            "dev_type": 21,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         },
+         {
+            "status": 0,
+            "version_id": 7,
+            "depart_id": 1,
+            "dev_type": 22,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         }
+      ]
+   }
+}
+```
+=======
+
+
+####应用商城   应用查询
+|    接口地址       |  xiaoyusvr/appinformation/appQuery   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+都不填则查询所有
+{
+     "param":{ 
+              "app_name":"牛", //选填-应用名称
+              "app_channel":1, //选填-频道id
+              "status":1
+     		  },
+     "orderby":"count desc,id", //排序字段, dsc表示降序排列, 没有desc为升序排列
+     "page_no":1, 
+     "page_size":10 
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": "count desc,id",
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 274,
+            "channelName": "女生频道",
+            "category": "电子书",
+            "status": 1,
+            "description": "犀牛故事",
+            "version": "V 3.8.0",
+            "versioncode": 371,
+            "icon": "http://xiaoyutest.fise-wi.com:8080/upload/rhino_story_logo.png",
+            "images": "http://xiaoyu.fise-wi.com:4869/083c8b27e50a4f76a68e331bfccd1fa1;http://xiaoyu.fise-wi.com:4869/b4759ad0b93d2eca48d509d540959616;http://xiaoyu.fise-wi.com:4869/7231a2a0f8277827780916e65d1bd80b",
+            "download": "http://xiaoyutest.fise-wi.com:8080/upload/xiniugushi20180130161640.apk",
+            "size": "11.85M",
+            "updated": 1517369229,
+            "created": 1517300200,
+            "prority": 0,
+            "count": 9,
+            "remarks": "",
+            "label": null,
+            "md5": "48d9ff284bd9dba5f79d41fbd3d6d491",
+            "star": "4",
+            "orientation": 0,
+            "app_name": "犀牛故事",
+            "app_spell": "xiniugushi",
+            "package_name": "com.rhinocerosstory",
+            "dev_id": 96,
+            "dev_name": "唐琨",
+            "channel_id": 2,
+            "top_category": "电子书",
+            "icon_type": 0
+         }
+      ]
+   }
+}
+```
