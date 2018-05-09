@@ -35,6 +35,7 @@
 		    <result column="app_id" jdbcType="INTEGER" property="appId" />
 		    <result column="status" jdbcType="INTEGER" property="status" />
 		    <result column="prority" jdbcType="INTEGER" property="prority" />
+		    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
 	</collection>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -590,7 +591,8 @@
 				c.id cid,
 				c.channel_id,
 				c.app_id,
-				c.prority
+				c.prority,
+				d.channel_name
 			FROM
 				(
 					SELECT
@@ -602,6 +604,7 @@
 						i.id
 				) a
 			LEFT JOIN app_channel_list c ON c.app_id = a.id
+			left join app_channel d on d.id=c.channel_id
 		) b
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

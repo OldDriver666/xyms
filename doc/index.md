@@ -5046,17 +5046,7 @@ param都不填则全部查询
                   "channel_id": 1,
                   "app_id": 184,
                   "app_name": null,
-                  "channel_name": null
-               },
-               {
-                  "id": 267,
-                  "status": 1,
-                  "updated": null,
-                  "prority": 1,
-                  "channel_id": 5,
-                  "app_id": 184,
-                  "app_name": null,
-                  "channel_name": null
+                  "channel_name": "男生频道"
                },
                {
                   "id": 171,
@@ -5066,7 +5056,17 @@ param都不填则全部查询
                   "channel_id": 3,
                   "app_id": 184,
                   "app_name": null,
-                  "channel_name": null
+                  "channel_name": "学习教育"
+               },
+               {
+                  "id": 267,
+                  "status": 1,
+                  "updated": null,
+                  "prority": 1,
+                  "channel_id": 5,
+                  "app_id": 184,
+                  "app_name": null,
+                  "channel_name": "建议安装"
                }
             ]
          }

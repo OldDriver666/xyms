@@ -708,17 +708,8 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		if (page.getParam().getDevId() != null) {
 			criteria.andDevIdEqualTo(page.getParam().getDevId());
 		}
-		//获取频道的应用id结果集
 		if (page.getParam().getChannelId() != null) {
-			AppChannelListExample example1 = new AppChannelListExample();
-	        AppChannelListExample.Criteria acriteria = example1.createCriteria();
-	        acriteria.andChannelIdEqualTo(page.getParam().getChannelId());
-			List<AppChannelList> list = appChannelListDao.selectByExample(example1);
-			List<Integer> idList = new ArrayList<Integer>();
-			for (AppChannelList appChannel : list) {
-				idList.add(appChannel.getAppId());
-			}
-			criteria.andIdIn(idList);
+			criteria.andChannelIdEqualTo(page.getParam().getChannelId());
 		}
 
 		if(StringUtil.isNotEmpty(page.getParam().getAppName())){
