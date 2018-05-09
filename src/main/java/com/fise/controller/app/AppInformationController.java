@@ -177,6 +177,7 @@ public class AppInformationController {
 		return response;
 	}
     
+	@IgnoreAuth
    	@RequestMapping(value = "/appQuery", method = RequestMethod.POST)
    	public Response appQuery(@RequestBody @Valid Page<AppInformation> param) {
 //       	logger.info(param.getParam().toString());

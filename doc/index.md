@@ -4616,3 +4616,72 @@ null 没有数据返回 看code是否成功
    "msg": "ok",
    }
 ```
+
+
+####应用商城   应用查询
+|    接口地址       |  xiaoyusvr/appinformation/appQuery   |
+|    ---     |      ---          |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+都不填则查询所有
+{
+     "param":{ 
+     	        "channel_id":1,    //选填-频道id
+                 "app_name":"安"     //选填-应用
+     		  },	
+     "page_no":1, 
+     "page_size":10 
+}
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": "count desc,id",
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 274,
+            "channelName": "女生频道",
+            "category": "电子书",
+            "status": 1,
+            "description": "犀牛故事",
+            "version": "V 3.8.0",
+            "versioncode": 371,
+            "icon": "http://xiaoyutest.fise-wi.com:8080/upload/rhino_story_logo.png",
+            "images": "http://xiaoyu.fise-wi.com:4869/083c8b27e50a4f76a68e331bfccd1fa1;http://xiaoyu.fise-wi.com:4869/b4759ad0b93d2eca48d509d540959616;http://xiaoyu.fise-wi.com:4869/7231a2a0f8277827780916e65d1bd80b",
+            "download": "http://xiaoyutest.fise-wi.com:8080/upload/xiniugushi20180130161640.apk",
+            "size": "11.85M",
+            "updated": 1517369229,
+            "created": 1517300200,
+            "prority": 0,
+            "count": 9,
+            "remarks": "",
+            "label": null,
+            "md5": "48d9ff284bd9dba5f79d41fbd3d6d491",
+            "star": "4",
+            "orientation": 0,
+            "app_name": "犀牛故事",
+            "app_spell": "xiniugushi",
+            "package_name": "com.rhinocerosstory",
+            "dev_id": 96,
+            "dev_name": "唐琨",
+            "channel_id": 2,
+            "top_category": "电子书",
+            "icon_type": 0
+         }
+      ]
+   }
+}
+```
+

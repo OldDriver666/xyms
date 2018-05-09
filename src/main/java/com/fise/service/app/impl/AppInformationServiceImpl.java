@@ -54,7 +54,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	private WiAdminMapper adminDao;
 	
 	@Autowired
-	private AppChannelListMapper AppChannelListDao;
+	private AppChannelListMapper appChannelListDao;
 
 	@Override
 	public Response query(Page<AppInformation> page) {
@@ -405,7 +405,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		appChannelList.setChannelId(appInfo.getChannelId());
 		appChannelList.setAppId(app1.getId());
 		appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
-		AppChannelListDao.insertSelective(appChannelList);
+		appChannelListDao.insertSelective(appChannelList);
 		
 		response.setMsg("新增应用成功");
 		response.setCode(200);
@@ -637,7 +637,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	        appChannelList.setStatus(1);
 	        appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
 	        
-	        result=AppChannelListDao.updateByExampleSelective(appChannelList, example1);
+	        result=appChannelListDao.updateByExampleSelective(appChannelList, example1);
 	        
 	        if (result == 0) {
 	            response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
@@ -686,30 +686,48 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	}
 
 	@Override
-	public Response queryByParam(Page<AppInformation> param) {
+	public Response queryByParam(Page<AppInformation> page) {
 		Response response = new Response();
 
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria = example.createCriteria();
 		// 先根据devdId查出对应得有哪些
-		if(param.getParam().getDevId()!=null){
-			criteria.andDevIdEqualTo(param.getParam().getDevId());	
+		if (page.getParam().getDevId() != null) {
+			criteria.andDevIdEqualTo(page.getParam().getDevId());
 		}
-		if(StringUtil.isNotEmpty(param.getParam().getAppName())){
-			criteria.andAppNameEqualTo(param.getParam().getAppName());
+		//获取频道的应用id结果集
+		if (page.getParam().getChannelId() != null) {
+			AppChannelListExample example1 = new AppChannelListExample();
+	        AppChannelListExample.Criteria acriteria = example1.createCriteria();
+	        acriteria.andChannelIdEqualTo(page.getParam().getChannelId());
+			List<AppChannelList> list = appChannelListDao.selectByExample(example1);
+			List<Integer> idList = new ArrayList<Integer>();
+			for (AppChannelList appChannel : list) {
+				idList.add(appChannel.getAppId());
+			}
+			criteria.andIdIn(idList);
 		}
-		if(param.getParam().getStatus()!=null){
-			criteria.andStatusEqualTo(param.getParam().getStatus());
+
+		if(StringUtil.isNotEmpty(page.getParam().getAppName())){
+			criteria.andAppNameLike("%" + page.getParam().getAppName() + "%");
 		}
-		List<AppInformation> list = appInformationDao.selectByPage(example, param);
+		if(page.getParam().getStatus()!=null){
+			criteria.andStatusEqualTo(page.getParam().getStatus());
+		}
+		if (StringUtil.isNotEmpty(page.getOrderby())) {
+			example.setOrderByClause(page.getOrderby());
+		} else {
+			example.setOrderByClause("created desc");
+		}
+		List<AppInformation> list = appInformationDao.selectByPage(example, page);
 		if (list.size() == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("App资源不足");
 			return response;
 		}
-		param.setParam(null);
-		param.setResult(list);
-		response.success(param);
+		page.setParam(null);
+		page.setResult(list);
+		response.success(page);
 		return response;
 	}
 
