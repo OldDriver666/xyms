@@ -25,7 +25,7 @@
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="channel_id_list" jdbcType="VARCHAR" property="channelIdList" />
     <result column="label" jdbcType="VARCHAR" property="label" />
     <result column="md5" jdbcType="VARCHAR" property="md5" />
     <result column="star" jdbcType="VARCHAR" property="star" />
@@ -552,7 +552,7 @@
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
 	SELECT * from (SELECT
-		a.*, GROUP_CONCAT(c.channel_name) channel_name
+		a.*, GROUP_CONCAT(c.channel_id) channel_id_list
 	FROM
 		(
 			SELECT
@@ -563,8 +563,7 @@
 			GROUP BY
 				i.id
 		) a
-	LEFT JOIN app_channel_list l ON l.app_id = a.id
-	LEFT JOIN app_channel c ON c.id = l.channel_id
+	LEFT JOIN app_channel_list c ON c.app_id = a.id
 	GROUP BY a.id)b
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

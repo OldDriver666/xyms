@@ -120,7 +120,21 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		param.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInformationDao.updateByPrimaryKeySelective(param);
-
+		String channelIdList = param.getChannelIdList();
+		if (StringUtil.isNotEmpty(channelIdList)) {
+			AppChannelListExample example = new AppChannelListExample();
+			AppChannelListExample.Criteria criteria = example.createCriteria();
+			criteria.andAppIdEqualTo(param.getId());
+			appChannelListDao.deleteByExample(example);
+			String[] idlist = channelIdList.split(",");
+			for (String id : idlist) {
+				AppChannelList appChannelList = new AppChannelList();
+				appChannelList.setChannelId(Integer.valueOf(id));
+				appChannelList.setAppId(param.getId());
+				appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
+				appChannelListDao.insertSelective(appChannelList);
+			}
+		}
 		return resp.success();
 	}
 
@@ -170,6 +184,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		System.out.println("============="+md5);
 		param.setMd5(md5);
 		appInformationDao.insertSelective(param);
+		
 		return resp.success();
 	}
 
@@ -401,11 +416,17 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		if(list.size()!=0){
 		    app1 = list.get(0);
 		}
-		AppChannelList appChannelList = new AppChannelList();
-		appChannelList.setChannelId(appInfo.getChannelId());
-		appChannelList.setAppId(app1.getId());
-		appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
-		appChannelListDao.insertSelective(appChannelList);
+		String channelIdList = appInfo.getChannelIdList();
+		if (StringUtil.isNotEmpty(channelIdList)) {
+			String[] idlist = channelIdList.split(",");
+			for (String id : idlist) {
+				AppChannelList appChannelList = new AppChannelList();
+				appChannelList.setChannelId(Integer.valueOf(id));
+				appChannelList.setAppId(app1.getId());
+				appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
+				appChannelListDao.insertSelective(appChannelList);
+			}
+		}
 		
 		response.setMsg("新增应用成功");
 		response.setCode(200);
