@@ -3070,13 +3070,14 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 {
      "param":{
-     			"id":""                    //选填-要查询的问题话题Id
-     	         "title":""                 //选填-要查询的问题话题
-     	         "content":""               //选填-要查询的问题内容
-     	         "user_id":""			     //选填-要查询的用户Id
-     	         "nick":""			     //选填-要查询的用户昵称
+     			"id":"" ,                       //选填-要查询的问题话题Id
+     	         "title":"" ,                 //选填-要查询的问题话题
+     	         "content":"" ,               //选填-要查询的问题内容
+     	         "user_id":""	,		         //选填-要查询的用户Id
+     	         "nick":""			            //选填-要查询的用户昵称
      		  },
-     "orderby":"answer_num desc"  ,         //选填-按什么字段排序
+     "orderby":"answer_num desc"  ,         //选填-按什么字段排序 answer_num desc--回答数降序排序,  
+     									//browse_num desc--浏览数降序排序, concerns desc--关注数降序排序,
      "page_no":1                      
 }
 ```
@@ -3144,7 +3145,7 @@ type和name都是选填，如果都不填，则查询所有信息
 
 ####请求
 ```
-user_id 和  problem_id 都不填则查询所有
+都不填则查询所有
 {
    "param":{
                    "user_id":1,               //选填-回答的用户ID
@@ -3153,6 +3154,7 @@ user_id 和  problem_id 都不填则查询所有
                    "title":""  ,               //选填-回答的问题标题
                    "content":""                //选填-回答内容
                 },
+   "orderby":"agree_num desc"  ,         //选填-按什么字段排序 agree_num desc--点赞数降序排序, comment_num desc--评论数降序排序
    "page_no":x
 }
 ```

@@ -487,7 +487,11 @@ public class AnswerServiceImpl implements IAnswerService{
         if(StringUtil.isNotEmpty(param.getParam().getContent())){
             criteria.andContentLike("%" + param.getParam().getContent() + "%");
         }
-        
+        if (StringUtil.isNotEmpty(param.getOrderby())) {
+        	example.setOrderByClause(param.getOrderby());
+		} else {
+			example.setOrderByClause("created desc");
+		}
         List<Answer> list=answerDao.selectBypage(example, param);
         param.setParam(null);
         param.setResult(list);
