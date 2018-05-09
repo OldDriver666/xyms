@@ -167,9 +167,9 @@ $(function() {
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent().parent();
-
-        var check_status = $.trim(that.find("td").eq(120).text());
+        var that = $(this).parent().parent();
+        console.log(that);
+        var check_status = $.trim(that.find("td").eq(20).text());
         var status_val = null;
         if(check_status === "待审核"){
             status_val = 0;

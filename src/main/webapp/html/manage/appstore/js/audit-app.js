@@ -168,7 +168,7 @@ $(function() {
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent().parent();
+        var that = $(this).parent().parent();
 
         var check_status = $.trim(that.find("td").eq(19).text());
         var status_val = null;

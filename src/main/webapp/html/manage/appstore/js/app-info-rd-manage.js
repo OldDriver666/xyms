@@ -432,7 +432,7 @@ $(function() {
             $("#showIcon").hide();
             $("#showIconprompt").hide();
             $("#showImage").hide();
-            $("#input-createtime").hide();
+            $("#input-createtime1").hide();
             $("#input-updatetime1").hide();
             $("#input-count1").hide();
             $("#input-package_name1").hide();

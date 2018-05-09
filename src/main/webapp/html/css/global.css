@@ -409,9 +409,11 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 .modal.right.fade.in .modal-dialog {
   right: 0;
 }
-/*文字对其*/
+/*文字对齐*/
 .distribCol1{text-align:justify; text-justify:distribute-all-lines; text-align-last:justify; text-indent:10px; width:140px}
-
-
 .jscolor{width: 60px;}
 
+/*图标排列*/
+.tr-array{
+  display:block;float:left;padding:25px; width:20%
+}
