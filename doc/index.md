@@ -5011,7 +5011,6 @@ param都不填则全部查询
       "result": [
          {
             "id": 274,
-            "channelName": "女生频道",
             "category": "电子书",
             "status": 1,
             "description": "犀牛故事",
@@ -5031,6 +5030,7 @@ param都不填则全部查询
             "star": "4",
             "orientation": 0,
             "app_name": "犀牛故事",
+            "channel_id_list": "2",
             "app_spell": "xiniugushi",
             "package_name": "com.rhinocerosstory",
             "dev_id": 96,
