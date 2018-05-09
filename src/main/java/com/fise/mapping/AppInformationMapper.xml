@@ -25,11 +25,17 @@
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="channel_id_list" jdbcType="VARCHAR" property="channelIdList" />
     <result column="label" jdbcType="VARCHAR" property="label" />
     <result column="md5" jdbcType="VARCHAR" property="md5" />
     <result column="star" jdbcType="VARCHAR" property="star" />
     <result column="orientation" jdbcType="INTEGER" property="orientation" />
+    <collection property="channelList" ofType="com.fise.model.entity.AppChannelList">
+			<id column="cid" jdbcType="INTEGER" property="id" />
+		    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
+		    <result column="app_id" jdbcType="INTEGER" property="appId" />
+		    <result column="status" jdbcType="INTEGER" property="status" />
+		    <result column="prority" jdbcType="INTEGER" property="prority" />
+	</collection>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -551,20 +557,52 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
-	SELECT * from (SELECT
-		a.*, GROUP_CONCAT(c.channel_id) channel_id_list
+	SELECT
+		*
 	FROM
 		(
 			SELECT
-				i.*, count(d.id) count
+				a.id,
+				a.app_name,
+				a.app_spell,
+				a.package_name,
+				a.dev_id,
+				a.dev_name,
+				a.top_category,
+				a.category,
+				a. STATUS,
+				a.description,
+				a.version,
+				a.versioncode,
+				a.icon,
+				a.icon_type,
+				a.images,
+				a.download,
+				a.size,
+				a.updated,
+				a.created,
+				a.remarks,
+				a.label,
+				a.star,
+				a.orientation,
+				a.md5,
+				a.count,
+				c.id cid,
+				c.channel_id,
+				c.app_id,
+				c.prority
 			FROM
-				app_information i
-			LEFT JOIN app_download d ON d.app_id = i.id
-			GROUP BY
-				i.id
-		) a
-	LEFT JOIN app_channel_list c ON c.app_id = a.id
-	GROUP BY a.id)b
+				(
+					SELECT
+						i.*, count(d.id) count
+					FROM
+						app_information i
+					LEFT JOIN app_download d ON d.app_id = i.id
+					GROUP BY
+						i.id
+				) a
+			LEFT JOIN app_channel_list c ON c.app_id = a.id
+		) b
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

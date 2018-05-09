@@ -120,19 +120,15 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 
 		param.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInformationDao.updateByPrimaryKeySelective(param);
-		String channelIdList = param.getChannelIdList();
-		if (StringUtil.isNotEmpty(channelIdList)) {
-			AppChannelListExample example = new AppChannelListExample();
-			AppChannelListExample.Criteria criteria = example.createCriteria();
-			criteria.andAppIdEqualTo(param.getId());
-			appChannelListDao.deleteByExample(example);
-			String[] idlist = channelIdList.split(",");
-			for (String id : idlist) {
-				AppChannelList appChannelList = new AppChannelList();
-				appChannelList.setChannelId(Integer.valueOf(id));
-				appChannelList.setAppId(param.getId());
-				appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
-				appChannelListDao.insertSelective(appChannelList);
+		
+		List<AppChannelList> channelList = param.getChannelList();
+		AppChannelListExample example = new AppChannelListExample();
+		AppChannelListExample.Criteria criteria = example.createCriteria();
+		criteria.andAppIdEqualTo(param.getId());
+		appChannelListDao.deleteByExample(example);
+		if (null != channelList && channelList.size() > 0) {
+			for (AppChannelList appChannel : channelList) {
+				appChannelListDao.insertSelective(appChannel);
 			}
 		}
 		return resp.success();
@@ -416,15 +412,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		if(list.size()!=0){
 		    app1 = list.get(0);
 		}
-		String channelIdList = appInfo.getChannelIdList();
-		if (StringUtil.isNotEmpty(channelIdList)) {
-			String[] idlist = channelIdList.split(",");
-			for (String id : idlist) {
-				AppChannelList appChannelList = new AppChannelList();
-				appChannelList.setChannelId(Integer.valueOf(id));
-				appChannelList.setAppId(app1.getId());
-				appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
-				appChannelListDao.insertSelective(appChannelList);
+		List<AppChannelList> channelList = param.getChannelList();
+		if (null != channelList && channelList.size() > 0) {
+			for (AppChannelList appChannel : channelList) {
+				appChannel.setAppId(app1.getId());
+				appChannelListDao.insertSelective(appChannel);
 			}
 		}
 		

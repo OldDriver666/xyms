@@ -1,6 +1,8 @@
 package com.fise.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,9 +18,6 @@ public class AppInformation implements Serializable {
     @JsonProperty("app_name")
     private String appName;
     
-    @JsonProperty("channel_id_list")
-    private String channelIdList;
-
     @JsonProperty("app_spell")
     private String appSpell;
 
@@ -129,6 +128,9 @@ public class AppInformation implements Serializable {
      * 0-竖 1-横着
      */
     private Integer orientation;
+    
+    @JsonProperty("channel_list")
+    private List<AppChannelList> channelList = new ArrayList<AppChannelList>();
 
     private static final long serialVersionUID = 1L;
 
@@ -348,11 +350,11 @@ public class AppInformation implements Serializable {
 		this.count = count;
 	}
 
-	public String getChannelIdList() {
-		return channelIdList;
+	public List<AppChannelList> getChannelList() {
+		return channelList;
 	}
 
-	public void setChannelIdList(String channelIdList) {
-		this.channelIdList = channelIdList;
-	}    
+	public void setChannelList(List<AppChannelList> channelList) {
+		this.channelList = channelList;
+	}
 }
