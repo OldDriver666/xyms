@@ -1,5 +1,6 @@
 package com.fise.service.depart;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDepartConfig;
 import com.fise.model.param.DepartConfigParam;
@@ -16,4 +17,7 @@ public interface IDepartConfigService {
 	
 	/*修改departconfig信息*/
 	public Response updateDepartConfig(IMDepartConfig record);
+
+	/*分页查询departconfig信息*/
+	public Response queryImdepCfgPage(Page<DepartConfigParam> param);
 }

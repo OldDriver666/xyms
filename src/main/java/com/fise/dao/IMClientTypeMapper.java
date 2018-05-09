@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.IMClientType;
 import com.fise.model.entity.IMClientTypeExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface IMClientTypeMapper {
     int updateByPrimaryKeySelective(IMClientType record);
 
     int updateByPrimaryKey(IMClientType record);
+    
+    List<IMClientType> selectByPage(@Param("example")IMClientTypeExample example,@Param("page")Page<?> page);
 }

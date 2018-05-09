@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganization;
 import com.fise.service.auth.IAuthService;
@@ -38,7 +39,16 @@ public class OrganizationController {
         logger.info("查询公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg());
         return response;
     }
-
+    
+    /* 分页查询公司组织 */
+    @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
+    public Response queryOrganPage(@RequestBody @Valid Page<WiOrganization> param) {
+    	Response response = new Response();
+    	response = organtSvr.QueryOrganizationPage(param);
+    	logger.info("查询公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg()); 
+    	return response;
+    }
+    
     /* 插入公司组织 */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Response insertOrgan(@RequestBody @Valid WiOrganization param) {

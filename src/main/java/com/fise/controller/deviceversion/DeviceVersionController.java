@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
@@ -61,9 +62,19 @@ public class DeviceVersionController {
 		if(param.getDepartid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
 		response=iDeviceVersionService.queryDeviceVersion(param);
+		return response;
+	}
+	/*分页查询设备版本信息*/
+	@RequestMapping(value="/queryPage",method=RequestMethod.POST)
+	public Response queryDevVersionPage(@RequestBody @Valid Page<DeviceVersionParam> param){
+		Response response=new Response();
+		logger.info(param.toString());
 		
+		if(param.getParam().getDepartid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		response=iDeviceVersionService.queryDevVersionPage(param);	
 		
 		return response;
 	}

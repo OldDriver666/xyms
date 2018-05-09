@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMClientTypeMapper;
 import com.fise.model.entity.IMClientType;
@@ -84,7 +85,35 @@ public class ClientTypeServiceImpl implements IClientTypeService{
 		
 		return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
 	}
-
+	
+	@Override
+	public Response queryClienTypePage(Page<ClientTypeParam> param) {
+        Response response=new Response();
+		
+		IMClientTypeExample example=new IMClientTypeExample();
+		Criteria criteria=example.createCriteria();
+		
+		if(!StringUtil.isEmpty(param.getParam().getClientname())){
+			criteria.andClientnameEqualTo(param.getParam().getClientname());
+		}
+		
+		if(param.getParam().getClienttype()!=null){
+			criteria.andClienttypeEqualTo(param.getParam().getClienttype());	
+		} 
+		List<IMClientType> list=imClientTypeDao.selectByPage(example, param);
+		if(list.size()==0) {
+		  return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);	
+		}
+		
+		Page <IMClientType> page = new Page<IMClientType>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		response.success(page);
+		return response;
+	}
 	@Override
 	public Response delClientType(ClientTypeParam param) {
 		
@@ -145,4 +174,5 @@ public class ClientTypeServiceImpl implements IClientTypeService{
 		response.success();
 		return response;	
 	}
+
 }

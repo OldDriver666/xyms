@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDepartConfig;
 import com.fise.model.param.DepartConfigParam;
@@ -57,10 +58,17 @@ public class DepartConfigController {
 		Response response=new Response();
 		logger.info(param.toString());
 		response=iDepartConfigService.queryDepartConfig(param);
-		
-		
 		return response;
 	}
+	
+	/*分页查询imdepartconfig*/
+	@RequestMapping(value="/queryImdepCfgPage",method=RequestMethod.POST)
+    public Response queryImdepCfgPage(@RequestBody @Valid Page<DepartConfigParam> param){
+		Response response=new Response();
+		logger.info(param.toString());
+		response=iDepartConfigService.queryImdepCfgPage(param);
+	    return response;
+	}	
 	
 	/*删除imdepartconfig*/
 	@RequestMapping(value="/delimdepartconfig",method=RequestMethod.POST)

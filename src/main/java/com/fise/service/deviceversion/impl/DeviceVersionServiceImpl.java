@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMDeviceVersionMapper;
 import com.fise.model.entity.IMDeviceVersion;
@@ -70,7 +71,29 @@ public class DeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		return response;
 	}
-
+	
+	@Override
+	public Response queryDevVersionPage(Page<DeviceVersionParam> param) {
+		Response response=new Response();
+		IMDeviceVersionExample example=new IMDeviceVersionExample();
+		Criteria criteria=example.createCriteria();
+		criteria.andDepartidEqualTo(param.getParam().getDepartid());
+		
+		if(param.getParam().getDevType()!=null){
+			criteria.andDevTypeEqualTo(param.getParam().getDevType());
+		}
+		List<IMDeviceVersion> list=deviceVersionDao.selectByPage(example, param);
+		Page<IMDeviceVersion> page = new Page<IMDeviceVersion>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		response.success(page);
+		
+		return response;
+	}
+	
 	@Override
 	public Response delDeviceVersion(DeviceVersionParam param) {
 		

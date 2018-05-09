@@ -1,6 +1,7 @@
 
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.entity.IMDeviceVersionExample;
 import java.util.List;
@@ -29,4 +30,5 @@ public interface IMDeviceVersionMapper {
 
     int updateByPrimaryKey(IMDeviceVersion record);
 
+    List<IMDeviceVersion> selectByPage(@Param("example") IMDeviceVersionExample example,@Param("page")Page<?>page);
 }

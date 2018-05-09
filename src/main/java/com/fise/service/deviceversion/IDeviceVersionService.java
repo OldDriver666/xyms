@@ -1,5 +1,6 @@
 package com.fise.service.deviceversion;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
@@ -16,4 +17,7 @@ public interface IDeviceVersionService {
 	
 	/*修改设备版本信息*/
 	public Response updateDeviceVersion(IMDeviceVersion record);
+	
+	/*分页查询设备版本信息*/
+	public Response queryDevVersionPage(Page<DeviceVersionParam> param);
 }

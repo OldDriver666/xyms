@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMDepartConfigMapper;
 import com.fise.model.entity.IMDepartConfig;
@@ -71,7 +72,33 @@ public class DepartConfigServiceImpl implements IDepartConfigService{
 			
 		return response;
 	}
-
+	
+	@Override
+	public Response queryImdepCfgPage(Page<DepartConfigParam> param) {
+        Response response=new Response();
+		
+		IMDepartConfigExample example=new IMDepartConfigExample();
+		Criteria criteria=example.createCriteria();
+		
+		if(param.getParam().getDepartid()!=null){
+			criteria.andDepartidEqualTo(param.getParam().getDepartid());
+		}
+		
+		if(param.getParam().getClienttype()!=null){
+			criteria.andClienttypeEqualTo(param.getParam().getClienttype());
+		}
+		List<IMDepartConfig> list=imDepartConfigDao.selectByPage(example, param);
+		
+		Page<IMDepartConfig> page = new Page<IMDepartConfig>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		response.success(page);
+		return response;
+	}
+	
 	@Override
 	public Response delDepartConfig(DepartConfigParam param) {
 		
@@ -110,5 +137,5 @@ public class DepartConfigServiceImpl implements IDepartConfigService{
 		response.success();
 		return response;		
 	}
-	
+
 }

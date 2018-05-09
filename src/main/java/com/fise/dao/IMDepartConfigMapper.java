@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.IMDepartConfig;
 import com.fise.model.entity.IMDepartConfigExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface IMDepartConfigMapper {
     int updateByPrimaryKeySelective(IMDepartConfig record);
 
     int updateByPrimaryKey(IMDepartConfig record);
+    
+    List<IMDepartConfig> selectByPage(@Param("example")IMDepartConfigExample example,@Param("page")Page<?>page);
 }
