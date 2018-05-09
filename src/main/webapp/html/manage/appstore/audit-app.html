@@ -63,11 +63,11 @@
 						<div class="form-group" >
 							<div class="col-sm-10"style="min-width: 162px">
 								<select name="search-status" id="input-search-status" class="selectpicker show-menu-arrow show-tick form-control">
-									<option value="">请选择状态</option>
+									<!--<option value="">请选择状态</option>-->
 									<option value="0">待审核</option>
-									<option value="1">发布</option>
+									<!--<option value="1">发布</option>-->
 									<option value="2">拒绝</option>
-									<option value="3">下架</option>
+									<!--<option value="3">下架</option>-->
 								</select>
 							</div>
 						</div>
@@ -100,9 +100,9 @@
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
-											<label for="input-appspell" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>app_spell</label>
+											<label for="input-appspell" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>应用拼音</label>
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入app_spell"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+												<input type="text" class="form-control" id="input-appspell" name="devXW" placeholder="请输入应用拼音"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
@@ -160,9 +160,9 @@
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
-											<label for="input-versioncode" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>versioncode</label>
+											<label for="input-versioncode" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>版本号</label>
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入版本号"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
@@ -202,9 +202,9 @@
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
-											<label for="input-prority" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>prority</label>
+											<label for="input-prority" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>权重值</label>
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入prority"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+												<input type="text" class="form-control" id="input-prority" name="devXW" placeholder="请输入权重值"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
@@ -226,9 +226,9 @@
 											</div>
 										</div>
 										<div class="form-group col-sm-4" style="margin-bottom: 0px">
-											<label for="input-star" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>star</label>
+											<label for="input-star" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>星级</label>
 											<div class="col-sm-8">
-												<input type="text" class="form-control" id="input-star" name="devXW" placeholder="请输入star" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
+												<input type="text" class="form-control" id="input-star" name="devXW" placeholder="请输入星级" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;" >
 											</div>
 										</div>
 										<div class="form-group col-sm-6">
@@ -247,15 +247,15 @@
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 待审核
 												</label>
-												<label class="radio-inline">
+												<!--<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-disabled" value="1"> 发布
-												</label>
+												</label>-->
 												<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-refuse" value="2"> 拒绝
 												</label>
-												<label class="radio-inline">
+												<!--<label class="radio-inline">
 													<input type="radio" name="status" id="radio-status-xiajia" value="3"> 下架
-												</label>
+												</label>-->
 											</div>
 										</div>
 										<div class="form-group col-sm-9" style="margin-bottom: 0px">
@@ -438,12 +438,12 @@
 	<td style="display:none;">${Util.formatDateTime(updated)}</td>
 	<td style="display:none;">${Util.formatDateTime(created)}</td>
 	<td style="position:relative">
-		<a href="javascript:void(0);" class="table-edit-btn">
+		<a href="javascript:void(0);" class="table-edit-btn" style="width:115px;height:115px;display:inline-block;">
 			<img src=${icon} style="width:100px;">
 		</a>
 		<h4>${app_name}</h4>
 		<h4>下载次数：${count}</h4>
-		<a href="javascript:void(0);" class="table-add-btn" style="position:absolute;top:0px;left:0;opacity:0.5;">
+		<a href="javascript:void(0);" class="table-add-btn" style="position:absolute;top:0px;right:0;opacity:0.5;">
 	       		<button type="button" class="btn btn-default btn-sm btn-add">
 				<span class="glyphicon glyphicon-plus"></span>
 				</button>
