@@ -49,6 +49,8 @@
 			word-break:break-all;
 		}
 		a:hover{text-decoration: none;}
+		#searchchannels{list-style:none; margin: 0px; padding: 0px;}
+		#searchchannels li {  float:left; width: 77px;}
 	</style>
 </head>
 
@@ -209,10 +211,11 @@
 										</div>
 										<div class="form-group col-sm-6" id="appchannelSelect" style="margin-bottom: 0px">
 											<label class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用频道</label>
-											<div class="col-sm-8"style="min-width: 162px">
-												<select name="searchchannels" id="searchchannels" class="selectpicker show-menu-arrow show-tick form-control">
+											<div class="col-sm-8" style="padding-top: 7px">
+												<ul name="searchchannels" id="searchchannels"></ul>
+												<!--<select name="searchchannels" id="searchchannels" class="selectpicker show-menu-arrow show-tick form-control">
 													<option value="">请选择频道</option>
-												</select>
+												</select>-->
 												<!--<select name="search-channels" id="channels" class="form-control">
 													<option value="0">请选择状态</option>
 													<option value="1">男生频道</option>
@@ -547,7 +550,7 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="pageChannels">
-    <option value=${id}>${channel_name}</option>
+    <li><div><input type="checkbox" value=${id}><span>${channel_name}</span></div></li>
 </script>
 
 <script type="text/javascript">
