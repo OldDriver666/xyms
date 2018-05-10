@@ -50,6 +50,18 @@ public class Problems implements Serializable {
      * 关注数量
      */
     private Integer concerns;
+    
+    /**
+     * 点赞数量
+     */
+    @JsonProperty("agree_num")
+    private Integer agreeNum;
+ 
+    /**
+     * 评论数量
+     */
+    @JsonProperty("comment_num")
+    private Integer commentNum;
 
     /**
      * 1-可用   0-删除
@@ -164,6 +176,22 @@ public class Problems implements Serializable {
 
 	public void setConcerns(Integer concerns) {
 		this.concerns = concerns;
+	}
+
+	public Integer getAgreeNum() {
+		return agreeNum;
+	}
+
+	public void setAgreeNum(Integer agreeNum) {
+		this.agreeNum = agreeNum;
+	}
+
+	public Integer getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(Integer commentNum) {
+		this.commentNum = commentNum;
 	}
 
 	@Override
