@@ -3077,7 +3077,8 @@ type和name都是选填，如果都不填，则查询所有信息
      	         "nick":""			            //选填-要查询的用户昵称
      		  },
      "orderby":"answer_num desc"  ,         //选填-按什么字段排序 answer_num desc--回答数降序排序,  
-     									//browse_num desc--浏览数降序排序, concerns desc--关注数降序排序,
+     									//browse_num desc--浏览数排序, concerns desc--关注数排序,
+     									//agree_num desc--点赞数排序, comment_num desc--评论数排序,
      "page_no":1                      
 }
 ```
@@ -3087,31 +3088,49 @@ type和name都是选填，如果都不填，则查询所有信息
    "code": 0,
    "msg": "ok",
    "data": {
+      "orderby": "comment_num desc",
       "page_no": 1,
-      "page_size": 10,
-      "total_count": 5,
-      "total_page_count": 1,
-      "param": null,  
+      "page_size": 5,
+      "total_count": 274,
+      "total_page_count": 55,
+      "param": null,
       "extra_param": null,
       "result": [
          {
-            "id": 71,
-            "title": "Ewwwwwww",
-            "content": "Wwwwww",
-            "picture": "",
-            "concerns": 1,     //关注数
+            "id": 25,
+            "title": "yyyy",
+            "content": "yyyyyyyy",
+            "nick": "2",
+            "concerns": 10,
             "status": 1,
-            "updated": 1505802100,
-            "created": 1504236766,
-            "user_id": 250060,
-            "nick": "jack",
-            "answer_num": 0,
-            "browse_num": 6,
-            "school_id": 62490
+            "address": "",
+            "updated": 1508831458,
+            "created": 1503538477,
+            "user_id": 2,
+            "answer_num": 5,
+            "browse_num": 1264,
+            "agree_num": 0,
+            "comment_num": 148
+         },
+         {
+            "id": 47,
+            "title": "4545",
+            "content": "45454",
+            "nick": "3",
+            "concerns": 3,
+            "status": 1,
+            "address": "",
+            "updated": 1504249147,
+            "created": 1504079889,
+            "user_id": 3,
+            "answer_num": 3,
+            "browse_num": 450,
+            "agree_num": 0,
+            "comment_num": 25
          }
-       ]
-     } 
-}      
+      ]
+   }
+}   
 ```
 
 ####问题更新
