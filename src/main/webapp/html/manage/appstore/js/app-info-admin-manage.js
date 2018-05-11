@@ -38,7 +38,7 @@ $(function() {
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/appinformation/appQuery";
+            var url = ctx + "xiaoyusvr/appinformation/appQuery ";
             var data = new Object();
             data.page_no = 1;
             data.page_size = page_content_num;
@@ -142,7 +142,7 @@ $(function() {
             this.page = new Util.Page(opt);
         },
         //新增数据
-        addToChannel : function() {
+        /*addToChannel : function() {
             var url = ctx + "xiaoyusvr/app/channellist/insert";
             var data = new Object();
             data.channel_id = parseInt($('#input-channels option:selected').val());
@@ -158,7 +158,7 @@ $(function() {
                     toastr.error(result.msg);
                 }
             });
-        },
+        },*/
 	};
 	window.action = action;
     action.init();
