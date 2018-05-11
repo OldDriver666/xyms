@@ -10,6 +10,9 @@ public interface IAppChannelService {
     /*应用商城    频道查询*/
     public Response query(Page<AppChannel> page);
     
+    /*应用商城    可用频道查询*/
+    public Response queryUsedChannel();
+    
     /*应用商城    频道更新*/
     public Response update(AppChannel param);
     

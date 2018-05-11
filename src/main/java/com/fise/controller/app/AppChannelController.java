@@ -36,6 +36,15 @@ public class AppChannelController {
         return resp;
     }
     
+    /*应用商城    频道查询*/
+    @IgnoreAuth
+    @RequestMapping(value="/queryUsedChannel",method=RequestMethod.POST)
+    public Response queryUsedChannel(){
+    	Response resp = new Response();
+    	resp = appChannelService.queryUsedChannel();
+    	return resp;
+    }
+    
     /*应用商城    频道更新*/
     @RequestMapping(value="/update",method=RequestMethod.POST)
     public Response update(@RequestBody @Valid AppChannel param){
