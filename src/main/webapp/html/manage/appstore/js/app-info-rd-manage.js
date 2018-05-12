@@ -77,6 +77,20 @@ $(function() {
                                     }
                                     imgStr = imgStr + imgArray[arrLen - 1]
                                 }
+
+                                var channel_list = [];
+                                var app_name = $("#input-appname").val();
+                                $("#input-channels").find('li').each(function() {
+                                    channel_list.push({
+                                            app_name:app_name,
+                                            channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
+                                            channel_name: $(this).find('.channelName').text(),
+                                            prority: parseInt($(this).find('input[type="text"]').val()),
+                                            status:1
+                                        }
+                                    )
+                                })
+
                                 var url = ctx + "xiaoyusvr/appinformation/appInsert";
                                 var data = new FormData();
                                 //data.append("appIndex", $("#input-appindex").val());
@@ -86,7 +100,8 @@ $(function() {
                                 data.append("devName", nickName);
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
-                                data.append("channelId", parseInt($('#searchchannels option:selected').val()));
+                                /*data.append("channelId", parseInt($('#searchchannels option:selected').val()));*/
+                                data.append("channel_list", channel_list);
                                 data.append("description", $("#input-description").val());
                                 data.append("images", imgStr);
                                 data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
@@ -120,6 +135,7 @@ $(function() {
                                             $(".up-section").remove();
                                             $("#son").html( 0 +"%" );
                                             $("#son").css("width" , 0 +"%");
+                                            $("input[name='channelboxes']").attr('checked', false);
                                         }else{
                                             alert(result.msg);
                                         }
@@ -238,8 +254,8 @@ $(function() {
                 },
                 "resultFilter" : function(result) {
                     $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
-                    $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                    $("#searchchannels").selectpicker('refresh');
+                   /* $("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
+                    /*$("#searchchannels").selectpicker('refresh');*/
                 },
                 "param" : data
             };
@@ -355,6 +371,21 @@ $(function() {
             myDiv2.appendChild(img);
         }
 
+        var channelArr = []
+        that.find("td").eq(29).find('li').each(function() {
+            channelArr.push(
+                {id: $(this).data('channel-id'),
+                    name: $(this).data('channel-name'),
+                    prority: parseInt($(this).data('channel-proirity'))
+                }
+            )
+        })
+        channelArr.forEach(function(item, index){
+            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+            $("#propity-"+item.id).value = item.prority;
+        })
+
+
         $("#input-id").val(that.find("td").eq(0).text());
         //$("#input-appindex").val(that.find("td").eq(2).text());
         $("#input-appname").val(that.find("td").eq(1).text());
@@ -420,7 +451,7 @@ $(function() {
             $("#topcategoryName").show();
             $("#categorySelect").hide();
             $("#categoryName").show();
-            $("#appchannelSelect").hide();
+            $("#appchannelSelect").show();
             $("#appchannelName").show();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
@@ -453,28 +484,18 @@ $(function() {
             $form[0].reset();
 		}
 	});
-    /*$("#addTempl2-modal").on('show.bs.modal', function(e) {
-        // 处理modal label显示及表单重置
-        var $form = $("form#form-addTempl2");
-        if (!e.relatedTarget) {
-            $("h4#addTempl2-modal-label").text("添加频道应用");
-            $form.data("action", "edit");
-        } else if (e.relatedTarget.id = "btn-add-userRoles") {
-            $("h4#addTempl2-modal-label").text("添加频道应用");
-            $form.data("action", "add");
-            $form[0].reset();
-        }
-    });*/
 
     //关闭或者hide弹出框清空插入的图片
     $("#addTempl-modal .close").on('click', function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
+        $("input[name='channelboxes']").attr('checked', false);
     });
 
     $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
+        $("input[name='channelboxes']").attr('checked', false);
     });
 
 	//验证表单
