@@ -558,8 +558,12 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
-	SELECT
-		*
+	SELECT  b.*,
+	        c.id cid,
+			c.channel_id,
+			c.app_id,
+			c.prority,
+			d.channel_name
 	FROM
 		(
 			SELECT
@@ -587,12 +591,7 @@
 				a.star,
 				a.orientation,
 				a.md5,
-				a.count,
-				c.id cid,
-				c.channel_id,
-				c.app_id,
-				c.prority,
-				d.channel_name
+				a.count
 			FROM
 				(
 					SELECT
@@ -603,14 +602,13 @@
 					GROUP BY
 						i.id
 				) a
-			LEFT JOIN app_channel_list c ON c.app_id = a.id
-			left join app_channel d on d.id=c.channel_id
-		) b
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-    <if test="example.orderByClause != null">
-      order by ${example.orderByClause}
-    </if>
+	    <if test="_parameter != null">
+	      <include refid="Update_By_Example_Where_Clause" />
+	    </if>
+	    <if test="example.orderByClause != null">
+	      order by ${example.orderByClause}
+	    </if>) b
+		LEFT JOIN app_channel_list c ON c.app_id = b.id
+		left join app_channel d on d.id=c.channel_id
   </select>
 </mapper>

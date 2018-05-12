@@ -622,41 +622,24 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 	@Override
 	public Response checkup(AppCheckUpParam developer) {
 		Response response = new Response();
-		AppInformationExample example = new AppInformationExample();
-		AppInformationExample.Criteria con = example.createCriteria();
-		con.andIdEqualTo(developer.getAppId());
 
 		AppInformation appInfo = new AppInformation();
+		appInfo.setId(developer.getAppId());
 		appInfo.setStatus(developer.getStatus());
 		appInfo.setUpdated(DateUtil.getLinuxTimeStamp());
 		appInfo.setRemarks(developer.getRemarks());
 
-		int result = appInformationDao.updateByExampleSelective(appInfo, example);
-		/*if (result == 0) {
-			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
-			response.setMsg("APP审核失败");
-			return response;
-		}*/
+		appInformationDao.updateByPrimaryKeySelective(appInfo);
 		
-		//在channellist里修改频道应用，status修改为1 可以
-		if(developer.getStatus()==1){
-		    AppChannelListExample example1 = new AppChannelListExample();
-	        AppChannelListExample.Criteria criteria = example1.createCriteria();
-	        
-	        criteria.andChannelIdEqualTo(developer.getChannelId());
-	        criteria.andAppIdEqualTo(developer.getAppId());
-	        
-	        AppChannelList appChannelList = new AppChannelList();
-	        appChannelList.setStatus(1);
-	        appChannelList.setUpdated(DateUtil.getLinuxTimeStamp());
-	        
-	        result=appChannelListDao.updateByExampleSelective(appChannelList, example1);
-	        
-	        if (result == 0) {
-	            response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
-	            response.setMsg("APP审核失败");
-	            return response;
-	        }
+		List<AppChannelList> channelList = developer.getChannelList();
+		AppChannelListExample example1 = new AppChannelListExample();
+		AppChannelListExample.Criteria criteria = example1.createCriteria();
+		criteria.andAppIdEqualTo(developer.getAppId());
+		appChannelListDao.deleteByExample(example1);
+		if (null != channelList && channelList.size() > 0) {
+			for (AppChannelList appChannel : channelList) {
+				appChannelListDao.insertSelective(appChannel);
+			}
 		}
         
 		AppInformation appResult=appInformationDao.selectByPrimaryKey(developer.getAppId());
@@ -691,7 +674,6 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			email.send();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return response.failure(ErrorCode.ERROR_SEND_IDENTITY_CODE);
 		}
 		response.setMsg("该应用审核完成。");
 		response.success();

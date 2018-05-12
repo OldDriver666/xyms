@@ -1,8 +1,12 @@
 package com.fise.model.param;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.model.entity.AppChannelList;
 import com.fise.utils.JsonUtil;
 
 public class AppCheckUpParam {
@@ -15,6 +19,9 @@ public class AppCheckUpParam {
 	
 	@JsonProperty("channel_id")
 	private Integer channelId;
+	
+    @JsonProperty("channel_list")
+    private List<AppChannelList> channelList = new ArrayList<AppChannelList>();
 	
 	private Integer updated;
 	
@@ -60,6 +67,14 @@ public class AppCheckUpParam {
 		this.remarks = remarks;
 	}
 	
+	public List<AppChannelList> getChannelList() {
+		return channelList;
+	}
+
+	public void setChannelList(List<AppChannelList> channelList) {
+		this.channelList = channelList;
+	}
+
 	@Override
 	public String toString() {
 		return JsonUtil.toJson(this);
