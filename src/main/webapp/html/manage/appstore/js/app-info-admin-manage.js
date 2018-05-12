@@ -30,9 +30,8 @@ $(function() {
 
             }
         },
-		//获取所有数据
-		loadPageData : function() {
-			var search_appname = $("#input-search-appname").val();
+        loadPageData : function() {
+            var search_appname = $("#input-search-appname").val();
             var search_status = parseInt($('#input-search-status option:selected').val());
             var page_content_num = parseInt($("#input-page-content-num").val());
 
@@ -72,6 +71,50 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
+        },
+		//获取所有数据
+		loadDataByOrder : function() {
+			var search_appname = $("#input-search-appname").val();
+            var search_status = parseInt($('#input-search-status option:selected').val());
+            var page_content_num = parseInt($("#input-page-content-num").val());
+
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/appinformation/appQuery ";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = page_content_num;
+            data.param = {
+                "dev_id": null,
+                "app_name":search_appname,
+                "status":search_status
+            };
+            data.orderby = "count desc,id";
+
+            var opt = {
+                "targetContentId" : "pageContent",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageTmpl",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    return result.data.result;
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
 		},
 		//编辑数据
 		edit : function() {
@@ -79,12 +122,28 @@ $(function() {
                 toastr.info("当前为待审核状态，请选择其他审核状态!");
                 return
             }
+            var channel_list = [];
+            var app_id = parseInt($("#input-id").val());
+            var app_name = $("#input-appname").val();
+            $("#input-channels").find('li').each(function() {
+                channel_list.push({
+                    app_id:app_id,
+                    app_name:app_name,
+                    channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
+                    channel_name: $(this).find('.channelName').text(),
+                    prority: parseInt($(this).find('input[type="text"]').val()),
+                    status:1
+                    }
+                )
+            })
+
             var url = ctx + "xiaoyusvr/appinformation/checkup";
             var data = new Object();
-            data.app_id = $("#input-id").val();
-            data.channel_id = parseInt($("#input-appchannelid").val());
+            data.app_id = parseInt($("#input-id").val());
+            //data.channel_id = parseInt($("#input-appchannelid").val());
             data.status = parseInt($("input[name=status]:checked").val());
             data.remarks = $("#input-remarks").val();
+            data.channel_list = channel_list;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -93,6 +152,7 @@ $(function() {
                     action.loadPageData();
                     $("#iconShow").empty();
                     $("#imgShow").empty();
+                    $("input[name='channelboxes']").attr('checked', false);
                 }else{
                     toastr.error(result.msg);
                 }
@@ -102,16 +162,13 @@ $(function() {
         loadChannelData : function() {
             var search_channelname = $("#input-search-channelname").val();
 
-
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/app/channel/query";
+            var url = ctx + "xiaoyusvr/app/channel/queryUsedChannel";
             var data = new Object();
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname,
-                "status": 2
             };
 
             var opt = {
@@ -133,32 +190,16 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
+                    /*$("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                    $("#input-channels").selectpicker('refresh');
+                    $("#input-channels").selectpicker('refresh');*/
+                    $("#pageChannels").tmpl(result.data).appendTo('#input-channels');
                    /* //return result.data.result;*/
                 },
                 "param" : data
             };
             this.page = new Util.Page(opt);
-        },
-        //新增数据
-        /*addToChannel : function() {
-            var url = ctx + "xiaoyusvr/app/channellist/insert";
-            var data = new Object();
-            data.channel_id = parseInt($('#input-channels option:selected').val());
-            data.app_id = parseInt($("#input-app-id").val());
-            data.status = parseInt($("input[name=status-txt]:checked").val());
-            data.prority = parseInt($("#input-prority-txt").val());
-
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl2-modal").modal('hide');
-                    toastr.success("添加成功!");
-                }else{
-                    toastr.error(result.msg);
-                }
-            });
-        },*/
+        }
 	};
 	window.action = action;
     action.init();
@@ -168,7 +209,20 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        console.log(that);
+        //console.log(that.find("td").eq(29));
+        var channelArr = []
+        that.find("td").eq(29).find('li').each(function() {
+            channelArr.push(
+                {id: $(this).data('channel-id'),
+                name: $(this).data('channel-name'),
+                prority: parseInt($(this).data('channel-proirity'))
+                }
+            )
+        })
+        channelArr.forEach(function(item, index){
+            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+            $("#propity-"+item.id).value = item.prority;
+        })
         var check_status = $.trim(that.find("td").eq(20).text());
         var status_val = null;
         if(check_status === "待审核"){
@@ -234,7 +288,7 @@ $(function() {
         $("#input-devname").val(that.find("td").eq(7).text());
         $("#input-topcategory").val(that.find("td").eq(8).text());
         $("#input-category").val(that.find("td").eq(9).text());
-        $("#input-appchannel").val(that.find("td").eq(10).text());
+        /*$("#input-appchannel").val(that.find("td").eq(10).text());*/
         $("#input-count").val(that.find("td").eq(28).text());
 
         $("#input-updatetime").val(that.find("td").eq(26).text());
@@ -255,7 +309,8 @@ $(function() {
         $("#input-remarks").val(that.find("td").eq(21).text());
         $("#input-label").val(that.find("td").eq(22).text());
         $("#input-star").val(that.find("td").eq(23).text());
-        $("#input-appchannelid").val(that.find("td").eq(25).text());
+
+        /*$("#input-appchannelid").val(that.find("td").eq(25).text());*/
 
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
         $("#addTempl-modal").modal("show");
@@ -304,11 +359,13 @@ $(function() {
     $("#addTempl-modal .close").on('click', function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
+        $("input[name='channelboxes']").attr('checked', false);
     });
 
     $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
+        $("input[name='channelboxes']").attr('checked', false);
     });
 
 	//验证表单
@@ -406,6 +463,9 @@ $(function() {
 	});
     $("#input-page-content-num").change(function() {
         action.loadPageData();
+    });
+    $("#btn-order").on('click', function() {
+        action.loadDataByOrder();
     });
 });
 

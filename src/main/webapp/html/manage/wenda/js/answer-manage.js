@@ -20,7 +20,7 @@ $(function() {
     var updateAuth = Request["updateAuth"];
     var searchID = Request["searchID"];
     var toHtmlID = Request["toHtmlID"];
-
+    var orderName = "";
 
 	var action = {
         init: function(){
@@ -39,7 +39,11 @@ $(function() {
 			var search_userid = $("#input-search-userid").val();
             var search_nick = $("#input-search-nick").val();
             var search_questiontitle = $("#input-search-questiontitle").val();
-            var search_questionid = $("#input-search-questionid").val();
+            if(searchID == ""){
+                var search_questionid = $("#input-search-questionid").val();
+            } else {
+                search_questionid = searchID;
+            }
             var page_content_num = parseInt($("#input-page-content-num").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -54,6 +58,7 @@ $(function() {
                     "problem_id":search_questionid,
                     "title":search_questiontitle
                 };
+                data.orderby = orderName;
 
             var opt = {
                 "targetContentId" : "pageContent",
@@ -138,14 +143,14 @@ $(function() {
         },
 	};
 	window.action = action;
-    /*action.init();
-	action.loadPageData();*/
+    action.init();
+	action.loadPageData();
 
-    if(searchID == ""){
+    /*if(searchID == ""){
         action.loadPageData();
     }else{
         action.searchPageData();
-    }
+    }*/
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -238,20 +243,24 @@ $(function() {
     });
 
 	$("#btn-search").on('click', function() {
+        searchID = "";
         action.loadPageData();
 	});
 	$("#input-search-userid").on('keydown', function(e) {
         if (e.keyCode == 13) {
+            searchID = "";
             action.loadPageData();
         }
 	});
     $("#input-search-questiontitle").on('keydown', function(e) {
         if (e.keyCode == 13) {
+            searchID = "";
             action.loadPageData();
         }
     });
     $("#input-search-nick").on('keydown', function(e) {
         if (e.keyCode == 13) {
+            searchID = "";
             action.loadPageData();
         }
     });
@@ -263,13 +272,14 @@ $(function() {
             action.loadPageData();
         }
     });
-    /*$(function () {
-        if(searchID == ""){
-            action.loadPageData();
-        }else{
-            action.searchPageData();
-        }
-    });*/
+    $("#agreeOrder").on('click', function(e) {
+        orderName = "agree_num desc";
+        action.loadPageData();
+    });
+    $("#commentOrder").on('click', function(e) {
+        orderName = "comment_num desc";
+        action.loadPageData();
+    });
 });
 
 

@@ -67,6 +67,7 @@ $(function() {
                     "user_id":search_userid,
                     "id":search_questionID
                 };
+
                 /*data.extra_param = {
                     "nick":search_Nick
                 };*/
@@ -96,6 +97,56 @@ $(function() {
             };
             this.page = new Util.Page(opt);
 		},
+        //获取所有数据
+        loadDataByOrder : function(orderName) {
+            var search_Title = $("#input-search-title").val();
+            var search_Nick = $("#input-search-nick").val();
+            var search_questionID = $("#input-search-questionID").val();
+            var search_userid = $("#input-search-userid").val();
+            var page_content_num = parseInt($("#input-page-content-num").val());
+
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/problem/queryback";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = page_content_num;
+            data.param = {
+                "title":search_Title,
+                "nick":search_Nick,
+                "user_id":search_userid,
+                "id":search_questionID
+            };
+            data.orderby = orderName;
+            /*data.extra_param = {
+             "nick":search_Nick
+             };*/
+
+            var opt = {
+                "targetContentId" : "pageContent",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageTmpl",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    return result.data.result;
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
+        },
 		//编辑数据
 		edit : function() {
             var url = ctx + "xiaoyusvr/problem/update";
@@ -323,12 +374,16 @@ $(function() {
             action.loadPageData();
         }
     });
-    /*$(function() {
-        action.questionPageData();
-        $("#btn-search").on('click', function() {
-            action.loadPageData();
-        });
-    });*/
+
+    $("#answerOrder").on('click', function(e) {
+        action.loadDataByOrder("answer_num desc");
+    });
+    $("#browseOrder").on('click', function(e) {
+        action.loadDataByOrder("browse_num desc");
+    });
+    $("#concernOrder").on('click', function(e) {
+        action.loadDataByOrder("concerns desc");
+    });
 
     $(".fileInsert").on('change', function(e){
         var tag = e.target
