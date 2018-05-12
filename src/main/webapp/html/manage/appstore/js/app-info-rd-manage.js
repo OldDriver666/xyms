@@ -81,14 +81,16 @@ $(function() {
                                 var channel_list = [];
                                 var app_name = $("#input-appname").val();
                                 $("#input-channels").find('li').each(function() {
-                                    channel_list.push({
-                                            app_name:app_name,
-                                            channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
-                                            channel_name: $(this).find('.channelName').text(),
-                                            prority: parseInt($(this).find('input[type="text"]').val()),
-                                            status:1
-                                        }
-                                    )
+                                    if($(this).find('input[type="checkbox"]').is(":checked")){
+                                        channel_list.push({
+                                                app_name:app_name,
+                                                channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
+                                                channel_name: $(this).find('.channelName').text(),
+                                                prority: parseInt($(this).find('input[type="text"]').val()),
+                                                status:1
+                                            }
+                                        )
+                                    }
                                 })
 
                                 var url = ctx + "xiaoyusvr/appinformation/appInsert";
