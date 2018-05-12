@@ -175,12 +175,12 @@ $(function() {
             };
 
             var opt = {
-                "targetContentId" : "pageContent",
+                "targetContentId" : "input-channels",
                 "url" : url,
                 "forAuth2" : true,
                 "updateAuth" : updateAuth,
                 "moduleId" : moduleId,
-                "rowTemplateId" : "pageTmpl",
+                "rowTemplateId" : "pageChannels",
                 "contextUrl" : ctx,
                 "pageBtnsContentId" : "pagination",
                 "tmplEvents" : {
@@ -194,10 +194,11 @@ $(function() {
                 },
                 "resultFilter" : function(result) {
                     /*$("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
-                    $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                    $("#input-channels").selectpicker('refresh');*/
-                    $("#pageChannels").tmpl(result.data).appendTo('#input-channels');
-                   /* //return result.data.result;*/
+                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
+                     $("#input-channels").selectpicker('refresh');*/
+                    /*$("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
+                    /* //return result.data.result;*/
+                    return result.data;
                 },
                 "param" : data
             };
