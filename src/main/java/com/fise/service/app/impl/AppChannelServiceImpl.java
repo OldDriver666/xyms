@@ -116,4 +116,14 @@ public class AppChannelServiceImpl implements IAppChannelService{
         else
             return data.get(0);
     }
+
+	@Override
+	public Response queryUsedChannel() {
+		Response resp = new Response();
+        AppChannelExample example = new AppChannelExample();
+        AppChannelExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusNotEqualTo(0);
+        List<AppChannel> list = appChannelDao.selectByExample(example);
+        return resp.success(list);
+	}
 }
