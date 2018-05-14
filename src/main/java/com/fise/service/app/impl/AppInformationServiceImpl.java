@@ -365,7 +365,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		
 		//获取文件的MD5值
         String md5=null;
-        String path="/home/fise/www/upload/";
+        String path="D:/home/fise/www/upload/";
         ApkInfo apkInfo=null;
         String iconpath=null;
         try {
@@ -445,7 +445,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 				/* 内网上传图片路径 */
 				//String path = "/home/fise/bin/www/upload";
 				/* 外网上传图片路径 */
-				String path="/home/fise/www/upload";
+				String path="D:/home/fise/www/upload";
 
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -467,7 +467,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		/* 内网上传图片路径 */
 		//String path = "/home/fise/bin/www/upload";
 		/* 外网上传图片路径 */
-		String path="/home/fise/www/upload";
+		String path="D:/home/fise/www/upload";
 
 		String filename = uploadfile.getOriginalFilename().replace(".",
 				new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
@@ -477,11 +477,11 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		}
 
 		uploadfile.transferTo(dir);
-		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
+//		Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
 		/* 内网上传图片路径 */
 		//String downloadURL = Constants.IN_FILE_UPLOAD_URL + filename;
 		/* 外网上传图片路径 */
-		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
+//		String downloadURL=Constants.OUT_FILE_UPLOAD_URL+filename;
 
 		return filename;
 	}
@@ -694,6 +694,9 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			criteria.andChannelIdEqualTo(page.getParam().getChannelId());
 		}
 
+		if(StringUtil.isNotEmpty(page.getParam().getChannelName())){
+			criteria.andChannelNameLike("%" + page.getParam().getChannelName() + "%");
+		}
 		if(StringUtil.isNotEmpty(page.getParam().getAppName())){
 			criteria.andAppNameLike("%" + page.getParam().getAppName() + "%");
 		}
@@ -706,13 +709,27 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 			example.setOrderByClause("created desc");
 		}
 		List<AppInformation> list = appInformationDao.selectByPage(example, page);
+
 		if (list.size() == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_UNEXIST);
 			response.setMsg("App资源不足");
 			return response;
 		}
+		List<Integer> idList = new ArrayList<Integer>();
+		for (AppInformation appInformation : list) {
+			idList.add(appInformation.getId());
+		}
+		AppInformationExample example1 = new AppInformationExample();
+		AppInformationExample.Criteria criteria1 = example1.createCriteria();
+		criteria1.andIdIn(idList);
+		if (StringUtil.isNotEmpty(page.getOrderby())) {
+			example1.setOrderByClause(page.getOrderby());
+		} else {
+			example1.setOrderByClause("created desc");
+		}
+		List<AppInformation> result = appInformationDao.selectByIdList(example1);
 		page.setParam(null);
-		page.setResult(list);
+		page.setResult(result);
 		response.success(page);
 		return response;
 	}

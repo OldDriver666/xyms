@@ -228,6 +228,11 @@ public class AppInformationExample {
             addCriterion("CONCAT( app_name , app_spell ) like", value, "appName");
             return (Criteria) this;
         }
+        
+        public Criteria andChannelNameLike(String value) {
+        	addCriterion("channel_name like", value, "channelName");
+        	return (Criteria) this;
+        }
 
         public Criteria andAppNameNotLike(String value) {
             addCriterion("app_name not like", value, "appName");
