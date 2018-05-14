@@ -86,7 +86,6 @@ $(function() {
                                                 app_name:app_name,
                                                 channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
                                                 channel_name: $(this).find('.channelName').text(),
-                                                prority: parseInt($(this).find('input[type="text"]').val()),
                                                 status:1
                                             }
                                         )
