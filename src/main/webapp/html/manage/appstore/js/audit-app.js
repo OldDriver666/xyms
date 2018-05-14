@@ -35,6 +35,11 @@ $(function() {
 			var search_appname = $("#input-search-appname").val();
             var search_status = parseInt($('#input-search-status option:selected').val());
             var page_content_num = parseInt($("#input-page-content-num").val());
+            if($('#input-search-appchannel option:selected').val() == ""){
+                var search_appchannelname = "";
+            }else{
+                var search_appchannelname = $('#input-search-appchannel option:selected').text();
+            }
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -45,6 +50,7 @@ $(function() {
             data.param = {
                 "dev_id": null,
                 "app_name":search_appname,
+                "channel_name":search_appchannelname,
                 "status":search_status
             };
 
@@ -129,7 +135,10 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
-                    return result.data;
+                    $("#pageChannels").tmpl(result.data).appendTo('#input-channels')
+                    $("#pageSearchChannel").tmpl(result.data).appendTo('#input-search-appchannel');
+                    $("#input-search-appchannel").selectpicker('refresh');
+                    //return result.data;
                 },
                 "param" : data
             };
@@ -262,7 +271,7 @@ $(function() {
         $("#input-star").val(that.find("td").eq(22).text());
         $("#input-appchannelid").val(that.find("td").eq(24).text());
 
-        $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
+        $("#orientation option[value= '"+ orientation_val +"']").attr('selected','selected');
         $("#addTempl-modal").modal("show");
         $("#orientation").attr("disabled", "disabled");
     });

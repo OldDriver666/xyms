@@ -108,12 +108,7 @@
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-id">
-										<!--<div class="form-group" >
-											<label for="input-appindex" class="col-sm-3 control-label"><span class="necessary"></span>APP唯一标示</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-appindex" name="devIME" placeholder="请输入APP唯一标示"  >
-											</div>
-										</div>-->
+
 										<div class="form-group col-sm-6" style="margin-bottom: 0px">
 											<label for="input-appname" class="col-sm-4 control-label distribCol1" style="margin-bottom: 0px"><span class="necessary">*</span>应用名称</label>
 											<div class="col-sm-8">
@@ -126,12 +121,7 @@
 												<input type="text" class="form-control" id="input-appspell" name="devappSpell" placeholder="请输入应用名称的拼音"  >
 											</div>
 										</div>
-										<!--<div class="form-group" >
-											<label for="input-packagename" class="col-sm-3 control-label"><span class="necessary"></span>包名</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-packagename" name="devXW" placeholder="请输入包名"  >
-											</div>
-										</div>-->
+
 										<div class="form-group col-sm-6" id="add-developerid-wrap" style="margin-bottom: 0px">
 											<label for="input-devid" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>开发者ID</label>
 											<div class="col-sm-8">
@@ -176,9 +166,9 @@
 												<input type="text" class="form-control" id="input-topcategory" name="devXW" placeholder="请输入应用大类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<div class="form-group col-sm-12" id="categorySelect">
-											<label class="col-sm-2 control-label distribCol1"><span class="necessary">*</span>应用小类型</label>
-											<div class="col-sm-10" id="categorySelectItem">
+										<div class="form-group col-sm-6" id="categorySelect">
+											<label class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用小类型</label>
+											<div class="col-sm-8" id="categorySelectItem">
 												<select id="category1" class="form-control"  >
 													<option value="" >请选择应用小类型</option>
 													<option value="1" >常用工具</option>
@@ -209,18 +199,6 @@
 												<input type="text" class="form-control" id="input-category" name="devXW" placeholder="请输入应用小类型"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
-										<!--<div class="form-group col-sm-6" id="appchannelSelect" style="margin-bottom: 0px">
-											<label class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用频道</label>
-											<div class="col-sm-8" style="padding-top: 7px">
-												<ul name="searchchannels" id="searchchannels"></ul>
-											</div>
-										</div>-->
-										<!--<div class="form-group col-sm-6" id="appchannelName" style="margin-bottom: 0px">
-											<label for="input-appchannel" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>应用频道</label>
-											<div class="col-sm-8">
-												<input type="text" class="form-control" id="input-appchannel" name="devChannel" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
-											</div>
-										</div>-->
 										<div class="form-group col-sm-6" id="input-count1" style="margin-bottom: 0px">
 											<label for="input-count" class="col-sm-4 control-label distribCol1"><span class="necessary"></span>下载次数</label>
 											<div class="col-sm-8">
@@ -237,26 +215,12 @@
 											<label for="input-description" class="col-sm-4 control-label distribCol1"><span class="necessary">*</span>应用简介</label>
 											<div class="col-sm-8">
 												<textarea type="text" class="form-control" id="input-description" name="devappdesp" placeholder="请输入应用简介"  ></textarea>
-												<!--<input type="text" class="form-control" id="input-description" name="devXW" placeholder="请输入应用简介"  >-->
 											</div>
 										</div>
-										<!--<div class="form-group" >
-											<label for="input-version" class="col-sm-3 control-label"><span class="necessary"></span>版本号</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-version" name="devXW" placeholder="请输入版本号"  >
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-versioncode" class="col-sm-3 control-label"><span class="necessary"></span>versioncode</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-versioncode" name="devXW" placeholder="请输入versioncode"  >
-											</div>
-										</div>-->
 										<div class="form-group col-sm-12" id="appchannelSelect" style="margin-bottom: 0px">
 											<label for="searchchannels" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>应用频道</label>
 											<div class="col-sm-10">
 												<ul name="searchchannels" id="searchchannels"></ul>
-												<!--<input type="text" class="form-control" id="input-appchannel" name="devChannel" placeholder="请输入应用频道"  readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">-->
 											</div>
 										</div>
 										<div id="showIcon" class="form-group">
@@ -264,59 +228,17 @@
 											<div id="iconShow" class="col-sm-10">
 											</div>
 										</div>
-										<!--<div id="showIconprompt" class="form-group" >
-											<label class="col-sm-3 control-label"><span class="necessary"></span></label>
-											<div  class="col-sm-9" style="color: #15B">如需修改应用图标，请点击下面按钮重新上传安装包</div>
-										</div>-->
-										<!--<div class="form-group" >
-											<label for="input-icon" class="col-sm-3 control-label"><span class="necessary"></span>上传应用图标</label>
-											<div class="col-sm-9">
-												<input type="file"  class="form-control" id="input-icon" name="icon" placeholder="请上传应用图标"  >
-												&lt;!&ndash;<input type="text" class="form-control" id="input-icon" name="devXW" placeholder="请输入应用图标"  >&ndash;&gt;
-											</div>
-										</div>
-										<div class="form-group" >
-											<label for="input-icontype" class="col-sm-3 control-label"><span class="necessary"></span>图标类型</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="input-icontype" name="devXW" placeholder="请输入图标类型"  >
-											</div>
-										</div>-->
-
 										<div id="showImage" class="form-group" style="margin-bottom: 0px">
 											<label class="col-sm-2 control-label distribCol1"><span class="necessary"></span>当前应用截图</label>
 											<div id="imgShow" class="col-sm-10">
 											</div>
 										</div>
-
-										<!--<div id="showImageprompt" class="form-group" >
-											<label class="col-sm-3 control-label"><span class="necessary"></span></label>
-											<div  class="col-sm-9" style="color: #15B">如需修改应用截图，请点击下面按钮重新上传截图</div>
-										</div>-->
-										<!--<div class="form-group" >
-											<label for="input-images" class="col-sm-3 control-label"><span class="necessary"></span>上传应用截图</label>
-											<div class="col-sm-9">
-												<input type="file" multiple class="form-control" id="input-images" name="images" placeholder="请上传应用截图"  >
-												&lt;!&ndash;<input type="text" class="form-control" id="input-images" name="devXW" placeholder="请输入截图"  >&ndash;&gt;
-											</div>
-										</div>-->
-
-
-
 										<div id="addImgUrl" class="form-group">
 											<label for="" class="col-sm-3 control-label distribCol1"><span class="necessary">*</span>上传App截图图片</label>
 											<div class="img-box full">
 												<section class=" img-section">
 													<!--<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>-->
 													<div class="z_photo upimg-div clear">
-														<!--<section class="up-section fl">
-															 <span class="up-span"></span>
-															 <img src="img/buyerCenter/a7.png" class="close-upimg">
-															 <img src="img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
-															 <img src="img/test2.jpg" class="up-img">
-															 <p class="img-namep"></p>
-															 <input id="taglocation" name="taglocation" value="" type="hidden">
-															 <input id="tags" name="tags" value="" type="hidden">
-														 </section>-->
 														<section class="z_file fl">
 															<img src="../../images/a11.png" class="add-img">
 															<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
