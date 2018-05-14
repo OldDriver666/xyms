@@ -35,6 +35,9 @@ public class AppInformation implements Serializable {
      */
     @JsonProperty("dev_name")
     private String devName;
+    
+    @JsonProperty("channel_name")
+    private String channelName;
 
     @JsonProperty("channel_id")
     private Integer channelId;
@@ -356,5 +359,13 @@ public class AppInformation implements Serializable {
 
 	public void setChannelList(List<AppChannelList> channelList) {
 		this.channelList = channelList;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 }

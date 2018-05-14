@@ -4651,10 +4651,10 @@ null 没有数据返回 看code是否成功
 {
      "param":{ 
               "app_name":"牛", //选填-应用名称
-              "app_channel":1, //选填-频道id
+              "channel_name":"男生频道", //选填-频道id
               "status":1
      		  },
-     "orderby":"count desc,id", //排序字段, dsc表示降序排列, 没有desc为升序排列
+     "orderby":"count desc,id", //排序字段, desc表示降序排列, 没有desc为升序排列
      "page_no":1, 
      "page_size":10 
 }

@@ -558,6 +558,43 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+
+	SELECT
+		*
+	FROM
+		(
+			SELECT
+				a.*, GROUP_CONCAT(d.channel_name) channel_name
+			FROM
+				(
+					SELECT
+						i.id,
+						i.app_name,
+						i.app_spell,
+						i.status,
+						i.created,
+						count(d.id) count
+					FROM
+						app_information i
+					LEFT JOIN app_download d ON d.app_id = i.id
+					GROUP BY
+						i.id
+				) a
+			LEFT JOIN app_channel_list c ON c.app_id = a.id
+			LEFT JOIN app_channel d ON d.id = c.channel_id
+			GROUP BY
+				a.id
+		) a
+	    <if test="_parameter != null">
+	      <include refid="Update_By_Example_Where_Clause" />
+	    </if>
+	    <if test="example.orderByClause != null">
+	      order by ${example.orderByClause}
+	    </if>
+  </select>
+  
+  
+  <select id="selectByIdList" parameterType="map" resultMap="BaseResultMap">
 	SELECT  b.*,
 	        c.id cid,
 			c.channel_id,
@@ -605,10 +642,12 @@
 	    <if test="_parameter != null">
 	      <include refid="Update_By_Example_Where_Clause" />
 	    </if>
-	    <if test="example.orderByClause != null">
-	      order by ${example.orderByClause}
-	    </if>) b
+	    ) b
 		LEFT JOIN app_channel_list c ON c.app_id = b.id
 		left join app_channel d on d.id=c.channel_id
+		<if test="example.orderByClause != null">
+	      order by ${example.orderByClause}
+	    </if>
   </select>
+  
 </mapper>
