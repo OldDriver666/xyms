@@ -118,9 +118,6 @@ $(function() {
                 "id":search_questionID
             };
             data.orderby = orderName;
-            /*data.extra_param = {
-             "nick":search_Nick
-             };*/
 
             var opt = {
                 "targetContentId" : "pageContent",
@@ -164,57 +161,7 @@ $(function() {
                     toastr.error(result.msg);
                 }
             });
-		},
-        //页面跳转数据
-       /* questionPageData : function() {
-            var thisURL = document.URL;
-            var getval =thisURL.split('?')[1];
-            var showval= getval.split("=")[1];
-            var search_Title = $("#input-search-title").val();
-            var search_Nick = $("#input-search-nick").val();
-            var page_content_num = parseInt($("#input-page-content-num").val());
-
-            var td_len = $("#table thead tr th").length;//表格字段数量
-            $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/answer/querybyid";
-            var data = new Object();
-            data.user_id = parseInt(id);
-            data.page_no = 1;
-            data.page_size = page_content_num;
-            data.param = {
-                "title":search_Title,
-                "problem_id":showval,
-                "order":"created"
-
-            };
-            data.extra_param = {
-                "nick":search_Nick
-            };
-            var opt = {
-                "targetContentId" : "pageContent",
-                "url" : url,
-                "forAuth2" : true,
-                "updateAuth" : updateAuth,
-                "moduleId" : moduleId,
-                "rowTemplateId" : "pageTmpl",
-                "contextUrl" : ctx,
-                "pageBtnsContentId" : "pagination",
-                "tmplEvents" : {
-                    setTime : function(time) {
-                        if (time) {
-                            var times = new Date(time);
-                            time = times.format('yyyy-MM-dd hh:mm:ss');
-                        }
-                        return time;
-                    }
-                },
-                "resultFilter" : function(result) {
-                    return result.data.result;
-                },
-                "param" : data
-            };
-            this.page = new Util.Page(opt);
-        },*/
+		}
     };
 	window.action = action;
     action.init();
@@ -383,6 +330,12 @@ $(function() {
     });
     $("#concernOrder").on('click', function(e) {
         action.loadDataByOrder("concerns desc");
+    });
+    $("#agreeOrder").on('click', function(e) {
+        action.loadDataByOrder("agree_num desc");
+    });
+    $("#commentOrder").on('click', function(e) {
+        action.loadDataByOrder("comment_num desc");
     });
 
     $(".fileInsert").on('change', function(e){
