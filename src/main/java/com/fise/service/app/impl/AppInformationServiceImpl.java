@@ -335,7 +335,7 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
             
             //获取apk信息
-            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt.exe");
+            String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt");
             ApkUtil.setAaptPath(aaptPath);
             apkInfo = ApkUtil.getApkInfo(path + app);
             System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
