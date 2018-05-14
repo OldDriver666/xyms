@@ -419,7 +419,7 @@ $(function() {
 
         $("#input-label").val(that.find("td").eq(22).text());
         $("#input-star").val(that.find("td").eq(23).text());
-        $("#orientation option[value= '"+ orientation_val +"']").attr('selected',true);
+        $("#orientation option[value= '"+ orientation_val +"']").attr('selected','selected');
 
         $("#addTempl-modal").modal("show");
     });
