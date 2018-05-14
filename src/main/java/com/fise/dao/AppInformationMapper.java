@@ -31,5 +31,7 @@ public interface AppInformationMapper {
     
     List<AppInformation> selectByPage(@Param("example") AppInformationExample example,@Param("page") Page<?> page);
     
+    List<AppInformation> selectAppByPage(@Param("example") AppInformationExample example,@Param("page") Page<?> page);
+    
     List<AppInformation> selectByIdList(@Param("example") AppInformationExample example);
 }

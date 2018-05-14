@@ -24,6 +24,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.annotation.AuthValid;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.framework.config.ConfigProperties;
 import com.fise.utils.Constants;
 
 @RestController
@@ -31,6 +32,10 @@ import com.fise.utils.Constants;
 public class FileController {
 	
 	private Logger logger = Logger.getLogger(this.getClass());
+	
+	private String path = ConfigProperties.getValue("FILE_UPLOAD_PATH").trim();
+	private String chown = ConfigProperties.getValue("AUTH_CHOWN_PATH").trim();
+	private String url = ConfigProperties.getValue("FILE_UPLOAD_URL").trim();
     
     //上传图片 
     @AuthValid
@@ -46,11 +51,6 @@ public class FileController {
             for(int i=0;i<uploadfile.length;i++){
                 file=uploadfile[i];
                 
-                /*内网上传图片路径*/
-                //String path="/home/fise/bin/www/upload";
-                /*外网上传图片路径*/
-                String path="/home/fise/www/upload";
-                
                 String filename=file.getOriginalFilename().replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
                 File dir=new File(path,filename);
                 if(!dir.exists()){
@@ -60,17 +60,11 @@ public class FileController {
                 file.transferTo(dir);
                 System.out.println("=========="+path+"/"+filename);
                 //在Linux服务器里将上传文件改为fise用户权限
-                Runtime.getRuntime().exec("chown fise:fise "+path+"/"+filename);
+                Runtime.getRuntime().exec(chown + " " + path + "/"+filename);
                 if(i==0){
-                    /*内网上传图片路径*/
-                    //pictureURL=Constants.IN_FILE_UPLOAD_URL+filename;
-                    /*外网上传图片路径*/
-                    pictureURL=Constants.OUT_FILE_UPLOAD_URL+filename;
+                    pictureURL=url+filename;
                 }else {
-                    /*内网上传图片路径*/
-                    //pictureURL=pictureURL+Constants.IN_FILE_UPLOAD_URL+filename;
-                    /*外网上传图片路径*/
-                    pictureURL=pictureURL+Constants.OUT_FILE_UPLOAD_URL+filename;
+                    pictureURL=pictureURL+url+filename;
                 }
         
             }
@@ -90,7 +84,7 @@ public class FileController {
                 resp.getWriter().write("参数不能为空");
             }
             String fileName=map.get("filedown");
-            fileName="/home/fise/bin/www/upload/"+fileName;
+            fileName=path+fileName;
             bis=new BufferedInputStream(new FileInputStream(new File(fileName)));
             
             String filename=URLEncoder.encode(map.get("filedown"),"utf-8");

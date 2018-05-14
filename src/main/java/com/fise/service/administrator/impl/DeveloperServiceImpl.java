@@ -18,6 +18,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
+import com.fise.framework.config.ConfigProperties;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
@@ -39,6 +40,10 @@ public class DeveloperServiceImpl implements IDeveloperService {
 
 	@Autowired
 	private WiAdminMapper adminDao;
+	
+	private String path = ConfigProperties.getValue("FILE_UPLOAD_PATH").trim();
+	private String chown = ConfigProperties.getValue("AUTH_CHOWN_PATH").trim();
+	private String url = ConfigProperties.getValue("FILE_UPLOAD_URL").trim();
 
 	@Override
 	public Response insert(DeveloperInsert param) {
@@ -99,11 +104,6 @@ public class DeveloperServiceImpl implements IDeveloperService {
 			for (int i = 0; i < uploadfile.size(); i++) {
 				file = uploadfile.get(i);
 
-				/* 内网上传图片路径 */
-				//String path = "/home/fise/bin/www/upload";
-				/* 外网上传图片路径 */
-				String path="/home/fise/www/upload";
-
 				String filename = file.getOriginalFilename().replace(".",
 						new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".");
 				File dir = new File(path, filename);
@@ -111,8 +111,8 @@ public class DeveloperServiceImpl implements IDeveloperService {
 					dir.mkdirs();
 				}
 				file.transferTo(dir);
-				Runtime.getRuntime().exec("chown fise:fise " + path + "/" + filename);
-				pictureURL = Constants.OUT_FILE_UPLOAD_URL + filename;
+				Runtime.getRuntime().exec(chown + " " + path + "/" + filename);
+				pictureURL = url + filename;
 				result.add(pictureURL);
 			}
 		}
