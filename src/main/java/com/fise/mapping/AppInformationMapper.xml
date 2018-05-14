@@ -558,6 +558,18 @@
   </update>
   
   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from app_information
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectAppByPage" parameterType="map" resultMap="BaseResultMap">
 
 	SELECT
 		*
@@ -569,6 +581,7 @@
 				(
 					SELECT
 						i.id,
+						i.dev_id,
 						i.app_name,
 						i.app_spell,
 						i.status,
@@ -612,7 +625,7 @@
 				a.dev_name,
 				a.top_category,
 				a.category,
-				a. STATUS,
+				a.STATUS,
 				a.description,
 				a.version,
 				a.versioncode,
