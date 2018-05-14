@@ -101,27 +101,22 @@ $(function() {
 		},
         //获取所有数据
         loadChannelData : function() {
-            var search_channelname = $("#input-search-channelname").val();
-
-
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/app/channel/query";
+            var url = ctx + "xiaoyusvr/app/channel/queryUsedChannel";
             var data = new Object();
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname,
-                "status": 2
             };
 
             var opt = {
-                "targetContentId" : "pageContent",
+                "targetContentId" : "input-channels",
                 "url" : url,
                 "forAuth2" : true,
                 "updateAuth" : updateAuth,
                 "moduleId" : moduleId,
-                "rowTemplateId" : "pageTmpl",
+                "rowTemplateId" : "pageChannels",
                 "contextUrl" : ctx,
                 "pageBtnsContentId" : "pagination",
                 "tmplEvents" : {
@@ -134,9 +129,7 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
-                    $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                    $("#input-channels").selectpicker('refresh');
-                   /* //return result.data.result;*/
+                    return result.data;
                 },
                 "param" : data
             };
@@ -169,6 +162,19 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+        var channelArr = []
+        that.find("td").eq(29).find('li').each(function() {
+            channelArr.push(
+                {id: $(this).data('channel-id'),
+                    name: $(this).data('channel-name'),
+                    prority: parseInt($(this).data('channel-proirity'))
+                }
+            )
+        })
+        channelArr.forEach(function(item, index){
+            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+            $("#propity-"+item.id).value = item.prority;
+        })
 
         var check_status = $.trim(that.find("td").eq(19).text());
         var status_val = null;
@@ -276,7 +282,7 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("审核应用信息");
-            $("#appdevChannelid").hide();
+            $("#appdevChannelid").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
             $("h4#addTempl-modal-label").text("添加应用信息");

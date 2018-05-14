@@ -220,8 +220,10 @@
 					<th id="answerOrder" class="th-order">回答数<span class="order">排序</span></th>
 					<th id="browseOrder" class="th-order">浏览数<span class="order">排序</span></th>
 					<th id="concernOrder" class="th-order">关注数<span class="order">排序</span></th>
+					<th id="agreeOrder" class="th-order">点赞数<span class="order">排序</span></th>
+					<th id="commentOrder" class="th-order">评论数<span class="order">排序</span></th>
 					<th>状态</th>
-					<th style="width: 150px">更新时间</th>
+					<!--<th style="width: 150px">更新时间</th>-->
 					<th style="width: 150px">创建时间</th>
 					<th class="table-manage" style="width: 80px">管理</th>
 				</tr>
@@ -273,9 +275,11 @@
 	<td><a href="javascript:void(0);" class="answer_num">${answer_num}</a></td>
 	<td>${browse_num}</td>
 	<td><a href="javascript:void(0);" class="concerns_num">${concerns}</a></td>
+	<td>${agree_num}</td>
+	<td>${comment_num}</td>
 	<td>{{if status == 0}}不可用 {{else status == 1}}可用{{/if}}</td>
 	<td style="display: none">${content}</td>
-	<td>${Util.formatDateTime(updated)}</td>
+	<td style="display:none;">${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 		<a href="javascript:void(0);" class="table-edit-btn">

@@ -125,16 +125,19 @@ $(function() {
             var channel_list = [];
             var app_id = parseInt($("#input-id").val());
             var app_name = $("#input-appname").val();
+
             $("#input-channels").find('li').each(function() {
-                channel_list.push({
-                    app_id:app_id,
-                    app_name:app_name,
-                    channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
-                    channel_name: $(this).find('.channelName').text(),
-                    prority: parseInt($(this).find('input[type="text"]').val()),
-                    status:1
-                    }
-                )
+                if($(this).find('input[type="checkbox"]').is(":checked")){
+                    channel_list.push({
+                            app_id:app_id,
+                            app_name:app_name,
+                            channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
+                            channel_name: $(this).find('.channelName').text(),
+                            prority: parseInt($(this).find('input[type="text"]').val()),
+                            status:1
+                        }
+                    )
+                }
             })
 
             var url = ctx + "xiaoyusvr/appinformation/checkup";
@@ -172,12 +175,12 @@ $(function() {
             };
 
             var opt = {
-                "targetContentId" : "pageContent",
+                "targetContentId" : "input-channels",
                 "url" : url,
                 "forAuth2" : true,
                 "updateAuth" : updateAuth,
                 "moduleId" : moduleId,
-                "rowTemplateId" : "pageTmpl",
+                "rowTemplateId" : "pageChannels",
                 "contextUrl" : ctx,
                 "pageBtnsContentId" : "pagination",
                 "tmplEvents" : {
@@ -191,10 +194,11 @@ $(function() {
                 },
                 "resultFilter" : function(result) {
                     /*$("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
-                    $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                    $("#input-channels").selectpicker('refresh');*/
-                    $("#pageChannels").tmpl(result.data).appendTo('#input-channels');
-                   /* //return result.data.result;*/
+                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
+                     $("#input-channels").selectpicker('refresh');*/
+                    /*$("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
+                    /* //return result.data.result;*/
+                    return result.data;
                 },
                 "param" : data
             };
