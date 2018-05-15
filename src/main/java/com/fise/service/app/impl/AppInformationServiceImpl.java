@@ -30,6 +30,7 @@ import com.fise.framework.config.ConfigProperties;
 import com.fise.model.dto.appmarket.ApkInfo;
 import com.fise.model.dto.appmarket.ApkUtil;
 import com.fise.model.dto.utils.IconUtil;
+import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppChannelList;
 import com.fise.model.entity.AppChannelListExample;
 import com.fise.model.entity.AppInformation;
@@ -371,10 +372,13 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
 		if(list.size()!=0){
 		    app1 = list.get(0);
 		}
-		List<AppChannelList> channelList = param.getChannelList();
-		if (null != channelList && channelList.size() > 0) {
-			for (AppChannelList appChannel : channelList) {
+		AppChannelList appChannel = new AppChannelList();
+		if (StringUtil.isNotEmpty(param.getChannelIds())) {
+			String[] channelIds = param.getChannelIds().split(",");
+			for (String channelId : channelIds) {
+				appChannel.setChannelId(Integer.valueOf(channelId));
 				appChannel.setAppId(app1.getId());
+				appChannel.setStatus(1);
 				appChannelListDao.insertSelective(appChannel);
 			}
 		}
