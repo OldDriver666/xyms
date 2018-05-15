@@ -86,7 +86,6 @@ $(function() {
                                                 app_name:app_name,
                                                 channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
                                                 channel_name: $(this).find('.channelName').text(),
-                                                prority: parseInt($(this).find('input[type="text"]').val()),
                                                 status:1
                                             }
                                         )
@@ -256,6 +255,7 @@ $(function() {
                 },
                 "resultFilter" : function(result) {
                     $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
+                    $("#pageCha").tmpl(result.data.result).appendTo('#input-channels');
                    /* $("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
                     /*$("#searchchannels").selectpicker('refresh');*/
                 },
@@ -378,14 +378,16 @@ $(function() {
             channelArr.push(
                 {id: $(this).data('channel-id'),
                     name: $(this).data('channel-name'),
-                    prority: parseInt($(this).data('channel-proirity'))
+                    prority: parseInt($(this).data('channel-prority'))
                 }
             )
         })
-        channelArr.forEach(function(item, index){
-            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
-            $("#propity-"+item.id).value = item.prority;
-        })
+        if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
+            channelArr.forEach(function(item, index){
+                $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+                $("#propity-"+item.id).value = item.prority;
+            })
+        }
 
 
         $("#input-id").val(that.find("td").eq(0).text());
@@ -453,6 +455,7 @@ $(function() {
             $("#topcategoryName").show();
             $("#categorySelect").hide();
             $("#categoryName").show();
+            $("#appchannelShow").hide();
             $("#appchannelSelect").show();
             $("#appchannelName").show();
             $("#son").html( 0 +"%" );
@@ -478,7 +481,8 @@ $(function() {
             $("#topcategoryName").hide();
             $("#categorySelect").show();
             $("#categoryName").hide();
-            $("#appchannelSelect").show();
+            $("#appchannelShow").show();
+            $("#appchannelSelect").hide();
             $("#appchannelName").hide();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");

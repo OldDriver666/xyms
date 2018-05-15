@@ -238,10 +238,13 @@ $(function() {
                 }
             )
         })
-        channelArr.forEach(function(item, index){
-            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
-            $("#propity-"+item.id).value = item.prority;
-        })
+        if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
+            channelArr.forEach(function(item, index){
+                $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+                $("#propity-"+item.id).value = item.prority;
+            })
+        }
+
         var check_status = $.trim(that.find("td").eq(20).text());
         var status_val = null;
         if(check_status === "待审核"){

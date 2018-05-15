@@ -85,13 +85,31 @@ $(function() {
                 toastr.info("当前为待审核状态，请选择其他审核状态!");
                 return
             }
+            var channel_list = [];
+            var app_id = parseInt($("#input-id").val());
+            var app_name = $("#input-appname").val();
+
+            $("#input-channels").find('li').each(function() {
+                if($(this).find('input[type="checkbox"]').is(":checked")){
+                    channel_list.push({
+                            app_id:app_id,
+                            app_name:app_name,
+                            channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
+                            channel_name: $(this).find('.channelName').text(),
+                            prority: parseInt($(this).find('input[type="text"]').val()),
+                            status:1
+                        }
+                    )
+                }
+            })
 
             var url = ctx + "xiaoyusvr/appinformation/checkup";
             var data = new Object();
             data.app_id = $("#input-id").val();
-            data.channel_id = parseInt($("#input-appchannelid").val());
+            /*data.channel_id = parseInt($("#input-appchannelid").val());*/
             data.status = parseInt($("input[name=status]:checked").val());
             data.remarks = $("#input-remarks").val();
+            data.channel_list = channel_list;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -180,10 +198,12 @@ $(function() {
                 }
             )
         })
-        channelArr.forEach(function(item, index){
-            $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
-            $("#propity-"+item.id).value = item.prority;
-        })
+        if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
+            channelArr.forEach(function(item, index){
+                $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+                $("#propity-"+item.id).value = item.prority;
+            })
+        }
 
         var check_status = $.trim(that.find("td").eq(19).text());
         var status_val = null;
