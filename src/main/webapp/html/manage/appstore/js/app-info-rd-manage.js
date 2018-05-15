@@ -271,67 +271,12 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-        },
-        //获取所有数据
-        loadChannelDataAll : function() {
-            var td_len = $("#table thead tr th").length;//表格字段数量
-            $("#pagination").hide();
-            var url = ctx + "xiaoyusvr/app/channel/queryUsedChannel";
-            var data = new Object();
-            data.page_no = 1;
-            data.page_size = 20;
-            data.param = {
-            };
-
-            var opt = {
-                "targetContentId" : "searchchannels",
-                "url" : url,
-                "forAuth2" : true,
-                "updateAuth" : updateAuth,
-                "moduleId" : moduleId,
-                "rowTemplateId" : "pageChannels",
-                "contextUrl" : ctx,
-                "pageBtnsContentId" : "pagination",
-                "tmplEvents" : {
-                    setTime : function(time) {
-                        if (time) {
-                            var times = new Date(time);
-                            time = times.format('yyyy-MM-dd hh:mm:ss');
-                        }
-                        return time;
-                    }
-                },
-                "resultFilter" : function(result) {
-                    $("#pageChannels").tmpl(result.data).appendTo('#searchchannels');
-                },
-                "param" : data
-            };
-            this.page = new Util.Page(opt);
-        },
-/*        //新增数据
-        addToChannel : function() {
-            var url = ctx + "xiaoyusvr/app/channellist/insert";
-            var data = new Object();
-            data.channel_id = parseInt($('#input-channels option:selected').val());
-            data.app_id = parseInt($("#input-app-id").val());
-            data.status = parseInt($("input[name=status-txt]:checked").val());
-            data.prority = parseInt($("#input-prority-txt").val());
-
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl2-modal").modal('hide');
-                    toastr.success("添加成功!");
-                }else{
-                    toastr.error(result.msg);
-                }
-            });
-        }*/
+        }
 	};
 	window.action = action;
     action.init();
 	action.loadPageData();
     action.loadChannelData();
-    action.loadChannelDataAll();
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -429,10 +374,11 @@ $(function() {
             )
         })
         if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
-            channelArr.forEach(function(item, index){
+            $("#pageChannels").tmpl(channelArr).appendTo('#searchchannels');
+            /*channelArr.forEach(function(item, index){
                 $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
                 $("#propity-"+item.id).value = item.prority;
-            })
+            })*/
         }
 
         var check_status = $.trim(that.find("td").eq(20).text());
@@ -446,6 +392,7 @@ $(function() {
         }else if(check_status === "下架"){
             status_val = 3;
         }
+
 
         $("#input-id").val(that.find("td").eq(0).text());
         //$("#input-appindex").val(that.find("td").eq(2).text());
@@ -479,8 +426,8 @@ $(function() {
         $("#input-label").val(that.find("td").eq(22).text());
         $("#input-star").val(that.find("td").eq(23).text());
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected','selected');
-        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-
+        $("#status option[value= '"+ status_val +"']").attr('selected','selected');
+        $("#status").attr("disabled", "disabled");
         $("#addTempl-modal").modal("show");
     });
 
@@ -560,12 +507,14 @@ $(function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
         $("input[name='channelboxes']").attr('checked', false);
+        $("#searchchannels").empty();
     });
 
     $('#addTempl-modal button[data-dismiss = "modal"]').on('click', function() {
         $("#iconShow").empty();
         $("#imgShow").empty();
         $("input[name='channelboxes']").attr('checked', false);
+        $("#searchchannels").empty();
     });
 
 	//验证表单

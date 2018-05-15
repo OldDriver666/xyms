@@ -51,6 +51,7 @@
 		a:hover{text-decoration: none;}
 		#searchchannels, #input-channels{list-style:none; margin: 0px; padding: 0px;}
 		#searchchannels li, #input-channels li {  float:left; width: 200px;}
+		#searchchannels li {  padding-top: 5px;}
 	</style>
 </head>
 
@@ -230,18 +231,13 @@
 										<div class="form-group col-sm-6" id="input-status-wrap" style="margin-bottom: 0px" >
 											<label class="col-sm-4 control-label distribCol1">状态</label>
 											<div class="col-sm-8">
-												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 待审核
-												</label>
-												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-disabled" value="1"> 发布
-												</label>
-												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-refuse" value="2"> 拒绝
-												</label>
-												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-xiajia" value="3"> 下架
-												</label>
+												<select name="status" id="status" class="show-menu-arrow  form-control" >
+													<option value="" >请选择摆放方向</option>
+													<option value="0" >待审核</option>
+													<option value="1">发布</option>
+													<option value="2">拒绝</option>
+													<option value="3">下架</option>
+												</select>
 											</div>
 										</div>
 										<div class="form-group col-sm-12" id="appchannelShow" style="margin-bottom: 0px">
@@ -441,19 +437,6 @@
             {{/each}}
         </ul>
     </td>
-
-	<!--<td class="table-update">
-			<a href="javascript:void(0);" class="table-edit-btn">
-				<button type="button" class="btn btn-default btn-sm btn-eye">
-					<span class="glyphicon glyphicon-eye-open"></span> 查看
-				</button>
-			</a>
-			<a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteConfig(${id})">
-				<button type="button" class="btn btn-default btn-sm btn-del">
-					<span class="glyphicon glyphicon-trash"></span> 删除
-				</button>
-			</a>
-	</td>-->
 </tr>
 </script>
 
@@ -461,7 +444,7 @@
     <li><input name="channelbox" type="checkbox" value=${id}><span class="channelName">${channel_name}</span><span style="margin-left:10px;"></li>
 </script>
 <script type="text/x-jquery-tmpl" id="pageChannels">
-    <li><input name="channelboxes" type="checkbox" value=${id}><span class="channelName">${channel_name}</span><span style="margin-left:10px;">权值：</span><input id="propity-${id}" type="text" style="width:50px;" value=${prority} ></li>
+    <li>${name}</li>
 </script>
 
 <script type="text/javascript">

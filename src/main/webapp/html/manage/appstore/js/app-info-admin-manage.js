@@ -222,13 +222,12 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        //console.log(that.find("td").eq(29));
         var channelArr = []
         that.find("td").eq(29).find('li').each(function() {
             channelArr.push(
                 {id: $(this).data('channel-id'),
                 name: $(this).data('channel-name'),
-                prority: parseInt($(this).data('channel-proirity'))
+                prority: parseInt($(this).data('channel-prority'))
                 }
             )
         })
