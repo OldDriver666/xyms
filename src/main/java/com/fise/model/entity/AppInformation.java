@@ -134,6 +134,9 @@ public class AppInformation implements Serializable {
     
     @JsonProperty("channel_list")
     private List<AppChannelList> channelList = new ArrayList<AppChannelList>();
+    
+    @JsonProperty("channel_ids")
+    private String channelIds;
 
     private static final long serialVersionUID = 1L;
 
@@ -368,4 +371,15 @@ public class AppInformation implements Serializable {
 	public void setChannelName(String channelName) {
 		this.channelName = channelName;
 	}
+
+	public String getChannelIds() {
+		return channelIds;
+	}
+
+	public void setChannelIds(String channelIds) {
+		this.channelIds = channelIds;
+	}
+
+
+	
 }
