@@ -189,33 +189,6 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var channelArr = []
-        that.find("td").eq(29).find('li').each(function() {
-            channelArr.push(
-                {id: $(this).data('channel-id'),
-                    name: $(this).data('channel-name'),
-                    prority: parseInt($(this).data('channel-proirity'))
-                }
-            )
-        })
-        if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
-            channelArr.forEach(function(item, index){
-                $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
-                $("#propity-"+item.id).value = item.prority;
-            })
-        }
-
-        var check_status = $.trim(that.find("td").eq(19).text());
-        var status_val = null;
-        if(check_status === "待审核"){
-            status_val = 0;
-        }else if(check_status === "发布"){
-            status_val = 1;
-        }else if(check_status === "拒绝"){
-            status_val = 2;
-        }else if(check_status === "下架"){
-            status_val = 3;
-        }
 
         var iconList = $.trim(that.find("td").eq(13).text()).split(";");
         var myDiv1 = document.getElementById("iconShow");
@@ -259,6 +232,34 @@ $(function() {
             myDiv2.appendChild(img);
         }
 
+        var check_status = $.trim(that.find("td").eq(19).text());
+        var status_val = null;
+        if(check_status === "待审核"){
+            status_val = 0;
+        }else if(check_status === "发布"){
+            status_val = 1;
+        }else if(check_status === "拒绝"){
+            status_val = 2;
+        }else if(check_status === "下架"){
+            status_val = 3;
+        }
+
+        var channelArr = []
+        that.find("td").eq(29).find('li').each(function() {
+            channelArr.push(
+                {id: $(this).data('channel-id'),
+                    name: $(this).data('channel-name'),
+                    prority: parseInt($(this).data('channel-prority'))
+                }
+            )
+        })
+        if(!(channelArr.length == 1 && channelArr[0].id == "data-channel-name=")){
+            channelArr.forEach(function(item, index){
+                $("input[name='channelboxes'][value='"+item.id+"']").prop("checked",true);
+                $("#propity-"+item.id).value = item.prority;
+            })
+        }
+
         var orientation_val = $.trim(that.find("td").eq(23).text());
 
         $("#input-id").val(that.find("td").eq(0).text());
@@ -292,8 +293,8 @@ $(function() {
         $("#input-appchannelid").val(that.find("td").eq(24).text());
 
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected','selected');
-        $("#addTempl-modal").modal("show");
         $("#orientation").attr("disabled", "disabled");
+        $("#addTempl-modal").modal("show");
     });
 
     //编辑获取数据数据
