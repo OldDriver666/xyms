@@ -330,18 +330,24 @@
 	FROM
 		(
 			SELECT
-				p.*, u.nick,
-				count(c.id) concerns,
-				sum(a.agree_num) agree_num,
+				b.*, sum(a.agree_num) agree_num,
 				sum(a.comment_num) comment_num
 			FROM
-				Problems p
-			LEFT JOIN IMUser u ON u.id = p.user_id
-			LEFT JOIN Concern c ON c.problem_id = p.id
-			LEFT JOIN Answer a ON a.problem_id = p.id
+				(
+					SELECT
+						p.*, u.nick,
+						count(c.id) concerns
+					FROM
+						Problems p
+					LEFT JOIN IMUser u ON u.id = p.user_id
+					LEFT JOIN Concern c ON c.problem_id = p.id
+					GROUP BY
+						p.id
+				) b
+			LEFT JOIN Answer a ON a.problem_id = b.id
 			GROUP BY
-				p.id
-		) a
+				b.id
+		) c
       <if test="_parameter != null">
 	      <include refid="Update_By_Example_Where_Clause" />
 	  </if>
