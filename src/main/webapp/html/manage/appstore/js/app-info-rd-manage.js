@@ -79,18 +79,30 @@ $(function() {
                                 }
 
                                 var channel_list = [];
+                                var channel_ids = "";
                                 var app_name = $("#input-appname").val();
                                 $("#input-channels").find('li').each(function() {
                                     if($(this).find('input[type="checkbox"]').is(":checked")){
                                         channel_list.push({
-                                                app_name:app_name,
-                                                channel_id: parseInt($(this).find('input[type="checkbox"]').val()),
-                                                channel_name: $(this).find('.channelName').text(),
-                                                status:1
+                                                channel_id: parseInt($(this).find('input[type="checkbox"]').val())
                                             }
                                         )
                                     }
                                 })
+
+                                if(channel_list.length == 0){
+                                    channel_ids = "";
+                                }else if(channel_list.length == 1){
+                                    channel_ids = channel_list[0].channel_id;
+                                }else{
+                                    for(var k = 0; k < channel_list.length; k++){
+                                        if(k < channel_list.length - 1){
+                                            channel_ids += channel_list[k].channel_id + ',';
+                                        }else {
+                                            channel_ids += channel_list[k].channel_id;
+                                        }
+                                    }
+                                }
 
                                 var url = ctx + "xiaoyusvr/appinformation/appInsert";
                                 var data = new FormData();
@@ -102,7 +114,7 @@ $(function() {
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
                                 /*data.append("channelId", parseInt($('#searchchannels option:selected').val()));*/
-                                data.append("channel_list", channel_list);
+                                data.append("channel_ids", channel_ids);
                                 data.append("description", $("#input-description").val());
                                 data.append("images", imgStr);
                                 data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
