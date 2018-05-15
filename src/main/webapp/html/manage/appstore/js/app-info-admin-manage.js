@@ -208,12 +208,6 @@ $(function() {
                     $("#pageChannels").tmpl(result.data).appendTo('#input-channels')
                     $("#pageSearchChannel").tmpl(result.data).appendTo('#input-search-appchannel');
                     $("#input-search-appchannel").selectpicker('refresh');
-                    /*$("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
-                     $("#pageChannels").tmpl(result.data.result).appendTo('#input-channels');
-                     $("#input-channels").selectpicker('refresh');*/
-                    /*$("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
-                    /* //return result.data.result;*/
-                    //return result.data;
                 },
                 "param" : data
             };

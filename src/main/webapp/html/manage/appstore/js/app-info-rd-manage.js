@@ -114,7 +114,7 @@ $(function() {
                                 data.append("topCategory", topcategory_txt);
                                 data.append("category", category_txt);
                                 /*data.append("channelId", parseInt($('#searchchannels option:selected').val()));*/
-                                data.append("channel_ids", channel_ids);
+                                data.append("channelIds", channel_ids);
                                 data.append("description", $("#input-description").val());
                                 data.append("images", imgStr);
                                 data.append("app", $("#input-download")[0].files[0], $("#input-download")[0].files[0].name);
@@ -243,17 +243,17 @@ $(function() {
             data.page_no = 1;
             data.page_size = 20;
             data.param = {
-                "channel_name":search_channelname,
+                "channel_name":null,
                 "status": 1
             };
 
             var opt = {
-                "targetContentId" : "pageContent",
+                "targetContentId" : "input-channels",
                 "url" : url,
                 "forAuth2" : true,
                 "updateAuth" : updateAuth,
                 "moduleId" : moduleId,
-                "rowTemplateId" : "pageTmpl",
+                "rowTemplateId" : "pageCha",
                 "contextUrl" : ctx,
                 "pageBtnsContentId" : "pagination",
                 "tmplEvents" : {
@@ -266,16 +266,49 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
-                    $("#pageChannels").tmpl(result.data.result).appendTo('#searchchannels');
                     $("#pageCha").tmpl(result.data.result).appendTo('#input-channels');
-                   /* $("#pageChannels").tmpl(result.data).appendTo('#input-channels');*/
-                    /*$("#searchchannels").selectpicker('refresh');*/
                 },
                 "param" : data
             };
             this.page = new Util.Page(opt);
         },
-        //新增数据
+        //获取所有数据
+        loadChannelDataAll : function() {
+            var td_len = $("#table thead tr th").length;//表格字段数量
+            $("#pagination").hide();
+            var url = ctx + "xiaoyusvr/app/channel/queryUsedChannel";
+            var data = new Object();
+            data.page_no = 1;
+            data.page_size = 20;
+            data.param = {
+            };
+
+            var opt = {
+                "targetContentId" : "searchchannels",
+                "url" : url,
+                "forAuth2" : true,
+                "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
+                "rowTemplateId" : "pageChannels",
+                "contextUrl" : ctx,
+                "pageBtnsContentId" : "pagination",
+                "tmplEvents" : {
+                    setTime : function(time) {
+                        if (time) {
+                            var times = new Date(time);
+                            time = times.format('yyyy-MM-dd hh:mm:ss');
+                        }
+                        return time;
+                    }
+                },
+                "resultFilter" : function(result) {
+                    $("#pageChannels").tmpl(result.data).appendTo('#searchchannels');
+                },
+                "param" : data
+            };
+            this.page = new Util.Page(opt);
+        },
+/*        //新增数据
         addToChannel : function() {
             var url = ctx + "xiaoyusvr/app/channellist/insert";
             var data = new Object();
@@ -292,12 +325,13 @@ $(function() {
                     toastr.error(result.msg);
                 }
             });
-        }
+        }*/
 	};
 	window.action = action;
     action.init();
 	action.loadPageData();
     action.loadChannelData();
+    action.loadChannelDataAll();
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -401,6 +435,17 @@ $(function() {
             })
         }
 
+        var check_status = $.trim(that.find("td").eq(20).text());
+        var status_val = null;
+        if(check_status === "待审核"){
+            status_val = 0;
+        }else if(check_status === "发布"){
+            status_val = 1;
+        }else if(check_status === "拒绝"){
+            status_val = 2;
+        }else if(check_status === "下架"){
+            status_val = 3;
+        }
 
         $("#input-id").val(that.find("td").eq(0).text());
         //$("#input-appindex").val(that.find("td").eq(2).text());
@@ -434,6 +479,7 @@ $(function() {
         $("#input-label").val(that.find("td").eq(22).text());
         $("#input-star").val(that.find("td").eq(23).text());
         $("#orientation option[value= '"+ orientation_val +"']").attr('selected','selected');
+        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 
         $("#addTempl-modal").modal("show");
     });
@@ -470,6 +516,9 @@ $(function() {
             $("#appchannelShow").hide();
             $("#appchannelSelect").show();
             $("#appchannelName").show();
+            $("#input-version1").show();
+            $("#input-versioncode1").show();
+            $("#input-status-wrap").show();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
 			$form.data("action", "edit");
@@ -496,6 +545,9 @@ $(function() {
             $("#appchannelShow").show();
             $("#appchannelSelect").hide();
             $("#appchannelName").hide();
+            $("#input-version1").hide();
+            $("#input-versioncode1").hide();
+            $("#input-status-wrap").hide();
             $("#son").html( 0 +"%" );
             $("#son").css("width" , 0 +"%");
             $form.data("action", "add");
