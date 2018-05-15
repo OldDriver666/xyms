@@ -332,16 +332,12 @@ public class AppInformationServiceImpl implements IAppInfoemationService {
             FileInputStream fis= new FileInputStream(path + app);
             md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
             IOUtils.closeQuietly(fis);  
-            System.out.println("MD5:"+md5); 
-            //md5=DigestUtils.md5Hex(new FileInputStream(path+app));
-            
             //获取apk信息
             String aaptPath=HttpContext.getRequest().getRealPath("/WEB-INF/resource/exe/aapt");
+            Runtime.getRuntime().exec("chmod 700 " + aaptPath);
             ApkUtil.setAaptPath(aaptPath);
             apkInfo = ApkUtil.getApkInfo(path + app);
-            System.out.println(">>>>>>>>>>>>>>>>"+apkInfo.toString());
             iconpath = apkInfo.getApplicationIcon().substring(apkInfo.getApplicationIcon().lastIndexOf("/")+1);
-            System.out.println(">>>>>>>>>>>>>"+iconpath);
             iconpath = iconpath.replace(".", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".");
             IconUtil.extractFileFromApk(path + app, apkInfo.getApplicationIcon(), path + iconpath);
         } catch (Exception e) {
