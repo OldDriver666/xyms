@@ -29,7 +29,7 @@ public class DepartConfigController {
 	@Resource
 	IAuthService authService;
 	
-	/*添加imdepartconfig*/
+	/*添加设备头像*/
 	@RequestMapping(value="/addimdepartconfig",method=RequestMethod.POST)
 	public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 		
@@ -51,7 +51,7 @@ public class DepartConfigController {
 		return response;
 	}
 	
-	/*查询imdepartconfig*/
+	/*查询设备头像*/
 	@RequestMapping(value="/queryimdepartconfig",method=RequestMethod.POST)
 	public Response queryImdepartConfig(@RequestBody @Valid DepartConfigParam param){
 		
@@ -61,7 +61,7 @@ public class DepartConfigController {
 		return response;
 	}
 	
-	/*分页查询imdepartconfig*/
+	/*分页查询设备头像*/
 	@RequestMapping(value="/queryImdepCfgPage",method=RequestMethod.POST)
     public Response queryImdepCfgPage(@RequestBody @Valid Page<DepartConfigParam> param){
 		Response response=new Response();
@@ -70,7 +70,7 @@ public class DepartConfigController {
 	    return response;
 	}	
 	
-	/*删除imdepartconfig*/
+	/*删除设备头像*/
 	@RequestMapping(value="/delimdepartconfig",method=RequestMethod.POST)
 	public Response delImdepartConfig(@RequestBody @Valid DepartConfigParam param){
 		
@@ -92,7 +92,7 @@ public class DepartConfigController {
 		return response;
 	}
 	
-	/*修改imdepartconfig信息*/
+	/*修改设备头像信息*/
 	@RequestMapping(value="/updateimdepartconfig",method=RequestMethod.POST)
 	public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 

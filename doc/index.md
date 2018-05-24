@@ -4708,7 +4708,7 @@ null 没有数据返回 看code是否成功
 }
 ```
 
-####分页查询配置
+####设备类型-分页查询
 |   接口地址    |   xiaoyusvr/boss/clienttype/queryClienTypePage        |
 |   ---     |   ---                   |
 |   请求方式    |   HTTP POST              |
@@ -4809,7 +4809,7 @@ param都不填则全部查询
 ```
 
 
-####分页查询设备
+####猫我号管理-分页查询
 |   接口地址    |   xiaoyusvr/boss/accountmanage/queryPage        |
 |   ---     |   ---                   |
 |   请求方式    |   HTTP POST             |
@@ -4872,7 +4872,7 @@ param都不填则全部查询
 ```
 
 
-####分页查询部门配置
+####设备头像-分页查询
 |   接口地址    |   xiaoyusvr/boss/departconf/queryImdepCfgPage        |
 |   ---     |   ---                   |
 |   请求方式    |   HTTP POST             |
@@ -4919,11 +4919,11 @@ param都不填则全部查询
     }
     ]
 ] 
-```  
+
+```
 
 
-
-####分页查询设备新版本
+####设备版本-分页查询
 |   接口地址    |   xiaoyusvr/boss/deviceversion/queryPage        |
 |   ---         |   ---                   |
 |   请求方式    |   HTTP POST             |
