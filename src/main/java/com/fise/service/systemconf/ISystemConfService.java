@@ -1,5 +1,6 @@
 package com.fise.service.systemconf;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.param.SystemConfParam;
@@ -16,4 +17,7 @@ public interface ISystemConfService {
 	
 	/*修改systemconf信息*/
 	public Response updateSystemConf(IMSystemConf record);
+	
+    /* 分页查询系统配置信息*/
+    public Response queryIMSystemConfByPage(Page<IMSystemConf> page);
 }

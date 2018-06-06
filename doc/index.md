@@ -5183,3 +5183,57 @@ param都不填则全部查询
    }
 }
 ```
+
+####系统配置分页查询
+|   接口地址    |  /boss/systemconf/queryIMSystemConfByPage |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+           "type":"user_base"  ,         //配置类型
+           "name":"default_avatar"       //配置名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "type": "user_base",
+         "name": "default_avatar",
+         "value": null,
+         "action": null,
+         "status": null,
+         "updated": null,
+         "created": null,
+         "config_id": null,
+         "parent_id": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "type": "user_base",
+            "name": "default_avatar",
+            "value": "g0/default/default.png",
+            "action": "",
+            "status": true,
+            "updated": 1500555615,
+            "created": 1480312406,
+            "config_id": 1,
+            "parent_id": 0
+         }
+      ]
+   }
+}
+```

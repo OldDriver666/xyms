@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.entity.IMSystemConfExample;
 import java.util.List;
@@ -27,4 +28,7 @@ public interface IMSystemConfMapper {
     int updateByPrimaryKeySelective(IMSystemConf record);
 
     int updateByPrimaryKey(IMSystemConf record);
+    
+    List<IMSystemConf> selectByExampleByPage(@Param("example") IMSystemConfExample example,@Param("page") Page<IMSystemConf> page);
+
 }
