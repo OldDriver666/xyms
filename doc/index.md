@@ -5237,3 +5237,55 @@ param都不填则全部查询
    }
 }
 ```
+
+####查询菜单-分页查询
+|   接口地址    |   boss/module/queryByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认10
+    "param":
+    {
+        "name":""                   //菜单名称
+    }
+}
+
+//回复
+{
+    "page_no": 1,
+    "page_size": 20,
+    "total_count": 89,
+    "total_page_count": 5,
+    "param": null,
+    "extra_param": null,
+    "result": [
+        {
+            "id": 1,
+            "devId": 205601,
+            "fileName": "007",
+            "duration": 120,
+            "imageUrl": "http://10.252.252.250:8700/g0/00/00/0.png",
+            "account": "testcamera2",
+            "vedioUrl": "",
+            "status": 1,
+            "type": 0,
+            "created": 1495882204
+        },
+        {
+             "id": 2,
+            "devId": 205601,
+            "fileName": "009",
+            "duration": 122,
+            "imageUrl": "http://10.252.252.250:8700/g0/00/00/0.png",
+            "account": "testcamera2",
+            "vedioUrl": "",
+            "status": 0,
+            "type": 0,
+            "created": 1495882775
+        }
+    ]
+}
+```
