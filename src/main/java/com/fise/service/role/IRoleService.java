@@ -2,6 +2,7 @@ package com.fise.service.role;
 
 import java.util.List;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
@@ -30,4 +31,7 @@ public interface IRoleService {
     public Response insertAuth(InsertAuthParam role);
 
     public Response delRole(WiOrganizationRole role);
+    
+    /* 分页查询角色 */
+    public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page);
 }

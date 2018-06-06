@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import java.util.List;
@@ -27,4 +28,7 @@ public interface WiOrganizationRoleMapper {
     int updateByPrimaryKeySelective(WiOrganizationRole record);
 
     int updateByPrimaryKey(WiOrganizationRole record);
+    
+    List<WiOrganizationRole> selectByExampleByPage(@Param("example") WiOrganizationRoleExample example,@Param("page") Page<WiOrganizationRole> page);
+
 }

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleParam;
@@ -132,6 +135,14 @@ public class RoleController {
         List<ModulePermissResult> data = roleSvr.queryAuthByName(param);
         resp.success(data);
 
+        return resp;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryRoleByPage", method = RequestMethod.POST)
+    public Response queryWiOrganizationRoleByPage(@RequestBody @Valid Page<WiOrganizationRole> page) {
+        Response resp = new Response();
+        resp = roleSvr.queryOrganizationRoleByPage(page);
         return resp;
     }
 }

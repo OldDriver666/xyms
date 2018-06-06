@@ -5289,3 +5289,112 @@ param都不填则全部查询
     ]
 }
 ```
+
+
+####查询一级菜单
+|   接口地址    |   boss/module/queryParentModule    |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+   
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "code": 0,
+      "msg": "ok",
+      "data": [
+         {
+            "id": 1,
+            "name": "Broadcast",
+            "pname": null,
+            "moduleType": 0,
+            "belongCompany": 1,
+            "description": "",
+            "priority": 2300,
+            "status": 0,
+            "sn": "zhengtigaisu",
+            "url": "manage/main/main.html",
+            "parentId": 0
+         },
+         {
+            "id": 2,
+            "name": "设备管理",
+            "pname": null,
+            "moduleType": 0,
+            "belongCompany": 1,
+            "description": "",
+            "priority": 1900,
+            "status": 1,
+            "sn": "shebeiguanli",
+            "url": "",
+            "parentId": 0
+         }
+      ]
+   }
+}
+```
+
+####角色分页查询
+|   接口地址    |   boss/role/queryRoleByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "role_name":"派出所",            //选填-角色名称
+        "company_id":1        //必填-公司ID
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "authLevel": null,
+         "departId": null,
+         "creatorId": 2,
+         "role_name": "管理员",
+         "desc": null,
+         "companyId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "authLevel": 800,
+            "departId": 2,
+            "creatorId": 2,
+            "role_name": "超级管理员",
+            "desc": "合作公司管理员账号",
+            "companyId": 1
+         },
+         {
+            "id": 3,
+            "authLevel": 700,
+            "departId": 0,
+            "creatorId": 2,
+            "role_name": "管理员",
+            "desc": "管理员账号",
+            "companyId": 1
+         }
+      ]
+   }
+}
+```

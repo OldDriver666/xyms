@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
@@ -202,4 +203,22 @@ public class RoleServiceImpl implements IRoleService {
         return resp;
     }
 
+    @Override
+	public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page) {
+		
+		Response response=new Response();
+		
+		WiOrganizationRoleExample example=new WiOrganizationRoleExample();
+		WiOrganizationRoleExample.Criteria criteria=example.createCriteria();
+		WiOrganizationRole param = page.getParam();
+		if(null != param.getOrganizationId()){
+        	criteria.andOrganizationIdEqualTo(param.getOrganizationId());
+        }
+        if(StringUtil.isNotEmpty(param.getName())){
+        	criteria.andNameLike("%" + param.getName() + "%");
+        }
+
+        page.setResult(roleDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 }
