@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Search;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.param.AdminInsert;
 import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
@@ -170,5 +173,13 @@ public class AdminstratorController {
         }
         
         return response.success(list);
+    }
+    
+    @RequestMapping(value = "/queryAdminByPage", method = RequestMethod.POST)
+    public Response queryAdminByPage(@RequestBody @Valid Page<WiAdmin> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = adminSvr.queryAdminByPage(page);
+        return resp;
     }
 }

@@ -2,7 +2,9 @@ package com.fise.service.administrator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.param.AdminInsert;
 import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
@@ -30,4 +32,7 @@ public interface IAdministratorService {
 
     /* 判断用户是否异地登录 */
     public Response isLogin(String accessToken);
+    
+    /* 分页查询管理员 */
+    public Response queryAdminByPage(Page<WiAdmin> page);
 }

@@ -29,5 +29,5 @@ public interface WiAccountManageMapper {
 
     int updateByPrimaryKey(WiAccountManage record);
     
-    List<WiAccountManage> selectByPage(@Param("example") WiAccountManageExample example,@Param("page")Page<?> page);
+    List<WiAccountManage> selectByPage(@Param("example") WiAccountManageExample example,@Param("page")Page<WiAccountManage> page);
 }

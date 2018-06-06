@@ -30,4 +30,6 @@ public interface WiAdminMapper {
     int updateByPrimaryKey(WiAdmin record);
     
     List<WiAdmin> selectByPage(@Param("example") WiAdminExample example,@Param("page") Page<?> page);
+    
+    List<WiAdmin> selectByExampleByPage(@Param("example") WiAdminExample example,@Param("page") Page<WiAdmin> page);
 }

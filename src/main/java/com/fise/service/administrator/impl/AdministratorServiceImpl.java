@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationMapper;
@@ -481,5 +482,32 @@ public class AdministratorServiceImpl implements IAdministratorService {
         adminDao.deleteByPrimaryKey(param.getAdminId());
         return resp;
     }
+    
+    @Override
+	public Response queryAdminByPage(Page<WiAdmin> page) {
+		
+		Response response=new Response();
+		
+		WiAdminExample example=new WiAdminExample();
+		WiAdminExample.Criteria criteria=example.createCriteria();
+		WiAdmin param = page.getParam();
+        if(null != param.getRoleId()){
+        	criteria.andRoleIdEqualTo(param.getRoleId());
+        }
+        if(null != param.getCompanyId()){
+        	criteria.andCompanyIdEqualTo(param.getCompanyId());
+        }
+        if(StringUtil.isNotEmpty(param.getAccount())){
+        	criteria.andAccountLike("%" + param.getAccount() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getNickName())){
+        	criteria.andNickNameLike("%" + param.getNickName() + "%");
+        }
+        criteria.andStatusNotEqualTo((byte) 2);
+
+        page.setResult(adminDao.selectByExampleByPage(example, page));
+        page.setParam(null);
+		return response.success(page);
+	}
 
 }
