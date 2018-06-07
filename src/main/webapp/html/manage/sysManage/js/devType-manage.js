@@ -29,21 +29,18 @@ $(function() {
 		},
 		//新增数据
 		add : function() {
-            var url = ctx + "xiaoyusvr/boss/deviceversion/add";
+            var url = ctx + "xiaoyusvr/boss/clienttype/addclienttype";
             var data = new Object();
-			data.depart_id = parseInt($("#input-depart_id  option:selected").val());
-			data.dev_type = parseInt($('#input-devType option:selected').val());
-			data.dev_version = $("#input-dev_version").val();
-			data.version_info = $("#input-version_info").val();
-			data.update_url = $("#input-update_url").val();
+
+            data.client_type = $("#input-client_type").val();
+            data.client_name = $("#input-client_name").val();
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
-					if((parseInt($("#input-depart_id  option:selected").val()) == parseInt($('#input-search-depart_id option:selected').val())) &&(parseInt($('#input-devType option:selected').val())==parseInt($('#input-search-client_type option:selected').val()))){
-						action.loadPageData();
-					}
+                    action.loadPageData();
+					action.allDevTypeQuery();
                 }else{
 					toastr.error(result.msg);
 				}
@@ -51,17 +48,14 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_depart_id = parseInt($('#input-search-depart_id option:selected').val());
-			var search_dev_type = parseInt($('#input-search-client_type option:selected').val());
-			var page_content_num = parseInt($("#input-page-content-num").val());
-
+            /*var search_client_type = $("#input-search-client_type").val();
+            var search_client_name = $("#input-search-client_name").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
-			$("#pagination").hide();
 
-            var url = ctx + "xiaoyusvr/boss/deviceversion/queryPage";
-           /* var data = new Object();
-			data.depart_id = search_depart_id;
-			data.dev_type = search_dev_type;
+            var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
+            var data = new Object();
+            data.client_type = parseInt(search_client_type);
+            data.client_name = search_client_name;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -76,19 +70,26 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else {
-					$('#pageContent').find("tr").remove();
 					toastr.error(result.msg);
                 }
             },function(errorMsg) {
 				toastr.error(errorMsg)
             });*/
 
+
+			var search_client_type = $("#input-search-client_type").val();
+			var search_client_name = $("#input-search-client_name").val();
+			var page_content_num = parseInt($("#input-page-content-num").val());
+
+			var td_len = $("#table thead tr th").length;//表格字段数量
+			$("#pagination").hide();
+			var url = ctx + "xiaoyusvr/boss/clienttype/queryClienTypePage";
 			var data = new Object();
 			data.page_no = 1;
 			data.page_size = page_content_num;
 			data.param = {
-				"depart_id":search_depart_id,
-				"dev_type":search_dev_type
+				"client_type":parseInt(search_client_type),
+				"client_name":search_client_name
 			};
 
 			/*data.extra_param = {
@@ -119,72 +120,41 @@ $(function() {
 				"param" : data
 			};
 			this.page = new Util.Page(opt);
+
 		},
-		//获取设备类型列表数据
-		loadDevTypeData : function() {
-			var dataArray1 = [];
+		//获取所有设备类型数据
+		allDevTypeQuery: function(){
 			var allDevTypeArray = [];
 			var url = ctx + "xiaoyusvr/boss/clienttype/queryclienttype";
-			var moduleId = 0;
 			var data = new Object();
 			data.client_type = null;
 			data.client_name = "";
-			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allDevTypeArray = result.data;
-					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
-					$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
-                    $("#input-search-client_type").selectpicker('refresh');
-                    $("#input-devType").selectpicker('refresh');
+					localStorage.setItem("allDevTypeArray",JSON.stringify(allDevTypeArray));
 				} else {
+					toastr.error(result.msg);
 				}
 			},function() {
+				toastr.error("服务器开个小差，请稍后重试！")
 			});
 
-			/*var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
-			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
-			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');*/
-		},
-		//获取全部公司团体数据
-		loadCompanyInfoData: function(){
-			var allCompanyArray = [];
-			var url = ctx + "xiaoyusvr/boss/organization/query";
-			var moduleId = 0;
-			var data = new Object();
-			data.name = "";
-			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-				if(result.code == ReturnCode.SUCCESS && result.data != ""){
-					allCompanyArray = result.data;
-					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
-					$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
-                    $("#input-search-depart_id").selectpicker('refresh');
-                    $("#input-depart_id").selectpicker('refresh');
-				} else {
-				}
-			},function() {
-			});
-
-			/*var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
-			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');*/
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "xiaoyusvr/boss/deviceversion/update";
+			var url = ctx + "xiaoyusvr/boss/clienttype/updateclienttype";
 			var data = new Object();
-			data.version_id = parseInt($("#input-version_id").val());
-			data.depart_id = parseInt($('#input-depart_idNo').val());
-			data.dev_type = parseInt($("#input-devTypeNo").val());
-			data.dev_version = $("#input-dev_version").val();
-			data.status = parseInt($("input[name=status]:checked").val());
-			data.version_info = $("#input-version_info").val();
-			data.update_url = $("#input-update_url").val();
+            data.type_id = parseInt($("#input-type_id").val());
+            data.client_type = $("#input-client_type").val();
+            data.client_name = $("#input-client_name").val();
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+					action.allDevTypeQuery();
 				}else{
 					toastr.error(result.msg);
 				}
@@ -193,13 +163,16 @@ $(function() {
 		//删除数据
 		deleteConfig : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "xiaoyusvr/boss/deviceversion/del";
+				var url = ctx + "xiaoyusvr/boss/clienttype/delclienttype";
 				var data = new Object();
-                data.version_id = id;
+                data.type_id = id;
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
+						$("#input-search-client_type").val("");
+						$("#input-search-client_name").val("");
                         action.loadPageData();
+						action.allDevTypeQuery();
 					}else{
 						toastr.error(result.msg);
 					}
@@ -209,32 +182,16 @@ $(function() {
 	};
 	window.action = action;
 	action.init();
-	action.loadDevTypeData();
-	action.loadCompanyInfoData();
-	//action.loadPageData();
+	action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑设备版本信息");
-			$("#input-depart_id-wrap").hide();
-			$("#input-depart_id-txt-wrap").show();
-			$("#input-depart_idNo-wrap").hide();
-			$("#input-devType-wrap").hide();
-			$("#input-devTypeNo-wrap").hide();
-			$("#input-devType-txt-wrap").show();
-			$("#input-status-wrap").show();
+			$("h4#addTempl-modal-label").text("编辑设备类型");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加设备版本信息");
-			$("#input-depart_id-wrap").show();
-			$("#input-depart_id-txt-wrap").hide();
-			$("#input-depart_idNo-wrap").hide();
-			$("#input-devType-wrap").show();
-			$("#input-devTypeNo-wrap").hide();
-			$("#input-devType-txt-wrap").hide();
-			$("#input-status-wrap").hide();
+			$("h4#addTempl-modal-label").text("添加设备类型");
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -243,90 +200,86 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var check_status = $.trim(that.find("td").eq(4).text());
-		var status_val = null;
-		if(check_status === "不可用"){
-			status_val = 0;
-		}else if(check_status === "可用"){
-			status_val = 1;
-		}
 
-
-		$("#input-version_id").val(that.find("td").eq(0).text());
-		$("#input-depart_id-txt").val(that.find("td").eq(1).text());
-		$("#input-depart_idNo").val(that.find("td").eq(8).text());
-		$("#input-devType-txt").val(that.find("td").eq(2).text());
-		$("#input-devTypeNo").val(that.find("td").eq(7).text());
-		$("#input-dev_version").val(that.find("td").eq(3).text());
-		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-		$("#input-version_info").val(that.find("td").eq(5).text());
-		$("#input-update_url").val(that.find("td").eq(6).text());
+        $("#input-type_id").val(that.find("td").eq(0).text());
+        $("#input-client_type").val(that.find("td").eq(1).text());
+        $("#input-client_name").val(that.find("td").eq(2).text());
 
         $("#addTempl-modal").modal("show");
     });
 
-	/*$("#input-search-depart_id").change(function () {
-		if ($(this).val() != "") {
-			$(this).parent().removeClass("has-error");
-			$(this).next().remove();
-		}
-	});*/
-
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-			depart_id : {
+            client_type : {
                 required : true
             },
-			devType : {
+            client_name : {
                 required : true
-            },
-			dev_version : {
-				required : true
-			},
-			update_url : {
-				required : true
-			}
+            }
         }
     });
 
 	$("#btn-add-submit").on('click', function() {
-		var action = $("form#form-addTempl").data("action");
-		if(action == "add"){
-			if (!$("#form-addTempl").valid()) {
-				return;
-			}else {
-				window.action.add();
-			}
-		}else if(action == "edit"){
-			    window.action.edit();
+		if (!$("#form-addTempl").valid()) {
+			return;
 		}
+		if(isNaN($("#input-client_type").val())) {
+			$("#input-client_type").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+			$("#input-client_type").parent().append(err_html);
+			return;
+		}
+		var action = $("form#form-addTempl").data("action");
+		switch (action) {
+		case "add":
+			window.action.add();
+			break;
+		case "edit":
+			window.action.edit();
+			break;
+		}
+	});
 
+	$("#input-client_type").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#input-search-client_type").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+		}
 	});
 
 	$("#btn-search").on('click', function() {
-		if($("#input-search-depart_id").val() == "") {
-			$("#input-search-depart_id").parent().addClass("has-error");
-			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-			$("#input-search-depart_id").append(err_html);
+		if(isNaN($("#input-search-client_type").val())) {
+			$("#input-search-client_type").parent().addClass("has-error");
 			return;
 		}
-		action.loadPageData();
+        action.loadPageData();
 	});
-	$("#input-search-depart_id").on('keydown', function(e) {
-		if($("#input-search-depart_id").val() == "") {
-			$("#input-search-depart_id").parent().addClass("has-error");
-			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-			$("#input-search-depart_id").append(err_html);
+	$("#input-search-client_type").on('keydown', function(e) {
+		if(isNaN($("#input-search-client_type").val())) {
+			$("#input-search-client_type").parent().addClass("has-error");
 			return;
 		}
-		action.loadPageData();
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+
+	});
+	$("#input-search-client_name").on('keydown', function(e) {
+		if (e.keyCode == 13) {
+			action.loadPageData();
+		}
 
 	});
 	$("#input-page-content-num").change(function() {
 		action.loadPageData();
 	});
-
 });
 
 
