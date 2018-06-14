@@ -30,7 +30,7 @@ $(function() {
         },
 		//新增数据
 		add : function() {
-            var url = ctx + "xiaoyusvr/boss/departconf/addimdepartconfig";
+           /* var url = ctx + "xiaoyusvr/boss/departconf/addimdepartconfig";
             var data = new Object();
             data.depart_id = parseInt($('#input-depart_id option:selected').val());
             data.client_type = parseInt($('#input-devType option:selected').val());
@@ -48,9 +48,10 @@ $(function() {
                 else{
                     toastr.error(result.msg);
                 }
-            });
+            });*/
 
-            /*var imgLen = $("img[class=up-img]").size();
+
+            var imgLen = $("img[class=up-img]").size();
             var imgurl = uploadUrl + "upload";
             var imgArray = [];
             var imgCount = 0;
@@ -111,7 +112,7 @@ $(function() {
                         alert("错误！！");
                     }
                 });
-            }*/
+            }
 		},
 		//获取所有数据
 		loadPageData : function() {
@@ -340,7 +341,7 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑公司设备信息");
+			$("h4#addTempl-modal-label").text("查看公司设备信息");
             $("#input-devType-wrap").hide();
             $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").show();
@@ -349,6 +350,7 @@ $(function() {
             $("#input-depart_idNo-wrap").hide();
             $("#addImgUrl").hide();
             $("#showImgUrl").show();
+            $("#btn-add-submit").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加公司设备信息");
@@ -358,8 +360,9 @@ $(function() {
             $("#input-depart_id-wrap").show();
             $("#input-depart_id-txt-wrap").hide();
             $("#input-depart_idNo-wrap").hide();
-            $("#addImgUrl").hide();
-            $("#showImgUrl").show()
+            $("#addImgUrl").show();
+            $("#showImgUrl").hide();
+            $("#btn-add-submit").show();
 			$form.data("action", "add");
 			$form[0].reset();
 		}

@@ -113,14 +113,14 @@
 										</div>
 
 										<div id="addImgUrl" class="form-group" >
-											<label for="" class="col-sm-3 control-label distribCol1"><span class="necessary"></span>上传设备头像图片</label>
+											<label for="" class="col-sm-3 control-label distribCol1"><span class="necessary"></span>上传设备头像</label>
 											<div class="img-box full">
 												<section class=" img-section">
-													<p class="up-p"><span class="up-span">最多可以上传10张图片</span></p>
+													<p class="up-p"><span class="up-span">可以上传1张图片</span></p>
 													<div class="z_photo upimg-div clear" >
 														<section class="z_file fl">
 															<img src="../../images/a11.png" class="add-img">
-															<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+															<input type="file" name="file" id="file" class="file1" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"  />
 														</section>
 													</div>
 												</section>
@@ -136,7 +136,7 @@
 										<div id="showImgUrl" class="form-group" >
 											<label for="input-avatar" class="col-sm-2 control-label distribCol1"><span class="necessary"></span>默认头像</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-avatar" name="devXW" placeholder="请输入默认头像URL" >
+												<input type="text" class="form-control" id="input-avatar" name="devXW" placeholder="请输入默认头像URL" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 									</form>
@@ -195,9 +195,15 @@
 	<td style="display:none;">${typeNameQuery(client_type)}</td>
 	<td style="position:relative">
 		<a href="javascript:void(0);" class="table-edit-btn" style="width:115px;height:115px;display:inline-block;">
-			<img src=${headPicUrl + avatar} style="width:85px;">
+			<!--<img src=${headPicUrl + avatar} style="width:85px;">-->
+			<img src=${avatar} style="width:85px;">
 		</a>
 		<h4>${typeNameQuery(client_type)}</h4>
+		<a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteConfig(${config_id})" style="position:absolute;top:0px;right:0;opacity:0.5;">
+				<button type="button" class="btn btn-default btn-sm btn-del">
+					<span class="glyphicon glyphicon-trash"></span>
+				</button>
+		</a>
 	</td>
 	<td style="display:none;">${client_type}</td>
 	<td class="table-update" style="display:none;">
